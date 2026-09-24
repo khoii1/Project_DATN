@@ -1,0 +1,11 @@
+# Local/LAN development configuration. Copy outside the repository and replace paths.
+listener 1883
+allow_anonymous false
+password_file C:/mosquitto/config/passwords
+acl_file C:/mosquitto/config/acl
+persistence true
+persistence_location C:/mosquitto/data/
+log_type error
+log_type warning
+log_type notice
+

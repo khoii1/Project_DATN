@@ -1,0 +1,2 @@
+import { Router } from "express"; import { listDeviceCommands } from "../controllers/device-command.controller"; import { authenticate } from "../middlewares/auth.middleware"; import { validate } from "../middlewares/validate.middleware"; import { commandListQuerySchema } from "../validators/device-command.schema";
+export const deviceCommandRouter = Router(); deviceCommandRouter.use(authenticate); deviceCommandRouter.get("/", validate(commandListQuerySchema, "query"), listDeviceCommands);

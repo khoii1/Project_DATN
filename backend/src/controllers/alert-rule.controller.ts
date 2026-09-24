@@ -1,0 +1,7 @@
+import type { NextFunction, Request, Response } from "express";
+import { alertRuleService } from "../services/alert-rule.service";
+import type { AlertRuleListQuery, CreateAlertRuleInput, UpdateAlertRuleInput } from "../validators/alert-rule.schema";
+export async function listAlertRules(req: Request, res: Response, next: NextFunction) { try { res.json({ success: true, message: "Lấy danh sách quy tắc thành công", data: await alertRuleService.list(req.query as unknown as AlertRuleListQuery, req.user!) }); } catch (error) { next(error); } }
+export async function getAlertRule(req: Request, res: Response, next: NextFunction) { try { res.json({ success: true, message: "Lấy quy tắc thành công", data: { rule: await alertRuleService.get(req.params.id as string, req.user!) } }); } catch (error) { next(error); } }
+export async function createAlertRule(req: Request, res: Response, next: NextFunction) { try { res.status(201).json({ success: true, message: "Tạo quy tắc cảnh báo thành công", data: { rule: await alertRuleService.create(req.body as CreateAlertRuleInput, req.user!, req.ip) } }); } catch (error) { next(error); } }
+export async function updateAlertRule(req: Request, res: Response, next: NextFunction) { try { res.json({ success: true, message: "Cập nhật quy tắc cảnh báo thành công", data: { rule: await alertRuleService.update(req.params.id as string, req.body as UpdateAlertRuleInput, req.user!, req.ip) } }); } catch (error) { next(error); } }

@@ -1,0 +1,6 @@
+import "dotenv/config";
+import { ActuatorState, DeviceCommandType } from "@prisma/client";
+import { prisma } from "../src/config/database";
+import { deviceCommandService } from "../src/services/device-command.service";
+async function main() { const deviceCode=(process.argv[2]??"ESP32-GF-A-01").trim().toUpperCase(); const actuatorCode=(process.argv[3]??"PUMP_01").trim().toUpperCase(); const actor=await prisma.user.findUniqueOrThrow({where:{email:"owner@smartagri.local"}}); let actuator=await prisma.actuator.findFirstOrThrow({where:{device:{deviceCode},actuatorCode}}); if(actuator.currentState===ActuatorState.ON) await deviceCommandService.issue(actuator.id,DeviceCommandType.TURN_OFF,actor); const on=await deviceCommandService.issue(actuator.id,DeviceCommandType.TURN_ON,actor); const off=await deviceCommandService.issue(actuator.id,DeviceCommandType.TURN_OFF,actor); actuator=await prisma.actuator.findUniqueOrThrow({where:{id:actuator.id}}); console.log(`${deviceCode}/${actuatorCode}: ${on.command.status} ON -> ${off.command.status} OFF; current state ${actuator.currentState}`); }
+main().catch(error=>{console.error(error instanceof Error?error.message:error);process.exitCode=1}).finally(()=>prisma.$disconnect());

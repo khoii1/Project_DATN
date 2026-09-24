@@ -1,0 +1,8 @@
+import type { NextFunction, Request, Response } from "express";
+import { deviceService } from "../services/device.service";
+import type { CreateDeviceInput, DeviceListQuery, DeviceSummaryQuery, UpdateDeviceInput } from "../validators/device.schema";
+export async function listDevices(req: Request, res: Response, next: NextFunction) { try { res.json({ success: true, message: "Lấy danh sách thiết bị thành công", data: await deviceService.list(req.query as unknown as DeviceListQuery, req.user!) }); } catch (error) { next(error); } }
+export async function getDeviceSummary(req: Request, res: Response, next: NextFunction) { try { res.json({ success: true, message: "Lấy tổng quan thiết bị thành công", data: await deviceService.summary(req.query as DeviceSummaryQuery, req.user!) }); } catch (error) { next(error); } }
+export async function getDevice(req: Request, res: Response, next: NextFunction) { try { res.json({ success: true, message: "Lấy thiết bị thành công", data: { device: await deviceService.getById(req.params.id as string, req.user!) } }); } catch (error) { next(error); } }
+export async function createDevice(req: Request, res: Response, next: NextFunction) { try { res.status(201).json({ success: true, message: "Đăng ký thiết bị thành công", data: { device: await deviceService.create(req.body as CreateDeviceInput, req.user!, req.ip) } }); } catch (error) { next(error); } }
+export async function updateDevice(req: Request, res: Response, next: NextFunction) { try { res.json({ success: true, message: "Cập nhật thiết bị thành công", data: { device: await deviceService.update(req.params.id as string, req.body as UpdateDeviceInput, req.user!, req.ip) } }); } catch (error) { next(error); } }

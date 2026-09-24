@@ -1,0 +1,6 @@
+import { DeviceCommandSource, DeviceCommandStatus, DeviceCommandType } from "@prisma/client";
+import { z } from "zod";
+const isoDate = z.string().datetime({ offset: true }).transform(value => new Date(value));
+export const issueCommandSchema = z.object({ command: z.nativeEnum(DeviceCommandType) }).strict("Nguồn, người yêu cầu và trạng thái do hệ thống quản lý");
+export const commandListQuerySchema = z.object({ farmId: z.string().trim().optional(), zoneId: z.string().trim().optional(), deviceId: z.string().trim().optional(), actuatorId: z.string().trim().optional(), automationRuleId: z.string().trim().optional(), command: z.nativeEnum(DeviceCommandType).optional(), source: z.nativeEnum(DeviceCommandSource).optional(), status: z.nativeEnum(DeviceCommandStatus).optional(), requestedById: z.string().trim().optional(), from: isoDate.optional(), to: isoDate.optional(), page: z.coerce.number().int().min(1).default(1), limit: z.coerce.number().int().min(1).max(100).default(20) }).refine(value => !value.from || !value.to || value.from < value.to, { path: ["from"], message: "Thời gian bắt đầu phải trước thời gian kết thúc" });
+export type IssueCommandInput = z.infer<typeof issueCommandSchema>; export type CommandListQuery = z.infer<typeof commandListQuerySchema>;

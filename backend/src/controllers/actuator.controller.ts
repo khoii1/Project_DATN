@@ -1,0 +1,11 @@
+import type { NextFunction, Request, Response } from "express";
+import { actuatorService } from "../services/actuator.service";
+import { deviceCommandService } from "../services/device-command.service";
+import type { ActuatorListQuery, ActuatorSummaryQuery, CreateActuatorInput, UpdateActuatorInput } from "../validators/actuator.schema";
+import type { IssueCommandInput } from "../validators/device-command.schema";
+export async function listActuators(req: Request, res: Response, next: NextFunction) { try { res.json({ success: true, message: "Lấy danh sách actuator thành công", data: await actuatorService.list(req.query as unknown as ActuatorListQuery, req.user!) }); } catch (error) { next(error); } }
+export async function actuatorSummary(req: Request, res: Response, next: NextFunction) { try { res.json({ success: true, message: "Lấy tổng quan actuator thành công", data: await actuatorService.summary(req.query as unknown as ActuatorSummaryQuery, req.user!) }); } catch (error) { next(error); } }
+export async function getActuator(req: Request, res: Response, next: NextFunction) { try { res.json({ success: true, message: "Lấy actuator thành công", data: { actuator: await actuatorService.get(req.params.id as string, req.user!) } }); } catch (error) { next(error); } }
+export async function createActuator(req: Request, res: Response, next: NextFunction) { try { res.status(201).json({ success: true, message: "Tạo actuator thành công", data: { actuator: await actuatorService.create(req.body as CreateActuatorInput, req.user!, req.ip) } }); } catch (error) { next(error); } }
+export async function updateActuator(req: Request, res: Response, next: NextFunction) { try { res.json({ success: true, message: "Cập nhật actuator thành công", data: { actuator: await actuatorService.update(req.params.id as string, req.body as UpdateActuatorInput, req.user!, req.ip) } }); } catch (error) { next(error); } }
+export async function issueActuatorCommand(req: Request, res: Response, next: NextFunction) { try { res.status(201).json({ success: true, message: "Đã xử lý lệnh điều khiển", data: await deviceCommandService.issue(req.params.id as string, (req.body as IssueCommandInput).command, req.user!, req.ip) }); } catch (error) { next(error); } }

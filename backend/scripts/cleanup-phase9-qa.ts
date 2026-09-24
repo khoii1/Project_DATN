@@ -1,0 +1,5 @@
+import "dotenv/config";
+import { PrismaClient } from "@prisma/client";
+const prisma = new PrismaClient();
+async function run() { const farms = await prisma.farm.findMany({ where: { name: { startsWith: "QA_AUTO_" } }, select: { id: true } }); const farmIds = farms.map(farm => farm.id); const rules = await prisma.automationRule.findMany({ where: { OR: [{ sensor: { device: { zone: { farmId: { in: farmIds } } } } }, { name: { startsWith: "QA_AUTO_UI" } }] }, select: { id: true, commands: { select: { id: true } } } }); const ids = [...farmIds, ...rules.flatMap(rule => [rule.id, ...rule.commands.map(command => command.id)])]; await prisma.activityLog.deleteMany({ where: { entityId: { in: ids } } }); await prisma.automationRule.deleteMany({ where: { name: { startsWith: "QA_AUTO_UI" } } }); const deleted = await prisma.farm.deleteMany({ where: { id: { in: farmIds } } }); console.log(`Phase 9 QA cleanup: ${deleted.count} farm(s), ${rules.length} automation fixture(s)`); }
+run().finally(() => prisma.$disconnect()).catch(error => { console.error(error); process.exitCode = 1; });

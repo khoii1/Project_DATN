@@ -1,0 +1,496 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  ADMIN
+  FARM_OWNER
+  STAFF
+}
+
+enum UserStatus {
+  ACTIVE
+  INACTIVE
+}
+
+enum ActivityAction {
+  LOGIN_SUCCESS
+  LOGOUT
+  CREATE_USER
+  UPDATE_USER
+  DEACTIVATE_USER
+  ACTIVATE_USER
+  CREATE_FARM
+  UPDATE_FARM
+  CHANGE_FARM_STATUS
+  ASSIGN_STAFF
+  REMOVE_STAFF
+  CREATE_ZONE
+  UPDATE_ZONE
+  CHANGE_ZONE_STATUS
+  CREATE_CROP
+  UPDATE_CROP
+  CHANGE_CROP_STATUS
+  CREATE_DEVICE
+  UPDATE_DEVICE
+  CHANGE_DEVICE_STATUS
+  CREATE_SENSOR
+  UPDATE_SENSOR
+  CHANGE_SENSOR_STATUS
+  CREATE_ALERT_RULE
+  UPDATE_ALERT_RULE
+  ENABLE_ALERT_RULE
+  DISABLE_ALERT_RULE
+  ACKNOWLEDGE_ALERT
+  MANUAL_RESOLVE_ALERT
+  CREATE_ACTUATOR
+  UPDATE_ACTUATOR
+  CHANGE_ACTUATOR_STATUS
+  ISSUE_DEVICE_COMMAND
+  UPDATE_STAFF_IRRIGATION_PERMISSION
+  CREATE_AUTOMATION_RULE
+  UPDATE_AUTOMATION_RULE
+  ENABLE_AUTOMATION_RULE
+  DISABLE_AUTOMATION_RULE
+}
+
+enum FarmStatus {
+  ACTIVE
+  INACTIVE
+}
+
+enum ZoneStatus {
+  ACTIVE
+  INACTIVE
+}
+
+enum CropStatus {
+  PLANNED
+  GROWING
+  HARVESTED
+  CANCELLED
+}
+
+enum DeviceType {
+  CONTROLLER
+  GATEWAY
+  OTHER
+}
+
+enum DeviceStatus {
+  ACTIVE
+  INACTIVE
+  MAINTENANCE
+}
+
+enum DeviceConnectionStatus {
+  ONLINE
+  OFFLINE
+  UNKNOWN
+}
+
+enum SensorType {
+  TEMP
+  AIR_HUMIDITY
+  SOIL_MOISTURE
+  LIGHT
+}
+
+enum SensorStatus {
+  ACTIVE
+  INACTIVE
+}
+
+enum SensorReadingSource {
+  SIMULATOR
+  MQTT
+}
+
+enum AlertOperator {
+  LT
+  LTE
+  GT
+  GTE
+}
+
+enum AlertSeverity {
+  INFO
+  WARNING
+  CRITICAL
+}
+
+enum AlertStatus {
+  OPEN
+  ACKNOWLEDGED
+  RESOLVED
+}
+
+enum AlertResolutionReason {
+  AUTO_RECOVERED
+  MANUAL
+  RULE_DISABLED
+  RULE_UPDATED
+}
+
+enum ActuatorType {
+  PUMP
+  VALVE
+  RELAY
+  OTHER
+}
+
+enum ActuatorStatus {
+  ACTIVE
+  INACTIVE
+  MAINTENANCE
+}
+
+enum ActuatorState {
+  ON
+  OFF
+  UNKNOWN
+}
+
+enum DeviceCommandType {
+  TURN_ON
+  TURN_OFF
+}
+
+enum DeviceCommandSource {
+  MANUAL
+  AUTOMATION
+}
+
+enum DeviceCommandStatus {
+  PENDING
+  SUCCESS
+  FAILED
+}
+
+model User {
+  id                     String                @id @default(cuid())
+  fullName               String                @map("full_name")
+  email                  String                @unique
+  passwordHash           String                @map("password_hash")
+  phone                  String?
+  role                   UserRole
+  status                 UserStatus            @default(ACTIVE)
+  createdAt              DateTime              @default(now()) @map("created_at")
+  updatedAt              DateTime              @updatedAt @map("updated_at")
+  activityLogs           ActivityLog[]
+  ownedFarms             Farm[]                @relation("FarmOwner")
+  farmAssignments        FarmStaffAssignment[] @relation("FarmStaff")
+  createdAlertRules      AlertRule[]           @relation("AlertRuleCreator")
+  acknowledgedAlerts     Alert[]               @relation("AlertAcknowledgedBy")
+  resolvedAlerts         Alert[]               @relation("AlertResolvedBy")
+  requestedCommands      DeviceCommand[]       @relation("DeviceCommandRequester")
+  createdAutomationRules AutomationRule[]      @relation("AutomationRuleCreator")
+
+  @@index([role])
+  @@index([status])
+  @@index([createdAt])
+  @@map("users")
+}
+
+model Farm {
+  id               String                @id @default(cuid())
+  ownerId          String                @map("owner_id")
+  name             String
+  address          String?
+  description      String?
+  areaHectares     Decimal?              @map("area_hectares") @db.Decimal(10, 2)
+  status           FarmStatus            @default(ACTIVE)
+  createdAt        DateTime              @default(now()) @map("created_at")
+  updatedAt        DateTime              @updatedAt @map("updated_at")
+  owner            User                  @relation("FarmOwner", fields: [ownerId], references: [id], onDelete: Restrict)
+  zones            Zone[]
+  staffAssignments FarmStaffAssignment[]
+  activityLogs     ActivityLog[]
+
+  @@index([ownerId])
+  @@index([status])
+  @@index([createdAt])
+  @@map("farms")
+}
+
+model FarmStaffAssignment {
+  id                   String   @id @default(cuid())
+  farmId               String   @map("farm_id")
+  staffId              String   @map("staff_id")
+  createdAt            DateTime @default(now()) @map("created_at")
+  canControlIrrigation Boolean  @default(false) @map("can_control_irrigation")
+  farm                 Farm     @relation(fields: [farmId], references: [id], onDelete: Cascade)
+  staff                User     @relation("FarmStaff", fields: [staffId], references: [id], onDelete: Cascade)
+
+  @@unique([farmId, staffId])
+  @@index([staffId])
+  @@index([farmId])
+  @@map("farm_staff_assignments")
+}
+
+model Zone {
+  id           String     @id @default(cuid())
+  farmId       String     @map("farm_id")
+  name         String
+  description  String?
+  areaHectares Decimal?   @map("area_hectares") @db.Decimal(10, 2)
+  status       ZoneStatus @default(ACTIVE)
+  createdAt    DateTime   @default(now()) @map("created_at")
+  updatedAt    DateTime   @updatedAt @map("updated_at")
+  farm         Farm       @relation(fields: [farmId], references: [id], onDelete: Cascade)
+  crops        Crop[]
+  devices      Device[]
+
+  @@unique([farmId, name])
+  @@index([farmId])
+  @@index([status])
+  @@index([createdAt])
+  @@map("zones")
+}
+
+model Device {
+  id               String                 @id @default(cuid())
+  zoneId           String                 @map("zone_id")
+  deviceCode       String                 @unique @map("device_code")
+  name             String
+  type             DeviceType
+  hardwareModel    String?                @map("hardware_model")
+  firmwareVersion  String?                @map("firmware_version")
+  status           DeviceStatus           @default(ACTIVE)
+  connectionStatus DeviceConnectionStatus @default(UNKNOWN) @map("connection_status")
+  lastSeenAt       DateTime?              @map("last_seen_at")
+  installedAt      DateTime?              @map("installed_at")
+  description      String?
+  createdAt        DateTime               @default(now()) @map("created_at")
+  updatedAt        DateTime               @updatedAt @map("updated_at")
+  zone             Zone                   @relation(fields: [zoneId], references: [id], onDelete: Cascade)
+  sensors          Sensor[]
+  actuators        Actuator[]
+
+  @@index([zoneId])
+  @@index([status])
+  @@index([connectionStatus])
+  @@index([createdAt])
+  @@map("devices")
+}
+
+model Actuator {
+  id                 String           @id @default(cuid())
+  deviceId           String           @map("device_id")
+  actuatorCode       String           @map("actuator_code")
+  name               String
+  type               ActuatorType
+  status             ActuatorStatus   @default(ACTIVE)
+  currentState       ActuatorState    @default(UNKNOWN) @map("current_state")
+  hardwareChannel    String?          @map("hardware_channel")
+  description        String?
+  lastCommandAt      DateTime?        @map("last_command_at")
+  lastStateChangedAt DateTime?        @map("last_state_changed_at")
+  createdAt          DateTime         @default(now()) @map("created_at")
+  updatedAt          DateTime         @updatedAt @map("updated_at")
+  device             Device           @relation(fields: [deviceId], references: [id], onDelete: Cascade)
+  commands           DeviceCommand[]
+  automationRules    AutomationRule[]
+
+  @@unique([deviceId, actuatorCode])
+  @@index([deviceId])
+  @@index([type])
+  @@index([status])
+  @@index([currentState])
+  @@map("actuators")
+}
+
+model DeviceCommand {
+  id               String              @id @default(cuid())
+  actuatorId       String              @map("actuator_id")
+  command          DeviceCommandType
+  source           DeviceCommandSource
+  status           DeviceCommandStatus @default(PENDING)
+  requestedById    String?             @map("requested_by_id")
+  automationRuleId String?             @map("automation_rule_id")
+  requestedAt      DateTime            @default(now()) @map("requested_at")
+  sentAt           DateTime?           @map("sent_at")
+  completedAt      DateTime?           @map("completed_at")
+  failureReason    String?             @map("failure_reason")
+  correlationId    String              @unique @map("correlation_id")
+  actuator         Actuator            @relation(fields: [actuatorId], references: [id], onDelete: Cascade)
+  requestedBy      User?               @relation("DeviceCommandRequester", fields: [requestedById], references: [id], onDelete: SetNull)
+  automationRule   AutomationRule?     @relation(fields: [automationRuleId], references: [id], onDelete: SetNull)
+
+  @@index([actuatorId])
+  @@index([status])
+  @@index([requestedAt])
+  @@index([requestedById])
+  @@index([automationRuleId])
+  @@map("device_commands")
+}
+
+model Sensor {
+  id              String           @id @default(cuid())
+  deviceId        String           @map("device_id")
+  sensorCode      String           @map("sensor_code")
+  name            String
+  type            SensorType
+  status          SensorStatus     @default(ACTIVE)
+  description     String?
+  createdAt       DateTime         @default(now()) @map("created_at")
+  updatedAt       DateTime         @updatedAt @map("updated_at")
+  device          Device           @relation(fields: [deviceId], references: [id], onDelete: Cascade)
+  readings        SensorReading[]
+  alertRules      AlertRule[]
+  alerts          Alert[]
+  automationRules AutomationRule[]
+
+  @@unique([deviceId, sensorCode])
+  @@index([deviceId])
+  @@index([type])
+  @@index([status])
+  @@map("sensors")
+}
+
+model AutomationRule {
+  id                   String          @id @default(cuid())
+  name                 String
+  sensorId             String          @map("sensor_id")
+  actuatorId           String          @map("actuator_id")
+  startThreshold       Float           @map("start_threshold")
+  stopThreshold        Float           @map("stop_threshold")
+  enabled              Boolean         @default(true)
+  lastEvaluatedAt      DateTime?       @map("last_evaluated_at")
+  lastCommandAttemptAt DateTime?       @map("last_command_attempt_at")
+  description          String?
+  createdById          String?         @map("created_by_id")
+  createdAt            DateTime        @default(now()) @map("created_at")
+  updatedAt            DateTime        @updatedAt @map("updated_at")
+  sensor               Sensor          @relation(fields: [sensorId], references: [id], onDelete: Cascade)
+  actuator             Actuator        @relation(fields: [actuatorId], references: [id], onDelete: Cascade)
+  createdBy            User?           @relation("AutomationRuleCreator", fields: [createdById], references: [id], onDelete: SetNull)
+  commands             DeviceCommand[]
+
+  @@index([sensorId])
+  @@index([actuatorId])
+  @@index([enabled])
+  @@index([createdAt])
+  @@map("automation_rules")
+}
+
+model AlertRule {
+  id                String        @id @default(cuid())
+  sensorId          String        @map("sensor_id")
+  name              String
+  operator          AlertOperator
+  threshold         Float
+  recoveryThreshold Float?        @map("recovery_threshold")
+  severity          AlertSeverity
+  enabled           Boolean       @default(true)
+  message           String?
+  createdById       String?       @map("created_by_id")
+  lastEvaluatedAt   DateTime?     @map("last_evaluated_at")
+  createdAt         DateTime      @default(now()) @map("created_at")
+  updatedAt         DateTime      @updatedAt @map("updated_at")
+  sensor            Sensor        @relation(fields: [sensorId], references: [id], onDelete: Cascade)
+  createdBy         User?         @relation("AlertRuleCreator", fields: [createdById], references: [id], onDelete: SetNull)
+  alerts            Alert[]
+
+  @@index([sensorId])
+  @@index([enabled])
+  @@index([severity])
+  @@map("alert_rules")
+}
+
+model Alert {
+  id                String                 @id @default(cuid())
+  alertRuleId       String                 @map("alert_rule_id")
+  sensorId          String                 @map("sensor_id")
+  status            AlertStatus            @default(OPEN)
+  title             String
+  message           String
+  triggerValue      Float                  @map("trigger_value")
+  lastValue         Float                  @map("last_value")
+  thresholdSnapshot Float                  @map("threshold_snapshot")
+  recoverySnapshot  Float?                 @map("recovery_snapshot")
+  operatorSnapshot  AlertOperator          @map("operator_snapshot")
+  severitySnapshot  AlertSeverity          @map("severity_snapshot")
+  unitSnapshot      String                 @map("unit_snapshot")
+  openedAt          DateTime               @map("opened_at")
+  lastReadingAt     DateTime               @map("last_reading_at")
+  acknowledgedAt    DateTime?              @map("acknowledged_at")
+  acknowledgedById  String?                @map("acknowledged_by_id")
+  resolvedAt        DateTime?              @map("resolved_at")
+  resolvedById      String?                @map("resolved_by_id")
+  resolutionReason  AlertResolutionReason? @map("resolution_reason")
+  createdAt         DateTime               @default(now()) @map("created_at")
+  updatedAt         DateTime               @updatedAt @map("updated_at")
+  alertRule         AlertRule              @relation(fields: [alertRuleId], references: [id], onDelete: Cascade)
+  sensor            Sensor                 @relation(fields: [sensorId], references: [id], onDelete: Cascade)
+  acknowledgedBy    User?                  @relation("AlertAcknowledgedBy", fields: [acknowledgedById], references: [id], onDelete: SetNull)
+  resolvedBy        User?                  @relation("AlertResolvedBy", fields: [resolvedById], references: [id], onDelete: SetNull)
+
+  @@index([alertRuleId, status])
+  @@index([sensorId])
+  @@index([status])
+  @@index([severitySnapshot])
+  @@index([openedAt])
+  @@map("alerts")
+}
+
+model SensorReading {
+  id         String              @id @default(cuid())
+  sensorId   String              @map("sensor_id")
+  value      Float
+  source     SensorReadingSource
+  recordedAt DateTime            @map("recorded_at")
+  receivedAt DateTime            @default(now()) @map("received_at")
+  sensor     Sensor              @relation(fields: [sensorId], references: [id], onDelete: Cascade)
+
+  @@unique([sensorId, recordedAt])
+  @@index([sensorId, recordedAt(sort: Desc)])
+  @@index([recordedAt])
+  @@map("sensor_readings")
+}
+
+model Crop {
+  id                  String     @id @default(cuid())
+  zoneId              String     @map("zone_id")
+  name                String
+  variety             String?
+  plantingDate        DateTime?  @map("planting_date")
+  expectedHarvestDate DateTime?  @map("expected_harvest_date")
+  actualHarvestDate   DateTime?  @map("actual_harvest_date")
+  status              CropStatus @default(PLANNED)
+  description         String?
+  createdAt           DateTime   @default(now()) @map("created_at")
+  updatedAt           DateTime   @updatedAt @map("updated_at")
+  zone                Zone       @relation(fields: [zoneId], references: [id], onDelete: Cascade)
+
+  @@index([zoneId])
+  @@index([status])
+  @@index([plantingDate])
+  @@index([createdAt])
+  @@map("crops")
+}
+
+model ActivityLog {
+  id          String         @id @default(cuid())
+  userId      String?        @map("user_id")
+  farmId      String?        @map("farm_id")
+  action      ActivityAction
+  entityType  String         @map("entity_type")
+  entityId    String?        @map("entity_id")
+  description String
+  ipAddress   String?        @map("ip_address")
+  createdAt   DateTime       @default(now()) @map("created_at")
+  user        User?          @relation(fields: [userId], references: [id], onDelete: SetNull)
+  farm        Farm?          @relation(fields: [farmId], references: [id], onDelete: SetNull)
+
+  @@index([userId, createdAt])
+  @@index([farmId, createdAt])
+  @@index([createdAt])
+  @@index([action])
+  @@map("activity_logs")
+}

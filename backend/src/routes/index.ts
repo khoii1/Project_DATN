@@ -1,0 +1,34 @@
+import { Router } from "express";
+import { healthRouter } from "./health.route";
+import { authRouter } from "./auth.route";
+import { userRouter } from "./user.route";
+import { farmRouter } from "./farm.route";
+import { zoneRouter } from "./zone.route";
+import { cropRouter } from "./crop.route";
+import { deviceRouter } from "./device.route";
+import { sensorRouter } from "./sensor.route";
+import { alertRuleRouter } from "./alert-rule.route";
+import { alertRouter } from "./alert.route";
+import { actuatorRouter } from "./actuator.route";
+import { deviceCommandRouter } from "./device-command.route";
+import { automationRuleRouter } from "./automation-rule.route";
+import { reportRouter } from './report.route';
+import { activityLogRouter } from './activity-log.route';
+
+export const apiRouter = Router();
+
+apiRouter.use("/health", healthRouter);
+apiRouter.use("/auth", authRouter);
+apiRouter.use("/users", userRouter);
+apiRouter.use("/farms", farmRouter);
+apiRouter.use("/zones", zoneRouter);
+apiRouter.use("/crops", cropRouter);
+apiRouter.use("/devices", deviceRouter);
+apiRouter.use("/sensors", sensorRouter);
+apiRouter.use("/alert-rules", alertRuleRouter);
+apiRouter.use("/alerts", alertRouter);
+apiRouter.use("/actuators", actuatorRouter);
+apiRouter.use("/device-commands", deviceCommandRouter);
+apiRouter.use("/automation-rules", automationRuleRouter);
+apiRouter.use('/reports', reportRouter);
+apiRouter.use('/activity-logs', activityLogRouter);

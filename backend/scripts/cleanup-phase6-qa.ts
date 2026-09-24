@@ -1,0 +1,4 @@
+import "dotenv/config";
+import { prisma } from "../src/config/database";
+async function main() { const farms = await prisma.farm.findMany({ where: { name: { startsWith: "QA_HISTORY_" } }, select: { id: true } }); const sensors = await prisma.sensor.findMany({ where: { sensorCode: { startsWith: "QA_SENSOR_HISTORY_" } }, select: { id: true } }); const ids = [...farms.map((item) => item.id), ...sensors.map((item) => item.id)]; await prisma.activityLog.deleteMany({ where: { entityId: { in: ids } } }); const removed = await prisma.sensor.deleteMany({ where: { sensorCode: { startsWith: "QA_SENSOR_HISTORY_" } } }); await prisma.farm.deleteMany({ where: { name: { startsWith: "QA_HISTORY_" } } }); console.log(`Phase 6 QA cleanup: ${removed.count} sensor(s)`); }
+main().catch((error) => { console.error(error); process.exitCode = 1; }).finally(() => prisma.$disconnect());

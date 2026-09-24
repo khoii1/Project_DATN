@@ -1,0 +1,10 @@
+import { ActuatorState, ActuatorStatus, ActuatorType } from "@prisma/client";
+import { z } from "zod";
+const optionalText = (max: number) => z.string().trim().max(max).optional().nullable().transform(value => value === "" ? null : value);
+const code = z.string().trim().toUpperCase().min(2).max(32).regex(/^[A-Z0-9_-]+$/, "Mã actuator chỉ được chứa A-Z, 0-9, _ và -");
+export const createActuatorSchema = z.object({ deviceId: z.string().trim().min(1), actuatorCode: code, name: z.string().trim().min(2).max(150), type: z.nativeEnum(ActuatorType), hardwareChannel: optionalText(100), description: optionalText(1000) }).strict();
+export const updateActuatorSchema = z.object({ name: z.string().trim().min(2).max(150).optional(), hardwareChannel: optionalText(100), description: optionalText(1000), status: z.nativeEnum(ActuatorStatus).optional() }).strict("Không được cập nhật trường hệ thống hoặc trường bất biến").refine(value => Object.keys(value).length > 0, "Cần dữ liệu cập nhật");
+export const actuatorListQuerySchema = z.object({ search: z.string().trim().max(100).optional(), farmId: z.string().trim().optional(), zoneId: z.string().trim().optional(), deviceId: z.string().trim().optional(), type: z.nativeEnum(ActuatorType).optional(), status: z.nativeEnum(ActuatorStatus).optional(), state: z.nativeEnum(ActuatorState).optional(), page: z.coerce.number().int().min(1).default(1), limit: z.coerce.number().int().min(1).max(100).default(20) });
+export const actuatorSummaryQuerySchema = actuatorListQuerySchema.pick({ farmId: true, zoneId: true, deviceId: true, type: true });
+export const actuatorIdParamsSchema = z.object({ id: z.string().trim().min(1) });
+export type CreateActuatorInput = z.infer<typeof createActuatorSchema>; export type UpdateActuatorInput = z.infer<typeof updateActuatorSchema>; export type ActuatorListQuery = z.infer<typeof actuatorListQuerySchema>; export type ActuatorSummaryQuery = z.infer<typeof actuatorSummaryQuerySchema>;

@@ -1,0 +1,16 @@
+import { UserRole } from "@prisma/client";
+import { Router } from "express";
+import { createDevice, getDevice, getDeviceSummary, listDevices, updateDevice } from "../controllers/device.controller";
+import { getDeviceLatestReadings } from "../controllers/sensor.controller";
+import { authenticate } from "../middlewares/auth.middleware";
+import { authorize } from "../middlewares/authorize.middleware";
+import { validate } from "../middlewares/validate.middleware";
+import { createDeviceSchema, deviceIdParamsSchema, deviceListQuerySchema, deviceSummaryQuerySchema, updateDeviceSchema } from "../validators/device.schema";
+import { deviceLatestParamsSchema } from "../validators/sensor.schema";
+export const deviceRouter = Router(); deviceRouter.use(authenticate);
+deviceRouter.get("/summary", validate(deviceSummaryQuerySchema, "query"), getDeviceSummary);
+deviceRouter.get("/", validate(deviceListQuerySchema, "query"), listDevices);
+deviceRouter.get("/:deviceId/latest-readings", validate(deviceLatestParamsSchema, "params"), getDeviceLatestReadings);
+deviceRouter.post("/", authorize(UserRole.ADMIN, UserRole.FARM_OWNER), validate(createDeviceSchema), createDevice);
+deviceRouter.get("/:id", validate(deviceIdParamsSchema, "params"), getDevice);
+deviceRouter.patch("/:id", authorize(UserRole.ADMIN, UserRole.FARM_OWNER), validate(deviceIdParamsSchema, "params"), validate(updateDeviceSchema), updateDevice);

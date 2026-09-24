@@ -1,0 +1,12 @@
+import { DeviceCommandSource, DeviceCommandStatus, DeviceCommandType, Prisma } from "@prisma/client";
+import { prisma } from "../config/database";
+import { farmScope, type FarmActor } from "./farm.repository";
+
+export interface CommandListOptions { farmId?: string; zoneId?: string; deviceId?: string; actuatorId?: string; automationRuleId?: string; command?: DeviceCommandType; source?: DeviceCommandSource; status?: DeviceCommandStatus; requestedById?: string; from?: Date; to?: Date; page: number; limit: number }
+export const commandInclude = { actuator: { include: { device: { include: { zone: { include: { farm: { select: { id: true, name: true, ownerId: true, status: true } } } } } } } }, requestedBy: { select: { id: true, fullName: true, email: true } }, automationRule: { select: { id: true, name: true, startThreshold: true, stopThreshold: true } } } satisfies Prisma.DeviceCommandInclude;
+const scope = (actor: FarmActor): Prisma.DeviceCommandWhereInput => ({ actuator: { device: { zone: { farm: farmScope(actor) } } } });
+function where(actor: FarmActor, options: Partial<CommandListOptions>): Prisma.DeviceCommandWhereInput { return { AND: [scope(actor), options.farmId ? { actuator: { device: { zone: { farmId: options.farmId } } } } : {}, options.zoneId ? { actuator: { device: { zoneId: options.zoneId } } } : {}, options.deviceId ? { actuator: { deviceId: options.deviceId } } : {}, options.actuatorId ? { actuatorId: options.actuatorId } : {}, options.automationRuleId ? { automationRuleId: options.automationRuleId } : {}, options.command ? { command: options.command } : {}, options.source ? { source: options.source } : {}, options.status ? { status: options.status } : {}, options.requestedById ? { requestedById: options.requestedById } : {}, options.from || options.to ? { requestedAt: { gte: options.from, lte: options.to } } : {}] }; }
+export const deviceCommandRepository = {
+  async list(actor: FarmActor, options: CommandListOptions) { const filter = where(actor, options); const [items, total] = await prisma.$transaction([prisma.deviceCommand.findMany({ where: filter, include: commandInclude, orderBy: { requestedAt: "desc" }, skip: (options.page - 1) * options.limit, take: options.limit }), prisma.deviceCommand.count({ where: filter })]); return { items, total }; },
+  findPending(actuatorId: string) { return prisma.deviceCommand.findFirst({ where: { actuatorId, status: DeviceCommandStatus.PENDING } }); },
+};

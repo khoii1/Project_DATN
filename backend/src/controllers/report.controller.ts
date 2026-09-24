@@ -1,0 +1,10 @@
+import type { NextFunction, Request, Response } from 'express';
+import { reportService } from '../services/report.service';
+import type { AlertReportQuery, ReportExportQuery, ReportQuery, SensorReportQuery } from '../validators/report.schema';
+
+export async function reportOverview(req: Request, res: Response, next: NextFunction) { try { res.json({ success: true, message: 'Lấy báo cáo tổng quan thành công', data: await reportService.overview(req.query as unknown as ReportQuery, req.user!) }); } catch (error) { next(error); } }
+export async function reportSensors(req: Request, res: Response, next: NextFunction) { try { res.json({ success: true, message: 'Lấy báo cáo cảm biến thành công', data: { items: await reportService.sensors(req.query as unknown as SensorReportQuery, req.user!) } }); } catch (error) { next(error); } }
+export async function reportAlerts(req: Request, res: Response, next: NextFunction) { try { res.json({ success: true, message: 'Lấy báo cáo cảnh báo thành công', data: await reportService.alerts(req.query as unknown as AlertReportQuery, req.user!) }); } catch (error) { next(error); } }
+export async function reportIrrigation(req: Request, res: Response, next: NextFunction) { try { res.json({ success: true, message: 'Lấy báo cáo tưới thành công', data: await reportService.irrigation(req.query as unknown as ReportQuery, req.user!) }); } catch (error) { next(error); } }
+export async function reportAutomation(req: Request, res: Response, next: NextFunction) { try { res.json({ success: true, message: 'Lấy báo cáo tự động hóa thành công', data: await reportService.automation(req.query as unknown as ReportQuery, req.user!) }); } catch (error) { next(error); } }
+export async function exportReport(req: Request, res: Response, next: NextFunction) { try { const result = await reportService.export(req.query as unknown as ReportExportQuery, req.user!); res.setHeader('Content-Type', 'text/csv; charset=utf-8'); res.setHeader('Content-Disposition', `attachment; filename="${result.filename}"`); res.send(result.content); } catch (error) { next(error); } }

@@ -1,0 +1,171 @@
+{
+  "checkedAt": "2026-10-22T04:43:27.141Z",
+  "node": "v22.20.0",
+  "prismaClient": "6.19.3",
+  "npm": "11.17.0",
+  "scripts": {
+    "dev": "tsx watch src/server.ts",
+    "start": "node dist/server.js",
+    "build": "tsc",
+    "predev": null,
+    "prestart": null
+  },
+  "dependencies": [
+    {
+      "name": "@prisma/client",
+      "installed": true
+    },
+    {
+      "name": "bcryptjs",
+      "installed": true
+    },
+    {
+      "name": "cors",
+      "installed": true
+    },
+    {
+      "name": "dotenv",
+      "installed": true
+    },
+    {
+      "name": "express",
+      "installed": true
+    },
+    {
+      "name": "express-rate-limit",
+      "installed": true
+    },
+    {
+      "name": "helmet",
+      "installed": true
+    },
+    {
+      "name": "jsonwebtoken",
+      "installed": true
+    },
+    {
+      "name": "morgan",
+      "installed": true
+    },
+    {
+      "name": "mqtt",
+      "installed": true
+    },
+    {
+      "name": "zod",
+      "installed": true
+    },
+    {
+      "name": "@types/cors",
+      "installed": true
+    },
+    {
+      "name": "@types/express",
+      "installed": true
+    },
+    {
+      "name": "@types/jsonwebtoken",
+      "installed": true
+    },
+    {
+      "name": "@types/morgan",
+      "installed": true
+    },
+    {
+      "name": "@types/node",
+      "installed": true
+    },
+    {
+      "name": "prisma",
+      "installed": true
+    },
+    {
+      "name": "tsx",
+      "installed": true
+    },
+    {
+      "name": "typescript",
+      "installed": true
+    }
+  ],
+  "requiredSecretsPresence": {
+    "DATABASE_URL": true,
+    "JWT_SECRET": true,
+    "MQTT_USERNAME": true,
+    "MQTT_PASSWORD": true
+  },
+  "currentConfigurationValidation": true,
+  "missingPrismaClientFields": [],
+  "currentConfigNotRuntime": {
+    "port": 5000,
+    "mqttEnabled": true,
+    "commands": false,
+    "automation": false,
+    "testMode": true,
+    "effectiveMaxRunSeconds": 1,
+    "brokerEndpoint": {
+      "host": "172.20.10.2",
+      "port": "1883"
+    }
+  },
+  "proposedChildOnlyEnvironment": {
+    "PORT": "5000",
+    "MQTT_ENABLED": "true",
+    "MQTT_BROKER_URL": "mqtt://172.20.10.2:1883",
+    "MQTT_COMMANDS_ENABLED": "false",
+    "MQTT_AUTOMATION_COMMANDS_ENABLED": "false",
+    "MQTT_PUMP_TEST_MODE": "true",
+    "MQTT_PUMP_MAX_RUN_SECONDS": "1"
+  },
+  "plannedEnvironmentValidation": true,
+  "missingMqttVariables": [],
+  "sourceDefaultsAreNotRuntimeAttestation": true,
+  "database": {
+    "identity": {
+      "database": "smart_agriculture",
+      "schema": "public",
+      "port": 5432,
+      "started": "2026-10-16 12:13:43.656514+07",
+      "read_only": "on"
+    },
+    "missingDeviceCommandColumns": [],
+    "migrationCount": 11,
+    "unfinishedMigrations": 0,
+    "pending": 0,
+    "mqttPending": 0,
+    "commandCount": 43,
+    "recoveryWouldSetUnknown": 1,
+    "enabledAutomationRuleCount": 1
+  },
+  "logs": [
+    {
+      "name": "backend-final.out.log",
+      "modifiedAt": "2026-10-21T12:06:15.103Z",
+      "bytes": 179623,
+      "refusedEndpoints": [],
+      "hasReconnect": false,
+      "hasExitSignalMarker": false,
+      "exitCode": "NOT_CAPTURED"
+    },
+    {
+      "name": "backend-final.err.log",
+      "modifiedAt": "2026-10-21T12:06:50.091Z",
+      "bytes": 782,
+      "refusedEndpoints": [
+        "ECONNREFUSED 172.20.10.2:1883"
+      ],
+      "hasReconnect": true,
+      "hasExitSignalMarker": false,
+      "exitCode": "NOT_CAPTURED"
+    }
+  ],
+  "backendStarted": false,
+  "startupSideEffects": {
+    "recoveryDml": true,
+    "mayInvalidateOldOffToUnknown": true,
+    "telemetryAndPresenceDml": true,
+    "alertsAndRuleMetadataMayChange": true,
+    "automaticCommandGatewayLockedWhenFlagsFalse": true,
+    "automaticMigrationOrSeedFound": false
+  }
+}

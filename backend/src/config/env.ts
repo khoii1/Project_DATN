@@ -7,9 +7,27 @@ const automationCommandCooldownSeconds = Number(process.env.AUTOMATION_COMMAND_C
 const automationManualOverrideMinutes = Number(process.env.AUTOMATION_MANUAL_OVERRIDE_MINUTES ?? 15);
 const automationMaxReadingAgeSeconds = Number(process.env.AUTOMATION_MAX_READING_AGE_SECONDS ?? 300);
 const mqttEnabled = (process.env.MQTT_ENABLED ?? "false").toLowerCase() === "true";
+const mqttCommandsEnabled = process.env.MQTT_COMMANDS_ENABLED === "true";
+const mqttAutomationCommandsEnabled = process.env.MQTT_AUTOMATION_COMMANDS_ENABLED === "true";
+const mqttCommandExpirySeconds = Number(process.env.MQTT_COMMAND_EXPIRY_SECONDS ?? 10);
+const mqttPumpMaxRunSeconds = Number(process.env.MQTT_PUMP_MAX_RUN_SECONDS ?? 5);
+// Safe by default: deliberate configuration/review is required to leave 1-second testing.
+const mqttPumpTestMode = (process.env.MQTT_PUMP_TEST_MODE ?? "true") === "true";
+if (process.env.MQTT_PUMP_TEST_MODE !== undefined && !["true", "false"].includes(process.env.MQTT_PUMP_TEST_MODE)) throw new Error("MQTT_PUMP_TEST_MODE must be true or false");
+if (mqttCommandsEnabled && !mqttEnabled) throw new Error("MQTT commands require MQTT_ENABLED=true");
+for (const [name, value] of Object.entries({ MQTT_COMMAND_EXPIRY_SECONDS: mqttCommandExpirySeconds, MQTT_PUMP_MAX_RUN_SECONDS: mqttPumpMaxRunSeconds })) {
+  if (!Number.isInteger(value) || value < 1 || value > 30) throw new Error(`${name} must be an integer from 1 to 30`);
+}
 const mqttReconnectPeriodMs = Number(process.env.MQTT_RECONNECT_PERIOD_MS ?? 3000);
 const mqttSideEffectMaxAgeSeconds = Number(process.env.MQTT_SIDE_EFFECT_MAX_AGE_SECONDS ?? 300);
 const mqttMaxPayloadBytes = Number(process.env.MQTT_MAX_PAYLOAD_BYTES ?? 32768);
+const devicePresenceTimeoutSeconds = Number(process.env.DEVICE_PRESENCE_TIMEOUT_SECONDS ?? 90);
+const devicePresenceCheckIntervalSeconds = Number(process.env.DEVICE_PRESENCE_CHECK_INTERVAL_SECONDS ?? 10);
+
+for (const [name, value] of Object.entries({ DEVICE_PRESENCE_TIMEOUT_SECONDS: devicePresenceTimeoutSeconds, DEVICE_PRESENCE_CHECK_INTERVAL_SECONDS: devicePresenceCheckIntervalSeconds })) {
+  if (!Number.isInteger(value) || value <= 0) throw new Error(`${name} must be a positive integer`);
+}
+if (devicePresenceCheckIntervalSeconds > devicePresenceTimeoutSeconds) throw new Error("Device presence check interval must not exceed timeout");
 
 if (!Number.isInteger(port) || port <= 0) {
   throw new Error("PORT must be a positive integer");
@@ -51,6 +69,14 @@ export const env = {
   automationManualOverrideMinutes,
   automationMaxReadingAgeSeconds,
   mqttEnabled,
+  mqttPresenceDebug: process.env.MQTT_PRESENCE_DEBUG === "true",
+  mqttCommandsEnabled,
+  mqttAutomationCommandsEnabled,
+  mqttCommandExpirySeconds,
+  mqttPumpMaxRunSeconds,
+  mqttPumpTestMode,
+  mqttCommandDeviceCode: process.env.MQTT_COMMAND_DEVICE_CODE ?? "ESP32-GF-A-01",
+  mqttCommandActuatorCode: process.env.MQTT_COMMAND_ACTUATOR_CODE ?? "PUMP_01",
   mqttBrokerUrl: process.env.MQTT_BROKER_URL ?? "mqtt://127.0.0.1:1883",
   mqttBackendClientId: process.env.MQTT_BACKEND_CLIENT_ID ?? "smartagri-backend",
   mqttUsername: process.env.MQTT_USERNAME,
@@ -59,4 +85,6 @@ export const env = {
   mqttReconnectPeriodMs,
   mqttSideEffectMaxAgeSeconds,
   mqttMaxPayloadBytes,
+  devicePresenceTimeoutSeconds,
+  devicePresenceCheckIntervalSeconds,
 } as const;

@@ -1,10 +1,10 @@
 import { Router } from "express";
 import rateLimit from "express-rate-limit";
-import { login, logout, me } from "../controllers/auth.controller";
+import { changePassword, login, logout, me, updateProfile } from "../controllers/auth.controller";
 import { env } from "../config/env";
 import { authenticate } from "../middlewares/auth.middleware";
 import { validate } from "../middlewares/validate.middleware";
-import { loginSchema } from "../validators/auth.schema";
+import { changePasswordSchema, loginSchema, updateProfileSchema } from "../validators/auth.schema";
 
 export const authRouter = Router();
 
@@ -18,5 +18,7 @@ const loginLimiter = rateLimit({
 
 authRouter.post("/login", loginLimiter, validate(loginSchema), login);
 authRouter.get("/me", authenticate, me);
+authRouter.patch("/me", authenticate, validate(updateProfileSchema), updateProfile);
+authRouter.patch("/change-password", authenticate, validate(changePasswordSchema), changePassword);
 authRouter.post("/logout", authenticate, logout);
 

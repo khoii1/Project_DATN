@@ -1,0 +1,6 @@
+// Production diagnostic only. No login/auth writes, no recovery URL fallback.
+const fs=require('node:fs'),{PrismaClient}=require('@prisma/client');
+async function main(){const v=require('dotenv').parse(fs.readFileSync(require('node:path').resolve(__dirname,'../.env')));const u=new URL(v.DATABASE_URL);if(!['localhost','127.0.0.1'].includes(u.hostname)||(u.port||'5432')!=='5432'||u.pathname!=='/smart_agriculture')throw Error('READ_TARGET_REFUSED');u.hostname='127.0.0.1';const db=new PrismaClient({datasourceUrl:u.href});try{
+ const result=await db.$transaction(async tx=>{await tx.$executeRawUnsafe('SET TRANSACTION READ ONLY');const [identity]=await tx.$queryRawUnsafe("SELECT current_database() AS database,inet_server_port() AS port,(SELECT system_identifier::text FROM pg_control_system()) AS system_id,current_setting('data_directory') AS pgdata,pg_postmaster_start_time()::text AS started");if(identity.system_id!=='7472695863566132416'||identity.port!==5432||identity.database!=='smart_agriculture')throw Error('PRODUCTION_IDENTITY_MISMATCH');return {identity,pending:await tx.deviceCommand.count({where:{status:'PENDING'}}),commands:await tx.deviceCommand.count()};});console.log(JSON.stringify(result));
+ }finally{await db.$disconnect();}}
+if(require.main===module)main().catch(()=>{console.error('PRODUCTION_READ_ONLY_DIAGNOSTIC_FAILED');process.exitCode=1;});

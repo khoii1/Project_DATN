@@ -23,7 +23,7 @@ export function LoginPage() {
     setServerError("");
     const nextErrors: FormErrors = {};
     if (!email.trim()) nextErrors.email = "Email không được để trống";
-    else if (!/^\S+@\S+\.\S+$/.test(email)) nextErrors.email = "Email chưa đúng định dạng";
+    else if (!/^\S+@\S+\.\S+$/.test(email.trim())) nextErrors.email = "Email chưa đúng định dạng";
     if (!password) nextErrors.password = "Mật khẩu không được để trống";
     setErrors(nextErrors);
     if (Object.keys(nextErrors).length > 0) return;
@@ -50,7 +50,7 @@ export function LoginPage() {
           <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-3 py-1.5 text-xs font-semibold text-emerald-100"><Sprout className="h-3.5 w-3.5" />Nông nghiệp bền vững</span>
           <h1 className="mt-7 text-4xl font-bold leading-tight tracking-tight xl:text-5xl">Hiểu từng thay đổi nhỏ,<br />nuôi dưỡng mùa vụ lớn.</h1>
           <p className="mt-6 max-w-lg text-base leading-7 text-emerald-50/65">Một không gian quản lý tập trung giúp theo dõi trang trại, môi trường và vận hành thông minh hơn mỗi ngày.</p>
-          <div className="mt-10 grid grid-cols-3 gap-4 border-t border-white/10 pt-7 text-sm"><div><b className="block text-xl">24/7</b><span className="text-xs text-emerald-100/55">Giám sát</span></div><div><b className="block text-xl">3</b><span className="text-xs text-emerald-100/55">Trang trại</span></div><div><b className="block text-xl">12</b><span className="text-xs text-emerald-100/55">Thiết bị</span></div></div>
+          <div className="mt-10 grid grid-cols-3 gap-4 border-t border-white/10 pt-7 text-sm"><div><b className="block text-xl">IoT</b><span className="text-xs text-emerald-100/55">Giám sát</span></div><div><b className="block text-xl">Quản lý</b><span className="text-xs text-emerald-100/55">Trang trại</span></div><div><b className="block text-xl">Theo dõi</b><span className="text-xs text-emerald-100/55">Thiết bị</span></div></div>
         </div>
         <p className="relative text-xs text-emerald-100/40">© 2026 Smart Agriculture · Graduation Project</p>
       </section>
@@ -65,7 +65,7 @@ export function LoginPage() {
           <form onSubmit={handleSubmit} className="mt-8 space-y-5" noValidate>
             <div>
               <label htmlFor="email" className="text-sm font-semibold text-slate-700">Email</label>
-              <div className="relative mt-2"><Mail className="absolute left-3.5 top-1/2 h-4.5 w-4.5 -translate-y-1/2 text-slate-400" /><input id="email" type="email" autoComplete="email" value={email} onChange={(event) => setEmail(event.target.value)} placeholder="admin@smartagri.local" className={`h-12 w-full rounded-xl border bg-white pl-11 pr-4 text-sm text-slate-800 shadow-sm transition placeholder:text-slate-300 ${errors.email ? "border-red-400" : "border-slate-200 focus:border-brand-500"}`} aria-invalid={Boolean(errors.email)} /></div>
+              <div className="relative mt-2"><Mail className="absolute left-3.5 top-1/2 h-4.5 w-4.5 -translate-y-1/2 text-slate-400" /><input id="email" type="email" autoComplete="email" value={email} onChange={(event) => setEmail(event.target.value)} placeholder="Email được cấp của bạn" className={`h-12 w-full rounded-xl border bg-white pl-11 pr-4 text-sm text-slate-800 shadow-sm transition placeholder:text-slate-300 ${errors.email ? "border-red-400" : "border-slate-200 focus:border-brand-500"}`} aria-invalid={Boolean(errors.email)} /></div>
               {errors.email && <p className="mt-1.5 text-xs font-medium text-red-600">{errors.email}</p>}
             </div>
             <div>
@@ -77,7 +77,7 @@ export function LoginPage() {
             {serverError && <div role="alert" className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm font-medium text-red-700">{serverError}</div>}
             <button type="submit" disabled={isSubmitting} className="flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-brand-600 text-sm font-bold text-white shadow-lg shadow-brand-600/15 transition hover:bg-brand-700 disabled:cursor-not-allowed disabled:opacity-70">{isSubmitting && <Loader2 className="h-4 w-4 animate-spin" />}{isSubmitting ? "Đang đăng nhập..." : "Đăng nhập"}</button>
           </form>
-          <div className="mt-7 rounded-xl border border-brand-100 bg-brand-50/70 p-3.5 text-center text-xs leading-5 text-brand-800">Tài khoản demo: admin@smartagri.local · Admin123</div>
+          <div className="mt-7 rounded-xl border border-brand-100 bg-brand-50/70 p-3.5 text-center text-xs leading-5 text-brand-800">Đăng nhập bằng tài khoản được cấp cho môi trường đang sử dụng. Liên hệ quản trị viên nếu cần hỗ trợ.</div>
         </div>
       </section>
     </main>

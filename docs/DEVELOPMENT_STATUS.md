@@ -1,11 +1,14 @@
 # Trạng thái phát triển
 
+> **28/10/2026 — trạng thái MVP hiện hành:** xem [PROJECT_COMPLETION_STATUS](archive/PROJECT_COMPLETION_STATUS.md), [FINAL_ACCEPTANCE_MATRIX](archive/FINAL_ACCEPTANCE_MATRIX.md) và [REMAINING_WORK_P0_P1_P2](archive/REMAINING_WORK_P0_P1_P2.md). Các checklist Phase11 bên dưới là lịch sử; không dùng các dòng “chưa có firmware/command MQTT” để mô tả code hiện tại. Chưa PROJECT_READY_FOR_DEFENSE vì backend/live acceptance và phạm vi automation còn mở.
+
 > Bộ nhớ kỹ thuật cập nhật sau mỗi Phase lớn. Quy ước: ✅ hoàn thành/xác minh; 🟡 một phần/đang làm; ⬜ chưa triển khai. “Xác minh ngoài repository” không đồng nghĩa có artifact tái lập trong source.
 
 ## Ảnh chụp trạng thái hiện tại
 
 - ✅ Website full-stack và database cho Phase 1–10 đã có source và test scripts.
 - ✅ MQTT telemetry/status backend của Phase 11 đã có source, broker config, simulator và integration test.
+- ✅ Auto-refresh frontend: REST polling 10 giây cho Device detail, Sensors, Dashboard, Alerts, Zone sensor overview; cancellation, tab visibility và retry. History refresh tương đối đã sửa, không polling toàn bộ lịch sử. Có suite polling in-memory; nghiệm thu UI với ESP32 thật cần thực hiện trong phiên đăng nhập hiện hữu (xem TESTING.md).
 - 🟡 Command device vẫn dùng `MockDeviceGateway`; command/ACK MQTT mới là contract chuẩn bị.
 - 🟡 Hardware telemetry đang tích hợp: ESP32/BH1750 được chủ dự án xác nhận chạy ngoài repo; soil sensor đang debug.
 - ⬜ DHT22, relay và pump vật lý chưa được xác minh hoàn tất.
@@ -45,6 +48,8 @@
 | Relay GPIO26 và pump | ⬜ | Chưa có physical command path |
 
 ## Giới hạn hiện tại
+
+Device presence đã bổ sung TTL/watchdog 90s/10s, retained replay guard, receipt time và Devices List polling. Suite mock có thể chạy bằng `npm --prefix backend run test:presence`; các thử nghiệm mất nguồn/Wi-Fi, broker/backend restart và UI end-to-end vẫn cần nghiệm thu thực tế. Chi tiết: [DEVICE_PRESENCE.md](DEVICE_PRESENCE.md).
 
 - Không có firmware/hardware test artifact trong source.
 - Không có MQTT command publisher, command consumer trên ESP32 hay ACK handler.

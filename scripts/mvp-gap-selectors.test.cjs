@@ -1,0 +1,16 @@
+// Actual pure component DOM smoke only; no API, DEV servers or databases.
+const test=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path'),vm=require('node:vm');
+const root=path.resolve(__dirname,'..'),front=path.join(root,'frontend');
+const ts=require(path.join(front,'node_modules/typescript')),React=require(path.join(front,'node_modules/react')),{renderToStaticMarkup}=require(path.join(front,'node_modules/react-dom/server'));
+function load(file,deps={}){const exports={};const js=ts.transpileModule(fs.readFileSync(path.join(front,'src',file),'utf8'),{compilerOptions:{module:ts.ModuleKind.CommonJS,jsx:ts.JsxEmit.ReactJSX,target:ts.ScriptTarget.ES2022}}).outputText;vm.runInNewContext(js,{exports,Intl,Date,require:name=>{if(Object.hasOwn(deps,name))return deps[name];if(['react','react/jsx-runtime','lucide-react'].includes(name))return require(path.join(front,'node_modules',name));throw Error('OFFLINE_COMPONENT_IMPORT_REFUSED');}});return exports;}
+test('actual user form/status dialog and disabled pump selectors match existing component DOM',async()=>{
+ const {chromium}=require('playwright-core');const browser=await chromium.launch({executablePath:require('./mvp-dev-acceptance.cjs').edgeExecutable(),headless:true});let network=0;
+ const render=(C,props)=>renderToStaticMarkup(React.createElement(C,props));
+ try{const p=await browser.newPage();await p.route('**/*',r=>{network++;return r.abort();});
+  const {UserFormModal}=load('components/users/UserFormModal.tsx');await p.setContent(render(UserFormModal,{user:null,isSubmitting:false,error:'',onClose:()=>{},onSubmit:()=>{}}));
+  const dlg=p.getByRole('dialog');for(const name of ['Họ và tên *','Email *','Mật khẩu *'])assert.equal(await dlg.getByLabel(name,{exact:true}).count(),1,name);assert.equal(await dlg.getByLabel(/^Vai trò \*/).count(),1);assert.equal(await dlg.getByRole('button',{name:'Tạo người dùng',exact:true}).count(),1);
+  const {UserStatusDialog}=load('components/users/UserStatusDialog.tsx');for(const [status,label]of [['ACTIVE','Ngừng hoạt động'],['INACTIVE','Kích hoạt']]){await p.setContent(render(UserStatusDialog,{user:{status,fullName:'OFFLINE ACCEPTANCE USER'},isSubmitting:false,error:'',onCancel:()=>{},onConfirm:()=>{}}));assert.equal(await p.getByRole('alertdialog').getByRole('button',{name:label,exact:true}).count(),1);}
+  const labels=load('types/actuator.ts'),policy=load('utils/irrigation-control.ts');const {PumpCard}=load('components/actuators/PumpCard.tsx',{'../../types/actuator':labels,'../../utils/irrigation-control':policy});await p.setContent(render(PumpCard,{actuator:{id:'offline-only',actuatorCode:'SYNTHETIC_PUMP',name:'OFFLINE SIMULATOR',status:'ACTIVE',currentState:'UNKNOWN',controlEnabled:false,canControl:true,device:{status:'ACTIVE',connectionStatus:'ONLINE',deviceCode:'MVP-SIM-A-01',zone:{name:'ZONE',status:'ACTIVE',farm:{status:'ACTIVE'}}}},canManage:false,onEdit:()=>{},onCommand:()=>{throw Error('NO_COMMANDS');}}));
+  assert.equal(await p.getByText('Thiết bị không khả dụng hoặc điều khiển MQTT chưa được bật',{exact:true}).count(),1);assert.equal(await p.getByRole('button',{name:'Bật thử 1 giây',exact:true}).count(),0);assert.equal(network,0);
+ }finally{await browser.close();}
+});

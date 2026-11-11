@@ -1,0 +1,42 @@
+'use strict';
+const {test}=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path'),{spawnSync}=require('node:child_process');
+const api=require('./phase13-5d1g-r23b-executor.cjs'),inspect=require('./phase13-5d1g-r22-root-state.cjs').inspectRoot;
+const read=(r,n)=>JSON.parse(fs.readFileSync(path.join(r.directory,n),'utf8'));
+test('R23B native executor offline acceptance; never live initialization',async t=>{
+ const before=inspect(),results=[];let abort=false;
+ await t.test('PLAN_ONLY exact spec, locked real launch, no historical approval token',()=>{const p=api.policy.plan();assert.equal(p.mode,'PLAN_ONLY');assert.equal(p.executionEnabled,false);assert.equal(p.historicalApprovalIsExecutionToken,false);assert.equal(p.maxAttempts,1);assert.equal(p.retry,false);assert.equal(p.forceKillReal,false);assert.equal(p.cleanupPGDATA,false);assert(p.args.includes('--pwprompt'));assert(p.args.includes('--auth-host=scram-sha-256'));assert(p.args.includes('--auth-local=scram-sha-256'));assert.equal(p.sideEffectsPossibleImmediatelyAfterResume,true);assert.equal(p.attachDeadlineIsCompatibilityGuarantee,false);assert.equal(p.passwordInputVerified,false);assert.throws(()=>api.executeInitdb(),/NEW_APPROVAL/);assert.throws(()=>api.prepare('initdb'),/SCENARIO_REQUIRED/);});
+ await t.test('real descendant profiles require exact binaries, graph, Job, owner, FILETIME and restricted token evidence',()=>{
+  const rules=api.policy.liveRules({postgresHash:'A'.repeat(64),cmdHash:'B'.repeat(64)});assert.equal(rules.length,8);const owner='operator',parent={pid:10,startFileTime:'100',role:'root'},rule=rules[1];const child={pid:11,parentPid:10,startFileTime:'101',image:rule.path,hash:rule.hash,owner,depth:1,inJob:true,restricted:true};assert(api.policy.validateIdentity(child,parent,rule,owner));
+  for(const override of [{parentPid:999},{startFileTime:'99'},{image:'C:\\other\\initdb.exe'},{hash:'0'.repeat(64)},{owner:'other'},{inJob:false},{depth:2},{restricted:false}])assert.equal(api.policy.validateIdentity({...child,...override},parent,rule,owner),false);
+  assert.throws(()=>api.policy.liveRules({postgresHash:'unknown',cmdHash:'unknown'}),/HASHES_REQUIRED/);assert(rules.every(r=>!r.path.includes('55433')));
+ });
+ await t.test('synthetic disposition cannot target real initdb or kill a Job Object',()=>{const s=fs.readFileSync(path.join(__dirname,'phase13-5d1g-r23b-native.cs'),'utf8');assert(!/TerminateJobObject|LaunchInitdb|pg_ctl|PGPASSWORD/.test(s));assert(s.includes('new[]{"fixture.exe","foreign.exe"}'));assert(s.includes('c!=p.startFileTime'));assert(s.includes('FIXTURE_DISPOSITION_UNKNOWN'));});
+ for(const scenario of api.SCENARIOS){if(abort)break;await t.test('actual external native case: '+scenario,async()=>{
+  try{
+   const canary='PUBLIC_R23B_ENV_CANARY_NOT_A_CREDENTIAL';let r;const saved=process.env.PGPASSWORD;try{if(scenario==='success')process.env.PGPASSWORD=canary;r=await api.run(scenario);}finally{if(saved===undefined)delete process.env.PGPASSWORD;else process.env.PGPASSWORD=saved;}
+   results.push(r);assert.deepEqual(r.exit,{code:0,signal:null});assert.equal(r.outcome.retry,false);assert.equal(r.census.some(x=>x.status==='MATCHING_ACTIVE'),false);
+   for(const name of fs.readdirSync(r.directory).filter(n=>/\.(log|json)$/.test(n)))assert.equal(fs.readFileSync(path.join(r.directory,name),'utf8').includes(canary),false);
+   if(['success','restricted','descendant'].includes(scenario)){
+    assert.equal(r.outcome.status,'OFFLINE_SYNTHETIC_PASS',JSON.stringify(r));assert.equal(r.observer.root.exitCode,0);assert.equal(r.observer.independentHandle,true);assert.equal(r.observer.accepted,true);assert.equal(r.observer.root.pid,r.host.root.pid);assert.equal(r.observer.root.startFileTime,r.host.root.startFileTime);assert.equal(r.observer.root.exitAt,r.host.root.exitAt);
+    const pre=read(r,'pre-resume.json');assert.equal(pre.suspended,true);assert.deepEqual(pre.members,[r.identity.hostPid]);const attach=read(r,'attached.json');assert(attach.members.includes(r.identity.pid));assert.equal(attach.preSideEffectSafety,false);assert.equal(r.outcome.sideEffectsPossible,true);
+    const expected=scenario==='success'?1:scenario==='restricted'?2:3;assert.equal(r.observer.rows.length,expected);for(const p of r.observer.rows){assert(p.inJob);assert.equal(p.hash,r.identity.hash);assert(p.exited);assert.equal(p.owner,before.acl.operatorSid);}
+    if(scenario==='restricted')assert.equal(r.observer.rows[1].role,'reexec-simulation');if(scenario==='descendant'){assert.equal(r.observer.rows[2].depth,2);assert.equal(r.observer.rows[2].parentPid,r.observer.rows[1].pid);}
+   }else{
+    assert.notEqual(r.outcome.status,'OFFLINE_SYNTHETIC_PASS');const native=r.observer||r.host;assert.equal(native.jobActive,0);assert.equal(native.flags,0);
+    const reasons={nonzero:'NATIVE_NONZERO','wrong-descendant':'DESCENDANT_POLICY_REFUSED','outside-job':'UNEXPECTED_CONSOLE_MEMBER','unexpected-console':'UNEXPECTED_CONSOLE_MEMBER','missing-child':'MISSING_CHILD_CONSOLE','early-exit':'OBSERVER_NOT_READY','wrong-pid':'NATIVE_IDENTITY_REFUSED','wrong-time':'NATIVE_IDENTITY_REFUSED','wrong-hash':'NATIVE_IDENTITY_REFUSED','observer-loss':'PRE_RESUME_NATIVE_OR_OBSERVER_REFUSED','host-loss':'HOST_LOSS_SIMULATION','pre-failure':'PRE_RESUME_GATE_FAILURE','post-failure':'POST_RESUME_GATE_FAILURE',unknown:'UNKNOWN_NATIVE_OUTCOME'};
+    if(scenario==='missing-child'&&r.outcome.reason==='ROOT_CONSOLE_MEMBERSHIP_LOST'){const f=read(r,'failure-state.json');assert.equal(f.members.includes(r.identity.pid),false);assert.equal(f.resumed,true);}else assert.equal(r.outcome.reason,reasons[scenario],JSON.stringify(r));assert.equal(native.root.exitCode,scenario==='nonzero'?7:scenario==='early-exit'?0:238);
+    if(['outside-job','unexpected-console'].includes(scenario))assert.equal(read(r,'outside-member.json').inJob,false);
+    if(['wrong-pid','wrong-time','wrong-hash','pre-failure','observer-loss','host-loss','outside-job','unexpected-console'].includes(scenario))assert.equal(r.outcome.resumed,false);
+    if(scenario==='post-failure'){assert.equal(r.outcome.resumed,true);assert.equal(r.outcome.sideEffectsPossible,true);assert.equal(read(r,'synthetic-side-effect.json').pgdataCreated,false);assert.equal(read(r,'failure-state.json').sideEffectsPossible,true);}
+    if(scenario==='unknown'){assert.equal(r.outcome.status,'UNKNOWN_NATIVE_OUTCOME');assert.equal(r.outcome.sideEffectsPossible,true);}
+   }
+   for(const name of fs.readdirSync(r.directory).filter(n=>/-disposition\.json$/.test(n))){const d=read(r,name);assert.equal(d.classification,'ABNORMAL_FIXTURE_DISPOSITION');assert.equal(d.graceful,false);}
+  }catch(e){abort=true;throw e;}
+ });}
+ await t.test('all external acceptance cases ran; no unresolved previous native attempt',()=>{assert.equal(results.length,api.SCENARIOS.length);assert(api.previousResolved());});
+ await t.test('duplicate attempt denied without overwrite or retry',async()=>{const r=results[0],file=path.join(r.directory,'attempt.json'),h=api.hash(file);await assert.rejects(api.resume({directory:r.directory,manifestHash:r.manifestHash}),/DUPLICATE/);assert.equal(api.hash(file),h);});
+ await t.test('manifest hash drift and arbitrary run path rejected before launch',()=>{const r=results[0];assert.throws(()=>api.verify({directory:r.directory,manifestHash:'0'.repeat(64)}),/REFUSED/);assert.throws(()=>api.verify({directory:'C:\\other',manifestHash:'0'.repeat(64)}),/REFUSED/);});
+ await t.test('native error/missing observer cannot count as exit0 success',()=>{const r=results[0],base={root:r.host.root,observer:{...r.observer.root,independentHandle:true},unknown:false,jobActive:0,policyAccepted:true};assert.equal(api.policy.classify(base),'OFFLINE_SYNTHETIC_PASS');for(const change of [{unknown:true},{observer:null},{jobActive:1},{policyAccepted:false}])assert.notEqual(api.policy.classify({...base,...change}),'OFFLINE_SYNTHETIC_PASS');});
+ const after=inspect();await t.test('ten historical files, DACL, PGDATA absence and free target unchanged',()=>{assert.deepEqual(after.files,before.files);assert.deepEqual(after.acl,before.acl);assert(after.pgdataAbsent);assert.equal(after.acl.initdbProcesses,0);});
+ const file=path.join(api.BASE,'tests-'+Date.now()+'.json');fs.writeFileSync(file,JSON.stringify({before,after,results,realInitdbAttempts:0,sqlConnections:0,livePasswordInputVerified:false},null,2),{flag:'wx'});console.log('R23B_EVIDENCE '+file);
+});

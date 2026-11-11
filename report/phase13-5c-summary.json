@@ -1,0 +1,276 @@
+{
+  "runId": "20261022074504_334f3f",
+  "sqlRestoreTests": 33,
+  "source": "smart_agriculture_rehearsal_0704174deb58_main",
+  "restoreDb": "smart_agriculture_restore_13_5c_20261022074504_334f3f",
+  "archive": {
+    "path": "C:\\DATN\\test-instances\\phase13-3b\\backup-restore-13-5c-20261022074504_334f3f\\synthetic-rehearsal.dump",
+    "bytes": 105354,
+    "sha256": "0b2273e1cf3d983b87de96a13e21949b2a121298aaa629c7e7904624790f1b41"
+  },
+  "globals": {
+    "path": "C:\\DATN\\test-instances\\phase13-3b\\backup-restore-13-5c-20261022074504_334f3f\\test-roles-no-passwords.sql",
+    "bytes": 3177,
+    "sha256": "ba0ad99769a8b5a4f0445e13664a33c475f97d967ed00234d3fe026de059b6db",
+    "exitCode": 0,
+    "rolePasswordsIncluded": false,
+    "restored": false
+  },
+  "restoreElapsedMs": 648,
+  "sourceUnchanged": true,
+  "ownersAndPrivilegesCompared": true,
+  "roleMapping": "IDENTITY_ON_SAME_TEST_CLUSTER",
+  "testClusterStopped": true,
+  "productionCatalogUnchanged": {
+    "identity": true,
+    "migrations": true,
+    "relations": true,
+    "columns": true,
+    "constraints": true,
+    "indexes": true,
+    "enums": true,
+    "functions": true,
+    "roles": true,
+    "memberships": true,
+    "schemaPrivileges": true,
+    "fingerprint": true,
+    "constraintFingerprint": true,
+    "ledgersPresent": true
+  },
+  "commandsBefore": 43,
+  "commandsAfter": 43,
+  "pending": 0,
+  "productionHealth": {
+    "success": true,
+    "message": "Smart Agriculture API is running",
+    "data": {
+      "database": "connected",
+      "mqtt": "connected",
+      "timestamp": "2026-10-22T07:45:10.156Z"
+    }
+  },
+  "device": {
+    "connectionStatus": "ONLINE",
+    "lastSeenAt": "2026-10-22T07:45:04.955Z",
+    "actuators": [
+      {
+        "currentState": "OFF",
+        "lastStateChangedAt": "2026-10-22T07:44:56.039Z"
+      }
+    ],
+    "sensors": [
+      {
+        "sensorCode": "TEMP_01",
+        "readings": [
+          {
+            "value": 24.8,
+            "recordedAt": "2026-10-22T07:45:04.591Z",
+            "receivedAt": "2026-10-22T07:45:04.958Z"
+          }
+        ]
+      },
+      {
+        "sensorCode": "HUM_01",
+        "readings": [
+          {
+            "value": 46.7,
+            "recordedAt": "2026-10-22T07:45:04.591Z",
+            "receivedAt": "2026-10-22T07:45:04.958Z"
+          }
+        ]
+      },
+      {
+        "sensorCode": "SOIL_01",
+        "readings": [
+          {
+            "value": 5.42,
+            "recordedAt": "2026-10-22T07:45:04.591Z",
+            "receivedAt": "2026-10-22T07:45:04.958Z"
+          }
+        ]
+      },
+      {
+        "sensorCode": "LIGHT_01",
+        "readings": [
+          {
+            "value": 0,
+            "recordedAt": "2026-10-22T07:45:04.591Z",
+            "receivedAt": "2026-10-22T07:45:04.958Z"
+          }
+        ]
+      }
+    ]
+  },
+  "capacityBefore": {
+    "database": {
+      "bytes": "20860051",
+      "pretty": "20 MB",
+      "in_recovery": false
+    },
+    "largestTables": [
+      {
+        "relname": "sensor_readings",
+        "bytes": "10084352",
+        "estimated_rows": "29843"
+      },
+      {
+        "relname": "activity_logs",
+        "bytes": "507904",
+        "estimated_rows": "807"
+      },
+      {
+        "relname": "device_commands",
+        "bytes": "196608",
+        "estimated_rows": "12"
+      },
+      {
+        "relname": "alerts",
+        "bytes": "163840",
+        "estimated_rows": "13"
+      },
+      {
+        "relname": "devices",
+        "bytes": "147456",
+        "estimated_rows": "2"
+      },
+      {
+        "relname": "actuators",
+        "bytes": "147456",
+        "estimated_rows": "1"
+      },
+      {
+        "relname": "automation_rules",
+        "bytes": "147456",
+        "estimated_rows": "1"
+      },
+      {
+        "relname": "crops",
+        "bytes": "131072",
+        "estimated_rows": "0"
+      },
+      {
+        "relname": "users",
+        "bytes": "131072",
+        "estimated_rows": "0"
+      },
+      {
+        "relname": "sensors",
+        "bytes": "131072",
+        "estimated_rows": "0"
+      }
+    ],
+    "recoverySettings": [
+      {
+        "name": "archive_mode",
+        "setting": "off"
+      },
+      {
+        "name": "full_page_writes",
+        "setting": "on"
+      },
+      {
+        "name": "max_wal_senders",
+        "setting": "10"
+      },
+      {
+        "name": "wal_level",
+        "setting": "replica"
+      }
+    ]
+  },
+  "capacityAfter": {
+    "database": {
+      "bytes": "20925587",
+      "pretty": "20 MB",
+      "in_recovery": false
+    },
+    "largestTables": [
+      {
+        "relname": "sensor_readings",
+        "bytes": "10149888",
+        "estimated_rows": "30055"
+      },
+      {
+        "relname": "activity_logs",
+        "bytes": "507904",
+        "estimated_rows": "807"
+      },
+      {
+        "relname": "device_commands",
+        "bytes": "196608",
+        "estimated_rows": "12"
+      },
+      {
+        "relname": "alerts",
+        "bytes": "163840",
+        "estimated_rows": "13"
+      },
+      {
+        "relname": "devices",
+        "bytes": "147456",
+        "estimated_rows": "2"
+      },
+      {
+        "relname": "actuators",
+        "bytes": "147456",
+        "estimated_rows": "1"
+      },
+      {
+        "relname": "automation_rules",
+        "bytes": "147456",
+        "estimated_rows": "1"
+      },
+      {
+        "relname": "crops",
+        "bytes": "131072",
+        "estimated_rows": "0"
+      },
+      {
+        "relname": "users",
+        "bytes": "131072",
+        "estimated_rows": "0"
+      },
+      {
+        "relname": "sensors",
+        "bytes": "131072",
+        "estimated_rows": "0"
+      }
+    ],
+    "recoverySettings": [
+      {
+        "name": "archive_mode",
+        "setting": "off"
+      },
+      {
+        "name": "full_page_writes",
+        "setting": "on"
+      },
+      {
+        "name": "max_wal_senders",
+        "setting": "10"
+      },
+      {
+        "name": "wal_level",
+        "setting": "replica"
+      }
+    ]
+  },
+  "sqlArtifacts": [
+    {
+      "kind": "bootstrap",
+      "sha256": "c96a200e4996cfbf86a274840abd7d4d0a02a9aec766395cfbdd5522a50e5a32"
+    },
+    {
+      "kind": "migration",
+      "sha256": "dac6a431a4598bea18cd0ff3290fb2009c36c30809247d258aea161d637a8b8a"
+    },
+    {
+      "kind": "finalize",
+      "sha256": "20de4109c7d16925ef0d12b7fb1d26491507242124f21dfa26107765e513e499"
+    }
+  ],
+  "storageCreated": false,
+  "productionBackupPerformed": false,
+  "productionMigrationPerformed": false,
+  "productionBackupPlan": "PARTIAL_PENDING_STORAGE_DATA_HANDLING_APPROVAL"
+}

@@ -1,0 +1,73 @@
+{
+  "runId": "recovery-20261022-01",
+  "started": "2026-10-22T14:45:42.785Z",
+  "batches": [],
+  "offs": [],
+  "states": [],
+  "checks": [],
+  "physicalPumpTriggered": false,
+  "commandsIssued": 0,
+  "baseline": {
+    "at": "2026-10-22T14:45:42.652Z",
+    "identity": {
+      "database": "smart_agriculture",
+      "schema": "public",
+      "port": 5432,
+      "started": "2026-10-16 12:13:43.656514+07"
+    },
+    "device": {
+      "id": "demo_device_esp32_a",
+      "deviceCode": "ESP32-GF-A-01",
+      "connectionStatus": "UNKNOWN",
+      "lastSeenAt": "2026-10-22T10:46:35.179Z",
+      "sensors": [
+        {
+          "id": "demo_sensor_temp",
+          "sensorCode": "TEMP_01"
+        },
+        {
+          "id": "demo_sensor_hum",
+          "sensorCode": "HUM_01"
+        },
+        {
+          "id": "demo_sensor_soil",
+          "sensorCode": "SOIL_01"
+        },
+        {
+          "id": "demo_sensor_light",
+          "sensorCode": "LIGHT_01"
+        }
+      ],
+      "actuators": [
+        {
+          "id": "demo_actuator_pump_a",
+          "currentState": "OFF",
+          "lastStateChangedAt": "2026-10-22T14:45:42.370Z"
+        }
+      ]
+    },
+    "rows": [],
+    "pending": 0,
+    "commandCount": 43
+  },
+  "process": {
+    "pid": 15264,
+    "state": "RUNNING",
+    "startedAt": "2026-10-22T14:45:27.4321006+00:00",
+    "stdout": "C:\\DATN\\Project_datn\\build\\phase13-5c3-recovery-20261022-01.stdout.log",
+    "command": "--import tsx src/server.ts",
+    "runId": "recovery-20261022-01",
+    "stderr": "C:\\DATN\\Project_datn\\build\\phase13-5c3-recovery-20261022-01.stderr.log",
+    "exitEvidence": "C:\\DATN\\Project_datn\\build\\phase13-5c3-recovery-20261022-01.exit.json"
+  },
+  "health": {
+    "database": "connected",
+    "mqtt": "connected",
+    "timestamp": "2026-10-22T14:45:42.838Z"
+  },
+  "error": {
+    "type": "Error",
+    "reason": "RUNTIME_ATTESTATION_MISSING"
+  },
+  "ended": "2026-10-22T14:45:42.858Z"
+}

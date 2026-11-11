@@ -1,0 +1,338 @@
+﻿{
+    "CheckedAtUtc":  "2026-10-21T11:32:47.1580363+00:00",
+    "Elevated":  false,
+    "BrokerExecutableConfigVerified":  false,
+    "LanPID":  13960,
+    "ParentPID":  7428,
+    "ProcessCreatedAt":  "\/Date(1792579345718)\/",
+    "SameProcessAtEnd":  true,
+    "ProcessOwner":  "DESKTOP-T2P0U4E\\Acer Swift3",
+    "Executable":  null,
+    "CommandLineReadInMemory":  false,
+    "CommandLineSafeSummary":  null,
+    "SelectedConfigPath":  null,
+    "ConfigOptions":  [
+
+                      ],
+    "IncludesRequireReview":  false,
+    "PasswordFilePath":  null,
+    "AclFilePath":  null,
+    "PathsExistAndAbsolute":  false,
+    "PasswordFileContentsRead":  false,
+    "ExecutableDiskVersion":  null,
+    "VersionHelpExitCode":  null,
+    "Bindings":  [
+                     {
+                         "LocalAddress":  "::1",
+                         "LocalPort":  1883,
+                         "OwningProcess":  4572
+                     },
+                     {
+                         "LocalAddress":  "::",
+                         "LocalPort":  1883,
+                         "OwningProcess":  13960
+                     },
+                     {
+                         "LocalAddress":  "127.0.0.1",
+                         "LocalPort":  1883,
+                         "OwningProcess":  4572
+                     },
+                     {
+                         "LocalAddress":  "0.0.0.0",
+                         "LocalPort":  1883,
+                         "OwningProcess":  13960
+                     }
+                 ],
+    "Services":  [
+                     {
+                         "Name":  "mosquitto",
+                         "State":  "Running",
+                         "ProcessId":  4572,
+                         "StartName":  "LocalSystem"
+                     }
+                 ],
+    "AclReview":  [
+                      {
+                          "Path":  "C:\\DATN\\Project_datn",
+                          "Exists":  true,
+                          "Reparse":  false,
+                          "Owner":  "DESKTOP-T2P0U4E\\Acer Swift3",
+                          "ProtectedDacl":  false,
+                          "Rules":  [
+                                        {
+                                            "Principal":  "BUILTIN\\Administrators",
+                                            "Rights":  "FullControl",
+                                            "Type":  "Allow",
+                                            "Inherited":  true
+                                        },
+                                        {
+                                            "Principal":  "NT AUTHORITY\\SYSTEM",
+                                            "Rights":  "FullControl",
+                                            "Type":  "Allow",
+                                            "Inherited":  true
+                                        },
+                                        {
+                                            "Principal":  "BUILTIN\\Users",
+                                            "Rights":  "ReadAndExecute, Synchronize",
+                                            "Type":  "Allow",
+                                            "Inherited":  true
+                                        },
+                                        {
+                                            "Principal":  "NT AUTHORITY\\Authenticated Users",
+                                            "Rights":  "Modify, Synchronize",
+                                            "Type":  "Allow",
+                                            "Inherited":  true
+                                        },
+                                        {
+                                            "Principal":  "NT AUTHORITY\\Authenticated Users",
+                                            "Rights":  "-536805376",
+                                            "Type":  "Allow",
+                                            "Inherited":  true
+                                        }
+                                    ]
+                      },
+                      {
+                          "Path":  "C:\\DATN\\Project_datn\\build",
+                          "Exists":  true,
+                          "Reparse":  false,
+                          "Owner":  "DESKTOP-T2P0U4E\\Acer Swift3",
+                          "ProtectedDacl":  false,
+                          "Rules":  [
+                                        {
+                                            "Principal":  "BUILTIN\\Administrators",
+                                            "Rights":  "FullControl",
+                                            "Type":  "Allow",
+                                            "Inherited":  true
+                                        },
+                                        {
+                                            "Principal":  "NT AUTHORITY\\SYSTEM",
+                                            "Rights":  "FullControl",
+                                            "Type":  "Allow",
+                                            "Inherited":  true
+                                        },
+                                        {
+                                            "Principal":  "BUILTIN\\Users",
+                                            "Rights":  "ReadAndExecute, Synchronize",
+                                            "Type":  "Allow",
+                                            "Inherited":  true
+                                        },
+                                        {
+                                            "Principal":  "NT AUTHORITY\\Authenticated Users",
+                                            "Rights":  "Modify, Synchronize",
+                                            "Type":  "Allow",
+                                            "Inherited":  true
+                                        },
+                                        {
+                                            "Principal":  "NT AUTHORITY\\Authenticated Users",
+                                            "Rights":  "-536805376",
+                                            "Type":  "Allow",
+                                            "Inherited":  true
+                                        }
+                                    ]
+                      },
+                      {
+                          "Path":  "C:\\DATN\\Project_datn\\firmware\\SmartAgricultureESP32\\config.local.h",
+                          "Exists":  true,
+                          "Reparse":  false,
+                          "Owner":  "DESKTOP-T2P0U4E\\Acer Swift3",
+                          "ProtectedDacl":  false,
+                          "Rules":  [
+                                        {
+                                            "Principal":  "BUILTIN\\Administrators",
+                                            "Rights":  "FullControl",
+                                            "Type":  "Allow",
+                                            "Inherited":  true
+                                        },
+                                        {
+                                            "Principal":  "NT AUTHORITY\\SYSTEM",
+                                            "Rights":  "FullControl",
+                                            "Type":  "Allow",
+                                            "Inherited":  true
+                                        },
+                                        {
+                                            "Principal":  "BUILTIN\\Users",
+                                            "Rights":  "ReadAndExecute, Synchronize",
+                                            "Type":  "Allow",
+                                            "Inherited":  true
+                                        },
+                                        {
+                                            "Principal":  "NT AUTHORITY\\Authenticated Users",
+                                            "Rights":  "Modify, Synchronize",
+                                            "Type":  "Allow",
+                                            "Inherited":  true
+                                        }
+                                    ]
+                      },
+                      {
+                          "Path":  "C:\\DATN\\Project_datn\\backend\\.env",
+                          "Exists":  true,
+                          "Reparse":  false,
+                          "Owner":  "DESKTOP-T2P0U4E\\Acer Swift3",
+                          "ProtectedDacl":  false,
+                          "Rules":  [
+                                        {
+                                            "Principal":  "BUILTIN\\Administrators",
+                                            "Rights":  "FullControl",
+                                            "Type":  "Allow",
+                                            "Inherited":  true
+                                        },
+                                        {
+                                            "Principal":  "NT AUTHORITY\\SYSTEM",
+                                            "Rights":  "FullControl",
+                                            "Type":  "Allow",
+                                            "Inherited":  true
+                                        },
+                                        {
+                                            "Principal":  "BUILTIN\\Users",
+                                            "Rights":  "ReadAndExecute, Synchronize",
+                                            "Type":  "Allow",
+                                            "Inherited":  true
+                                        },
+                                        {
+                                            "Principal":  "NT AUTHORITY\\Authenticated Users",
+                                            "Rights":  "Modify, Synchronize",
+                                            "Type":  "Allow",
+                                            "Inherited":  true
+                                        }
+                                    ]
+                      },
+                      {
+                          "Path":  "C:\\mosquitto\\config",
+                          "Exists":  true,
+                          "Reparse":  false,
+                          "Owner":  "BUILTIN\\Administrators",
+                          "ProtectedDacl":  false,
+                          "Rules":  [
+                                        {
+                                            "Principal":  "BUILTIN\\Administrators",
+                                            "Rights":  "FullControl",
+                                            "Type":  "Allow",
+                                            "Inherited":  true
+                                        },
+                                        {
+                                            "Principal":  "NT AUTHORITY\\SYSTEM",
+                                            "Rights":  "FullControl",
+                                            "Type":  "Allow",
+                                            "Inherited":  true
+                                        },
+                                        {
+                                            "Principal":  "BUILTIN\\Users",
+                                            "Rights":  "ReadAndExecute, Synchronize",
+                                            "Type":  "Allow",
+                                            "Inherited":  true
+                                        },
+                                        {
+                                            "Principal":  "NT AUTHORITY\\Authenticated Users",
+                                            "Rights":  "Modify, Synchronize",
+                                            "Type":  "Allow",
+                                            "Inherited":  true
+                                        },
+                                        {
+                                            "Principal":  "NT AUTHORITY\\Authenticated Users",
+                                            "Rights":  "-536805376",
+                                            "Type":  "Allow",
+                                            "Inherited":  true
+                                        }
+                                    ]
+                      },
+                      {
+                          "Path":  "C:\\DATN\\backups",
+                          "Exists":  true,
+                          "Reparse":  false,
+                          "Owner":  "DESKTOP-T2P0U4E\\Acer Swift3",
+                          "ProtectedDacl":  false,
+                          "Rules":  [
+                                        {
+                                            "Principal":  "BUILTIN\\Administrators",
+                                            "Rights":  "FullControl",
+                                            "Type":  "Allow",
+                                            "Inherited":  true
+                                        },
+                                        {
+                                            "Principal":  "NT AUTHORITY\\SYSTEM",
+                                            "Rights":  "FullControl",
+                                            "Type":  "Allow",
+                                            "Inherited":  true
+                                        },
+                                        {
+                                            "Principal":  "BUILTIN\\Users",
+                                            "Rights":  "ReadAndExecute, Synchronize",
+                                            "Type":  "Allow",
+                                            "Inherited":  true
+                                        },
+                                        {
+                                            "Principal":  "NT AUTHORITY\\Authenticated Users",
+                                            "Rights":  "Modify, Synchronize",
+                                            "Type":  "Allow",
+                                            "Inherited":  true
+                                        },
+                                        {
+                                            "Principal":  "NT AUTHORITY\\Authenticated Users",
+                                            "Rights":  "-536805376",
+                                            "Type":  "Allow",
+                                            "Inherited":  true
+                                        }
+                                    ]
+                      },
+                      {
+                          "Path":  "C:\\mosquitto\\config\\passwords",
+                          "Exists":  true,
+                          "Reparse":  false,
+                          "Owner":  "BUILTIN\\Administrators",
+                          "ProtectedDacl":  true,
+                          "Rules":  [
+                                        {
+                                            "Principal":  "DESKTOP-T2P0U4E\\Acer Swift3",
+                                            "Rights":  "FullControl",
+                                            "Type":  "Allow",
+                                            "Inherited":  false
+                                        }
+                                    ]
+                      },
+                      {
+                          "Path":  "C:\\Users\\Acer Swift3\\AppData\\Local",
+                          "Exists":  true,
+                          "Reparse":  false,
+                          "Owner":  "DESKTOP-T2P0U4E\\Acer Swift3",
+                          "ProtectedDacl":  false,
+                          "Rules":  [
+                                        {
+                                            "Principal":  "DESKTOP-T2P0U4E\\CodexSandboxUsers",
+                                            "Rights":  "ReadAndExecute, Synchronize",
+                                            "Type":  "Allow",
+                                            "Inherited":  true
+                                        },
+                                        {
+                                            "Principal":  "NT AUTHORITY\\SYSTEM",
+                                            "Rights":  "FullControl",
+                                            "Type":  "Allow",
+                                            "Inherited":  true
+                                        },
+                                        {
+                                            "Principal":  "BUILTIN\\Administrators",
+                                            "Rights":  "FullControl",
+                                            "Type":  "Allow",
+                                            "Inherited":  true
+                                        },
+                                        {
+                                            "Principal":  "DESKTOP-T2P0U4E\\Acer Swift3",
+                                            "Rights":  "FullControl",
+                                            "Type":  "Allow",
+                                            "Inherited":  true
+                                        }
+                                    ]
+                      },
+                      {
+                          "Path":  "C:\\Users\\Acer Swift3\\AppData\\Local\\SmartAgriculture",
+                          "Exists":  false
+                      },
+                      {
+                          "Path":  "C:\\Users\\Acer Swift3\\AppData\\Local\\SmartAgriculture\\credential-rotation",
+                          "Exists":  false
+                      }
+                  ],
+    "StagingPath":  "C:\\Users\\Acer Swift3\\AppData\\Local\\SmartAgriculture\\credential-rotation",
+    "StagingCreated":  false,
+    "CredentialsChanged":  false,
+    "ServicesRestarted":  false
+}

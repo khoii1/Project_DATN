@@ -1,0 +1,88 @@
+{
+  "startedAt": "2026-10-22T17:39:44.356Z",
+  "endedAt": "2026-10-22T17:39:47.579Z",
+  "status": "EXISTING_RESTORE_VERIFICATION_PASS",
+  "identity": {
+    "systemId": "7699532241714573532",
+    "host": "127.0.0.1",
+    "port": 55434,
+    "pgdata": "C:/Users/Acer Swift3/AppData/Local/SmartAgriculturePostgresRecovery/phase13-5c-recovery-01/data",
+    "schema": "public",
+    "user": "sa_recovery_dba",
+    "versionNum": 170002,
+    "inRecovery": false,
+    "database": "smart_agriculture_recovery_13_5c_01"
+  },
+  "identityVerified": true,
+  "startupCapturePass": true,
+  "checks": [
+    {
+      "name": "startup SQL config and exact database identity after clean native capture",
+      "status": "PASS"
+    },
+    {
+      "name": "all 15 tables and every column/type/default/nullability match archive DDL",
+      "status": "PASS"
+    },
+    {
+      "name": "every PK/FK/UNIQUE/CHECK matches archive and is validated",
+      "status": "PASS"
+    },
+    {
+      "name": "indexes definitions and validity match stable archive-era metadata",
+      "status": "PASS"
+    },
+    {
+      "name": "all enums match archive DDL",
+      "status": "PASS"
+    },
+    {
+      "name": "function/trigger inventories match archive DDL",
+      "status": "PASS"
+    },
+    {
+      "name": "all object owners and relation ACL semantics preserved",
+      "status": "PASS"
+    },
+    {
+      "name": "public schema and enum type ownership/ACL semantics",
+      "status": "PASS"
+    },
+    {
+      "name": "database properties and normalized ACL match manifest",
+      "status": "PASS"
+    },
+    {
+      "name": "11 Prisma migrations names/checksums/timestamps match snapshot manifest",
+      "status": "PASS"
+    },
+    {
+      "name": "all tables COPY counts and typed SHA256 data digests equal archive",
+      "status": "PASS"
+    },
+    {
+      "name": "existing non-admin roles effective privileges read-only",
+      "status": "PASS"
+    },
+    {
+      "name": "actual SELECT owner allowed and existing monitor role denied",
+      "status": "PASS"
+    }
+  ],
+  "summary": {
+    "tables": 15,
+    "totalRows": 34205,
+    "columns": 165,
+    "constraints": 38,
+    "indexes": 75,
+    "enums": 22,
+    "functions": 0,
+    "triggers": 0,
+    "migrations": 11
+  },
+  "clusterStopped": true,
+  "additionalRestoreCalls": 0,
+  "sourceSnapshotEquality": "NOT_VERIFIED",
+  "cloudBackupScope": "NOT_VERIFIED",
+  "physicalPumpTriggered": false
+}

@@ -1,0 +1,68 @@
+{
+  "startedAt": "2026-10-22T16:58:32.268Z",
+  "endedAt": "2026-10-22T16:59:11.343Z",
+  "status": "STOPPED_NO_RETRY",
+  "error": {
+    "type": "Error",
+    "code": null,
+    "reason": "ARCHIVE_TARGET_COPY_DATA_MISMATCH"
+  },
+  "systemId": "7699532241714573532",
+  "restoreAttempted": true,
+  "restoreExit": 0,
+  "restoreElapsedMs": 1217,
+  "clusterStarted": true,
+  "clusterStopped": true,
+  "checks": [
+    {
+      "name": "loopback SCRAM and port configuration",
+      "status": "PASS"
+    },
+    {
+      "name": "fresh role and database names",
+      "status": "PASS"
+    },
+    {
+      "name": "archive-era stable catalog columns",
+      "status": "PASS"
+    },
+    {
+      "name": "archive-era stable catalog constraints",
+      "status": "PASS"
+    },
+    {
+      "name": "archive-era stable catalog indexes",
+      "status": "PASS"
+    },
+    {
+      "name": "archive-era stable catalog enums",
+      "status": "PASS"
+    },
+    {
+      "name": "archive-era stable catalog functions",
+      "status": "PASS"
+    },
+    {
+      "name": "all public object names and owners",
+      "status": "PASS"
+    },
+    {
+      "name": "all indexes valid and constraints validated",
+      "status": "PASS"
+    },
+    {
+      "name": "11 archive migration rows and checksums",
+      "status": "PASS"
+    },
+    {
+      "name": "database properties and normalized ACL mapping",
+      "status": "PASS"
+    },
+    {
+      "name": "all relation ACLs normalized, not skipped",
+      "status": "PASS"
+    }
+  ],
+  "cloudBackupScope": "NOT_VERIFIED",
+  "physicalPumpTriggered": false
+}

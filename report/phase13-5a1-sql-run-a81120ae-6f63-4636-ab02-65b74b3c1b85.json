@@ -1,0 +1,47 @@
+{
+  "runId": "a81120ae-6f63-4636-ab02-65b74b3c1b85",
+  "startedAt": "2026-10-21T17:58:25.003Z",
+  "startedByAgent": true,
+  "migrationCommitted": true,
+  "testsPassed": false,
+  "testClusterStopped": true,
+  "production": {
+    "db": "smart_agriculture",
+    "schema": "public",
+    "port": 5432,
+    "started": "2026-10-16 12:13:43.656514+07",
+    "data": "C:/Program Files/PostgreSQL/17/data",
+    "system_id": "7472695863566132416"
+  },
+  "control": {
+    "systemId": "7698826681383327460",
+    "state": "shut down"
+  },
+  "identity": {
+    "db": "smart_agriculture_test_phase13_3b",
+    "role": "phase13_test_migrator",
+    "host": "127.0.0.1/32",
+    "port": 55433,
+    "schema": "phase13_test_phase13_3b",
+    "started": "2026-10-22 00:58:25.362247+07"
+  },
+  "appRole": {
+    "rolsuper": false,
+    "rolcreatedb": false,
+    "rolcreaterole": false,
+    "audit_owner": "phase13_test_migrator"
+  },
+  "v1ConstraintCount": 66,
+  "syntaxDryRun": {
+    "exitCode": 0,
+    "sha256": "ed9baa0d01c8fcceb1bbef068ea8bfcc7cb396b6a11d5d1c8a55e8e962d26a97"
+  },
+  "committedV2": {
+    "exitCode": 0,
+    "sha256": "33eb31404ccdac7ab5dd2cf778330cb3b6796128733938739c5170ecfd088e5d"
+  },
+  "finishedAt": "2026-10-21T17:58:40.026Z",
+  "failure": {
+    "reason": "SQL_INTEGRATION_FAILED_SEE_REDACTED_EVIDENCE"
+  }
+}

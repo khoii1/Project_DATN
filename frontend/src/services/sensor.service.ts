@@ -8,14 +8,14 @@ export interface SensorFilters { search?: string; farmId?: string; zoneId?: stri
 const params = (value: object) => Object.fromEntries(Object.entries(value).filter(([, item]) => item !== "" && item !== undefined));
 
 export const sensorService = {
-  async list(filters: SensorFilters = {}) { const response = await api.get<Envelope<{ items: Sensor[]; pagination: Pagination }>>("/sensors", { params: params(filters) }); return response.data.data; },
-  async summary() { const response = await api.get<Envelope<SensorSummary>>("/sensors/summary"); return response.data.data; },
-  async get(id: string) { const response = await api.get<Envelope<{ sensor: Sensor }>>(`/sensors/${id}`); return response.data.data.sensor; },
+  async list(filters: SensorFilters = {}, signal?: AbortSignal) { const response = await api.get<Envelope<{ items: Sensor[]; pagination: Pagination }>>("/sensors", { params: params(filters), signal }); return response.data.data; },
+  async summary(signal?: AbortSignal) { const response = await api.get<Envelope<SensorSummary>>("/sensors/summary", { signal }); return response.data.data; },
+  async get(id: string, signal?: AbortSignal) { const response = await api.get<Envelope<{ sensor: Sensor }>>(`/sensors/${id}`, { signal }); return response.data.data.sensor; },
   async create(input: SensorInput) { const response = await api.post<Envelope<{ sensor: Sensor }>>("/sensors", input); return response.data.data.sensor; },
   async update(id: string, input: Partial<SensorInput>) { const { deviceId: _deviceId, sensorCode: _sensorCode, type: _type, ...changes } = input; void _deviceId; void _sensorCode; void _type; const response = await api.patch<Envelope<{ sensor: Sensor }>>(`/sensors/${id}`, changes); return response.data.data.sensor; },
   async readings(id: string, query: Partial<SensorHistoryQuery> = {}, signal?: AbortSignal) { const response = await api.get<Envelope<SensorReadingPage>>(`/sensors/${id}/readings`, { params: params(query), signal }); return response.data.data; },
   async chart(id: string, query: Pick<SensorHistoryQuery, "from" | "to"> & { resolution?: SensorChartResolution }, signal?: AbortSignal) { const response = await api.get<Envelope<SensorChartResponse>>(`/sensors/${id}/chart`, { params: query, signal }); return response.data.data; },
   async statistics(id: string, query: Pick<SensorHistoryQuery, "from" | "to">, signal?: AbortSignal) { const response = await api.get<Envelope<SensorStatistics>>(`/sensors/${id}/statistics`, { params: query, signal }); return response.data.data; },
-  async zoneLatest(zoneId: string) { const response = await api.get<Envelope<{ zone: { id: string; name: string }; sensors: ZoneLatestReading[] }>>(`/zones/${zoneId}/latest-readings`); return response.data.data; },
-  async deviceLatest(deviceId: string) { const response = await api.get<Envelope<{ items: Sensor[] }>>(`/devices/${deviceId}/latest-readings`); return response.data.data.items; },
+  async zoneLatest(zoneId: string, signal?: AbortSignal) { const response = await api.get<Envelope<{ zone: { id: string; name: string }; sensors: ZoneLatestReading[] }>>(`/zones/${zoneId}/latest-readings`, { signal }); return response.data.data; },
+  async deviceLatest(deviceId: string, signal?: AbortSignal) { const response = await api.get<Envelope<{ items: Sensor[] }>>(`/devices/${deviceId}/latest-readings`, { signal }); return response.data.data.items; },
 };

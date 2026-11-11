@@ -1,0 +1,593 @@
+{
+  "runId": "controlled-20261022-01",
+  "started": "2026-10-22T05:45:53.118Z",
+  "batches": [
+    {
+      "recordedAt": "2026-10-22T05:45:49.535Z",
+      "receiptId": "8ac588c1-46f8-4ee0-aec0-51ff302070e0",
+      "sessionId": "backend-observer:b8f0fe0e-474d-4247-b7c8-49ea36c9c935",
+      "qos": 1,
+      "retain": false,
+      "dup": false,
+      "callbackReceivedAt": "2026-10-22T05:45:49.866Z",
+      "rows": [
+        {
+          "id": "cmvj4ayp8000auma8yzfkrdd6",
+          "sensorCode": "TEMP_01",
+          "value": 26.1,
+          "source": "MQTT",
+          "recordedAt": "2026-10-22T05:45:49.535Z",
+          "receivedAt": "2026-10-22T05:45:49.868Z"
+        },
+        {
+          "id": "cmvj4ayp8000buma88prde0p6",
+          "sensorCode": "HUM_01",
+          "value": 53.3,
+          "source": "MQTT",
+          "recordedAt": "2026-10-22T05:45:49.535Z",
+          "receivedAt": "2026-10-22T05:45:49.868Z"
+        },
+        {
+          "id": "cmvj4ayp8000cuma8lpbn35mw",
+          "sensorCode": "LIGHT_01",
+          "value": 0,
+          "source": "MQTT",
+          "recordedAt": "2026-10-22T05:45:49.535Z",
+          "receivedAt": "2026-10-22T05:45:49.868Z"
+        },
+        {
+          "id": "cmvj4ayp8000duma8k5mk6i4t",
+          "sensorCode": "SOIL_01",
+          "value": 8.63,
+          "source": "MQTT",
+          "recordedAt": "2026-10-22T05:45:49.535Z",
+          "receivedAt": "2026-10-22T05:45:49.868Z"
+        }
+      ]
+    },
+    {
+      "recordedAt": "2026-10-22T05:46:04.535Z",
+      "receiptId": "49f4cc76-6016-460c-b31e-0cc6f15dcc7e",
+      "sessionId": "backend-observer:b8f0fe0e-474d-4247-b7c8-49ea36c9c935",
+      "qos": 1,
+      "retain": false,
+      "dup": false,
+      "callbackReceivedAt": "2026-10-22T05:46:04.919Z",
+      "rows": [
+        {
+          "id": "cmvj4babi000guma8sovz9cqv",
+          "sensorCode": "TEMP_01",
+          "value": 26.1,
+          "source": "MQTT",
+          "recordedAt": "2026-10-22T05:46:04.535Z",
+          "receivedAt": "2026-10-22T05:46:04.927Z"
+        },
+        {
+          "id": "cmvj4babi000huma80w1v517s",
+          "sensorCode": "HUM_01",
+          "value": 53.4,
+          "source": "MQTT",
+          "recordedAt": "2026-10-22T05:46:04.535Z",
+          "receivedAt": "2026-10-22T05:46:04.927Z"
+        },
+        {
+          "id": "cmvj4babi000iuma8b1ap49sn",
+          "sensorCode": "LIGHT_01",
+          "value": 0,
+          "source": "MQTT",
+          "recordedAt": "2026-10-22T05:46:04.535Z",
+          "receivedAt": "2026-10-22T05:46:04.927Z"
+        },
+        {
+          "id": "cmvj4babi000juma8pffl9d9d",
+          "sensorCode": "SOIL_01",
+          "value": 8.53,
+          "source": "MQTT",
+          "recordedAt": "2026-10-22T05:46:04.535Z",
+          "receivedAt": "2026-10-22T05:46:04.927Z"
+        }
+      ]
+    },
+    {
+      "recordedAt": "2026-10-22T05:46:19.535Z",
+      "receiptId": "7a950fe9-ccc4-49f9-a671-06b39f3187c9",
+      "sessionId": "backend-observer:b8f0fe0e-474d-4247-b7c8-49ea36c9c935",
+      "qos": 1,
+      "retain": false,
+      "dup": false,
+      "callbackReceivedAt": "2026-10-22T05:46:19.873Z",
+      "rows": [
+        {
+          "id": "cmvj4blur000kuma8sgosik33",
+          "sensorCode": "TEMP_01",
+          "value": 26.1,
+          "source": "MQTT",
+          "recordedAt": "2026-10-22T05:46:19.535Z",
+          "receivedAt": "2026-10-22T05:46:19.876Z"
+        },
+        {
+          "id": "cmvj4blus000luma85nnhznif",
+          "sensorCode": "HUM_01",
+          "value": 53.6,
+          "source": "MQTT",
+          "recordedAt": "2026-10-22T05:46:19.535Z",
+          "receivedAt": "2026-10-22T05:46:19.876Z"
+        },
+        {
+          "id": "cmvj4blus000muma8m3rnqnu1",
+          "sensorCode": "LIGHT_01",
+          "value": 0,
+          "source": "MQTT",
+          "recordedAt": "2026-10-22T05:46:19.535Z",
+          "receivedAt": "2026-10-22T05:46:19.876Z"
+        },
+        {
+          "id": "cmvj4blus000numa8zok9uaot",
+          "sensorCode": "SOIL_01",
+          "value": 8.68,
+          "source": "MQTT",
+          "recordedAt": "2026-10-22T05:46:19.535Z",
+          "receivedAt": "2026-10-22T05:46:19.876Z"
+        }
+      ]
+    }
+  ],
+  "offs": [
+    {
+      "receiptId": "0f02fa3e-18bc-4913-98e9-70afb8bc2db6",
+      "deviceCode": "ESP32-GF-A-01",
+      "actuatorCode": "PUMP_01",
+      "topic": "smart-agriculture/v1/devices/ESP32-GF-A-01/actuator/state",
+      "state": "OFF",
+      "reason": "PERIODIC",
+      "payloadDigest": "177da384e1b84a3308ac99d03eb89501f011c4e55000969064fbcf58e6cb115e",
+      "recordedAt": "2026-10-22T05:45:57.097Z",
+      "callbackReceivedAt": "2026-10-22T05:45:57.447Z",
+      "qos": 1,
+      "retain": false,
+      "dup": false,
+      "topicMatches": true,
+      "generation": 1,
+      "sessionId": "backend-observer:b8f0fe0e-474d-4247-b7c8-49ea36c9c935",
+      "sessionStartedAt": "2026-10-22T05:45:11.443Z",
+      "sessionKind": "BACKEND_OBSERVER",
+      "policyVersion": "13.4A-observation-v1",
+      "publisherIdentityAssurance": "NOT_VERIFIED",
+      "sourceVerification": "BACKEND_COMMIT_OBSERVED_NOT_PUBLISHER_AUTHENTICATED"
+    },
+    {
+      "receiptId": "940a09d0-ea74-4ab6-b6a5-99bb3a6ef3a2",
+      "deviceCode": "ESP32-GF-A-01",
+      "actuatorCode": "PUMP_01",
+      "topic": "smart-agriculture/v1/devices/ESP32-GF-A-01/actuator/state",
+      "state": "OFF",
+      "reason": "PERIODIC",
+      "payloadDigest": "1d13395187a649ec81b1ac77857364c51519002a3e9e6a7e1e0a64ae854fc9f8",
+      "recordedAt": "2026-10-22T05:46:12.249Z",
+      "callbackReceivedAt": "2026-10-22T05:46:12.508Z",
+      "qos": 1,
+      "retain": false,
+      "dup": false,
+      "topicMatches": true,
+      "generation": 1,
+      "sessionId": "backend-observer:b8f0fe0e-474d-4247-b7c8-49ea36c9c935",
+      "sessionStartedAt": "2026-10-22T05:45:11.443Z",
+      "sessionKind": "BACKEND_OBSERVER",
+      "policyVersion": "13.4A-observation-v1",
+      "publisherIdentityAssurance": "NOT_VERIFIED",
+      "sourceVerification": "BACKEND_COMMIT_OBSERVED_NOT_PUBLISHER_AUTHENTICATED"
+    },
+    {
+      "receiptId": "626f6dbc-fd48-40c3-98db-a42bf16384fe",
+      "deviceCode": "ESP32-GF-A-01",
+      "actuatorCode": "PUMP_01",
+      "topic": "smart-agriculture/v1/devices/ESP32-GF-A-01/actuator/state",
+      "state": "OFF",
+      "reason": "PERIODIC",
+      "payloadDigest": "21a7cb93b87eb183abf9b4535d4ae3870f71bed5e3e3c4e5021808b608c21339",
+      "recordedAt": "2026-10-22T05:46:27.317Z",
+      "callbackReceivedAt": "2026-10-22T05:46:27.650Z",
+      "qos": 1,
+      "retain": false,
+      "dup": false,
+      "topicMatches": true,
+      "generation": 1,
+      "sessionId": "backend-observer:b8f0fe0e-474d-4247-b7c8-49ea36c9c935",
+      "sessionStartedAt": "2026-10-22T05:45:11.443Z",
+      "sessionKind": "BACKEND_OBSERVER",
+      "policyVersion": "13.4A-observation-v1",
+      "publisherIdentityAssurance": "NOT_VERIFIED",
+      "sourceVerification": "BACKEND_COMMIT_OBSERVED_NOT_PUBLISHER_AUTHENTICATED"
+    }
+  ],
+  "states": [
+    {
+      "at": "2026-10-22T05:45:54.734Z",
+      "connectionStatus": "ONLINE",
+      "lastSeenAt": "2026-10-22T05:45:49.866Z",
+      "id": "demo_actuator_pump_a",
+      "currentState": "OFF",
+      "lastStateChangedAt": "2026-10-22T05:45:41.944Z"
+    },
+    {
+      "at": "2026-10-22T05:46:00.467Z",
+      "connectionStatus": "ONLINE",
+      "lastSeenAt": "2026-10-22T05:45:57.549Z",
+      "id": "demo_actuator_pump_a",
+      "currentState": "OFF",
+      "lastStateChangedAt": "2026-10-22T05:45:57.097Z"
+    },
+    {
+      "at": "2026-10-22T05:46:01.521Z",
+      "connectionStatus": "ONLINE",
+      "lastSeenAt": "2026-10-22T05:45:57.549Z",
+      "id": "demo_actuator_pump_a",
+      "currentState": "OFF",
+      "lastStateChangedAt": "2026-10-22T05:45:57.097Z"
+    },
+    {
+      "at": "2026-10-22T05:46:02.575Z",
+      "connectionStatus": "ONLINE",
+      "lastSeenAt": "2026-10-22T05:45:57.549Z",
+      "id": "demo_actuator_pump_a",
+      "currentState": "OFF",
+      "lastStateChangedAt": "2026-10-22T05:45:57.097Z"
+    },
+    {
+      "at": "2026-10-22T05:46:03.632Z",
+      "connectionStatus": "ONLINE",
+      "lastSeenAt": "2026-10-22T05:45:57.549Z",
+      "id": "demo_actuator_pump_a",
+      "currentState": "OFF",
+      "lastStateChangedAt": "2026-10-22T05:45:57.097Z"
+    },
+    {
+      "at": "2026-10-22T05:46:04.702Z",
+      "connectionStatus": "ONLINE",
+      "lastSeenAt": "2026-10-22T05:45:57.549Z",
+      "id": "demo_actuator_pump_a",
+      "currentState": "OFF",
+      "lastStateChangedAt": "2026-10-22T05:45:57.097Z"
+    },
+    {
+      "at": "2026-10-22T05:46:05.765Z",
+      "connectionStatus": "ONLINE",
+      "lastSeenAt": "2026-10-22T05:46:04.919Z",
+      "id": "demo_actuator_pump_a",
+      "currentState": "OFF",
+      "lastStateChangedAt": "2026-10-22T05:45:57.097Z"
+    },
+    {
+      "at": "2026-10-22T05:46:06.857Z",
+      "connectionStatus": "ONLINE",
+      "lastSeenAt": "2026-10-22T05:46:04.919Z",
+      "id": "demo_actuator_pump_a",
+      "currentState": "OFF",
+      "lastStateChangedAt": "2026-10-22T05:45:57.097Z"
+    },
+    {
+      "at": "2026-10-22T05:46:07.902Z",
+      "connectionStatus": "ONLINE",
+      "lastSeenAt": "2026-10-22T05:46:04.919Z",
+      "id": "demo_actuator_pump_a",
+      "currentState": "OFF",
+      "lastStateChangedAt": "2026-10-22T05:45:57.097Z"
+    },
+    {
+      "at": "2026-10-22T05:46:08.979Z",
+      "connectionStatus": "ONLINE",
+      "lastSeenAt": "2026-10-22T05:46:04.919Z",
+      "id": "demo_actuator_pump_a",
+      "currentState": "OFF",
+      "lastStateChangedAt": "2026-10-22T05:45:57.097Z"
+    },
+    {
+      "at": "2026-10-22T05:46:10.039Z",
+      "connectionStatus": "ONLINE",
+      "lastSeenAt": "2026-10-22T05:46:04.919Z",
+      "id": "demo_actuator_pump_a",
+      "currentState": "OFF",
+      "lastStateChangedAt": "2026-10-22T05:45:57.097Z"
+    },
+    {
+      "at": "2026-10-22T05:46:11.089Z",
+      "connectionStatus": "ONLINE",
+      "lastSeenAt": "2026-10-22T05:46:04.919Z",
+      "id": "demo_actuator_pump_a",
+      "currentState": "OFF",
+      "lastStateChangedAt": "2026-10-22T05:45:57.097Z"
+    },
+    {
+      "at": "2026-10-22T05:46:12.148Z",
+      "connectionStatus": "ONLINE",
+      "lastSeenAt": "2026-10-22T05:46:04.919Z",
+      "id": "demo_actuator_pump_a",
+      "currentState": "OFF",
+      "lastStateChangedAt": "2026-10-22T05:45:57.097Z"
+    },
+    {
+      "at": "2026-10-22T05:46:13.199Z",
+      "connectionStatus": "ONLINE",
+      "lastSeenAt": "2026-10-22T05:46:12.601Z",
+      "id": "demo_actuator_pump_a",
+      "currentState": "OFF",
+      "lastStateChangedAt": "2026-10-22T05:46:12.249Z"
+    },
+    {
+      "at": "2026-10-22T05:46:14.267Z",
+      "connectionStatus": "ONLINE",
+      "lastSeenAt": "2026-10-22T05:46:12.601Z",
+      "id": "demo_actuator_pump_a",
+      "currentState": "OFF",
+      "lastStateChangedAt": "2026-10-22T05:46:12.249Z"
+    },
+    {
+      "at": "2026-10-22T05:46:15.307Z",
+      "connectionStatus": "ONLINE",
+      "lastSeenAt": "2026-10-22T05:46:12.601Z",
+      "id": "demo_actuator_pump_a",
+      "currentState": "OFF",
+      "lastStateChangedAt": "2026-10-22T05:46:12.249Z"
+    },
+    {
+      "at": "2026-10-22T05:46:16.371Z",
+      "connectionStatus": "ONLINE",
+      "lastSeenAt": "2026-10-22T05:46:12.601Z",
+      "id": "demo_actuator_pump_a",
+      "currentState": "OFF",
+      "lastStateChangedAt": "2026-10-22T05:46:12.249Z"
+    },
+    {
+      "at": "2026-10-22T05:46:17.433Z",
+      "connectionStatus": "ONLINE",
+      "lastSeenAt": "2026-10-22T05:46:12.601Z",
+      "id": "demo_actuator_pump_a",
+      "currentState": "OFF",
+      "lastStateChangedAt": "2026-10-22T05:46:12.249Z"
+    },
+    {
+      "at": "2026-10-22T05:46:18.495Z",
+      "connectionStatus": "ONLINE",
+      "lastSeenAt": "2026-10-22T05:46:12.601Z",
+      "id": "demo_actuator_pump_a",
+      "currentState": "OFF",
+      "lastStateChangedAt": "2026-10-22T05:46:12.249Z"
+    },
+    {
+      "at": "2026-10-22T05:46:19.552Z",
+      "connectionStatus": "ONLINE",
+      "lastSeenAt": "2026-10-22T05:46:12.601Z",
+      "id": "demo_actuator_pump_a",
+      "currentState": "OFF",
+      "lastStateChangedAt": "2026-10-22T05:46:12.249Z"
+    },
+    {
+      "at": "2026-10-22T05:46:20.653Z",
+      "connectionStatus": "ONLINE",
+      "lastSeenAt": "2026-10-22T05:46:19.873Z",
+      "id": "demo_actuator_pump_a",
+      "currentState": "OFF",
+      "lastStateChangedAt": "2026-10-22T05:46:12.249Z"
+    },
+    {
+      "at": "2026-10-22T05:46:21.792Z",
+      "connectionStatus": "ONLINE",
+      "lastSeenAt": "2026-10-22T05:46:19.873Z",
+      "id": "demo_actuator_pump_a",
+      "currentState": "OFF",
+      "lastStateChangedAt": "2026-10-22T05:46:12.249Z"
+    },
+    {
+      "at": "2026-10-22T05:46:22.868Z",
+      "connectionStatus": "ONLINE",
+      "lastSeenAt": "2026-10-22T05:46:19.873Z",
+      "id": "demo_actuator_pump_a",
+      "currentState": "OFF",
+      "lastStateChangedAt": "2026-10-22T05:46:12.249Z"
+    },
+    {
+      "at": "2026-10-22T05:46:23.935Z",
+      "connectionStatus": "ONLINE",
+      "lastSeenAt": "2026-10-22T05:46:19.873Z",
+      "id": "demo_actuator_pump_a",
+      "currentState": "OFF",
+      "lastStateChangedAt": "2026-10-22T05:46:12.249Z"
+    },
+    {
+      "at": "2026-10-22T05:46:24.988Z",
+      "connectionStatus": "ONLINE",
+      "lastSeenAt": "2026-10-22T05:46:19.873Z",
+      "id": "demo_actuator_pump_a",
+      "currentState": "OFF",
+      "lastStateChangedAt": "2026-10-22T05:46:12.249Z"
+    },
+    {
+      "at": "2026-10-22T05:46:26.031Z",
+      "connectionStatus": "ONLINE",
+      "lastSeenAt": "2026-10-22T05:46:19.873Z",
+      "id": "demo_actuator_pump_a",
+      "currentState": "OFF",
+      "lastStateChangedAt": "2026-10-22T05:46:12.249Z"
+    },
+    {
+      "at": "2026-10-22T05:46:27.067Z",
+      "connectionStatus": "ONLINE",
+      "lastSeenAt": "2026-10-22T05:46:19.873Z",
+      "id": "demo_actuator_pump_a",
+      "currentState": "OFF",
+      "lastStateChangedAt": "2026-10-22T05:46:12.249Z"
+    },
+    {
+      "at": "2026-10-22T05:46:28.105Z",
+      "connectionStatus": "ONLINE",
+      "lastSeenAt": "2026-10-22T05:46:27.757Z",
+      "id": "demo_actuator_pump_a",
+      "currentState": "OFF",
+      "lastStateChangedAt": "2026-10-22T05:46:27.317Z"
+    }
+  ],
+  "checks": [],
+  "physicalPumpTriggered": false,
+  "commandsIssued": 0,
+  "baseline": {
+    "at": "2026-10-22T05:44:57.758Z",
+    "identity": {
+      "database": "smart_agriculture",
+      "schema": "public",
+      "port": 5432,
+      "started": "2026-10-16 12:13:43.656514+07"
+    },
+    "device": {
+      "id": "demo_device_esp32_a",
+      "deviceCode": "ESP32-GF-A-01",
+      "connectionStatus": "OFFLINE",
+      "lastSeenAt": "2026-10-21T12:06:15.174Z",
+      "sensors": [
+        {
+          "id": "demo_sensor_temp",
+          "sensorCode": "TEMP_01"
+        },
+        {
+          "id": "demo_sensor_hum",
+          "sensorCode": "HUM_01"
+        },
+        {
+          "id": "demo_sensor_soil",
+          "sensorCode": "SOIL_01"
+        },
+        {
+          "id": "demo_sensor_light",
+          "sensorCode": "LIGHT_01"
+        }
+      ],
+      "actuators": [
+        {
+          "id": "demo_actuator_pump_a",
+          "currentState": "OFF",
+          "lastStateChangedAt": "2026-10-21T12:06:14.500Z"
+        }
+      ]
+    },
+    "rows": [],
+    "pending": 0,
+    "commandCount": 43
+  },
+  "process": {
+    "mode": "Backend",
+    "runId": "controlled-20261022-01",
+    "pid": 22400,
+    "startedAt": "2026-10-22T05:45:03.8780667Z",
+    "command": "--import tsx src/server.ts",
+    "workingDirectory": "C:\\DATN\\Project_datn\\backend",
+    "state": "RUNNING",
+    "stdout": "C:\\DATN\\Project_datn\\build\\phase13-5a3-controlled-20261022-01.stdout.log",
+    "stderr": "C:\\DATN\\Project_datn\\build\\phase13-5a3-controlled-20261022-01.stderr.log",
+    "exitEvidence": "C:\\DATN\\Project_datn\\build\\phase13-5a3-controlled-20261022-01.exit.json"
+  },
+  "health": {
+    "database": "connected",
+    "mqtt": "connected",
+    "timestamp": "2026-10-22T05:45:53.168Z"
+  },
+  "runtime": {
+    "pid": 22400,
+    "startedAt": "2026-10-22T05:45:11.435Z",
+    "testMode": true,
+    "effectiveMaxRunSeconds": 1,
+    "commandsEnabled": false,
+    "automationEnabled": false
+  },
+  "mqttLogs": {
+    "connackAcceptedEvent": true,
+    "subscriptionsRestored": true,
+    "offSubscription": true
+  },
+  "listenerPids": [
+    22400
+  ],
+  "auth": {
+    "method": "NORMAL_EXISTING_ACCOUNT_LOGIN",
+    "loginActivityExpected": true,
+    "tokenPersisted": false
+  },
+  "observer": {
+    "sessionKind": "BACKEND_OBSERVER",
+    "generation": 1,
+    "sessionId": "backend-observer:b8f0fe0e-474d-4247-b7c8-49ea36c9c935",
+    "sessionStartedAt": "2026-10-22T05:45:11.443Z",
+    "entries": 12,
+    "lastRejection": null,
+    "ttlMs": 45000,
+    "publisherIdentityAssurance": "NOT_VERIFIED"
+  },
+  "clock": {
+    "health": "HEALTHY",
+    "reason": "SHORT_TERM_NTP_MEASUREMENT_OK",
+    "source": "time.windows.com,0x8",
+    "lastSuccessfulSync": "2026-10-22T05:40:00.483Z",
+    "lastSyncError": 0,
+    "lastSuccessfulSyncBasis": "STATUS_AGE_APPROXIMATE",
+    "leapIndicator": 0,
+    "stratum": 5,
+    "offsetMs": -159.1902,
+    "checkedAt": "2026-10-22T05:45:59.248Z",
+    "ttlMs": 60000,
+    "clockJumpDetected": false,
+    "assurance": "SHORT_TERM_READ_ONLY_MEASUREMENT",
+    "longTermStability": "NOT_VERIFIED"
+  },
+  "actuatorApi": {
+    "id": "demo_actuator_pump_a",
+    "currentState": "OFF",
+    "gatewayMode": "DISABLED",
+    "controlEnabled": false,
+    "lastStateChangedAt": "2026-10-22T05:46:27.317Z"
+  },
+  "finalDatabase": {
+    "at": "2026-10-22T05:46:29.153Z",
+    "pending": 0,
+    "commandCount": 43,
+    "device": {
+      "id": "demo_device_esp32_a",
+      "deviceCode": "ESP32-GF-A-01",
+      "connectionStatus": "ONLINE",
+      "lastSeenAt": "2026-10-22T05:46:27.757Z",
+      "sensors": [
+        {
+          "id": "demo_sensor_temp",
+          "sensorCode": "TEMP_01"
+        },
+        {
+          "id": "demo_sensor_hum",
+          "sensorCode": "HUM_01"
+        },
+        {
+          "id": "demo_sensor_soil",
+          "sensorCode": "SOIL_01"
+        },
+        {
+          "id": "demo_sensor_light",
+          "sensorCode": "LIGHT_01"
+        }
+      ],
+      "actuators": [
+        {
+          "id": "demo_actuator_pump_a",
+          "currentState": "OFF",
+          "lastStateChangedAt": "2026-10-22T05:46:27.317Z"
+        }
+      ]
+    }
+  },
+  "verdicts": {
+    "backendStartup": "PASS",
+    "mqttBackendConnection": "PASS",
+    "telemetry": "PASS",
+    "periodicOff": "PASS",
+    "online": true,
+    "runtimeCommandsDisabled": true,
+    "runtimeAutomationDisabled": true
+  },
+  "status": "RUNNING",
+  "ended": "2026-10-22T05:46:29.156Z"
+}

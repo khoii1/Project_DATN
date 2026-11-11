@@ -6,12 +6,13 @@
   * { @apply border-slate-200; }
   html { @apply bg-slate-50 antialiased; }
   body { @apply m-0 min-w-[320px] bg-slate-50 font-sans text-slate-900; }
-  button, a, input { @apply outline-none; }
-  button:focus-visible, a:focus-visible, input:focus-visible { @apply ring-2 ring-brand-500 ring-offset-2; }
+  input, select, textarea { @apply min-w-0 max-w-full; }
+  button, a, input, select, textarea { @apply outline-none; }
+  button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible { @apply ring-2 ring-brand-500 ring-offset-2; }
 }
 
 @layer components {
-  .surface-card { @apply rounded-2xl border border-slate-200/80 bg-white shadow-card; }
+  .surface-card { @apply min-w-0 rounded-2xl border border-slate-200/80 bg-white shadow-card; }
   .scrollbar-thin { scrollbar-width: thin; scrollbar-color: #cbd5e1 transparent; }
 }
 

@@ -1,0 +1,17 @@
+{
+  "startedAt": "2026-10-22T16:37:50.888Z",
+  "endedAt": "2026-10-22T16:37:50.896Z",
+  "status": "STOPPED_NO_RETRY",
+  "error": {
+    "type": "SyntaxError",
+    "code": null,
+    "reason": "VERIFICATION_FAILED_REDACTED"
+  },
+  "restoreAttempted": false,
+  "restoreExit": null,
+  "clusterStarted": false,
+  "clusterStopped": false,
+  "checks": [],
+  "cloudBackupScope": "NOT_VERIFIED",
+  "physicalPumpTriggered": false
+}

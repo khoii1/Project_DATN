@@ -2,23 +2,31 @@
 
 Hệ thống website quản lý và giám sát nông nghiệp thông minh, kết hợp quản trị trang trại, dữ liệu cảm biến, cảnh báo, tưới thủ công/tự động và hạ tầng MQTT.
 
-> Tài liệu này phản ánh source code tại thời điểm kiểm tra. Quy ước: ✅ đã triển khai/xác minh; 🟡 hoàn thành một phần/đang làm; ⬜ chưa triển khai.
+## Hồ sơ hoàn thiện đồ án — 05/11/2026
+
+**NOT_READY_FOR_DEFENSE**: phần mềm DEV/SIMULATOR đã có nghiệm thu; luồng ESP32 thật → MQTT → DEV PostgreSQL → REST đã được đối chiếu ở Phase Y. Website historical sau bản sửa AW vẫn chờ nghiệm thu cuối vì preflight AX gặp native `0xC0000005`. Không cần hoàn thành migration production hoặc toàn bộ Phase13.5 để trình diễn MVP trên DEV.
+
+Đọc bộ tài liệu hiện hành: [kiến trúc](docs/FINAL_SYSTEM_ARCHITECTURE.md), [ma trận nghiệm thu](docs/FINAL_FEATURE_ACCEPTANCE.md), [demo và checklist ảnh](docs/FINAL_DEMO_SCRIPT.md), [kết quả kiểm thử](docs/FINAL_TEST_RESULTS.md), [checklist bảo vệ và bước cần duyệt](docs/FINAL_DEFENSE_CHECKLIST.md). Báo cáo phase cũ là bằng chứng theo thời điểm, không xác nhận trạng thái runtime hiện tại.
+
+Đường ngắn nhất: một diagnostic native có phê duyệt mới → nếu completion đạt, một phiên supervised historical Website có phê duyệt riêng → chốt ảnh/bảng/biểu đồ. Tưới tự động vật lý vẫn BLOCKED bởi SOIL calibration/trust. Không chạy lại initdb, migration production hoặc thử bơm để hoàn tất phần website.
+
+> Nghiệm thu MVP cập nhật ngày 28/10/2026: [trạng thái dự án](docs/archive/PROJECT_COMPLETION_STATUS.md), [acceptance matrix](docs/archive/FINAL_ACCEPTANCE_MATRIX.md), [việc còn lại](docs/archive/REMAINING_WORK_P0_P1_P2.md), [demo](docs/archive/END_TO_END_DEMO_PLAN.md), [kết quả kiểm thử](docs/archive/FINAL_TEST_REPORT.md). Code/mock PASS không thay thế nghiệm thu production hoặc phần cứng.
 
 ## Trạng thái nhanh
 
-- ✅ Phase 1–10: website, xác thực/RBAC, Farm–Zone–Crop, Device/Sensor, lịch sử và biểu đồ, Alert, Actuator, Automation, Reports, CSV và Activity Log.
-- ✅ Phase 11 (đường telemetry): Mosquitto, MQTT.js, telemetry/status adapter, reconnect, health và MQTT simulator.
-- ✅ Telemetry MQTT hợp lệ được lưu với `source=MQTT`; dữ liệu mới có thể kích hoạt Alert và Automation.
-- 🟡 IoT vật lý: chủ dự án đã xác nhận ngoài repository rằng ESP32 và BH1750 đọc lux thành công; soil sensor vẫn hiệu chỉnh. Repository chưa có firmware để tái lập kết quả này.
-- 🟡 Simulator vẫn được dùng cho telemetry/trạng thái MQTT và các kịch bản kiểm thử.
-- 🟡 `DeviceCommandService` hiện kết thúc tại `MockDeviceGateway`.
-- ⬜ Backend chưa publish command MQTT; ESP32 chưa subscribe command; relay/pump vật lý chưa được điều khiển.
+- Đã triển khai website quản trị/RBAC/farm scope, monitoring, history/chart, alert, reports/CSV và activity log; cần nghiệm thu tích hợp cuối trên môi trường demo đã được duyệt.
+- Firmware ESP32 `13.4F.1` có trong `firmware/SmartAgricultureESP32`; DHT22/BH1750/soil telemetry đã đối chiếu PostgreSQL/API trong các phiên trước. Hiệu chuẩn đất và SNTP refresh dài hạn còn giới hạn chưa nghiệm thu.
+- MQTT command/ACK thật đã triển khai, không fallback mock khi khóa. Lần chạy bơm có ACK/APPLIED và MAX_RUNTIME OFF, nhưng báo cáo Phase12D4 vẫn PARTIAL (thiếu xác nhận nước/browser và có hai thao tác ON).
+- Tưới tự động có engine/SHADOW UI và persistence thử nghiệm; **VERIFIED_LIVE/ACTIVE chưa sẵn sàng**, không được gọi là tự động tưới vật lý đã hoàn thành.
+- Snapshot audit 28/10 là bằng chứng lịch sử: không có listener backend5000/frontend5173 khi đó. Không dùng snapshot này mô tả runtime05/11; đợt hoàn thiện tài liệu không khởi động hoặc kết nối production để kiểm tra lại.
 
 Chi tiết và bằng chứng: [trạng thái phát triển](docs/DEVELOPMENT_STATUS.md), [MQTT](docs/IOT_MQTT.md), [hardware](docs/HARDWARE_SETUP.md).
 
 ## Chức năng chính
 
 Đăng nhập JWT và phân quyền `ADMIN`/`FARM_OWNER`/`STAFF`; quản lý user, farm, staff, zone, crop, device, sensor và actuator; tiếp nhận telemetry; lịch sử/thống kê/biểu đồ; vòng đời cảnh báo; tưới thủ công và tự động; dashboard; báo cáo, CSV và nhật ký hoạt động.
+
+Các trang Device detail, Sensors, Dashboard, Alerts và Zone sensor overview tự cập nhật qua REST polling mặc định 10 giây sau batch trước hoàn tất, dừng khi tab ẩn. History vẫn tải theo yêu cầu; refresh khoảng tương đối tính lại thời gian, khoảng tùy chỉnh giữ nguyên. Xem cơ chế và giới hạn trong [ARCHITECTURE.md](docs/ARCHITECTURE.md), kiểm thử không ghi database bằng `npm --prefix frontend run test:polling`.
 
 ## Công nghệ thực tế
 
@@ -33,7 +41,7 @@ Version trên lấy từ `package.json`; dấu `^`/`~` cho phép package manager
 ```text
 React frontend -> REST API -> Express services -> Prisma -> PostgreSQL
 
-ESP32 (mục tiêu) hoặc MQTT simulator
+ESP32 firmware hoặc simulator được tách riêng
   -> Mosquitto
   -> MqttTelemetryAdapter
   -> TelemetryIngestionService
@@ -41,7 +49,9 @@ ESP32 (mục tiêu) hoặc MQTT simulator
      |-> AlertEvaluationService
      `-> AutomationEvaluationService
          -> DeviceCommandService
-         -> MockDeviceGateway (hiện tại)
+         -> MQTT gateway (khóa mặc định)
+
+SHADOW fixture -> pure engine/preview (không gửi MQTT, không DeviceCommand thật)
 ```
 
 Alert và Automation là hai luồng side effect độc lập. Không có đường Alert trực tiếp bật bơm. Xem [kiến trúc chi tiết](docs/ARCHITECTURE.md).
@@ -50,11 +60,12 @@ Alert và Automation là hai luồng side effect độc lập. Không có đư�
 
 ```text
 backend/                  Express API, Prisma, MQTT, services, simulators, tests
-  prisma/                 schema, 10 migrations và seed
+  prisma/                 schema, 11 migrations và seed; irrigation proposals riêng
   src/                    source TypeScript
 frontend/                 React/Vite UI
 infrastructure/mosquitto/ cấu hình broker, ACL mẫu và hướng dẫn
 scripts/                  browser QA scripts
+firmware/                 ESP32 source và C++ host tests, local config không commit
 docs/                     bộ nhớ kỹ thuật của dự án
 package.json              lệnh điều phối root
 ```
@@ -62,6 +73,7 @@ package.json              lệnh điều phối root
 ## Yêu cầu môi trường
 
 - Node.js 20+ và npm (yêu cầu vận hành đã dùng cho dự án; `package.json` chưa khóa bằng trường `engines`).
+- Để tái lập bằng chứng hiện hành, dùng runtime/lockfile đã pin trong manifest; không tự nâng package hoặc dùng version ở bảng khai báo thay installed version. Manifest không phải quyền thực thi launcher.
 - PostgreSQL đang chạy và một database trống/có quyền migration.
 - Mosquitto chỉ bắt buộc khi chạy luồng MQTT/Phase 11.
 
@@ -75,6 +87,8 @@ Copy-Item frontend/.env.example frontend/.env
 
 Điền giá trị cục bộ trong `.env`; không commit file này. Các biến được hỗ trợ:
 
+Cho database phát triển **mới, độc lập**, cấu hình `MQTT_ENABLED=false`, `MQTT_COMMANDS_ENABLED=false`, `MQTT_AUTOMATION_COMMANDS_ENABLED=false`, `MQTT_PUMP_TEST_MODE=true` trước startup. JWT secret tối thiểu 32 ký tự, origin `CLIENT_URL` phải khớp frontend. Không dùng credentials production hoặc chạy seed trên DEV historical đang giữ 12 readings. Với DEV historical hiện hữu, dùng đúng supervised runbook và approval mới; không dùng các lệnh cài mới bên dưới để reset dữ liệu.
+
 | Nơi | Biến | Ý nghĩa |
 |---|---|---|
 | Backend | `PORT` | Cổng HTTP API |
@@ -86,6 +100,9 @@ Copy-Item frontend/.env.example frontend/.env
 | Backend | `AUTOMATION_MANUAL_OVERRIDE_MINUTES` | Thời gian ưu tiên điều khiển thủ công |
 | Backend | `AUTOMATION_MAX_READING_AGE_SECONDS` | Tuổi tối đa của reading để chạy automation |
 | Backend | `MQTT_ENABLED` | Bật/tắt MQTT backend |
+| Backend | `MQTT_COMMANDS_ENABLED` | Quyền dispatch thủ công; giữ false trong demo UI-only |
+| Backend | `MQTT_AUTOMATION_COMMANDS_ENABLED` | Quyền dispatch tự động; giữ false |
+| Backend | `MQTT_PUMP_TEST_MODE` | Chế độ thử giới hạn backend tối đa1giây; cần xác minh process thực khi startup |
 | Backend | `MQTT_BROKER_URL`, `MQTT_BACKEND_CLIENT_ID` | Broker URL và client ID backend |
 | Backend | `MQTT_USERNAME`, `MQTT_PASSWORD` | Credential broker; bắt buộc khi bật MQTT |
 | Backend | `MQTT_TOPIC_PREFIX` | Prefix topic; mặc định `smart-agriculture/v1` |
@@ -98,7 +115,7 @@ File mẫu chỉ chứa placeholder. Không đưa password, token hay connection
 
 ## Database, migration và seed
 
-Sau khi cấu hình `backend/.env`:
+Chỉ cho database phát triển mới đã được duyệt. Không chạy migration/seed lên production hiện hữu để phục vụ audit/demo:
 
 ```powershell
 npm --prefix backend run prisma:generate
@@ -110,7 +127,7 @@ Seed tạo dữ liệu demo và ba tài khoản phát triển được mô tả 
 
 ## Khởi chạy
 
-Chạy frontend và backend cùng lúc từ root:
+Các lệnh sau có thể ghi database khi backend recovery/ingestion chạy. Với môi trường production hiện tại phải có phê duyệt startup riêng; audit không thực hiện các lệnh này. Cho môi trường development đã cấu hình/được duyệt:
 
 ```powershell
 npm run dev
@@ -127,7 +144,7 @@ Mặc định frontend ở `http://localhost:5173`, backend ở `http://localhos
 
 ### MQTT và simulator
 
-Thiết lập Mosquitto theo [infrastructure/mosquitto/README.md](infrastructure/mosquitto/README.md), bật `MQTT_ENABLED=true`, rồi chạy backend và:
+Chỉ chạy simulator trên môi trường test riêng. Không dùng cùng MQTT client ID/credential/namespace với ESP32 thật. Thiết lập theo [infrastructure/mosquitto/README.md](infrastructure/mosquitto/README.md), rồi trên target test đã duyệt:
 
 ```powershell
 npm --prefix backend run simulate:mqtt-device -- --device-code ESP32-GF-A-01
@@ -140,21 +157,23 @@ Các simulator HTTP/dev khác có sẵn trong `backend/package.json`; xem danh s
 ```powershell
 npm run build
 npm run lint
-npm --prefix backend run test:auth
-npm --prefix backend run test:phase3
+npm run qa:offline
+npm run qa:acceptance-browser
 ```
 
-Repository không có script `npm test` tổng hợp. Các suite Phase 3–11 và browser QA có lệnh riêng, được liệt kê đầy đủ trong [TESTING.md](docs/TESTING.md).
+`qa:offline` chỉ chạy allowlist test in-memory/loopback mock, không đọc `.env` hoặc nối database/broker. `qa:acceptance-browser` dùng Edge và frontend build, mọi API được mock; không phải live E2E. `npm run demo:simulation` chạy cùng kịch bản trong Edge hiển thị, có banner SIMULATION, tự kết thúc. Cần Edge cài sẵn; không tự tải browser. Các suite `test:auth`, Phase3–11 và simulator có thể ghi DB, không thuộc QA offline này. Xem [TESTING.md](docs/TESTING.md).
 
 ## Giới hạn hiện tại và bước tiếp theo
 
-- Không có firmware ESP32 trong repository; chưa thể tái lập telemetry vật lý chỉ từ source này.
-- MQTT command/ACK mới có topic contract và ACL chuẩn bị; chưa có publish/subscribe/ACK runtime.
-- Lệnh bơm vẫn qua gateway giả lập; không được xem là điều khiển relay/pump thật.
+Device presence có TTL/watchdog mặc định 90 giây/10 giây, chống retained replay và policy UNKNOWN khi broker không quan sát được. Devices List tự cập nhật bằng polling. Xem [DEVICE_PRESENCE.md](docs/DEVICE_PRESENCE.md) để cấu hình và nghiệm thu; không coi unit tests là thử mất nguồn ESP32 thật.
+
+- Backend không phục vụ port5000 tại snapshot audit28/10; đây không phải trạng thái hiện tại đã kiểm chứng. Startup production cần phê duyệt riêng vì có recovery writes và ingestion; demo historical dùng dedicated DEV entry, không production bootstrap.
+- Chưa có VERIFIED_LIVE/ACTIVE automation; sáu ledger production không được migration/wire vào startup.
+- Có sự cố lộ Wi-Fi/device MQTT credential trong output lịch sử; chưa có bằng chứng rotation hoàn tất. Không đưa secrets/artifacts firmware vào Git hoặc màn hình bảo vệ.
 - JWT logout là phía client/stateless; chưa có refresh token hoặc revocation list.
 - Broker mẫu dùng MQTT plaintext cho local/LAN, chưa cấu hình TLS.
 
-Bước tiếp theo hợp lý: đưa firmware ESP32 telemetry vào quản lý phiên bản và kiểm thử end-to-end; sau đó mới triển khai command/ACK MQTT cùng cơ chế an toàn cho relay/pump. Không coi hai phần này là đã hoàn thành.
+Bước tiếp theo ngắn nhất: duyệt phạm vi MVP → phục hồi demo backend đúng target sau phê duyệt mới → live telemetry/DB/API/browser acceptance và kiểm tra quản trị trên DB phát triển riêng → tổng duyệt. Không cần hoàn tất toàn bộ Phase13.5 hoặc migration production để demo monitoring và SHADOW. Nếu yêu cầu bảo vệ bắt buộc tưới tự động vật lý, phần đó vẫn là blocker, không tự loại khỏi phạm vi.
 
 ## Tài liệu chi tiết
 

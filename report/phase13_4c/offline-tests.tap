@@ -1,0 +1,2458 @@
+TAP version 13
+# Subtest: 1 ONLINE: valid telemetry uses backend receipt time; duplicate readings preserve history
+ok 1 - 1 ONLINE: valid telemetry uses backend receipt time; duplicate readings preserve history
+  ---
+  duration_ms: 181.3899
+  type: 'test'
+  ...
+# Subtest: 2 timeout expires ONLINE without touching lastSeenAt
+ok 2 - 2 timeout expires ONLINE without touching lastSeenAt
+  ---
+  duration_ms: 0.6859
+  type: 'test'
+  ...
+# Subtest: 3 within TTL and exact TTL boundary remain ONLINE
+ok 3 - 3 within TTL and exact TTL boundary remain ONLINE
+  ---
+  duration_ms: 0.3231
+  type: 'test'
+  ...
+# Subtest: 4 atomic watchdog predicate cannot overwrite a concurrent heartbeat
+ok 4 - 4 atomic watchdog predicate cannot overwrite a concurrent heartbeat
+  ---
+  duration_ms: 0.4676
+  type: 'test'
+  ...
+# Subtest: 5 live ONLINE reconnect recovers OFFLINE
+ok 5 - 5 live ONLINE reconnect recovers OFFLINE
+  ---
+  duration_ms: 261.3515
+  type: 'test'
+  ...
+# Subtest: 6 retained ONLINE replay never revives or touches lastSeenAt
+ok 6 - 6 retained ONLINE replay never revives or touches lastSeenAt
+  ---
+  duration_ms: 84.8475
+  type: 'test'
+  ...
+# Subtest: 7 retained OFFLINE replay cannot overwrite fresh ONLINE
+ok 7 - 7 retained OFFLINE replay cannot overwrite fresh ONLINE
+  ---
+  duration_ms: 114.9545
+  type: 'test'
+  ...
+# Subtest: 8 live broker Last Will OFFLINE is accepted; old arrival cannot overwrite newer heartbeat
+ok 8 - 8 live broker Last Will OFFLINE is accepted; old arrival cannot overwrite newer heartbeat
+  ---
+  duration_ms: 183.1821
+  type: 'test'
+  ...
+# Subtest: 11 multi-device expiry is isolated
+ok 9 - 11 multi-device expiry is isolated
+  ---
+  duration_ms: 0.9089
+  type: 'test'
+  ...
+# Subtest: broker outage means UNKNOWN after TTL; recovery re-evaluates without refreshing timestamp
+ok 10 - broker outage means UNKNOWN after TTL; recovery re-evaluates without refreshing timestamp
+  ---
+  duration_ms: 1.8149
+  type: 'test'
+  ...
+# Subtest: out-of-order or queue-delayed ONLINE cannot refresh presence
+ok 11 - out-of-order or queue-delayed ONLINE cannot refresh presence
+  ---
+  duration_ms: 0.6314
+  type: 'test'
+  ...
+# Subtest: telemetry transport metadata suppresses retained presence; freshness flags are unchanged
+ok 12 - telemetry transport metadata suppresses retained presence; freshness flags are unchanged
+  ---
+  duration_ms: 292.0908
+  type: 'test'
+  ...
+# Subtest: 9 watchdog start/stop/restart is idempotent, serial and survives database failure
+ok 13 - 9 watchdog start/stop/restart is idempotent, serial and survives database failure
+  ---
+  duration_ms: 56.8743
+  type: 'test'
+  ...
+# Subtest: 14 MQTT reconnect resubscribes once per connect and forwards retained/arrival metadata
+ok 14 - 14 MQTT reconnect resubscribes once per connect and forwards retained/arrival metadata
+  ---
+  duration_ms: 174.2128
+  type: 'test'
+  ...
+# Subtest: 12 authorization/farm scope unchanged; 13 presence source never writes readings or commands
+ok 15 - 12 authorization/farm scope unchanged; 13 presence source never writes readings or commands
+  ---
+  duration_ms: 84.1588
+  type: 'test'
+  ...
+# Subtest: 12 auth uses current database role and farm access still rejects out-of-scope actors
+ok 16 - 12 auth uses current database role and farm access still rejects out-of-scope actors
+  ---
+  duration_ms: 125.0727
+  type: 'test'
+  ...
+# Subtest: router preserves transport context for telemetry and status
+ok 17 - router preserves transport context for telemetry and status
+  ---
+  duration_ms: 19.5834
+  type: 'test'
+  ...
+# Subtest: invalid or unknown status never changes presence
+ok 18 - invalid or unknown status never changes presence
+  ---
+  duration_ms: 41.5596
+  type: 'test'
+  ...
+# Subtest: denied SUBACK is uncertain rather than a healthy MQTT observer
+ok 19 - denied SUBACK is uncertain rather than a healthy MQTT observer
+  ---
+  duration_ms: 228.2561
+  type: 'test'
+  ...
+# Subtest: Phase12C connected endpoint log redacts URL userinfo
+ok 20 - Phase12C connected endpoint log redacts URL userinfo
+  ---
+  duration_ms: 131.1171
+  type: 'test'
+  ...
+# Subtest: Phase12C backend starting after ESP32 accepts next non-retained heartbeat
+ok 21 - Phase12C backend starting after ESP32 accepts next non-retained heartbeat
+  ---
+  duration_ms: 42.5122
+  type: 'test'
+  ...
+# Subtest: Phase12C telemetry still reaches ingestion when status JSON is rejected
+ok 22 - Phase12C telemetry still reaches ingestion when status JSON is rejected
+  ---
+  duration_ms: 168.1887
+  type: 'test'
+  ...
+# Subtest: Phase12C device detail controller preserves database connectionStatus
+ok 23 - Phase12C device detail controller preserves database connectionStatus
+  ---
+  duration_ms: 39.1577
+  type: 'test'
+  ...
+# Subtest: Phase12C diagnostic logs contain receipt and committed row count, never payload
+ok 24 - Phase12C diagnostic logs contain receipt and committed row count, never payload
+  ---
+  duration_ms: 27.3243
+  type: 'test'
+  ...
+# Subtest: Phase12C frontend ONLINE label and device binding use actual API connectionStatus (static contract)
+ok 25 - Phase12C frontend ONLINE label and device binding use actual API connectionStatus (static contract)
+  ---
+  duration_ms: 8.3457
+  type: 'test'
+  ...
+# Subtest: presence environment defaults and timeout validation require no real .env
+ok 26 - presence environment defaults and timeout validation require no real .env
+  ---
+  duration_ms: 47.7909
+  type: 'test'
+  ...
+# Subtest: QoS redelivery cannot replay an old OFFLINE over newer ONLINE
+ok 27 - QoS redelivery cannot replay an old OFFLINE over newer ONLINE
+  ---
+  duration_ms: 34.3603
+  type: 'test'
+  ...
+# Subtest: reserve atomically maps cycle, budget, intent, reservation and audit; never DeviceCommand
+ok 28 - reserve atomically maps cycle, budget, intent, reservation and audit; never DeviceCommand
+  ---
+  duration_ms: 53.3509
+  type: 'test'
+  ...
+# Subtest: unique idempotency, same logical request returns the same intent, never dispatch permission
+ok 29 - unique idempotency, same logical request returns the same intent, never dispatch permission
+  ---
+  duration_ms: 5.3611
+  type: 'test'
+  ...
+# Subtest: JSONB key reordering does not change fingerprint
+ok 30 - JSONB key reordering does not change fingerprint
+  ---
+  duration_ms: 10.0651
+  type: 'test'
+  ...
+# Subtest: two simulated instances with same key reserve once
+ok 31 - two simulated instances with same key reserve once
+  ---
+  duration_ms: 44.5509
+  type: 'test'
+  ...
+# Subtest: different keys on same actuator cannot reserve while a prior intent is open
+ok 32 - different keys on same actuator cannot reserve while a prior intent is open
+  ---
+  duration_ms: 5.1253
+  type: 'test'
+  ...
+# Subtest: transaction rollback after insertIntent
+ok 33 - transaction rollback after insertIntent
+  ---
+  duration_ms: 19.8463
+  type: 'test'
+  ...
+# Subtest: transaction rollback after insertReservation
+ok 34 - transaction rollback after insertReservation
+  ---
+  duration_ms: 9.5477
+  type: 'test'
+  ...
+# Subtest: transaction rollback after appendDecision
+ok 35 - transaction rollback after appendDecision
+  ---
+  duration_ms: 6.5138
+  type: 'test'
+  ...
+# Subtest: transaction rollback after savesafety
+ok 36 - transaction rollback after savesafety
+  ---
+  duration_ms: 3.6392
+  type: 'test'
+  ...
+# Subtest: CAS mismatch aborts transaction
+ok 37 - CAS mismatch aborts transaction
+  ---
+  duration_ms: 1.536
+  type: 'test'
+  ...
+# Subtest: persisted quota cannot be reset by snapshot: reservedRuns
+ok 38 - persisted quota cannot be reset by snapshot: reservedRuns
+  ---
+  duration_ms: 2.433
+  type: 'test'
+  ...
+# Subtest: persisted quota cannot be reset by snapshot: reservedSeconds
+ok 39 - persisted quota cannot be reset by snapshot: reservedSeconds
+  ---
+  duration_ms: 2.6757
+  type: 'test'
+  ...
+# Subtest: fail closed with persisted state: fault
+ok 40 - fail closed with persisted state: fault
+  ---
+  duration_ms: 13.5987
+  type: 'test'
+  ...
+# Subtest: fail closed with persisted state: unknown persisted relay
+ok 41 - fail closed with persisted state: unknown persisted relay
+  ---
+  duration_ms: 1.9258
+  type: 'test'
+  ...
+# Subtest: fail closed with persisted state: cooldown
+ok 42 - fail closed with persisted state: cooldown
+  ---
+  duration_ms: 1.1926
+  type: 'test'
+  ...
+# Subtest: fail closed with persisted state: soak
+ok 43 - fail closed with persisted state: soak
+  ---
+  duration_ms: 1.9882
+  type: 'test'
+  ...
+# Subtest: fail closed with persisted state: manual override
+ok 44 - fail closed with persisted state: manual override
+  ---
+  duration_ms: 5.4274
+  type: 'test'
+  ...
+# Subtest: fail closed with persisted state: emergency stop
+ok 45 - fail closed with persisted state: emergency stop
+  ---
+  duration_ms: 1.4563
+  type: 'test'
+  ...
+# Subtest: fail closed with persisted state: untrusted reading
+ok 46 - fail closed with persisted state: untrusted reading
+  ---
+  duration_ms: 1.4003
+  type: 'test'
+  ...
+# Subtest: fail closed with persisted state: offline
+ok 47 - fail closed with persisted state: offline
+  ---
+  duration_ms: 2.2911
+  type: 'test'
+  ...
+# Subtest: fail closed with persisted state: unknown observed relay
+ok 48 - fail closed with persisted state: unknown observed relay
+  ---
+  duration_ms: 2.2003
+  type: 'test'
+  ...
+# Subtest: fail closed with persisted state: old OFF session
+ok 49 - fail closed with persisted state: old OFF session
+  ---
+  duration_ms: 2.7575
+  type: 'test'
+  ...
+# Subtest: fail closed with persisted state: clock unknown
+ok 50 - fail closed with persisted state: clock unknown
+  ---
+  duration_ms: 1.6437
+  type: 'test'
+  ...
+# Subtest: ACTIVE/production repository and disabled snapshots are rejected
+ok 51 - ACTIVE/production repository and disabled snapshots are rejected
+  ---
+  duration_ms: 0.9911
+  type: 'test'
+  ...
+# Subtest: stored policy is authoritative
+ok 52 - stored policy is authoritative
+  ---
+  duration_ms: 1.0703
+  type: 'test'
+  ...
+# Subtest: duplicate evaluation under a different request key does not reserve after a skip
+ok 53 - duplicate evaluation under a different request key does not reserve after a skip
+  ---
+  duration_ms: 5.1376
+  type: 'test'
+  ...
+# Subtest: clock rollback persists fault and never allocates a new day
+ok 54 - clock rollback persists fault and never allocates a new day
+  ---
+  duration_ms: 1.2313
+  type: 'test'
+  ...
+# Subtest: UTC+7 midnight starts separate budget without erasing previous reservations
+ok 55 - UTC+7 midnight starts separate budget without erasing previous reservations
+  ---
+  duration_ms: 2.1707
+  type: 'test'
+  ...
+# Subtest: ACK_TIMEOUT retains budget and late ACK cannot clear fault
+ok 56 - ACK_TIMEOUT retains budget and late ACK cannot clear fault
+  ---
+  duration_ms: 15.9843
+  type: 'test'
+  ...
+# Subtest: PUBLISH_UNCERTAIN retains budget and late ACK cannot clear fault
+ok 57 - PUBLISH_UNCERTAIN retains budget and late ACK cannot clear fault
+  ---
+  duration_ms: 10.5828
+  type: 'test'
+  ...
+# Subtest: BROKER_LOST retains budget and late ACK cannot clear fault
+ok 58 - BROKER_LOST retains budget and late ACK cannot clear fault
+  ---
+  duration_ms: 3.6224
+  type: 'test'
+  ...
+# Subtest: ACK_REJECTED retains budget and late ACK cannot clear fault
+ok 59 - ACK_REJECTED retains budget and late ACK cannot clear fault
+  ---
+  duration_ms: 12.3289
+  type: 'test'
+  ...
+# Subtest: restart at RESERVED is UNKNOWN/UNCERTAIN with no replay
+ok 60 - restart at RESERVED is UNKNOWN/UNCERTAIN with no replay
+  ---
+  duration_ms: 3.723
+  type: 'test'
+  ...
+# Subtest: restart at DISPATCH_CLAIMED is UNKNOWN/UNCERTAIN with no replay
+ok 61 - restart at DISPATCH_CLAIMED is UNKNOWN/UNCERTAIN with no replay
+  ---
+  duration_ms: 9.0052
+  type: 'test'
+  ...
+# Subtest: restart at PUBLISHED is UNKNOWN/UNCERTAIN with no replay
+ok 62 - restart at PUBLISHED is UNKNOWN/UNCERTAIN with no replay
+  ---
+  duration_ms: 5.0258
+  type: 'test'
+  ...
+# Subtest: restart at ACKED is UNKNOWN/UNCERTAIN with no replay
+ok 63 - restart at ACKED is UNKNOWN/UNCERTAIN with no replay
+  ---
+  duration_ms: 14.8013
+  type: 'test'
+  ...
+# Subtest: fresh OFF after ACK stores fake cooldown/soak, old OFF is rejected
+ok 64 - fresh OFF after ACK stores fake cooldown/soak, old OFF is rejected
+  ---
+  duration_ms: 5.156
+  type: 'test'
+  ...
+# Subtest: test database guard requires separate approval, exact endpoint/schema and test credentials
+ok 65 - test database guard requires separate approval, exact endpoint/schema and test credentials
+  ---
+  duration_ms: 1.702
+  type: 'test'
+  ...
+# Subtest: module boundary: foundation has no network/Prisma/production routes or actuator mutations
+ok 66 - module boundary: foundation has no network/Prisma/production routes or actuator mutations
+  ---
+  duration_ms: 1.9002
+  type: 'test'
+  ...
+# Subtest: expired intent and broker uncertainty never refund quota or permit redispatch
+ok 67 - expired intent and broker uncertainty never refund quota or permit redispatch
+  ---
+  duration_ms: 2.9316
+  type: 'test'
+  ...
+# Subtest: wrong correlation and invalid transition leave ledger unchanged
+ok 68 - wrong correlation and invalid transition leave ledger unchanged
+  ---
+  duration_ms: 2.244
+  type: 'test'
+  ...
+# Subtest: midnight does not clear fault, manual override or pending intent
+ok 69 - midnight does not clear fault, manual override or pending intent
+  ---
+  duration_ms: 4.4984
+  type: 'test'
+  ...
+# Subtest: persisted day high-water blocks going back to yesterday even with a healthy supplied clock
+ok 70 - persisted day high-water blocks going back to yesterday even with a healthy supplied clock
+  ---
+  duration_ms: 0.9111
+  type: 'test'
+  ...
+# Subtest: request shape rejects missing or non-string keys
+ok 71 - request shape rejects missing or non-string keys
+  ---
+  duration_ms: 0.7302
+  type: 'test'
+  ...
+# Subtest: foundation is not reachable from production routes, preview or telemetry
+ok 72 - foundation is not reachable from production routes, preview or telemetry
+  ---
+  duration_ms: 1.5694
+  type: 'test'
+  ...
+# Subtest: receipt stores exact callback time and DB correlation, zero preserved, publisher NOT_VERIFIED
+ok 73 - receipt stores exact callback time and DB correlation, zero preserved, publisher NOT_VERIFIED
+  ---
+  duration_ms: 5.519
+  type: 'test'
+  ...
+# Subtest: reject receipt retained
+ok 74 - reject receipt retained
+  ---
+  duration_ms: 0.6186
+  type: 'test'
+  ...
+# Subtest: reject receipt dup flag
+ok 75 - reject receipt dup flag
+  ---
+  duration_ms: 0.3604
+  type: 'test'
+  ...
+# Subtest: reject receipt qos missing
+ok 76 - reject receipt qos missing
+  ---
+  duration_ms: 0.2736
+  type: 'test'
+  ...
+# Subtest: reject receipt qos zero
+ok 77 - reject receipt qos zero
+  ---
+  duration_ms: 0.4709
+  type: 'test'
+  ...
+# Subtest: reject receipt callback missing
+ok 78 - reject receipt callback missing
+  ---
+  duration_ms: 0.3089
+  type: 'test'
+  ...
+# Subtest: reject receipt callback invalid
+ok 79 - reject receipt callback invalid
+  ---
+  duration_ms: 0.3024
+  type: 'test'
+  ...
+# Subtest: reject receipt generation mismatch
+ok 80 - reject receipt generation mismatch
+  ---
+  duration_ms: 0.2579
+  type: 'test'
+  ...
+# Subtest: reject receipt session missing
+ok 81 - reject receipt session missing
+  ---
+  duration_ms: 0.7348
+  type: 'test'
+  ...
+# Subtest: reject topic wrong
+ok 82 - reject topic wrong
+  ---
+  duration_ms: 0.8979
+  type: 'test'
+  ...
+# Subtest: reject topic smart-agriculture/v1/extra/devices/ESP32-GF-A-01/telemetry
+ok 83 - reject topic smart-agriculture/v1/extra/devices/ESP32-GF-A-01/telemetry
+  ---
+  duration_ms: 3.8195
+  type: 'test'
+  ...
+# Subtest: reject topic smart-agriculture/v1/devices/OTHER/telemetry
+ok 84 - reject topic smart-agriculture/v1/devices/OTHER/telemetry
+  ---
+  duration_ms: 0.2263
+  type: 'test'
+  ...
+# Subtest: reject stale/future timestamp -46000
+ok 85 - reject stale/future timestamp -46000
+  ---
+  duration_ms: 0.1964
+  type: 'test'
+  ...
+# Subtest: reject stale/future timestamp 2100
+ok 86 - reject stale/future timestamp 2100
+  ---
+  duration_ms: 0.1251
+  type: 'test'
+  ...
+# Subtest: payload duplicate and same sensor timestamp cannot gain a new receipt
+ok 87 - payload duplicate and same sensor timestamp cannot gain a new receipt
+  ---
+  duration_ms: 1.141
+  type: 'test'
+  ...
+# Subtest: out-of-order timestamp rejected despite changed payload
+ok 88 - out-of-order timestamp rejected despite changed payload
+  ---
+  duration_ms: 0.5119
+  type: 'test'
+  ...
+# Subtest: uncorrelated receipt is never returned as a reading
+ok 89 - uncorrelated receipt is never returned as a reading
+  ---
+  duration_ms: 0.294
+  type: 'test'
+  ...
+# Subtest: correlation fail-closed wrong value
+ok 90 - correlation fail-closed wrong value
+  ---
+  duration_ms: 0.5121
+  type: 'test'
+  ...
+# Subtest: correlation fail-closed wrong sensor
+ok 91 - correlation fail-closed wrong sensor
+  ---
+  duration_ms: 0.5139
+  type: 'test'
+  ...
+# Subtest: correlation fail-closed wrong timestamp
+ok 92 - correlation fail-closed wrong timestamp
+  ---
+  duration_ms: 0.4882
+  type: 'test'
+  ...
+# Subtest: correlation fail-closed wrong source
+ok 93 - correlation fail-closed wrong source
+  ---
+  duration_ms: 0.3449
+  type: 'test'
+  ...
+# Subtest: correlation fail-closed missing id
+ok 94 - correlation fail-closed missing id
+  ---
+  duration_ms: 0.6097
+  type: 'test'
+  ...
+# Subtest: correlation fail-closed missing DB receipt
+ok 95 - correlation fail-closed missing DB receipt
+  ---
+  duration_ms: 0.546
+  type: 'test'
+  ...
+# Subtest: correlation fail-closed duplicate result
+ok 96 - correlation fail-closed duplicate result
+  ---
+  duration_ms: 0.6579
+  type: 'test'
+  ...
+# Subtest: wrong readingId / changed DB row cannot match known receipt
+ok 97 - wrong readingId / changed DB row cannot match known receipt
+  ---
+  duration_ms: 2.884
+  type: 'test'
+  ...
+# Subtest: reconnect invalidates receipt and in-flight old-session correlation
+ok 98 - reconnect invalidates receipt and in-flight old-session correlation
+  ---
+  duration_ms: 0.401
+  type: 'test'
+  ...
+# Subtest: expired receipt TTL removes reading and monotonic high-water prevents replay
+ok 99 - expired receipt TTL removes reading and monotonic high-water prevents replay
+  ---
+  duration_ms: 0.7239
+  type: 'test'
+  ...
+# Subtest: clock rollback invalidates cache until a new observer session
+ok 100 - clock rollback invalidates cache until a new observer session
+  ---
+  duration_ms: 0.3625
+  type: 'test'
+  ...
+# Subtest: bounded capacity refuses unbounded sensor high-water allocation
+ok 101 - bounded capacity refuses unbounded sensor high-water allocation
+  ---
+  duration_ms: 0.3121
+  type: 'test'
+  ...
+# Subtest: fresh OFF records backend observation session, not an ESP32 boot session
+ok 102 - fresh OFF records backend observation session, not an ESP32 boot session
+  ---
+  duration_ms: 1.1336
+  type: 'test'
+  ...
+# Subtest: reject OFF old OFF
+ok 103 - reject OFF old OFF
+  ---
+  duration_ms: 0.4349
+  type: 'test'
+  ...
+# Subtest: reject OFF ON
+ok 104 - reject OFF ON
+  ---
+  duration_ms: 0.2017
+  type: 'test'
+  ...
+# Subtest: reject OFF wrong actuator
+ok 105 - reject OFF wrong actuator
+  ---
+  duration_ms: 0.3575
+  type: 'test'
+  ...
+# Subtest: reject OFF retained
+ok 106 - reject OFF retained
+  ---
+  duration_ms: 0.1472
+  type: 'test'
+  ...
+# Subtest: reject OFF duplicate
+ok 107 - reject OFF duplicate
+  ---
+  duration_ms: 0.1034
+  type: 'test'
+  ...
+# Subtest: reject OFF session mismatch
+ok 108 - reject OFF session mismatch
+  ---
+  duration_ms: 0.0995
+  type: 'test'
+  ...
+# Subtest: OFF TTL and reconnect clear current evidence
+ok 109 - OFF TTL and reconnect clear current evidence
+  ---
+  duration_ms: 0.3531
+  type: 'test'
+  ...
+# Subtest: clock HEALTHY short-term evidence does not assert long-term stability
+ok 110 - clock HEALTHY short-term evidence does not assert long-term stability
+  ---
+  duration_ms: 2.99
+  type: 'test'
+  ...
+# Subtest: clock unsynchronized
+ok 111 - clock unsynchronized
+  ---
+  duration_ms: 0.6645
+  type: 'test'
+  ...
+# Subtest: clock stale sync
+ok 112 - clock stale sync
+  ---
+  duration_ms: 0.2531
+  type: 'test'
+  ...
+# Subtest: clock wrong source
+ok 113 - clock wrong source
+  ---
+  duration_ms: 0.2003
+  type: 'test'
+  ...
+# Subtest: clock pending peer
+ok 114 - clock pending peer
+  ---
+  duration_ms: 0.4868
+  type: 'test'
+  ...
+# Subtest: clock localized/unknown output
+ok 115 - clock localized/unknown output
+  ---
+  duration_ms: 0.5626
+  type: 'test'
+  ...
+# Subtest: clock missing offsets
+ok 116 - clock missing offsets
+  ---
+  duration_ms: 0.3042
+  type: 'test'
+  ...
+# Subtest: clock excess offset
+ok 117 - clock excess offset
+  ---
+  duration_ms: 0.1893
+  type: 'test'
+  ...
+# Subtest: clock last sync error
+ok 118 - clock last sync error
+  ---
+  duration_ms: 0.3147
+  type: 'test'
+  ...
+# Subtest: another Active peer cannot mask Pending approved peer
+ok 119 - another Active peer cannot mask Pending approved peer
+  ---
+  duration_ms: 0.4959
+  type: 'test'
+  ...
+# Subtest: clock timeout/errors return UNKNOWN instead of retaining a HEALTHY sample
+ok 120 - clock timeout/errors return UNKNOWN instead of retaining a HEALTHY sample
+  ---
+  duration_ms: 1.4393
+  type: 'test'
+  ...
+# Subtest: clock TTL expires using wall and monotonic evidence age
+ok 121 - clock TTL expires using wall and monotonic evidence age
+  ---
+  duration_ms: 0.5323
+  type: 'test'
+  ...
+# Subtest: clock jump/rollback latches fail-closed -1
+ok 122 - clock jump/rollback latches fail-closed -1
+  ---
+  duration_ms: 0.5651
+  type: 'test'
+  ...
+# Subtest: clock jump/rollback latches fail-closed 3000
+ok 123 - clock jump/rollback latches fail-closed 3000
+  ---
+  duration_ms: 0.3191
+  type: 'test'
+  ...
+# Subtest: clock refresh coalesces concurrent requests into one measurement
+ok 124 - clock refresh coalesces concurrent requests into one measurement
+  ---
+  duration_ms: 0.4183
+  type: 'test'
+  ...
+# Subtest: assembler never manufactures missing policy/cycle/budget or publisher trust
+ok 125 - assembler never manufactures missing policy/cycle/budget or publisher trust
+  ---
+  duration_ms: 1.0038
+  type: 'test'
+  ...
+# Subtest: offline/missing evidence assembler returns BLOCKED, no engine call
+ok 126 - offline/missing evidence assembler returns BLOCKED, no engine call
+  ---
+  duration_ms: 0.2756
+  type: 'test'
+  ...
+# Subtest: real telemetry adapter instrumentation correlates ingestion result, no new ingestion semantics
+ok 127 - real telemetry adapter instrumentation correlates ingestion result, no new ingestion semantics
+  ---
+  duration_ms: 241.6449
+  type: 'test'
+  ...
+# Subtest: unproven/old-session receipt never blocks normal telemetry ingestion
+ok 128 - unproven/old-session receipt never blocks normal telemetry ingestion
+  ---
+  duration_ms: 103.3575
+  type: 'test'
+  ...
+# Subtest: instrumentation failure cannot turn accepted ingestion into an error: observeTelemetry
+ok 129 - instrumentation failure cannot turn accepted ingestion into an error: observeTelemetry
+  ---
+  duration_ms: 178.3565
+  type: 'test'
+  ...
+# Subtest: instrumentation failure cannot turn accepted ingestion into an error: correlate
+ok 130 - instrumentation failure cannot turn accepted ingestion into an error: correlate
+  ---
+  duration_ms: 102.8113
+  type: 'test'
+  ...
+# Subtest: failed ingestion never produces correlated evidence
+ok 131 - failed ingestion never produces correlated evidence
+  ---
+  duration_ms: 75.6422
+  type: 'test'
+  ...
+# Subtest: duplicate DB insert result cannot borrow historical readingId
+ok 132 - duplicate DB insert result cannot borrow historical readingId
+  ---
+  duration_ms: 0.4611
+  type: 'test'
+  ...
+# Subtest: OFF instrumentation follows actual adapter commit boundary: committed
+ok 133 - OFF instrumentation follows actual adapter commit boundary: committed
+  ---
+  duration_ms: 42.2906
+  type: 'test'
+  ...
+# Subtest: OFF instrumentation follows actual adapter commit boundary: zero rows
+ok 134 - OFF instrumentation follows actual adapter commit boundary: zero rows
+  ---
+  duration_ms: 25.5375
+  type: 'test'
+  ...
+# Subtest: OFF instrumentation follows actual adapter commit boundary: failed commit
+ok 135 - OFF instrumentation follows actual adapter commit boundary: failed commit
+  ---
+  duration_ms: 13.2422
+  type: 'test'
+  ...
+# Subtest: OFF instrumentation follows actual adapter commit boundary: reconnect during commit
+ok 136 - OFF instrumentation follows actual adapter commit boundary: reconnect during commit
+  ---
+  duration_ms: 11.3235
+  type: 'test'
+  ...
+# Subtest: ingestion adds exact RETURNING correlation without changing write/presence/evaluator order
+ok 137 - ingestion adds exact RETURNING correlation without changing write/presence/evaluator order
+  ---
+  duration_ms: 104.2352
+  type: 'test'
+  ...
+# Subtest: new modules contain no publish/command/evaluator/persistence mutation paths
+ok 138 - new modules contain no publish/command/evaluator/persistence mutation paths
+  ---
+  duration_ms: 2.8981
+  type: 'test'
+  ...
+# Subtest: scoped HTTP GET rejects trust injection; unauthorized/outsider/mutations cannot evaluate live
+ok 139 - scoped HTTP GET rejects trust injection; unauthorized/outsider/mutations cannot evaluate live
+  ---
+  duration_ms: 984.9052
+  type: 'test'
+  ...
+# Subtest: MQTT receipt observed != authenticated publisher
+ok 140 - MQTT receipt observed != authenticated publisher
+  ---
+  duration_ms: 3.1089
+  type: 'test'
+  ...
+# Subtest: username/anonymous=false/client trusted flag/ACL on disk cannot attest policy
+ok 141 - username/anonymous=false/client trusted flag/ACL on disk cannot attest policy
+  ---
+  duration_ms: 0.7266
+  type: 'test'
+  ...
+# Subtest: no receipt cannot create OBSERVED
+ok 142 - no receipt cannot create OBSERVED
+  ---
+  duration_ms: 2.7091
+  type: 'test'
+  ...
+# Subtest: broker missing control approved
+ok 143 - broker missing control approved
+  ---
+  duration_ms: 0.4448
+  type: 'test'
+  ...
+# Subtest: broker missing control anonymousDenied
+ok 144 - broker missing control anonymousDenied
+  ---
+  duration_ms: 0.5117
+  type: 'test'
+  ...
+# Subtest: broker missing control topicPrincipalBindingTested
+ok 145 - broker missing control topicPrincipalBindingTested
+  ---
+  duration_ms: 0.4497
+  type: 'test'
+  ...
+# Subtest: broker missing control credentialIsolationAudited
+ok 146 - broker missing control credentialIsolationAudited
+  ---
+  duration_ms: 0.3256
+  type: 'test'
+  ...
+# Subtest: broker missing control revocationAudited
+ok 147 - broker missing control revocationAudited
+  ---
+  duration_ms: 0.5614
+  type: 'test'
+  ...
+# Subtest: broker missing control protectedTransport
+ok 148 - broker missing control protectedTransport
+  ---
+  duration_ms: 0.8065
+  type: 'test'
+  ...
+# Subtest: broker missing control protectedConnectionAudit
+ok 149 - broker missing control protectedConnectionAudit
+  ---
+  duration_ms: 0.7462
+  type: 'test'
+  ...
+# Subtest: broker evidence fails closed runningAclHash:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+ok 150 - broker evidence fails closed runningAclHash:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+  ---
+  duration_ms: 0.3753
+  type: 'test'
+  ...
+# Subtest: broker evidence fails closed configHash:invalid
+ok 151 - broker evidence fails closed configHash:invalid
+  ---
+  duration_ms: 0.1365
+  type: 'test'
+  ...
+# Subtest: broker evidence fails closed principal:other
+ok 152 - broker evidence fails closed principal:other
+  ---
+  duration_ms: 0.098
+  type: 'test'
+  ...
+# Subtest: broker evidence fails closed deviceCode:other
+ok 153 - broker evidence fails closed deviceCode:other
+  ---
+  duration_ms: 0.0921
+  type: 'test'
+  ...
+# Subtest: broker evidence fails closed checkedAt:2026-10-21T06:00:00.001Z
+ok 154 - broker evidence fails closed checkedAt:2026-10-21T06:00:00.001Z
+  ---
+  duration_ms: 0.0902
+  type: 'test'
+  ...
+# Subtest: broker evidence fails closed expiresAt:2026-10-21T06:00:00.000Z
+ok 155 - broker evidence fails closed expiresAt:2026-10-21T06:00:00.000Z
+  ---
+  duration_ms: 0.4045
+  type: 'test'
+  ...
+# Subtest: broker evidence fails closed expiresAt:2026-10-21T06:10:00.000Z
+ok 156 - broker evidence fails closed expiresAt:2026-10-21T06:10:00.000Z
+  ---
+  duration_ms: 0.1157
+  type: 'test'
+  ...
+# Subtest: broker evidence fails closed checkedAt:invalid
+ok 157 - broker evidence fails closed checkedAt:invalid
+  ---
+  duration_ms: 0.089
+  type: 'test'
+  ...
+# Subtest: broker evidence fails closed reviewId:
+ok 158 - broker evidence fails closed reviewId:
+  ---
+  duration_ms: 0.0976
+  type: 'test'
+  ...
+# Subtest: synthetic broker attestation only upgrades policy level, NEVER packet/device identity
+ok 159 - synthetic broker attestation only upgrades policy level, NEVER packet/device identity
+  ---
+  duration_ms: 0.2004
+  type: 'test'
+  ...
+# Subtest: session proposal observes sequence without authenticating device
+ok 160 - session proposal observes sequence without authenticating device
+  ---
+  duration_ms: 0.6579
+  type: 'test'
+  ...
+# Subtest: session rejects bootId:undefined
+ok 161 - session rejects bootId:undefined
+  ---
+  duration_ms: 0.2623
+  type: 'test'
+  ...
+# Subtest: session rejects credentialVersion:undefined
+ok 162 - session rejects credentialVersion:undefined
+  ---
+  duration_ms: 0.2099
+  type: 'test'
+  ...
+# Subtest: session rejects sequence:undefined
+ok 163 - session rejects sequence:undefined
+  ---
+  duration_ms: 0.1122
+  type: 'test'
+  ...
+# Subtest: session rejects sequence:-1
+ok 164 - session rejects sequence:-1
+  ---
+  duration_ms: 0.1202
+  type: 'test'
+  ...
+# Subtest: session rejects sequence:1.1
+ok 165 - session rejects sequence:1.1
+  ---
+  duration_ms: 5.7991
+  type: 'test'
+  ...
+# Subtest: session rejects sequence:9007199254740992
+ok 166 - session rejects sequence:9007199254740992
+  ---
+  duration_ms: 0.3091
+  type: 'test'
+  ...
+# Subtest: session rejects observerId:old
+ok 167 - session rejects observerId:old
+  ---
+  duration_ms: 0.1316
+  type: 'test'
+  ...
+# Subtest: session rejects observerGeneration:0
+ok 168 - session rejects observerGeneration:0
+  ---
+  duration_ms: 1.2983
+  type: 'test'
+  ...
+# Subtest: session rejects retain:true
+ok 169 - session rejects retain:true
+  ---
+  duration_ms: 0.2115
+  type: 'test'
+  ...
+# Subtest: session rejects duplicate:true
+ok 170 - session rejects duplicate:true
+  ---
+  duration_ms: 0.1467
+  type: 'test'
+  ...
+# Subtest: session rejects digest:
+ok 171 - session rejects digest:
+  ---
+  duration_ms: 36.9131
+  type: 'test'
+  ...
+# Subtest: session rejects recordedAt:2026-10-21T06:00:02.001Z
+ok 172 - session rejects recordedAt:2026-10-21T06:00:02.001Z
+  ---
+  duration_ms: 0.204
+  type: 'test'
+  ...
+# Subtest: session rejects receivedAt:bad
+ok 173 - session rejects receivedAt:bad
+  ---
+  duration_ms: 0.1137
+  type: 'test'
+  ...
+# Subtest: observer cannot stand in for ESP32 boot identity
+ok 174 - observer cannot stand in for ESP32 boot identity
+  ---
+  duration_ms: 0.4369
+  type: 'test'
+  ...
+# Subtest: untrusted caller boot id does not establish session
+ok 175 - untrusted caller boot id does not establish session
+  ---
+  duration_ms: 0.175
+  type: 'test'
+  ...
+# Subtest: session revocation, expired/missing lifetime, pre-establishment message fail closed
+ok 176 - session revocation, expired/missing lifetime, pre-establishment message fail closed
+  ---
+  duration_ms: 0.3119
+  type: 'test'
+  ...
+# Subtest: duplicate sequence/digest and out-of-order receipt rejected, inputs immutable
+ok 177 - duplicate sequence/digest and out-of-order receipt rejected, inputs immutable
+  ---
+  duration_ms: 0.2835
+  type: 'test'
+  ...
+# Subtest: disconnect/generation invalidate cursor; old callback cannot be reused
+ok 178 - disconnect/generation invalidate cursor; old callback cannot be reused
+  ---
+  duration_ms: 0.2659
+  type: 'test'
+  ...
+# Subtest: boot/credential rotation requires explicit trusted re-establishment
+ok 179 - boot/credential rotation requires explicit trusted re-establishment
+  ---
+  duration_ms: 0.38
+  type: 'test'
+  ...
+# Subtest: synthetic fully described consecutive samples valid OBSERVED, not irrigation permission
+ok 180 - synthetic fully described consecutive samples valid OBSERVED, not irrigation permission
+  ---
+  duration_ms: 10.0814
+  type: 'test'
+  ...
+# Subtest: real v1 metadata absent -> NOT_VERIFIED even 30%
+ok 181 - real v1 metadata absent -> NOT_VERIFIED even 30%
+  ---
+  duration_ms: 1.2916
+  type: 'test'
+  ...
+# Subtest: soil value:null
+ok 182 - soil value:null
+  ---
+  duration_ms: 1.7742
+  type: 'test'
+  ...
+# Subtest: soil value:NaN
+ok 183 - soil value:NaN
+  ---
+  duration_ms: 0.3579
+  type: 'test'
+  ...
+# Subtest: soil value:Infinity
+ok 184 - soil value:Infinity
+  ---
+  duration_ms: 1.6217
+  type: 'test'
+  ...
+# Subtest: soil value:-1
+ok 185 - soil value:-1
+  ---
+  duration_ms: 0.4659
+  type: 'test'
+  ...
+# Subtest: soil value:101
+ok 186 - soil value:101
+  ---
+  duration_ms: 0.1823
+  type: 'test'
+  ...
+# Subtest: soil source:HTTP
+ok 187 - soil source:HTTP
+  ---
+  duration_ms: 0.1605
+  type: 'test'
+  ...
+# Subtest: soil sensorCode:TEMP_01
+ok 188 - soil sensorCode:TEMP_01
+  ---
+  duration_ms: 0.1472
+  type: 'test'
+  ...
+# Subtest: soil deviceCode:OTHER
+ok 189 - soil deviceCode:OTHER
+  ---
+  duration_ms: 0.1521
+  type: 'test'
+  ...
+# Subtest: soil rawAdc:0
+ok 190 - soil rawAdc:0
+  ---
+  duration_ms: 0.1535
+  type: 'test'
+  ...
+# Subtest: soil rawAdc:4095
+ok 191 - soil rawAdc:4095
+  ---
+  duration_ms: 0.1564
+  type: 'test'
+  ...
+# Subtest: soil rawAdc:4096
+ok 192 - soil rawAdc:4096
+  ---
+  duration_ms: 23.2922
+  type: 'test'
+  ...
+# Subtest: soil rawAdc:2500.5
+ok 193 - soil rawAdc:2500.5
+  ---
+  duration_ms: 0.4489
+  type: 'test'
+  ...
+# Subtest: soil rawAdc:undefined
+ok 194 - soil rawAdc:undefined
+  ---
+  duration_ms: 0.3581
+  type: 'test'
+  ...
+# Subtest: soil calibrationVersion:undefined
+ok 195 - soil calibrationVersion:undefined
+  ---
+  duration_ms: 0.1845
+  type: 'test'
+  ...
+# Subtest: soil calibrationVersion:other
+ok 196 - soil calibrationVersion:other
+  ---
+  duration_ms: 0.1814
+  type: 'test'
+  ...
+# Subtest: soil disconnected:true
+ok 197 - soil disconnected:true
+  ---
+  duration_ms: 0.1609
+  type: 'test'
+  ...
+# Subtest: soil recordedAt:2026-10-21T05:59:14.999Z
+ok 198 - soil recordedAt:2026-10-21T05:59:14.999Z
+  ---
+  duration_ms: 0.1493
+  type: 'test'
+  ...
+# Subtest: soil receivedAt:2026-10-21T05:59:14.999Z
+ok 199 - soil receivedAt:2026-10-21T05:59:14.999Z
+  ---
+  duration_ms: 0.1478
+  type: 'test'
+  ...
+# Subtest: soil recordedAt:2026-10-21T06:00:02.200Z
+ok 200 - soil recordedAt:2026-10-21T06:00:02.200Z
+  ---
+  duration_ms: 0.1471
+  type: 'test'
+  ...
+# Subtest: soil receivedAt:bad
+ok 201 - soil receivedAt:bad
+  ---
+  duration_ms: 0.1556
+  type: 'test'
+  ...
+# Subtest: soil endpoint/clamp 0/3500 remains value not missing
+ok 202 - soil endpoint/clamp 0/3500 remains value not missing
+  ---
+  duration_ms: 0.3595
+  type: 'test'
+  ...
+# Subtest: soil endpoint/clamp 100/1507 remains value not missing
+ok 203 - soil endpoint/clamp 100/1507 remains value not missing
+  ---
+  duration_ms: 0.1519
+  type: 'test'
+  ...
+# Subtest: soil endpoint/clamp 0/3700 remains value not missing
+ok 204 - soil endpoint/clamp 0/3700 remains value not missing
+  ---
+  duration_ms: 0.1709
+  type: 'test'
+  ...
+# Subtest: soil endpoint/clamp 100/1400 remains value not missing
+ok 205 - soil endpoint/clamp 100/1400 remains value not missing
+  ---
+  duration_ms: 0.1909
+  type: 'test'
+  ...
+# Subtest: stuck/noise/spike/rate flagged
+ok 206 - stuck/noise/spike/rate flagged
+  ---
+  duration_ms: 1.859
+  type: 'test'
+  ...
+# Subtest: ADC percent mismatch is suspect
+ok 207 - ADC percent mismatch is suspect
+  ---
+  duration_ms: 0.3272
+  type: 'test'
+  ...
+# Subtest: missing consecutive window, duplicates, cross-session, old/future/invalid history cannot pass
+ok 208 - missing consecutive window, duplicates, cross-session, old/future/invalid history cannot pass
+  ---
+  duration_ms: 0.7346
+  type: 'test'
+  ...
+# Subtest: quality evidence expiry based on earlier recorded/received time, no timestamp rewrite or mutation
+ok 209 - quality evidence expiry based on earlier recorded/received time, no timestamp rewrite or mutation
+  ---
+  duration_ms: 0.67
+  type: 'test'
+  ...
+# Subtest: missing sampling interval breaks a consecutive valid streak
+ok 210 - missing sampling interval breaks a consecutive valid streak
+  ---
+  duration_ms: 2.9882
+  type: 'test'
+  ...
+# Subtest: unapproved proposal and invalid policy/calibration fail closed
+ok 211 - unapproved proposal and invalid policy/calibration fail closed
+  ---
+  duration_ms: 3.0224
+  type: 'test'
+  ...
+# Subtest: all synthetic gates PASS still cannot enable production VERIFIED_LIVE or engine
+ok 212 - all synthetic gates PASS still cannot enable production VERIFIED_LIVE or engine
+  ---
+  duration_ms: 1.1117
+  type: 'test'
+  ...
+# Subtest: readiness missing receiptCorrelation
+ok 213 - readiness missing receiptCorrelation
+  ---
+  duration_ms: 1.5073
+  type: 'test'
+  ...
+# Subtest: readiness missing publisherAssurance
+ok 214 - readiness missing publisherAssurance
+  ---
+  duration_ms: 0.3423
+  type: 'test'
+  ...
+# Subtest: readiness missing deviceSession
+ok 215 - readiness missing deviceSession
+  ---
+  duration_ms: 3.6894
+  type: 'test'
+  ...
+# Subtest: readiness missing soilQuality
+ok 216 - readiness missing soilQuality
+  ---
+  duration_ms: 0.9758
+  type: 'test'
+  ...
+# Subtest: readiness missing freshOff
+ok 217 - readiness missing freshOff
+  ---
+  duration_ms: 0.4123
+  type: 'test'
+  ...
+# Subtest: readiness missing productionPolicy
+ok 218 - readiness missing productionPolicy
+  ---
+  duration_ms: 0.2769
+  type: 'test'
+  ...
+# Subtest: readiness missing persistentCycle
+ok 219 - readiness missing persistentCycle
+  ---
+  duration_ms: 0.2534
+  type: 'test'
+  ...
+# Subtest: readiness missing persistentBudget
+ok 220 - readiness missing persistentBudget
+  ---
+  duration_ms: 0.2671
+  type: 'test'
+  ...
+# Subtest: readiness missing persistentSafety
+ok 221 - readiness missing persistentSafety
+  ---
+  duration_ms: 4.6741
+  type: 'test'
+  ...
+# Subtest: readiness missing idempotency
+ok 222 - readiness missing idempotency
+  ---
+  duration_ms: 0.2765
+  type: 'test'
+  ...
+# Subtest: readiness missing farmDeviceRbac
+ok 223 - readiness missing farmDeviceRbac
+  ---
+  duration_ms: 0.2088
+  type: 'test'
+  ...
+# Subtest: readiness missing emergencyStop
+ok 224 - readiness missing emergencyStop
+  ---
+  duration_ms: 0.2713
+  type: 'test'
+  ...
+# Subtest: readiness missing restartRecovery
+ok 225 - readiness missing restartRecovery
+  ---
+  duration_ms: 0.2174
+  type: 'test'
+  ...
+# Subtest: readiness clock guard {"health":"UNHEALTHY"}
+ok 226 - readiness clock guard {"health":"UNHEALTHY"}
+  ---
+  duration_ms: 0.3412
+  type: 'test'
+  ...
+# Subtest: readiness clock guard {"health":"UNKNOWN"}
+ok 227 - readiness clock guard {"health":"UNKNOWN"}
+  ---
+  duration_ms: 0.224
+  type: 'test'
+  ...
+# Subtest: readiness clock guard {"checkedAt":"2026-10-21T05:58:59.999Z"}
+ok 228 - readiness clock guard {"checkedAt":"2026-10-21T05:58:59.999Z"}
+  ---
+  duration_ms: 0.2036
+  type: 'test'
+  ...
+# Subtest: readiness clock guard {"clockJumpDetected":true}
+ok 229 - readiness clock guard {"clockJumpDetected":true}
+  ---
+  duration_ms: 0.1943
+  type: 'test'
+  ...
+# Subtest: readiness clock guard {"offsetMs":501}
+ok 230 - readiness clock guard {"offsetMs":501}
+  ---
+  duration_ms: 0.2772
+  type: 'test'
+  ...
+# Subtest: readiness clock guard {"lastSyncError":1}
+ok 231 - readiness clock guard {"lastSyncError":1}
+  ---
+  duration_ms: 0.2429
+  type: 'test'
+  ...
+# Subtest: readiness clock guard {"leapIndicator":3}
+ok 232 - readiness clock guard {"leapIndicator":3}
+  ---
+  duration_ms: 0.2052
+  type: 'test'
+  ...
+# Subtest: readiness clock guard {"source":"other"}
+ok 233 - readiness clock guard {"source":"other"}
+  ---
+  duration_ms: 0.214
+  type: 'test'
+  ...
+# Subtest: readiness clock guard {"stratum":0}
+ok 234 - readiness clock guard {"stratum":0}
+  ---
+  duration_ms: 0.2184
+  type: 'test'
+  ...
+# Subtest: readiness clock guard {"lastSuccessfulSync":"2026-10-21T04:59:59.999Z"}
+ok 235 - readiness clock guard {"lastSuccessfulSync":"2026-10-21T04:59:59.999Z"}
+  ---
+  duration_ms: 0.2515
+  type: 'test'
+  ...
+# Subtest: missing/stale/future readiness evidence cannot be PASS
+ok 236 - missing/stale/future readiness evidence cannot be PASS
+  ---
+  duration_ms: 0.9217
+  type: 'test'
+  ...
+# Subtest: closed import graph, no production modules import these policies; zero publish/command/DB paths
+ok 237 - closed import graph, no production modules import these policies; zero publish/command/DB paths
+  ---
+  duration_ms: 834.3925
+  type: 'test'
+  ...
+# Subtest: ON publish has unique command identity, bounded duration and expiry; PUBACK is not success
+ok 238 - ON publish has unique command identity, bounded duration and expiry; PUBACK is not success
+  ---
+  duration_ms: 95.7443
+  type: 'test'
+  ...
+# Subtest: OFF omits runtime and valid OFF ACK confirms OFF
+ok 239 - OFF omits runtime and valid OFF ACK confirms OFF
+  ---
+  duration_ms: 143.2556
+  type: 'test'
+  ...
+# Subtest: APPLIED ACK is required for confirmed ON
+ok 240 - APPLIED ACK is required for confirmed ON
+  ---
+  duration_ms: 130.8466
+  type: 'test'
+  ...
+# Subtest: REJECTED retains reason and does not confirm state
+ok 241 - REJECTED retains reason and does not confirm state
+  ---
+  duration_ms: 136.0847
+  type: 'test'
+  ...
+# Subtest: timeout clears timer and discarded outgoing command
+ok 242 - timeout clears timer and discarded outgoing command
+  ---
+  duration_ms: 75.6113
+  type: 'test'
+  ...
+# Subtest: broker unavailable never publishes or falls back
+ok 243 - broker unavailable never publishes or falls back
+  ---
+  duration_ms: 82.1501
+  type: 'test'
+  ...
+# Subtest: expired ON never publishes
+ok 244 - expired ON never publishes
+  ---
+  duration_ms: 134.8069
+  type: 'test'
+  ...
+# Subtest: duplicate ACK cannot reapply a command
+ok 245 - duplicate ACK cannot reapply a command
+  ---
+  duration_ms: 114.648
+  type: 'test'
+  ...
+# Subtest: wrong id/device/actuator/state/topic and retained ACKs ignored
+ok 246 - wrong id/device/actuator/state/topic and retained ACKs ignored
+  ---
+  duration_ms: 38.3116
+  type: 'test'
+  ...
+# Subtest: late ACK and future timestamp ignored
+ok 247 - late ACK and future timestamp ignored
+  ---
+  duration_ms: 34.0656
+  type: 'test'
+  ...
+# Subtest: conflicting ON rejected; emergency OFF supersedes ON
+ok 248 - conflicting ON rejected; emergency OFF supersedes ON
+  ---
+  duration_ms: 47.1821
+  type: 'test'
+  ...
+# Subtest: disconnect/reconnect and new backend gateway never replay ON
+ok 249 - disconnect/reconnect and new backend gateway never replay ON
+  ---
+  duration_ms: 140.2971
+  type: 'test'
+  ...
+# Subtest: device auto-OFF cancels older pending ON but not OFF
+ok 250 - device auto-OFF cancels older pending ON but not OFF
+  ---
+  duration_ms: 32.2139
+  type: 'test'
+  ...
+# Subtest: invalid max runtime and missing callback rejected
+ok 251 - invalid max runtime and missing callback rejected
+  ---
+  duration_ms: 28.7393
+  type: 'test'
+  ...
+# Subtest: publish error is FAILED not APPLIED
+ok 252 - publish error is FAILED not APPLIED
+  ---
+  duration_ms: 31.1589
+  type: 'test'
+  ...
+# Subtest: service/DB integration: API pending, only ACK persists SUCCESS and actuator ON
+ok 253 - service/DB integration: API pending, only ACK persists SUCCESS and actuator ON
+  ---
+  duration_ms: 171.1073
+  type: 'test'
+  ...
+# Subtest: service DB rejects ACK timeout and does not claim OFF
+ok 254 - service DB rejects ACK timeout and does not claim OFF
+  ---
+  duration_ms: 69.1203
+  type: 'test'
+  ...
+# Subtest: RBAC: cross-farm inaccessible actuator cannot create command
+ok 255 - RBAC: cross-farm inaccessible actuator cannot create command
+  ---
+  duration_ms: 54.0596
+  type: 'test'
+  ...
+# Subtest: RBAC: STAFF without irrigation permission cannot create command
+ok 256 - RBAC: STAFF without irrigation permission cannot create command
+  ---
+  duration_ms: 61.3422
+  type: 'test'
+  ...
+# Subtest: offline/stale presence blocks ON before persistence
+ok 257 - offline/stale presence blocks ON before persistence
+  ---
+  duration_ms: 356.3527
+  type: 'test'
+  ...
+# Subtest: disabled feature and unavailable broker never fallback to mock
+ok 258 - disabled feature and unavailable broker never fallback to mock
+  ---
+  duration_ms: 160.1789
+  type: 'test'
+  ...
+# Subtest: allowlist, server runtime bound and automatic opt-in enforced
+ok 259 - allowlist, server runtime bound and automatic opt-in enforced
+  ---
+  duration_ms: 45.3259
+  type: 'test'
+  ...
+# Subtest: rapid conflicting requests serialize; OFF supersedes pending ON
+ok 260 - rapid conflicting requests serialize; OFF supersedes pending ON
+  ---
+  duration_ms: 40.9586
+  type: 'test'
+  ...
+# Subtest: 12D2 test mode defaults ON to one second and rejects oversized bypass before writes
+ok 261 - 12D2 test mode defaults ON to one second and rejects oversized bypass before writes
+  ---
+  duration_ms: 30.3746
+  type: 'test'
+  ...
+# Subtest: 12D2 env test mode is safe by default and invalid values cannot bypass it
+ok 262 - 12D2 env test mode is safe by default and invalid values cannot bypass it
+  ---
+  duration_ms: 129.6344
+  type: 'test'
+  ...
+# Subtest: 12D2 UNKNOWN or persisted OFF without session evidence blocks real ON
+ok 263 - 12D2 UNKNOWN or persisted OFF without session evidence blocks real ON
+  ---
+  duration_ms: 74.4097
+  type: 'test'
+  ...
+# Subtest: 12D2 new periodic OFF restores restarted state; old, duplicate and pre-session frames never do
+ok 264 - 12D2 new periodic OFF restores restarted state; old, duplicate and pre-session frames never do
+  ---
+  duration_ms: 17.6813
+  type: 'test'
+  ...
+# Subtest: 12D2 expired OFF evidence is not a current physical claim
+ok 265 - 12D2 expired OFF evidence is not a current physical claim
+  ---
+  duration_ms: 0.8325
+  type: 'test'
+  ...
+# Subtest: 12D3C DB commit / observer-confirm gap fails closed in API and command service
+ok 266 - 12D3C DB commit / observer-confirm gap fails closed in API and command service
+  ---
+  duration_ms: 117.2378
+  type: 'test'
+  ...
+# Subtest: 12D3C serving-process startup attests shared cap and disabled flags without secrets
+ok 267 - 12D3C serving-process startup attests shared cap and disabled flags without secrets
+  ---
+  duration_ms: 11.0595
+  type: 'test'
+  ...
+# Subtest: restart recovery fails orphan MQTT commands without publishing
+ok 268 - restart recovery fails orphan MQTT commands without publishing
+  ---
+  duration_ms: 11.2965
+  type: 'test'
+  ...
+# Subtest: state adapter accepts fresh auto-OFF, rejects retained/stale/unsolicited ON
+ok 269 - state adapter accepts fresh auto-OFF, rejects retained/stale/unsolicited ON
+  ---
+  duration_ms: 11.975
+  type: 'test'
+  ...
+# Subtest: 12C2 OFF observation commits with commands disabled; no command gateway side effects
+ok 270 - 12C2 OFF observation commits with commands disabled; no command gateway side effects
+  ---
+  duration_ms: 9.3088
+  type: 'test'
+  ...
+# Subtest: 12C2 invalid, retained, DUP, stale, future or mismatched state never becomes evidence
+ok 271 - 12C2 invalid, retained, DUP, stale, future or mismatched state never becomes evidence
+  ---
+  duration_ms: 9.2477
+  type: 'test'
+  ...
+# Subtest: 12C2 failed DB commit or disconnect during commit cannot confirm OFF
+ok 272 - 12C2 failed DB commit or disconnect during commit cannot confirm OFF
+  ---
+  duration_ms: 27.5725
+  type: 'test'
+  ...
+# Subtest: 12C2 API list/detail expose observed OFF without enabling control; OFFLINE/reconnect hide evidence
+ok 273 - 12C2 API list/detail expose observed OFF without enabling control; OFFLINE/reconnect hide evidence
+  ---
+  duration_ms: 26.5806
+  type: 'test'
+  ...
+# Subtest: 12C2 passive state subscription/routing works with commands disabled and denial preserves telemetry
+ok 274 - 12C2 passive state subscription/routing works with commands disabled and denial preserves telemetry
+  ---
+  duration_ms: 56.666
+  type: 'test'
+  ...
+# Subtest: 12C2 actuator summary uses the same session OFF evidence as detail
+ok 275 - 12C2 actuator summary uses the same session OFF evidence as detail
+  ---
+  duration_ms: 14.7018
+  type: 'test'
+  ...
+# Subtest: 12C2 frontend relay label preserves OFF/UNKNOWN and masks OFFLINE (static contract)
+ok 276 - 12C2 frontend relay label preserves OFF/UNKNOWN and masks OFFLINE (static contract)
+  ---
+  duration_ms: 2.3186
+  type: 'test'
+  ...
+# Subtest: managed client uses QoS1 non-retained; disconnect removes outgoing ON before reconnect
+ok 277 - managed client uses QoS1 non-retained; disconnect removes outgoing ON before reconnect
+  ---
+  duration_ms: 17.1222
+  type: 'test'
+  ...
+# Subtest: soil boundary 18
+ok 278 - soil boundary 18
+  ---
+  duration_ms: 9.589
+  type: 'test'
+  ...
+# Subtest: soil boundary 0
+ok 279 - soil boundary 0
+  ---
+  duration_ms: 1.3351
+  type: 'test'
+  ...
+# Subtest: soil boundary 20
+ok 280 - soil boundary 20
+  ---
+  duration_ms: 0.6803
+  type: 'test'
+  ...
+# Subtest: soil boundary 30
+ok 281 - soil boundary 30
+  ---
+  duration_ms: 0.6593
+  type: 'test'
+  ...
+# Subtest: soil boundary 40
+ok 282 - soil boundary 40
+  ---
+  duration_ms: 0.558
+  type: 'test'
+  ...
+# Subtest: soil boundary 80
+ok 283 - soil boundary 80
+  ---
+  duration_ms: 0.5897
+  type: 'test'
+  ...
+# Subtest: soil boundary 100
+ok 284 - soil boundary 100
+  ---
+  duration_ms: 3.6413
+  type: 'test'
+  ...
+# Subtest: fail closed: null
+ok 285 - fail closed: null
+  ---
+  duration_ms: 2.6572
+  type: 'test'
+  ...
+# Subtest: fail closed: NaN
+ok 286 - fail closed: NaN
+  ---
+  duration_ms: 1.5825
+  type: 'test'
+  ...
+# Subtest: fail closed: Infinity
+ok 287 - fail closed: Infinity
+  ---
+  duration_ms: 2.5668
+  type: 'test'
+  ...
+# Subtest: fail closed: below zero
+ok 288 - fail closed: below zero
+  ---
+  duration_ms: 1.507
+  type: 'test'
+  ...
+# Subtest: fail closed: above 100
+ok 289 - fail closed: above 100
+  ---
+  duration_ms: 0.8931
+  type: 'test'
+  ...
+# Subtest: fail closed: missing trust
+ok 290 - fail closed: missing trust
+  ---
+  duration_ms: 0.8708
+  type: 'test'
+  ...
+# Subtest: fail closed: unknown input property
+ok 291 - fail closed: unknown input property
+  ---
+  duration_ms: 0.786
+  type: 'test'
+  ...
+# Subtest: fail closed: ACTIVE forbidden
+ok 292 - fail closed: ACTIVE forbidden
+  ---
+  duration_ms: 0.8527
+  type: 'test'
+  ...
+# Subtest: fail closed: disabled
+ok 293 - fail closed: disabled
+  ---
+  duration_ms: 0.8988
+  type: 'test'
+  ...
+# Subtest: fail closed: rule disabled
+ok 294 - fail closed: rule disabled
+  ---
+  duration_ms: 0.8127
+  type: 'test'
+  ...
+# Subtest: fail closed: threshold order
+ok 295 - fail closed: threshold order
+  ---
+  duration_ms: 0.7493
+  type: 'test'
+  ...
+# Subtest: fail closed: runtime above 1
+ok 296 - fail closed: runtime above 1
+  ---
+  duration_ms: 0.7299
+  type: 'test'
+  ...
+# Subtest: fail closed: sensor identity
+ok 297 - fail closed: sensor identity
+  ---
+  duration_ms: 0.5874
+  type: 'test'
+  ...
+# Subtest: fail closed: device identity
+ok 298 - fail closed: device identity
+  ---
+  duration_ms: 0.6454
+  type: 'test'
+  ...
+# Subtest: fail closed: actuator identity
+ok 299 - fail closed: actuator identity
+  ---
+  duration_ms: 0.702
+  type: 'test'
+  ...
+# Subtest: fail closed: stale recordedAt
+ok 300 - fail closed: stale recordedAt
+  ---
+  duration_ms: 0.5912
+  type: 'test'
+  ...
+# Subtest: fail closed: stale receivedAt
+ok 301 - fail closed: stale receivedAt
+  ---
+  duration_ms: 0.5401
+  type: 'test'
+  ...
+# Subtest: fail closed: future recordedAt
+ok 302 - fail closed: future recordedAt
+  ---
+  duration_ms: 0.8593
+  type: 'test'
+  ...
+# Subtest: fail closed: future receivedAt
+ok 303 - fail closed: future receivedAt
+  ---
+  duration_ms: 0.7512
+  type: 'test'
+  ...
+# Subtest: fail closed: wrong source
+ok 304 - fail closed: wrong source
+  ---
+  duration_ms: 0.6749
+  type: 'test'
+  ...
+# Subtest: fail closed: unverified MQTT
+ok 305 - fail closed: unverified MQTT
+  ---
+  duration_ms: 0.9622
+  type: 'test'
+  ...
+# Subtest: fail closed: unauthenticated MQTT
+ok 306 - fail closed: unauthenticated MQTT
+  ---
+  duration_ms: 0.8512
+  type: 'test'
+  ...
+# Subtest: fail closed: topic mismatch
+ok 307 - fail closed: topic mismatch
+  ---
+  duration_ms: 0.7451
+  type: 'test'
+  ...
+# Subtest: fail closed: retained
+ok 308 - fail closed: retained
+  ---
+  duration_ms: 2.6104
+  type: 'test'
+  ...
+# Subtest: fail closed: duplicate
+ok 309 - fail closed: duplicate
+  ---
+  duration_ms: 0.723
+  type: 'test'
+  ...
+# Subtest: fail closed: out of order
+ok 310 - fail closed: out of order
+  ---
+  duration_ms: 0.7638
+  type: 'test'
+  ...
+# Subtest: fail closed: offline
+ok 311 - fail closed: offline
+  ---
+  duration_ms: 0.758
+  type: 'test'
+  ...
+# Subtest: fail closed: unknown presence
+ok 312 - fail closed: unknown presence
+  ---
+  duration_ms: 0.7943
+  type: 'test'
+  ...
+# Subtest: fail closed: stale presence
+ok 313 - fail closed: stale presence
+  ---
+  duration_ms: 1.5985
+  type: 'test'
+  ...
+# Subtest: fail closed: missing presence
+ok 314 - fail closed: missing presence
+  ---
+  duration_ms: 0.7562
+  type: 'test'
+  ...
+# Subtest: fail closed: pump unknown
+ok 315 - fail closed: pump unknown
+  ---
+  duration_ms: 0.6917
+  type: 'test'
+  ...
+# Subtest: fail closed: pump on
+ok 316 - fail closed: pump on
+  ---
+  duration_ms: 0.8999
+  type: 'test'
+  ...
+# Subtest: fail closed: no off
+ok 317 - fail closed: no off
+  ---
+  duration_ms: 0.9185
+  type: 'test'
+  ...
+# Subtest: fail closed: historical/mock off
+ok 318 - fail closed: historical/mock off
+  ---
+  duration_ms: 0.8822
+  type: 'test'
+  ...
+# Subtest: fail closed: retained off
+ok 319 - fail closed: retained off
+  ---
+  duration_ms: 0.7572
+  type: 'test'
+  ...
+# Subtest: fail closed: previous session off
+ok 320 - fail closed: previous session off
+  ---
+  duration_ms: 0.6028
+  type: 'test'
+  ...
+# Subtest: fail closed: pre-session off
+ok 321 - fail closed: pre-session off
+  ---
+  duration_ms: 0.8177
+  type: 'test'
+  ...
+# Subtest: fail closed: stale off
+ok 322 - fail closed: stale off
+  ---
+  duration_ms: 0.771
+  type: 'test'
+  ...
+# Subtest: fail closed: future off
+ok 323 - fail closed: future off
+  ---
+  duration_ms: 0.7338
+  type: 'test'
+  ...
+# Subtest: fail closed: broker disconnected
+ok 324 - fail closed: broker disconnected
+  ---
+  duration_ms: 1.0028
+  type: 'test'
+  ...
+# Subtest: fail closed: clock unhealthy
+ok 325 - fail closed: clock unhealthy
+  ---
+  duration_ms: 0.7492
+  type: 'test'
+  ...
+# Subtest: fail closed: clock unknown
+ok 326 - fail closed: clock unknown
+  ---
+  duration_ms: 0.5804
+  type: 'test'
+  ...
+# Subtest: fail closed: clock stale
+ok 327 - fail closed: clock stale
+  ---
+  duration_ms: 0.9639
+  type: 'test'
+  ...
+# Subtest: fail closed: clock future
+ok 328 - fail closed: clock future
+  ---
+  duration_ms: 0.7344
+  type: 'test'
+  ...
+# Subtest: fail closed: clock offset missing
+ok 329 - fail closed: clock offset missing
+  ---
+  duration_ms: 0.7248
+  type: 'test'
+  ...
+# Subtest: fail closed: clock skew
+ok 330 - fail closed: clock skew
+  ---
+  duration_ms: 0.7909
+  type: 'test'
+  ...
+# Subtest: fail closed: pending
+ok 331 - fail closed: pending
+  ---
+  duration_ms: 1.0075
+  type: 'test'
+  ...
+# Subtest: fail closed: manual override
+ok 332 - fail closed: manual override
+  ---
+  duration_ms: 0.7278
+  type: 'test'
+  ...
+# Subtest: fail closed: cooldown
+ok 333 - fail closed: cooldown
+  ---
+  duration_ms: 0.7835
+  type: 'test'
+  ...
+# Subtest: fail closed: future shared cooldown
+ok 334 - fail closed: future shared cooldown
+  ---
+  duration_ms: 0.7175
+  type: 'test'
+  ...
+# Subtest: fail closed: daily seconds
+ok 335 - fail closed: daily seconds
+  ---
+  duration_ms: 0.8561
+  type: 'test'
+  ...
+# Subtest: fail closed: daily runs
+ok 336 - fail closed: daily runs
+  ---
+  duration_ms: 0.7175
+  type: 'test'
+  ...
+# Subtest: fail closed: budget not trusted
+ok 337 - fail closed: budget not trusted
+  ---
+  duration_ms: 0.6909
+  type: 'test'
+  ...
+# Subtest: fail closed: budget from yesterday
+ok 338 - fail closed: budget from yesterday
+  ---
+  duration_ms: 1.129
+  type: 'test'
+  ...
+# Subtest: fail closed: fault latch
+ok 339 - fail closed: fault latch
+  ---
+  duration_ms: 0.7228
+  type: 'test'
+  ...
+# Subtest: fail closed: fault cycle
+ok 340 - fail closed: fault cycle
+  ---
+  duration_ms: 0.6181
+  type: 'test'
+  ...
+# Subtest: fail closed: emergency stop
+ok 341 - fail closed: emergency stop
+  ---
+  duration_ms: 0.8769
+  type: 'test'
+  ...
+# Subtest: fail closed: restart loses cycle
+ok 342 - fail closed: restart loses cycle
+  ---
+  duration_ms: 0.7993
+  type: 'test'
+  ...
+# Subtest: fail closed: untrusted cycle
+ok 343 - fail closed: untrusted cycle
+  ---
+  duration_ms: 1.1304
+  type: 'test'
+  ...
+# Subtest: fail closed: restart session changed
+ok 344 - fail closed: restart session changed
+  ---
+  duration_ms: 0.8747
+  type: 'test'
+  ...
+# Subtest: fail closed: rule version changed
+ok 345 - fail closed: rule version changed
+  ---
+  duration_ms: 1.0515
+  type: 'test'
+  ...
+# Subtest: fail closed: cycle pending
+ok 346 - fail closed: cycle pending
+  ---
+  duration_ms: 3.7407
+  type: 'test'
+  ...
+# Subtest: fail closed: cycle active
+ok 347 - fail closed: cycle active
+  ---
+  duration_ms: 0.8932
+  type: 'test'
+  ...
+# Subtest: fail closed: cycle waiting off
+ok 348 - fail closed: cycle waiting off
+  ---
+  duration_ms: 0.8283
+  type: 'test'
+  ...
+# Subtest: fail closed: reading reused
+ok 349 - fail closed: reading reused
+  ---
+  duration_ms: 1.1901
+  type: 'test'
+  ...
+# Subtest: fail closed: old reading
+ok 350 - fail closed: old reading
+  ---
+  duration_ms: 0.6502
+  type: 'test'
+  ...
+# Subtest: fail closed: no off after pulse
+ok 351 - fail closed: no off after pulse
+  ---
+  duration_ms: 0.5764
+  type: 'test'
+  ...
+# Subtest: fail closed: soak missing off
+ok 352 - fail closed: soak missing off
+  ---
+  duration_ms: 0.6216
+  type: 'test'
+  ...
+# Subtest: same snapshot is deterministic; caller must carry proposed state, no atomic cross-instance claim
+ok 353 - same snapshot is deterministic; caller must carry proposed state, no atomic cross-instance claim
+  ---
+  duration_ms: 6.8535
+  type: 'test'
+  ...
+# Subtest: hysteresis uses trusted cycle state, no ON within band
+ok 354 - hysteresis uses trusted cycle state, no ON within band
+  ---
+  duration_ms: 1.2163
+  type: 'test'
+  ...
+# Subtest: pulse -> wait fresh OFF -> soak; no immediate repeat
+ok 355 - pulse -> wait fresh OFF -> soak; no immediate repeat
+  ---
+  duration_ms: 3.0063
+  type: 'test'
+  ...
+# Subtest: old OFF cannot finish a pulse; duplicate ACK, early elapsed and late ACK are rejected
+ok 356 - old OFF cannot finish a pulse; duplicate ACK, early elapsed and late ACK are rejected
+  ---
+  duration_ms: 1.7499
+  type: 'test'
+  ...
+# Subtest: ACK_TIMEOUT latches fault without refund or retry
+ok 357 - ACK_TIMEOUT latches fault without refund or retry
+  ---
+  duration_ms: 1.7615
+  type: 'test'
+  ...
+# Subtest: ACK_REJECTED latches fault without refund or retry
+ok 358 - ACK_REJECTED latches fault without refund or retry
+  ---
+  duration_ms: 1.1416
+  type: 'test'
+  ...
+# Subtest: persistent dry soil stops after finite daily run reservations
+ok 359 - persistent dry soil stops after finite daily run reservations
+  ---
+  duration_ms: 4.0652
+  type: 'test'
+  ...
+# Subtest: per-cycle cap applies independently of daily quota
+ok 360 - per-cycle cap applies independently of daily quota
+  ---
+  duration_ms: 1.9439
+  type: 'test'
+  ...
+# Subtest: reevaluation needs reading after pulse OFF, not a cached reading
+ok 361 - reevaluation needs reading after pulse OFF, not a cached reading
+  ---
+  duration_ms: 1.7015
+  type: 'test'
+  ...
+# Subtest: UTC+7 budget day, no automatic midnight budget reset
+ok 362 - UTC+7 budget day, no automatic midnight budget reset
+  ---
+  duration_ms: 0.8298
+  type: 'test'
+  ...
+# Subtest: closed source boundary: no side-effectful imports, dynamic require, timers or implicit clock
+ok 363 - closed source boundary: no side-effectful imports, dynamic require, timers or implicit clock
+  ---
+  duration_ms: 51.7297
+  type: 'test'
+  ...
+# Subtest: proposal audit includes eligibility, isolated output cannot mutate input actuator or cycle
+ok 364 - proposal audit includes eligibility, isolated output cannot mutate input actuator or cycle
+  ---
+  duration_ms: 0.9911
+  type: 'test'
+  ...
+# Subtest: invalid, disabled or restarted transition cannot resume watering
+ok 365 - invalid, disabled or restarted transition cannot resume watering
+  ---
+  duration_ms: 1.3505
+  type: 'test'
+  ...
+# Subtest: retained, stale or duplicate OFF cannot complete simulated pulse
+ok 366 - retained, stale or duplicate OFF cannot complete simulated pulse
+  ---
+  duration_ms: 2.422
+  type: 'test'
+  ...
+# Subtest: clock TTL and offset exact boundary accepted, expired TTL blocked
+ok 367 - clock TTL and offset exact boundary accepted, expired TTL blocked
+  ---
+  duration_ms: 0.6984
+  type: 'test'
+  ...
+# Subtest: shared actuator cooldown applies even to a different rule/cycle snapshot
+ok 368 - shared actuator cooldown applies even to a different rule/cycle snapshot
+  ---
+  duration_ms: 0.6603
+  type: 'test'
+  ...
+# Subtest: production source never imports or invokes isolated shadow modules
+ok 369 - production source never imports or invokes isolated shadow modules
+  ---
+  duration_ms: 166.5171
+  type: 'test'
+  ...
+# Subtest: preview engine reason SOIL_BELOW_THRESHOLD{}
+ok 370 - preview engine reason SOIL_BELOW_THRESHOLD{}
+  ---
+  duration_ms: 9.8105
+  type: 'test'
+  ...
+# Subtest: preview engine reason SOIL_BELOW_THRESHOLD{"soilMoisture":0}
+ok 371 - preview engine reason SOIL_BELOW_THRESHOLD{"soilMoisture":0}
+  ---
+  duration_ms: 1.9893
+  type: 'test'
+  ...
+# Subtest: preview engine reason SOIL_MOISTURE_SUFFICIENT{"soilMoisture":100}
+ok 372 - preview engine reason SOIL_MOISTURE_SUFFICIENT{"soilMoisture":100}
+  ---
+  duration_ms: 0.9291
+  type: 'test'
+  ...
+# Subtest: preview engine reason HYSTERESIS_IDLE{"soilMoisture":20}
+ok 373 - preview engine reason HYSTERESIS_IDLE{"soilMoisture":20}
+  ---
+  duration_ms: 1.0239
+  type: 'test'
+  ...
+# Subtest: preview engine reason HYSTERESIS_IDLE{"soilMoisture":30}
+ok 374 - preview engine reason HYSTERESIS_IDLE{"soilMoisture":30}
+  ---
+  duration_ms: 1.4937
+  type: 'test'
+  ...
+# Subtest: preview engine reason SOIL_MOISTURE_SUFFICIENT{"soilMoisture":40}
+ok 375 - preview engine reason SOIL_MOISTURE_SUFFICIENT{"soilMoisture":40}
+  ---
+  duration_ms: 0.8663
+  type: 'test'
+  ...
+# Subtest: preview engine reason HYSTERESIS_HOLD{"cyclePhase":"REEVALUATE","soilMoisture":30}
+ok 376 - preview engine reason HYSTERESIS_HOLD{"cyclePhase":"REEVALUATE","soilMoisture":30}
+  ---
+  duration_ms: 0.902
+  type: 'test'
+  ...
+# Subtest: preview engine reason CLOCK_UNKNOWN{"clockHealth":"UNKNOWN"}
+ok 377 - preview engine reason CLOCK_UNKNOWN{"clockHealth":"UNKNOWN"}
+  ---
+  duration_ms: 0.6141
+  type: 'test'
+  ...
+# Subtest: preview engine reason CLOCK_UNHEALTHY{"clockHealth":"UNHEALTHY"}
+ok 378 - preview engine reason CLOCK_UNHEALTHY{"clockHealth":"UNHEALTHY"}
+  ---
+  duration_ms: 1.2595
+  type: 'test'
+  ...
+# Subtest: preview engine reason DEVICE_NOT_ONLINE{"connectionStatus":"OFFLINE"}
+ok 379 - preview engine reason DEVICE_NOT_ONLINE{"connectionStatus":"OFFLINE"}
+  ---
+  duration_ms: 1.6817
+  type: 'test'
+  ...
+# Subtest: preview engine reason PUMP_STATE_UNKNOWN{"pumpState":"UNKNOWN"}
+ok 380 - preview engine reason PUMP_STATE_UNKNOWN{"pumpState":"UNKNOWN"}
+  ---
+  duration_ms: 0.6779
+  type: 'test'
+  ...
+# Subtest: preview engine reason PUMP_ALREADY_ON{"pumpState":"ON"}
+ok 381 - preview engine reason PUMP_ALREADY_ON{"pumpState":"ON"}
+  ---
+  duration_ms: 0.4644
+  type: 'test'
+  ...
+# Subtest: preview engine reason BROKER_UNAVAILABLE{"brokerHealthy":"false"}
+ok 382 - preview engine reason BROKER_UNAVAILABLE{"brokerHealthy":"false"}
+  ---
+  duration_ms: 0.6154
+  type: 'test'
+  ...
+# Subtest: preview engine reason STALE_READING{"readingScenario":"STALE"}
+ok 383 - preview engine reason STALE_READING{"readingScenario":"STALE"}
+  ---
+  duration_ms: 0.4641
+  type: 'test'
+  ...
+# Subtest: preview engine reason FUTURE_READING{"readingScenario":"FUTURE"}
+ok 384 - preview engine reason FUTURE_READING{"readingScenario":"FUTURE"}
+  ---
+  duration_ms: 0.3936
+  type: 'test'
+  ...
+# Subtest: preview engine reason RETAINED_READING{"readingScenario":"RETAINED"}
+ok 385 - preview engine reason RETAINED_READING{"readingScenario":"RETAINED"}
+  ---
+  duration_ms: 2.4033
+  type: 'test'
+  ...
+# Subtest: preview engine reason DUPLICATE_READING{"readingScenario":"DUPLICATE"}
+ok 386 - preview engine reason DUPLICATE_READING{"readingScenario":"DUPLICATE"}
+  ---
+  duration_ms: 0.5432
+  type: 'test'
+  ...
+# Subtest: preview engine reason COOLDOWN_ACTIVE{"cooldownSeconds":10}
+ok 387 - preview engine reason COOLDOWN_ACTIVE{"cooldownSeconds":10}
+  ---
+  duration_ms: 1.0988
+  type: 'test'
+  ...
+# Subtest: preview engine reason SOAK_ACTIVE{"soakSeconds":10}
+ok 388 - preview engine reason SOAK_ACTIVE{"soakSeconds":10}
+  ---
+  duration_ms: 0.987
+  type: 'test'
+  ...
+# Subtest: preview engine reason DAILY_RUN_LIMIT{"reservedRuns":3}
+ok 389 - preview engine reason DAILY_RUN_LIMIT{"reservedRuns":3}
+  ---
+  duration_ms: 1.1151
+  type: 'test'
+  ...
+# Subtest: preview engine reason DAILY_BUDGET_EXHAUSTED{"reservedSeconds":3}
+ok 390 - preview engine reason DAILY_BUDGET_EXHAUSTED{"reservedSeconds":3}
+  ---
+  duration_ms: 0.6448
+  type: 'test'
+  ...
+# Subtest: preview engine reason FAULT_LATCHED{"faultLatched":"true"}
+ok 391 - preview engine reason FAULT_LATCHED{"faultLatched":"true"}
+  ---
+  duration_ms: 0.5905
+  type: 'test'
+  ...
+# Subtest: preview engine reason COMMAND_PENDING{"cyclePhase":"PENDING_ACK"}
+ok 392 - preview engine reason COMMAND_PENDING{"cyclePhase":"PENDING_ACK"}
+  ---
+  duration_ms: 1.0232
+  type: 'test'
+  ...
+# Subtest: preview engine reason CYCLE_IN_FLIGHT{"cyclePhase":"PULSE_ACTIVE"}
+ok 393 - preview engine reason CYCLE_IN_FLIGHT{"cyclePhase":"PULSE_ACTIVE"}
+  ---
+  duration_ms: 0.5946
+  type: 'test'
+  ...
+# Subtest: preview engine reason CYCLE_IN_FLIGHT{"cyclePhase":"WAIT_FRESH_OFF"}
+ok 394 - preview engine reason CYCLE_IN_FLIGHT{"cyclePhase":"WAIT_FRESH_OFF"}
+  ---
+  duration_ms: 0.7023
+  type: 'test'
+  ...
+# Subtest: preview engine reason INVALID_THRESHOLDS{"thresholdOn":40,"thresholdOff":20}
+ok 395 - preview engine reason INVALID_THRESHOLDS{"thresholdOn":40,"thresholdOff":20}
+  ---
+  duration_ms: 0.8732
+  type: 'test'
+  ...
+# Subtest: reject client trust/state injection verified
+ok 396 - reject client trust/state injection verified
+  ---
+  duration_ms: 0.9515
+  type: 'test'
+  ...
+# Subtest: reject client trust/state injection authenticated
+ok 397 - reject client trust/state injection authenticated
+  ---
+  duration_ms: 0.2028
+  type: 'test'
+  ...
+# Subtest: reject client trust/state injection trusted
+ok 398 - reject client trust/state injection trusted
+  ---
+  duration_ms: 0.1352
+  type: 'test'
+  ...
+# Subtest: reject client trust/state injection source
+ok 399 - reject client trust/state injection source
+  ---
+  duration_ms: 0.2191
+  type: 'test'
+  ...
+# Subtest: reject client trust/state injection snapshot
+ok 400 - reject client trust/state injection snapshot
+  ---
+  duration_ms: 0.1837
+  type: 'test'
+  ...
+# Subtest: reject client trust/state injection cycle
+ok 401 - reject client trust/state injection cycle
+  ---
+  duration_ms: 0.1237
+  type: 'test'
+  ...
+# Subtest: reject client trust/state injection mode
+ok 402 - reject client trust/state injection mode
+  ---
+  duration_ms: 0.2978
+  type: 'test'
+  ...
+# Subtest: reject client trust/state injection command
+ok 403 - reject client trust/state injection command
+  ---
+  duration_ms: 0.2096
+  type: 'test'
+  ...
+# Subtest: reject client trust/state injection now
+ok 404 - reject client trust/state injection now
+  ---
+  duration_ms: 0.2887
+  type: 'test'
+  ...
+# Subtest: reject client trust/state injection budget
+ok 405 - reject client trust/state injection budget
+  ---
+  duration_ms: 0.1959
+  type: 'test'
+  ...
+# Subtest: fixture provenance never promoted to live and independent scenarios do not retain budget
+ok 406 - fixture provenance never promoted to live and independent scenarios do not retain budget
+  ---
+  duration_ms: 1.7805
+  type: 'test'
+  ...
+# Subtest: authenticated GET scope, validation and method restrictions with no production writes
+ok 407 - authenticated GET scope, validation and method restrictions with no production writes
+  ---
+  duration_ms: 203.9735
+  type: 'test'
+  ...
+# Subtest: closed preview import graph, no write paths; no direct production gateway or evaluator
+ok 408 - closed preview import graph, no write paths; no direct production gateway or evaluator
+  ---
+  duration_ms: 2.0744
+  type: 'test'
+  ...
+1..408
+# tests 408
+# suites 0
+# pass 408
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 4440.761

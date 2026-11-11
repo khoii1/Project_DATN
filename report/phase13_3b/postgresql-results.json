@@ -1,0 +1,329 @@
+{
+  "conclusion": "POSTGRESQL_PERSISTENCE_PASS",
+  "scope": "ISOLATED_TEST_ONLY",
+  "startedAt": "2026-10-20T19:09:10.215Z",
+  "endedAt": "2026-10-20T19:09:19.399Z",
+  "identity": {
+    "db": "smart_agriculture_test_phase13_3b",
+    "role": "phase13_test_migrator",
+    "host": "127.0.0.1/32",
+    "port": 55433,
+    "schema": "phase13_test_phase13_3b",
+    "started": "2026-10-21 01:59:39.993302+07"
+  },
+  "appRole": {
+    "rolsuper": false,
+    "rolcreatedb": false,
+    "rolcreaterole": false
+  },
+  "testsPassed": 38,
+  "testsFailed": 0,
+  "counts": {
+    "deviceCommands": 0,
+    "sensorReadings": 0,
+    "automationRules": 0,
+    "auditRows": 134
+  },
+  "tests": [
+    {
+      "name": "atomic reservation + real same-key replay + mismatch",
+      "status": "PASS"
+    },
+    {
+      "name": "PG rollback on injected SQL failure: insertIntent",
+      "status": "PASS",
+      "details": {
+        "code": "P2003"
+      }
+    },
+    {
+      "name": "PG rollback on injected SQL failure: saveBudget",
+      "status": "PASS",
+      "details": {
+        "code": "PrismaClientUnknownRequestError",
+        "sqlstate": "23514"
+      }
+    },
+    {
+      "name": "PG rollback on injected SQL failure: appendDecision",
+      "status": "PASS",
+      "details": {
+        "code": "P2003"
+      }
+    },
+    {
+      "name": "two PG connections same-key concurrent reservation",
+      "status": "PASS",
+      "details": {
+        "intentId": "fb46d14a-d371-420d-a3ce-3eedabbd6e17",
+        "connections": 2
+      }
+    },
+    {
+      "name": "two PG connections different-key same-actuator",
+      "status": "PASS"
+    },
+    {
+      "name": "two independent processes same-key durable idempotency",
+      "status": "PASS",
+      "details": {
+        "pids": [
+          17160,
+          20596
+        ],
+        "intentId": "2a87447d-154e-48df-9f86-37a870dcf290"
+      }
+    },
+    {
+      "name": "two independent processes different-key prevent double reserve",
+      "status": "PASS",
+      "details": {
+        "pids": [
+          2904,
+          12200
+        ]
+      }
+    },
+    {
+      "name": "actual process kill before transaction commit rolls back",
+      "status": "PASS",
+      "details": {
+        "killedPid": 22628
+      }
+    },
+    {
+      "name": "actual kill/restart recovery: crash-after-commit",
+      "status": "PASS",
+      "details": {
+        "killedPid": 15576,
+        "restartedPid": 14808,
+        "inspectionPid": 24484
+      }
+    },
+    {
+      "name": "actual kill/restart recovery: crash-claimed",
+      "status": "PASS",
+      "details": {
+        "killedPid": 17820,
+        "restartedPid": 13908,
+        "inspectionPid": 22704
+      }
+    },
+    {
+      "name": "actual kill/restart recovery: crash-published",
+      "status": "PASS",
+      "details": {
+        "killedPid": 3244,
+        "restartedPid": 11276,
+        "inspectionPid": 1412
+      }
+    },
+    {
+      "name": "actual kill/restart recovery: crash-acked",
+      "status": "PASS",
+      "details": {
+        "killedPid": 12392,
+        "restartedPid": 12804,
+        "inspectionPid": 24332
+      }
+    },
+    {
+      "name": "uncertainty/fault ledger + late/duplicate ACK: ACK_TIMEOUT",
+      "status": "PASS"
+    },
+    {
+      "name": "uncertainty/fault ledger + late/duplicate ACK: PUBLISH_UNCERTAIN",
+      "status": "PASS"
+    },
+    {
+      "name": "uncertainty/fault ledger + late/duplicate ACK: BROKER_LOST",
+      "status": "PASS"
+    },
+    {
+      "name": "uncertainty/fault ledger + late/duplicate ACK: ACK_REJECTED",
+      "status": "PASS"
+    },
+    {
+      "name": "ACK APPLIED + old OFF refused + fresh same-session OFF stores soak",
+      "status": "PASS"
+    },
+    {
+      "name": "expired intent becomes uncertain, no refund",
+      "status": "PASS"
+    },
+    {
+      "name": "guard: offline",
+      "status": "PASS",
+      "details": {
+        "reason": "DEVICE_NOT_ONLINE",
+        "expectedGuard": "DEVICE_OFFLINE"
+      }
+    },
+    {
+      "name": "guard: unknown relay",
+      "status": "PASS",
+      "details": {
+        "reason": "PUMP_STATE_UNKNOWN",
+        "expectedGuard": "ACTUATOR_UNKNOWN"
+      }
+    },
+    {
+      "name": "guard: untrusted reading",
+      "status": "PASS",
+      "details": {
+        "reason": "MQTT_READING_UNTRUSTED",
+        "expectedGuard": "MQTT_UNTRUSTED"
+      }
+    },
+    {
+      "name": "guard: old off",
+      "status": "PASS",
+      "details": {
+        "reason": "OFF_SESSION_MISMATCH",
+        "expectedGuard": "OFF_EVIDENCE_STALE"
+      }
+    },
+    {
+      "name": "persisted safety: manual override",
+      "status": "PASS"
+    },
+    {
+      "name": "persisted safety: emergency stop",
+      "status": "PASS"
+    },
+    {
+      "name": "persisted safety: fault latch",
+      "status": "PASS"
+    },
+    {
+      "name": "persisted safety: persisted unknown",
+      "status": "PASS"
+    },
+    {
+      "name": "persisted safety: soak/cooldown",
+      "status": "PASS"
+    },
+    {
+      "name": "quota persists and supplied snapshot cannot reset counters",
+      "status": "PASS"
+    },
+    {
+      "name": "clock rollback latches fault durably",
+      "status": "PASS"
+    },
+    {
+      "name": "day high-water blocks old day even if supplied clock says healthy",
+      "status": "PASS"
+    },
+    {
+      "name": "midnight does not clear existing fault or manual override",
+      "status": "PASS"
+    },
+    {
+      "name": "midnight UTC+7 allocates new day but retains previous quota",
+      "status": "PASS"
+    },
+    {
+      "name": "real CAS conflict rolls back",
+      "status": "PASS"
+    },
+    {
+      "name": "SQL FK/unique/partial-index/CHECK reject invalid writes",
+      "status": "PASS"
+    },
+    {
+      "name": "app audit UPDATE DELETE TRUNCATE and schema CREATE denied",
+      "status": "PASS"
+    },
+    {
+      "name": "duplicate decision evaluation cannot mutate append-only audit",
+      "status": "PASS"
+    },
+    {
+      "name": "real SERIALIZABLE conflict on two independent connections",
+      "status": "PASS",
+      "details": {
+        "prismaCode": "P2010",
+        "sqlstate": "40001",
+        "successfulTransactions": 1
+      }
+    }
+  ],
+  "migration": {
+    "files": [
+      {
+        "file": "backend\\prisma\\migrations\\20260826044448_add_users_auth\\migration.sql",
+        "sha256": "76b3bf2f8ebc4c546968bd58a4e53aad6df82c90af2977e589ab50f6e793df30"
+      },
+      {
+        "file": "backend\\prisma\\migrations\\20260826053517_add_farms_zones_crops\\migration.sql",
+        "sha256": "35f717305819cc2399770595bd83e7156e9015e39ee0d7f76b70116067f45da6"
+      },
+      {
+        "file": "backend\\prisma\\migrations\\20260826064902_add_iot_devices\\migration.sql",
+        "sha256": "1bf8a8bde5fe2b15494972a9860f868ee4d0390c39e0362c9c1d5e9ab3bfb950"
+      },
+      {
+        "file": "backend\\prisma\\migrations\\20260826091140_add_sensors_and_readings\\migration.sql",
+        "sha256": "426c3af4a3084563b2e430993210e66df40f65646f2a5852bc0557a708202c68"
+      },
+      {
+        "file": "backend\\prisma\\migrations\\20260826143000_rename_temperature_sensor_type_to_temp\\migration.sql",
+        "sha256": "183dfec7e273f4e49598b623bfcd180b795fe1f46280d7131d3c1836a4071a5a"
+      },
+      {
+        "file": "backend\\prisma\\migrations\\20260827022817_add_alert_rules_and_alerts\\migration.sql",
+        "sha256": "d1c72dfea3cfc3a4aa4e40cfada2d117bb11d45e966e8f455f39eb300602c83c"
+      },
+      {
+        "file": "backend\\prisma\\migrations\\20260827032735_add_actuators_and_device_commands\\migration.sql",
+        "sha256": "21c26cc5d219040d4a8d1a960e6d185ef17877a1af09ce0fe38c56cfe47356dc"
+      },
+      {
+        "file": "backend\\prisma\\migrations\\20260827113854_add_automation_rules\\migration.sql",
+        "sha256": "1d70eb0324962afd4451f95c86df81a95e1b324db7631070263572dcfa22aea3"
+      },
+      {
+        "file": "backend\\prisma\\migrations\\20260827120000_add_automation_enabled_rule_index\\migration.sql",
+        "sha256": "2a011f06e820a1efbc7a0db1e4bf78e55222997e22a891f42e9577eea07ae8a5"
+      },
+      {
+        "file": "backend\\prisma\\migrations\\20260827150000_add_activity_log_farm_scope\\migration.sql",
+        "sha256": "0a0365622567856c7eaae02f11955f9368b40eaf6a787a3d0f2f6ad6b5e594b8"
+      },
+      {
+        "file": "backend\\prisma\\migrations\\20261014090000_mqtt_pump_commands\\migration.sql",
+        "sha256": "2a38418373a21de5d33e522efa74b0734d80a37e61eca28e905bd12e8b06f221"
+      },
+      {
+        "file": "build\\phase13-3a-schema\\migration-proposal.sql",
+        "sha256": "62c14dc8ef9d937ee3db34a4bc2c015ff3f5de511509587f65f07c60095146d4"
+      }
+    ],
+    "catalogs": [
+      {
+        "tables": 20
+      }
+    ],
+    "testClientOutput": "C:\\DATN\\Project_datn\\build\\phase13-3b-client",
+    "productionMigrationApplied": false
+  },
+  "shutdown": {
+    "stoppedAt": "2026-10-20T19:10:02.520Z",
+    "identity": {
+      "db": "postgres",
+      "role": "phase13_test_admin",
+      "host": "127.0.0.1/32",
+      "port": 55433,
+      "schema": "public",
+      "started": "2026-10-21 01:59:39.993302+07"
+    },
+    "testClusterStopped": true,
+    "testPortListening": false,
+    "dataRetained": true,
+    "productionServiceTouched": false
+  },
+  "automationActive": false,
+  "mqttPublishedByHarness": false,
+  "physicalPumpTriggered": false
+}

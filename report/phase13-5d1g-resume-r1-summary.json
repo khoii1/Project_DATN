@@ -1,0 +1,58 @@
+{
+  "phase": "13.5D.1G-R1",
+  "runReference": "d1g-resume-r1-0c4c6b23-ebcc-482f-862c-4e5ca805f90f",
+  "verdict": "PHASE13_5D1G_ISOLATED_SQL_INTEGRATION_PARTIAL/BLOCKED",
+  "startedAt": "2026-10-25T18:13:50.731Z",
+  "endedAt": "2026-10-25T18:13:52.899Z",
+  "bootstrap": {
+    "nativeExitCode": 0,
+    "nativeErrorCode": null,
+    "nativeSignal": null,
+    "checkpoint": "VERIFY_ACTUAL_DACL",
+    "unknownOutcome": false,
+    "rootNtfs": "PASS",
+    "parentAclUnchanged": true,
+    "protectedDacl": true,
+    "aceCount": 2,
+    "evidenceFilesChecked": 10,
+    "evidenceFileAclFailures": 0
+  },
+  "initdb": {
+    "attemptsUsed": 1,
+    "attemptsAllowed": 1,
+    "nativeExitCode": 1,
+    "nativeErrorCode": null,
+    "nativeSignal": null,
+    "elapsedMs": 270,
+    "stdoutBytes": 290,
+    "stderrBytes": 79,
+    "reason": "PWFILE_DASH_TREATED_AS_LITERAL_FILENAME",
+    "retryPerformed": false,
+    "pgdataCreated": false,
+    "pgVersionCreated": false,
+    "newSystemId": null
+  },
+  "existingTestPeerSystemId": "7698826681383327460",
+  "peerReadMethod": "LOCAL_PG_CONTROLDATA_NO_DATABASE_CONNECTION",
+  "serverStartAttempts": 0,
+  "postgresConnections": 0,
+  "r1Executions": 0,
+  "sqlIntegrationTestsExecuted": 0,
+  "finalPort55435Listeners": 0,
+  "shutdown": "NOT_APPLICABLE_NO_SERVER_STARTED",
+  "offlineTests": { "total": 211, "passed": 211, "failed": 0, "skipped": 0, "runnerExitCode": 0 },
+  "sourceR1Sha256": "9C47BD805608012D74916033AB061495311C29AD9A588D3AAFAD36578A2F9774",
+  "sourceSha256": {
+    "phase13-5d1g-isolated-run.cjs": "855B3EADF534E214D7112FE11190A356CBC952ABFF81493656D11A02BFF4699B",
+    "phase13-5d1g-resume.cjs": "26EC6C3176FB27533262CD64475D26DD11599F8020BDEA49CF362B0948F68110",
+    "phase13-5d1g-resume-root.ps1": "EA18F33C8FD072A6F524AD831278A3124B0E4256FE7C15667458D7267AA704C1",
+    "phase13-5d1g-resume.test.cjs": "3BCF646B2C2C3D96C300698E7A18D4E5E87240378CF9E0A2DE6250907CE62E5F"
+  },
+  "restrictions": [
+    "LIVE_PRODUCTION_PREFLIGHT_NOT_PERFORMED",
+    "BACKEND_RECOVERY_NOT_PERFORMED",
+    "PRODUCTION_MIGRATION_NOT_PERFORMED",
+    "PRODUCTION_STARTUP_NOT_AUTHORIZED",
+    "PHYSICAL_PUMP_NOT_TRIGGERED"
+  ]
+}

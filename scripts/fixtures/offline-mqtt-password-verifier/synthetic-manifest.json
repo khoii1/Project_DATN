@@ -1,0 +1,46 @@
+{
+  "reference": "Python hashlib.pbkdf2_hmac sha512, Mosquitto 2.1.2 canonical $7$",
+  "syntheticOnly": true,
+  "fixtures": [
+    {
+      "name": "ascii",
+      "file": "synthetic-ascii.pw",
+      "iterations": 1000,
+      "saltBytes": 12,
+      "digestBytes": 64,
+      "sha256": "328ae2f12f9930777e412cd852397534065772867c1241be7c8861ca431042c5"
+    },
+    {
+      "name": "unicode",
+      "file": "synthetic-unicode.pw",
+      "iterations": 4096,
+      "saltBytes": 64,
+      "digestBytes": 64,
+      "sha256": "dc226b385d0c6506fd8e1dccb576cf41a65f7a961a3dc453e208122d2bac0b4f"
+    },
+    {
+      "name": "spaces",
+      "file": "synthetic-spaces.pw",
+      "iterations": 2,
+      "saltBytes": 12,
+      "digestBytes": 64,
+      "sha256": "9f5c2d0c31d475b1e537afeeac318ea368fd61e52f068fd7037128ca191d4e9a"
+    },
+    {
+      "name": "special",
+      "file": "synthetic-special.pw",
+      "iterations": 1,
+      "saltBytes": 64,
+      "digestBytes": 64,
+      "sha256": "7fce8e974d184e0bdfcd606119629f26fa18f6b06bc13d63e1b14acd87377038"
+    },
+    {
+      "name": "composed",
+      "file": "synthetic-composed.pw",
+      "iterations": 1000,
+      "saltBytes": 12,
+      "digestBytes": 64,
+      "sha256": "86d404897f32015981eba7ff47a68b41753a0e3db4a6357ac3e31ad36c8390f8"
+    }
+  ]
+}

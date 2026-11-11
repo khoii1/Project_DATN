@@ -35,7 +35,17 @@
     "test:phase10": "tsx scripts/phase10-api.test.ts",
     "cleanup:phase10": "tsx scripts/cleanup-phase10-qa.ts",
     "simulate:mqtt-device": "tsx scripts/simulate-mqtt-device.ts",
-    "test:phase11": "tsx scripts/phase11-mqtt.test.ts"
+    "test:phase11": "tsx scripts/phase11-mqtt.test.ts",
+    "test:presence": "node --test scripts/device-presence.test.cjs",
+    "test:pump": "node --test scripts/mqtt-pump.test.cjs",
+    "test:shadow": "node --test scripts/shadow-irrigation.test.cjs",
+    "test:shadow-preview": "node --test scripts/shadow-preview.test.cjs",
+    "test:irrigation-persistence": "node --test scripts/irrigation-persistence.test.cjs",
+    "test:live-provenance": "node --test scripts/live-provenance.test.cjs",
+    "test:live-readiness": "node --test scripts/live-readiness.test.cjs",
+    "test:irrigation-postgres": "node scripts/phase13-3b-integration.cjs",
+    "schema:irrigation-proposal": "node scripts/prepare-irrigation-schema.cjs",
+    "simulate:shadow": "tsx scripts/shadow-irrigation-demo.ts"
   },
   "prisma": {
     "seed": "tsx prisma/seed.ts"

@@ -1,0 +1,100 @@
+﻿{
+    "At":  "2026-10-22T08:41:28.5770286+00:00",
+    "OperatorSid":  "S-1-5-21-1432835263-483988321-3159128977-1001",
+    "ScriptSha256":  "D4E74C0B9F4C51481FF1C355C1500E4780556670AA74A2C090780E7B8BCDFF22",
+    "HelperSha256":  "EE463654C397BA83F627F2BDEBAF01FCB43B73DE72ADD1D291C81A5445F19E6F",
+    "Result":  {
+                   "Status":  "BACKUP_STORAGE_DIRECTORIES_CREATED",
+                   "Ntfs":  "BACKUP_STORAGE_NTFS_VERIFIED",
+                   "Created":  [
+                                   "C:\\Users\\Acer Swift3\\AppData\\Local\\SmartAgriculturePostgresBackups",
+                                   "C:\\Users\\Acer Swift3\\AppData\\Local\\SmartAgriculturePostgresBackups\\production"
+                               ],
+                   "EmptyOnly":  true,
+                   "FileCount":  0,
+                   "AttestationWritten":  false,
+                   "ProductionDataStorageApproved":  false,
+                   "CloudBackupScope":  "NOT_VERIFIED",
+                   "Encryption":  "NOT_VERIFIED",
+                   "ExistingParentAclChanges":  false
+               },
+    "Acl":  [
+                {
+                    "Path":  "C:\\Users\\Acer Swift3\\AppData\\Local\\SmartAgriculturePostgresBackups",
+                    "OwnerSid":  "S-1-5-21-1432835263-483988321-3159128977-1001",
+                    "Protected":  true,
+                    "Reparse":  false,
+                    "Rules":  [
+                                  {
+                                      "Sid":  "S-1-5-18",
+                                      "Rights":  "FullControl",
+                                      "Inherited":  false,
+                                      "Type":  "Allow",
+                                      "InheritanceFlags":  "ContainerInherit, ObjectInherit",
+                                      "PropagationFlags":  "None"
+                                  },
+                                  {
+                                      "Sid":  "S-1-5-21-1432835263-483988321-3159128977-1001",
+                                      "Rights":  "FullControl",
+                                      "Inherited":  false,
+                                      "Type":  "Allow",
+                                      "InheritanceFlags":  "ContainerInherit, ObjectInherit",
+                                      "PropagationFlags":  "None"
+                                  }
+                              ],
+                    "Children":  [
+                                     {
+                                         "Name":  "production",
+                                         "PSIsContainer":  true
+                                     }
+                                 ]
+                },
+                {
+                    "Path":  "C:\\Users\\Acer Swift3\\AppData\\Local\\SmartAgriculturePostgresBackups\\production",
+                    "OwnerSid":  "S-1-5-21-1432835263-483988321-3159128977-1001",
+                    "Protected":  true,
+                    "Reparse":  false,
+                    "Rules":  [
+                                  {
+                                      "Sid":  "S-1-5-18",
+                                      "Rights":  "FullControl",
+                                      "Inherited":  false,
+                                      "Type":  "Allow",
+                                      "InheritanceFlags":  "ContainerInherit, ObjectInherit",
+                                      "PropagationFlags":  "None"
+                                  },
+                                  {
+                                      "Sid":  "S-1-5-21-1432835263-483988321-3159128977-1001",
+                                      "Rights":  "FullControl",
+                                      "Inherited":  false,
+                                      "Type":  "Allow",
+                                      "InheritanceFlags":  "ContainerInherit, ObjectInherit",
+                                      "PropagationFlags":  "None"
+                                  }
+                              ],
+                    "Children":  [
+
+                                 ]
+                }
+            ],
+    "Parents":  [
+                    {
+                        "Path":  "C:\\Users\\Acer Swift3\\AppData\\Local",
+                        "Verified":  true,
+                        "Unchanged":  true
+                    },
+                    {
+                        "Path":  "C:\\DATN\\Project_datn",
+                        "Verified":  true,
+                        "Unchanged":  true
+                    },
+                    {
+                        "Path":  "C:\\Program Files\\PostgreSQL\\17\\data",
+                        "Verified":  true,
+                        "Unchanged":  true
+                    }
+                ],
+    "FileCount":  0,
+    "ProductionBackupPerformed":  false,
+    "DataHandlingAttestationCreated":  false
+}

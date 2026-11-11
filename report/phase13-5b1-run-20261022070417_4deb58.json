@@ -1,0 +1,4017 @@
+{
+  "runId": "20261022070417_4deb58",
+  "startedAt": "2026-10-22T07:04:17.724Z",
+  "startedCluster": true,
+  "stoppedCluster": true,
+  "cases": [
+    {
+      "name": "isolated identity, source hashes and preserved existing phase database",
+      "status": "PASS",
+      "elapsedMs": 0,
+      "details": {
+        "systemId": "7698826681383327460",
+        "port": 55433,
+        "oldAuditRows": 232
+      }
+    },
+    {
+      "name": "file00 prerequisites commits with real role/index catalog",
+      "status": "PASS",
+      "elapsedMs": 144,
+      "details": {
+        "indexes": [
+          {
+            "relname": "actuators_id_device_id_key",
+            "indisunique": true,
+            "indisvalid": true
+          },
+          {
+            "relname": "device_commands_id_actuator_id_key",
+            "indisunique": true,
+            "indisvalid": true
+          },
+          {
+            "relname": "automation_rules_id_actuator_id_key",
+            "indisunique": true,
+            "indisvalid": true
+          }
+        ]
+      }
+    },
+    {
+      "name": "file01 ledgers commits before DBA finalization",
+      "status": "PASS",
+      "elapsedMs": 317,
+      "details": {
+        "checkpoint": "01_COMMITTED_02_NOT_RUN",
+        "migrator_create": true
+      }
+    },
+    {
+      "name": "DBA file02 finalization commits and removes temporary grants",
+      "status": "PASS",
+      "elapsedMs": 113,
+      "details": {
+        "create_schema": false,
+        "history_select": false,
+        "actuator_reference": false,
+        "command_reference": false,
+        "rule_reference": false,
+        "reading_reference": false,
+        "control_execute": true,
+        "direct_control_execute": false,
+        "baselineControlPublicExecute": true
+      }
+    },
+    {
+      "name": "six tables, six enums and 14 validated RESTRICT foreign keys",
+      "status": "PASS",
+      "elapsedMs": 0,
+      "details": {
+        "tables": [
+          {
+            "relname": "irrigation_budget_reservations",
+            "owner": "p135b1_0704174deb58_main_m"
+          },
+          {
+            "relname": "irrigation_command_intents",
+            "owner": "p135b1_0704174deb58_main_m"
+          },
+          {
+            "relname": "irrigation_cycles",
+            "owner": "p135b1_0704174deb58_main_m"
+          },
+          {
+            "relname": "irrigation_daily_budgets",
+            "owner": "p135b1_0704174deb58_main_m"
+          },
+          {
+            "relname": "irrigation_decision_logs",
+            "owner": "p135b1_0704174deb58_main_m"
+          },
+          {
+            "relname": "irrigation_safety_states",
+            "owner": "p135b1_0704174deb58_main_m"
+          }
+        ],
+        "enums": [
+          {
+            "typname": "IrrigationCyclePhase",
+            "labels": "{IDLE,ELIGIBLE,PENDING_ACK,PULSE_ACTIVE,WAIT_FRESH_OFF,SOAK,REEVALUATE,FAULT_LOCKED}"
+          },
+          {
+            "typname": "IrrigationDecisionOutcome",
+            "labels": "{WOULD_ON,WOULD_SKIP,BLOCKED}"
+          },
+          {
+            "typname": "IrrigationDecisionSource",
+            "labels": "{FIXTURE,MOCK,VERIFIED_LIVE}"
+          },
+          {
+            "typname": "IrrigationIntentStatus",
+            "labels": "{RESERVED,DISPATCH_CLAIMED,PUBLISHED,ACKED,COMPLETED,REJECTED,UNCERTAIN,CANCELLED}"
+          },
+          {
+            "typname": "IrrigationPersistenceMode",
+            "labels": "{DISABLED,SHADOW,ACTIVE}"
+          },
+          {
+            "typname": "IrrigationReservationStatus",
+            "labels": "{RESERVED,CHARGED,UNCERTAIN,RELEASED}"
+          }
+        ],
+        "fkCount": 14,
+        "indexCount": 109
+      }
+    },
+    {
+      "name": "v1/v2 constraints, exact expected indexes and append-only triggers match SQL",
+      "status": "PASS",
+      "elapsedMs": 1,
+      "details": {
+        "expectedIndexes": 25,
+        "expectedConstraints": 38,
+        "triggers": [
+          {
+            "tgname": "irrigation_v2_append_only",
+            "tgenabled": "O",
+            "definition": "CREATE TRIGGER irrigation_v2_append_only BEFORE DELETE OR UPDATE ON public.irrigation_decision_logs FOR EACH ROW EXECUTE FUNCTION irrigation_v2_deny_audit_mutation()"
+          },
+          {
+            "tgname": "irrigation_v2_no_truncate",
+            "tgenabled": "O",
+            "definition": "CREATE TRIGGER irrigation_v2_no_truncate BEFORE TRUNCATE ON public.irrigation_decision_logs FOR EACH STATEMENT EXECUTE FUNCTION irrigation_v2_deny_audit_mutation()"
+          }
+        ]
+      }
+    },
+    {
+      "name": "effective app/migrator identities use separate non-admin authenticated connections",
+      "status": "PASS",
+      "elapsedMs": 190,
+      "details": {
+        "identities": [
+          {
+            "db": "smart_agriculture_rehearsal_0704174deb58_main",
+            "role": "p135b1_0704174deb58_main_a_login",
+            "session_role": "p135b1_0704174deb58_main_a_login",
+            "host": "127.0.0.1/32",
+            "port": 55433,
+            "started": "2026-10-22 14:04:17.960606+07",
+            "pgdata": "C:/DATN/test-instances/phase13-3b/data",
+            "system_id": "7698826681383327460"
+          },
+          {
+            "db": "smart_agriculture_rehearsal_0704174deb58_main",
+            "role": "p135b1_0704174deb58_main_m_login",
+            "session_role": "p135b1_0704174deb58_main_m_login",
+            "host": "127.0.0.1/32",
+            "port": 55433,
+            "started": "2026-10-22 14:04:17.960606+07",
+            "pgdata": "C:/DATN/test-instances/phase13-3b/data",
+            "system_id": "7698826681383327460"
+          }
+        ],
+        "privileges": {
+          "create_schema": false,
+          "app_member": true,
+          "migrator_member": false,
+          "unsafe": false,
+          "owns_ledger": false
+        }
+      }
+    },
+    {
+      "name": "real app denied CREATE schema object",
+      "status": "PASS",
+      "elapsedMs": 11,
+      "details": {
+        "sqlstate": "42501",
+        "expectedFragment": null
+      }
+    },
+    {
+      "name": "real app denied INSERT DeviceCommand",
+      "status": "PASS",
+      "elapsedMs": 3,
+      "details": {
+        "sqlstate": "42501",
+        "expectedFragment": null
+      }
+    },
+    {
+      "name": "real app denied UPDATE DeviceCommand",
+      "status": "PASS",
+      "elapsedMs": 7,
+      "details": {
+        "sqlstate": "42501",
+        "expectedFragment": null
+      }
+    },
+    {
+      "name": "real app denied UPDATE audit",
+      "status": "PASS",
+      "elapsedMs": 6,
+      "details": {
+        "sqlstate": "42501",
+        "expectedFragment": null
+      }
+    },
+    {
+      "name": "real app denied DELETE audit",
+      "status": "PASS",
+      "elapsedMs": 2,
+      "details": {
+        "sqlstate": "42501",
+        "expectedFragment": null
+      }
+    },
+    {
+      "name": "real app denied TRUNCATE audit",
+      "status": "PASS",
+      "elapsedMs": 2,
+      "details": {
+        "sqlstate": "42501",
+        "expectedFragment": null
+      }
+    },
+    {
+      "name": "effective privilege matrix includes inherited group and PUBLIC grants",
+      "status": "PASS",
+      "elapsedMs": 6,
+      "details": [
+        {
+          "table": "irrigation_cycles",
+          "read": true,
+          "insert": true,
+          "update": true,
+          "delete": false,
+          "truncate": false
+        },
+        {
+          "table": "irrigation_decision_logs",
+          "read": true,
+          "insert": true,
+          "update": false,
+          "delete": false,
+          "truncate": false
+        },
+        {
+          "table": "irrigation_daily_budgets",
+          "read": true,
+          "insert": true,
+          "update": true,
+          "delete": false,
+          "truncate": false
+        },
+        {
+          "table": "irrigation_budget_reservations",
+          "read": true,
+          "insert": true,
+          "update": true,
+          "delete": false,
+          "truncate": false
+        },
+        {
+          "table": "irrigation_command_intents",
+          "read": true,
+          "insert": true,
+          "update": true,
+          "delete": false,
+          "truncate": false
+        },
+        {
+          "table": "irrigation_safety_states",
+          "read": true,
+          "insert": true,
+          "update": true,
+          "delete": false,
+          "truncate": false
+        }
+      ]
+    },
+    {
+      "name": "app can append audit and mutate only intended ledger tables using synthetic fixture",
+      "status": "PASS",
+      "elapsedMs": 33,
+      "details": {
+        "fixtureOnly": true
+      }
+    },
+    {
+      "name": "owner connection blocked by append-only trigger: UPDATE",
+      "status": "PASS",
+      "elapsedMs": 10,
+      "details": {
+        "sqlstate": "P0001",
+        "expectedFragment": "IRRIGATION_AUDIT_APPEND_ONLY"
+      }
+    },
+    {
+      "name": "owner connection blocked by append-only trigger: DELETE",
+      "status": "PASS",
+      "elapsedMs": 2,
+      "details": {
+        "sqlstate": "P0001",
+        "expectedFragment": "IRRIGATION_AUDIT_APPEND_ONLY"
+      }
+    },
+    {
+      "name": "owner connection blocked by append-only trigger: TRUNCATE",
+      "status": "PASS",
+      "elapsedMs": 3,
+      "details": {
+        "sqlstate": "P0001",
+        "expectedFragment": "IRRIGATION_AUDIT_APPEND_ONLY"
+      }
+    },
+    {
+      "name": "audit row unchanged after all rejected mutations",
+      "status": "PASS",
+      "elapsedMs": 2,
+      "details": [
+        {
+          "id": "audit0",
+          "reason_code": "SYNTHETIC_ONLY"
+        }
+      ]
+    },
+    {
+      "name": "SHADOW-only mode fence enforced by PostgreSQL",
+      "status": "PASS",
+      "elapsedMs": 2,
+      "details": {
+        "sqlstate": "23514",
+        "expectedFragment": "shadow_fence"
+      }
+    },
+    {
+      "name": "VERIFIED_LIVE source fence enforced even with valid reading FK",
+      "status": "PASS",
+      "elapsedMs": 2,
+      "details": {
+        "sqlstate": "23514",
+        "expectedFragment": "irrigation_unverified_source_fence"
+      }
+    },
+    {
+      "name": "14 RESTRICT FKs protect referenced legacy fixture from DELETE",
+      "status": "PASS",
+      "elapsedMs": 15,
+      "details": {
+        "sqlstate": "23503",
+        "expectedFragment": null
+      }
+    },
+    {
+      "name": "ledger FK violation rejected on independent app SQL connection",
+      "status": "PASS",
+      "elapsedMs": 12,
+      "details": {
+        "sqlstate": "23503",
+        "expectedFragment": null
+      }
+    },
+    {
+      "name": "v2 settlement rejects CHARGED without settled_at",
+      "status": "PASS",
+      "elapsedMs": 2,
+      "details": {
+        "sqlstate": "23514",
+        "expectedFragment": "irrigation_v2_settlement"
+      }
+    },
+    {
+      "name": "v2 dispatch ordering rejects publish without claim",
+      "status": "PASS",
+      "elapsedMs": 2,
+      "details": {
+        "sqlstate": "23514",
+        "expectedFragment": "irrigation_v2_dispatch_order"
+      }
+    },
+    {
+      "name": "quota CHECK rejects budget beyond policy",
+      "status": "PASS",
+      "elapsedMs": 2,
+      "details": {
+        "sqlstate": "23514",
+        "expectedFragment": "irrigation_budget_bounds"
+      }
+    },
+    {
+      "name": "transaction SQL error rolls back budget and appended audit together",
+      "status": "PASS",
+      "elapsedMs": 11,
+      "details": {
+        "sqlstate": "23503",
+        "expectedFragment": null
+      }
+    },
+    {
+      "name": "initial safety defaults fail closed; no automatic DeviceCommand generated",
+      "status": "PASS",
+      "elapsedMs": 13,
+      "details": {
+        "emergency_stop": true,
+        "fault_latched": true,
+        "reported_state": "UNKNOWN"
+      }
+    },
+    {
+      "name": "wrong role stops migration before DDL",
+      "status": "PASS",
+      "elapsedMs": 189,
+      "details": {
+        "sqlstate": "P0001"
+      }
+    },
+    {
+      "name": "wrong database identity stops mapped script before DDL",
+      "status": "PASS",
+      "elapsedMs": 100,
+      "details": {
+        "database": "postgres",
+        "sqlstate": "P0001"
+      }
+    },
+    {
+      "name": "checkpoint 00 COMMIT then injected file01 SQL failure preserves only prerequisites",
+      "status": "PASS",
+      "elapsedMs": 517,
+      "details": {
+        "checkpoint00Committed": true,
+        "checkpoint01RolledBack": true,
+        "retained": {
+          "tables": [],
+          "constraints": [],
+          "indexes": [
+            {
+              "table_name": "_prisma_migrations",
+              "index_name": "_prisma_migrations_pkey",
+              "indisvalid": true,
+              "definition": "CREATE UNIQUE INDEX _prisma_migrations_pkey ON public._prisma_migrations USING btree (id)"
+            },
+            {
+              "table_name": "activity_logs",
+              "index_name": "activity_logs_action_idx",
+              "indisvalid": true,
+              "definition": "CREATE INDEX activity_logs_action_idx ON public.activity_logs USING btree (action)"
+            },
+            {
+              "table_name": "activity_logs",
+              "index_name": "activity_logs_created_at_idx",
+              "indisvalid": true,
+              "definition": "CREATE INDEX activity_logs_created_at_idx ON public.activity_logs USING btree (created_at)"
+            },
+            {
+              "table_name": "activity_logs",
+              "index_name": "activity_logs_farm_id_created_at_idx",
+              "indisvalid": true,
+              "definition": "CREATE INDEX activity_logs_farm_id_created_at_idx ON public.activity_logs USING btree (farm_id, created_at)"
+            },
+            {
+              "table_name": "activity_logs",
+              "index_name": "activity_logs_pkey",
+              "indisvalid": true,
+              "definition": "CREATE UNIQUE INDEX activity_logs_pkey ON public.activity_logs USING btree (id)"
+            },
+            {
+              "table_name": "activity_logs",
+              "index_name": "activity_logs_user_id_created_at_idx",
+              "indisvalid": true,
+              "definition": "CREATE INDEX activity_logs_user_id_created_at_idx ON public.activity_logs USING btree (user_id, created_at)"
+            },
+            {
+              "table_name": "actuators",
+              "index_name": "actuators_current_state_idx",
+              "indisvalid": true,
+              "definition": "CREATE INDEX actuators_current_state_idx ON public.actuators USING btree (current_state)"
+            },
+            {
+              "table_name": "actuators",
+              "index_name": "actuators_device_id_actuator_code_key",
+              "indisvalid": true,
+              "definition": "CREATE UNIQUE INDEX actuators_device_id_actuator_code_key ON public.actuators USING btree (device_id, actuator_code)"
+            },
+            {
+              "table_name": "actuators",
+              "index_name": "actuators_device_id_idx",
+              "indisvalid": true,
+              "definition": "CREATE INDEX actuators_device_id_idx ON public.actuators USING btree (device_id)"
+            },
+            {
+              "table_name": "actuators",
+              "index_name": "actuators_id_device_id_key",
+              "indisvalid": true,
+              "definition": "CREATE UNIQUE INDEX actuators_id_device_id_key ON public.actuators USING btree (id, device_id)"
+            },
+            {
+              "table_name": "actuators",
+              "index_name": "actuators_pkey",
+              "indisvalid": true,
+              "definition": "CREATE UNIQUE INDEX actuators_pkey ON public.actuators USING btree (id)"
+            },
+            {
+              "table_name": "actuators",
+              "index_name": "actuators_status_idx",
+              "indisvalid": true,
+              "definition": "CREATE INDEX actuators_status_idx ON public.actuators USING btree (status)"
+            },
+            {
+              "table_name": "actuators",
+              "index_name": "actuators_type_idx",
+              "indisvalid": true,
+              "definition": "CREATE INDEX actuators_type_idx ON public.actuators USING btree (type)"
+            },
+            {
+              "table_name": "alert_rules",
+              "index_name": "alert_rules_enabled_idx",
+              "indisvalid": true,
+              "definition": "CREATE INDEX alert_rules_enabled_idx ON public.alert_rules USING btree (enabled)"
+            },
+            {
+              "table_name": "alert_rules",
+              "index_name": "alert_rules_pkey",
+              "indisvalid": true,
+              "definition": "CREATE UNIQUE INDEX alert_rules_pkey ON public.alert_rules USING btree (id)"
+            },
+            {
+              "table_name": "alert_rules",
+              "index_name": "alert_rules_sensor_id_idx",
+              "indisvalid": true,
+              "definition": "CREATE INDEX alert_rules_sensor_id_idx ON public.alert_rules USING btree (sensor_id)"
+            },
+            {
+              "table_name": "alert_rules",
+              "index_name": "alert_rules_severity_idx",
+              "indisvalid": true,
+              "definition": "CREATE INDEX alert_rules_severity_idx ON public.alert_rules USING btree (severity)"
+            },
+            {
+              "table_name": "alerts",
+              "index_name": "alerts_alert_rule_id_status_idx",
+              "indisvalid": true,
+              "definition": "CREATE INDEX alerts_alert_rule_id_status_idx ON public.alerts USING btree (alert_rule_id, status)"
+            },
+            {
+              "table_name": "alerts",
+              "index_name": "alerts_one_active_per_rule_idx",
+              "indisvalid": true,
+              "definition": "CREATE UNIQUE INDEX alerts_one_active_per_rule_idx ON public.alerts USING btree (alert_rule_id) WHERE (status = ANY (ARRAY['OPEN'::\"AlertStatus\", 'ACKNOWLEDGED'::\"AlertStatus\"]))"
+            },
+            {
+              "table_name": "alerts",
+              "index_name": "alerts_opened_at_idx",
+              "indisvalid": true,
+              "definition": "CREATE INDEX alerts_opened_at_idx ON public.alerts USING btree (opened_at)"
+            },
+            {
+              "table_name": "alerts",
+              "index_name": "alerts_pkey",
+              "indisvalid": true,
+              "definition": "CREATE UNIQUE INDEX alerts_pkey ON public.alerts USING btree (id)"
+            },
+            {
+              "table_name": "alerts",
+              "index_name": "alerts_sensor_id_idx",
+              "indisvalid": true,
+              "definition": "CREATE INDEX alerts_sensor_id_idx ON public.alerts USING btree (sensor_id)"
+            },
+            {
+              "table_name": "alerts",
+              "index_name": "alerts_severity_snapshot_idx",
+              "indisvalid": true,
+              "definition": "CREATE INDEX alerts_severity_snapshot_idx ON public.alerts USING btree (severity_snapshot)"
+            },
+            {
+              "table_name": "alerts",
+              "index_name": "alerts_status_idx",
+              "indisvalid": true,
+              "definition": "CREATE INDEX alerts_status_idx ON public.alerts USING btree (status)"
+            },
+            {
+              "table_name": "automation_rules",
+              "index_name": "automation_rules_actuator_id_idx",
+              "indisvalid": true,
+              "definition": "CREATE INDEX automation_rules_actuator_id_idx ON public.automation_rules USING btree (actuator_id)"
+            },
+            {
+              "table_name": "automation_rules",
+              "index_name": "automation_rules_created_at_idx",
+              "indisvalid": true,
+              "definition": "CREATE INDEX automation_rules_created_at_idx ON public.automation_rules USING btree (created_at)"
+            },
+            {
+              "table_name": "automation_rules",
+              "index_name": "automation_rules_enabled_idx",
+              "indisvalid": true,
+              "definition": "CREATE INDEX automation_rules_enabled_idx ON public.automation_rules USING btree (enabled)"
+            },
+            {
+              "table_name": "automation_rules",
+              "index_name": "automation_rules_id_actuator_id_key",
+              "indisvalid": true,
+              "definition": "CREATE UNIQUE INDEX automation_rules_id_actuator_id_key ON public.automation_rules USING btree (id, actuator_id)"
+            },
+            {
+              "table_name": "automation_rules",
+              "index_name": "automation_rules_one_enabled_per_actuator_idx",
+              "indisvalid": true,
+              "definition": "CREATE UNIQUE INDEX automation_rules_one_enabled_per_actuator_idx ON public.automation_rules USING btree (actuator_id) WHERE (enabled = true)"
+            },
+            {
+              "table_name": "automation_rules",
+              "index_name": "automation_rules_pkey",
+              "indisvalid": true,
+              "definition": "CREATE UNIQUE INDEX automation_rules_pkey ON public.automation_rules USING btree (id)"
+            },
+            {
+              "table_name": "automation_rules",
+              "index_name": "automation_rules_sensor_id_idx",
+              "indisvalid": true,
+              "definition": "CREATE INDEX automation_rules_sensor_id_idx ON public.automation_rules USING btree (sensor_id)"
+            },
+            {
+              "table_name": "crops",
+              "index_name": "crops_created_at_idx",
+              "indisvalid": true,
+              "definition": "CREATE INDEX crops_created_at_idx ON public.crops USING btree (created_at)"
+            },
+            {
+              "table_name": "crops",
+              "index_name": "crops_pkey",
+              "indisvalid": true,
+              "definition": "CREATE UNIQUE INDEX crops_pkey ON public.crops USING btree (id)"
+            },
+            {
+              "table_name": "crops",
+              "index_name": "crops_planting_date_idx",
+              "indisvalid": true,
+              "definition": "CREATE INDEX crops_planting_date_idx ON public.crops USING btree (planting_date)"
+            },
+            {
+              "table_name": "crops",
+              "index_name": "crops_status_idx",
+              "indisvalid": true,
+              "definition": "CREATE INDEX crops_status_idx ON public.crops USING btree (status)"
+            },
+            {
+              "table_name": "crops",
+              "index_name": "crops_zone_id_idx",
+              "indisvalid": true,
+              "definition": "CREATE INDEX crops_zone_id_idx ON public.crops USING btree (zone_id)"
+            },
+            {
+              "table_name": "device_commands",
+              "index_name": "device_commands_actuator_id_idx",
+              "indisvalid": true,
+              "definition": "CREATE INDEX device_commands_actuator_id_idx ON public.device_commands USING btree (actuator_id)"
+            },
+            {
+              "table_name": "device_commands",
+              "index_name": "device_commands_automation_rule_id_idx",
+              "indisvalid": true,
+              "definition": "CREATE INDEX device_commands_automation_rule_id_idx ON public.device_commands USING btree (automation_rule_id)"
+            },
+            {
+              "table_name": "device_commands",
+              "index_name": "device_commands_correlation_id_key",
+              "indisvalid": true,
+              "definition": "CREATE UNIQUE INDEX device_commands_correlation_id_key ON public.device_commands USING btree (correlation_id)"
+            },
+            {
+              "table_name": "device_commands",
+              "index_name": "device_commands_id_actuator_id_key",
+              "indisvalid": true,
+              "definition": "CREATE UNIQUE INDEX device_commands_id_actuator_id_key ON public.device_commands USING btree (id, actuator_id)"
+            },
+            {
+              "table_name": "device_commands",
+              "index_name": "device_commands_one_pending_per_actuator_idx",
+              "indisvalid": true,
+              "definition": "CREATE UNIQUE INDEX device_commands_one_pending_per_actuator_idx ON public.device_commands USING btree (actuator_id) WHERE (status = 'PENDING'::\"DeviceCommandStatus\")"
+            },
+            {
+              "table_name": "device_commands",
+              "index_name": "device_commands_pkey",
+              "indisvalid": true,
+              "definition": "CREATE UNIQUE INDEX device_commands_pkey ON public.device_commands USING btree (id)"
+            },
+            {
+              "table_name": "device_commands",
+              "index_name": "device_commands_requested_at_idx",
+              "indisvalid": true,
+              "definition": "CREATE INDEX device_commands_requested_at_idx ON public.device_commands USING btree (requested_at)"
+            },
+            {
+              "table_name": "device_commands",
+              "index_name": "device_commands_requested_by_id_idx",
+              "indisvalid": true,
+              "definition": "CREATE INDEX device_commands_requested_by_id_idx ON public.device_commands USING btree (requested_by_id)"
+            },
+            {
+              "table_name": "device_commands",
+              "index_name": "device_commands_status_idx",
+              "indisvalid": true,
+              "definition": "CREATE INDEX device_commands_status_idx ON public.device_commands USING btree (status)"
+            },
+            {
+              "table_name": "devices",
+              "index_name": "devices_connection_status_idx",
+              "indisvalid": true,
+              "definition": "CREATE INDEX devices_connection_status_idx ON public.devices USING btree (connection_status)"
+            },
+            {
+              "table_name": "devices",
+              "index_name": "devices_created_at_idx",
+              "indisvalid": true,
+              "definition": "CREATE INDEX devices_created_at_idx ON public.devices USING btree (created_at)"
+            },
+            {
+              "table_name": "devices",
+              "index_name": "devices_device_code_key",
+              "indisvalid": true,
+              "definition": "CREATE UNIQUE INDEX devices_device_code_key ON public.devices USING btree (device_code)"
+            },
+            {
+              "table_name": "devices",
+              "index_name": "devices_pkey",
+              "indisvalid": true,
+              "definition": "CREATE UNIQUE INDEX devices_pkey ON public.devices USING btree (id)"
+            },
+            {
+              "table_name": "devices",
+              "index_name": "devices_status_idx",
+              "indisvalid": true,
+              "definition": "CREATE INDEX devices_status_idx ON public.devices USING btree (status)"
+            },
+            {
+              "table_name": "devices",
+              "index_name": "devices_zone_id_idx",
+              "indisvalid": true,
+              "definition": "CREATE INDEX devices_zone_id_idx ON public.devices USING btree (zone_id)"
+            },
+            {
+              "table_name": "farm_staff_assignments",
+              "index_name": "farm_staff_assignments_farm_id_idx",
+              "indisvalid": true,
+              "definition": "CREATE INDEX farm_staff_assignments_farm_id_idx ON public.farm_staff_assignments USING btree (farm_id)"
+            },
+            {
+              "table_name": "farm_staff_assignments",
+              "index_name": "farm_staff_assignments_farm_id_staff_id_key",
+              "indisvalid": true,
+              "definition": "CREATE UNIQUE INDEX farm_staff_assignments_farm_id_staff_id_key ON public.farm_staff_assignments USING btree (farm_id, staff_id)"
+            },
+            {
+              "table_name": "farm_staff_assignments",
+              "index_name": "farm_staff_assignments_pkey",
+              "indisvalid": true,
+              "definition": "CREATE UNIQUE INDEX farm_staff_assignments_pkey ON public.farm_staff_assignments USING btree (id)"
+            },
+            {
+              "table_name": "farm_staff_assignments",
+              "index_name": "farm_staff_assignments_staff_id_idx",
+              "indisvalid": true,
+              "definition": "CREATE INDEX farm_staff_assignments_staff_id_idx ON public.farm_staff_assignments USING btree (staff_id)"
+            },
+            {
+              "table_name": "farms",
+              "index_name": "farms_created_at_idx",
+              "indisvalid": true,
+              "definition": "CREATE INDEX farms_created_at_idx ON public.farms USING btree (created_at)"
+            },
+            {
+              "table_name": "farms",
+              "index_name": "farms_owner_id_idx",
+              "indisvalid": true,
+              "definition": "CREATE INDEX farms_owner_id_idx ON public.farms USING btree (owner_id)"
+            },
+            {
+              "table_name": "farms",
+              "index_name": "farms_pkey",
+              "indisvalid": true,
+              "definition": "CREATE UNIQUE INDEX farms_pkey ON public.farms USING btree (id)"
+            },
+            {
+              "table_name": "farms",
+              "index_name": "farms_status_idx",
+              "indisvalid": true,
+              "definition": "CREATE INDEX farms_status_idx ON public.farms USING btree (status)"
+            },
+            {
+              "table_name": "sensor_readings",
+              "index_name": "sensor_readings_pkey",
+              "indisvalid": true,
+              "definition": "CREATE UNIQUE INDEX sensor_readings_pkey ON public.sensor_readings USING btree (id)"
+            },
+            {
+              "table_name": "sensor_readings",
+              "index_name": "sensor_readings_recorded_at_idx",
+              "indisvalid": true,
+              "definition": "CREATE INDEX sensor_readings_recorded_at_idx ON public.sensor_readings USING btree (recorded_at)"
+            },
+            {
+              "table_name": "sensor_readings",
+              "index_name": "sensor_readings_sensor_id_recorded_at_idx",
+              "indisvalid": true,
+              "definition": "CREATE INDEX sensor_readings_sensor_id_recorded_at_idx ON public.sensor_readings USING btree (sensor_id, recorded_at DESC)"
+            },
+            {
+              "table_name": "sensor_readings",
+              "index_name": "sensor_readings_sensor_id_recorded_at_key",
+              "indisvalid": true,
+              "definition": "CREATE UNIQUE INDEX sensor_readings_sensor_id_recorded_at_key ON public.sensor_readings USING btree (sensor_id, recorded_at)"
+            },
+            {
+              "table_name": "sensors",
+              "index_name": "sensors_device_id_idx",
+              "indisvalid": true,
+              "definition": "CREATE INDEX sensors_device_id_idx ON public.sensors USING btree (device_id)"
+            },
+            {
+              "table_name": "sensors",
+              "index_name": "sensors_device_id_sensor_code_key",
+              "indisvalid": true,
+              "definition": "CREATE UNIQUE INDEX sensors_device_id_sensor_code_key ON public.sensors USING btree (device_id, sensor_code)"
+            },
+            {
+              "table_name": "sensors",
+              "index_name": "sensors_pkey",
+              "indisvalid": true,
+              "definition": "CREATE UNIQUE INDEX sensors_pkey ON public.sensors USING btree (id)"
+            },
+            {
+              "table_name": "sensors",
+              "index_name": "sensors_status_idx",
+              "indisvalid": true,
+              "definition": "CREATE INDEX sensors_status_idx ON public.sensors USING btree (status)"
+            },
+            {
+              "table_name": "sensors",
+              "index_name": "sensors_type_idx",
+              "indisvalid": true,
+              "definition": "CREATE INDEX sensors_type_idx ON public.sensors USING btree (type)"
+            },
+            {
+              "table_name": "users",
+              "index_name": "users_created_at_idx",
+              "indisvalid": true,
+              "definition": "CREATE INDEX users_created_at_idx ON public.users USING btree (created_at)"
+            },
+            {
+              "table_name": "users",
+              "index_name": "users_email_key",
+              "indisvalid": true,
+              "definition": "CREATE UNIQUE INDEX users_email_key ON public.users USING btree (email)"
+            },
+            {
+              "table_name": "users",
+              "index_name": "users_pkey",
+              "indisvalid": true,
+              "definition": "CREATE UNIQUE INDEX users_pkey ON public.users USING btree (id)"
+            },
+            {
+              "table_name": "users",
+              "index_name": "users_role_idx",
+              "indisvalid": true,
+              "definition": "CREATE INDEX users_role_idx ON public.users USING btree (role)"
+            },
+            {
+              "table_name": "users",
+              "index_name": "users_status_idx",
+              "indisvalid": true,
+              "definition": "CREATE INDEX users_status_idx ON public.users USING btree (status)"
+            },
+            {
+              "table_name": "zones",
+              "index_name": "zones_created_at_idx",
+              "indisvalid": true,
+              "definition": "CREATE INDEX zones_created_at_idx ON public.zones USING btree (created_at)"
+            },
+            {
+              "table_name": "zones",
+              "index_name": "zones_farm_id_idx",
+              "indisvalid": true,
+              "definition": "CREATE INDEX zones_farm_id_idx ON public.zones USING btree (farm_id)"
+            },
+            {
+              "table_name": "zones",
+              "index_name": "zones_farm_id_name_key",
+              "indisvalid": true,
+              "definition": "CREATE UNIQUE INDEX zones_farm_id_name_key ON public.zones USING btree (farm_id, name)"
+            },
+            {
+              "table_name": "zones",
+              "index_name": "zones_pkey",
+              "indisvalid": true,
+              "definition": "CREATE UNIQUE INDEX zones_pkey ON public.zones USING btree (id)"
+            },
+            {
+              "table_name": "zones",
+              "index_name": "zones_status_idx",
+              "indisvalid": true,
+              "definition": "CREATE INDEX zones_status_idx ON public.zones USING btree (status)"
+            }
+          ],
+          "enums": [],
+          "triggers": []
+        }
+      }
+    },
+    {
+      "name": "explicit duplicate checkpoint00 attempt fails rather than replaying COMMIT",
+      "status": "PASS",
+      "elapsedMs": 234,
+      "details": {
+        "sqlstate": "P0001",
+        "automaticRetry": false
+      }
+    },
+    {
+      "name": "duplicate prerequisite index causes rollback including new roles",
+      "status": "PASS",
+      "elapsedMs": 164,
+      "details": {
+        "sqlstate": "42P07",
+        "rolesRolledBack": true
+      }
+    },
+    {
+      "name": "CREATE INDEX ShareLock waits for writer lock then respects 3-second lock_timeout",
+      "status": "PASS",
+      "elapsedMs": 3219,
+      "details": {
+        "sqlstate": "55P03",
+        "elapsedMs": 3134,
+        "heldLocks": [
+          {
+            "mode": "RowExclusiveLock",
+            "granted": true,
+            "pid": 14152
+          }
+        ],
+        "syntheticOnly": true
+      }
+    },
+    {
+      "name": "all rehearsal migrations leave legacy DeviceCommand and AutomationRule rows untouched",
+      "status": "PASS",
+      "elapsedMs": 58,
+      "details": [
+        {
+          "database": "smart_agriculture_rehearsal_0704174deb58_main",
+          "commandCount": 0,
+          "automationCount": 0
+        },
+        {
+          "database": "smart_agriculture_rehearsal_0704174deb58_rollback",
+          "commandCount": 0,
+          "automationCount": 0
+        },
+        {
+          "database": "smart_agriculture_rehearsal_0704174deb58_conflict",
+          "commandCount": 0,
+          "automationCount": 0
+        },
+        {
+          "database": "smart_agriculture_rehearsal_0704174deb58_lock",
+          "commandCount": 0,
+          "automationCount": 0
+        }
+      ]
+    }
+  ],
+  "environments": [
+    {
+      "label": "main",
+      "name": "smart_agriculture_rehearsal_0704174deb58_main",
+      "migrator": "p135b1_0704174deb58_main_m",
+      "app": "p135b1_0704174deb58_main_a",
+      "created": true,
+      "mapping": {
+        "00-prerequisites.review.sql": {
+          "changes": [
+            {
+              "from": "7472695863566132416",
+              "to": "7698826681383327460",
+              "occurrences": 1
+            },
+            {
+              "from": "C:/Program Files/PostgreSQL/17/data",
+              "to": "C:/DATN/test-instances/phase13-3b/data",
+              "occurrences": 1
+            },
+            {
+              "from": "'smart_agriculture'",
+              "to": "'smart_agriculture_rehearsal_0704174deb58_main'",
+              "occurrences": 1
+            },
+            {
+              "from": "ON DATABASE smart_agriculture ",
+              "to": "ON DATABASE smart_agriculture_rehearsal_0704174deb58_main ",
+              "occurrences": 1
+            },
+            {
+              "from": "5432",
+              "to": "55433",
+              "occurrences": 1
+            },
+            {
+              "from": "'postgres'",
+              "to": "'phase13_test_admin'",
+              "occurrences": 1
+            },
+            {
+              "from": "sa_irrigation_migrator",
+              "to": "p135b1_0704174deb58_main_m",
+              "occurrences": 10
+            },
+            {
+              "from": "sa_irrigation_app",
+              "to": "p135b1_0704174deb58_main_a",
+              "occurrences": 6
+            }
+          ],
+          "sourceSha256": "c96a200e4996cfbf86a274840abd7d4d0a02a9aec766395cfbdd5522a50e5a32",
+          "mappedSha256": "b76ee031dacb2d078abceab79fc9e6cc52403700ad284c1197085baa016fb57a",
+          "reversible": true
+        },
+        "01-ledgers.review.sql": {
+          "changes": [
+            {
+              "from": "7472695863566132416",
+              "to": "7698826681383327460",
+              "occurrences": 1
+            },
+            {
+              "from": "'smart_agriculture'",
+              "to": "'smart_agriculture_rehearsal_0704174deb58_main'",
+              "occurrences": 1
+            },
+            {
+              "from": "5432",
+              "to": "55433",
+              "occurrences": 1
+            },
+            {
+              "from": "sa_irrigation_migrator",
+              "to": "p135b1_0704174deb58_main_m",
+              "occurrences": 3
+            },
+            {
+              "from": "sa_irrigation_app",
+              "to": "p135b1_0704174deb58_main_a",
+              "occurrences": 17
+            }
+          ],
+          "sourceSha256": "dac6a431a4598bea18cd0ff3290fb2009c36c30809247d258aea161d637a8b8a",
+          "mappedSha256": "8be9e64f3ba99d7758c780b3049b72f0e70281e26d209b7add1dd243587f4230",
+          "reversible": true
+        },
+        "02-finalize-dba.review.sql": {
+          "changes": [
+            {
+              "from": "7472695863566132416",
+              "to": "7698826681383327460",
+              "occurrences": 1
+            },
+            {
+              "from": "'smart_agriculture'",
+              "to": "'smart_agriculture_rehearsal_0704174deb58_main'",
+              "occurrences": 1
+            },
+            {
+              "from": "5432",
+              "to": "55433",
+              "occurrences": 1
+            },
+            {
+              "from": "'postgres'",
+              "to": "'phase13_test_admin'",
+              "occurrences": 1
+            },
+            {
+              "from": "sa_irrigation_migrator",
+              "to": "p135b1_0704174deb58_main_m",
+              "occurrences": 9
+            },
+            {
+              "from": "sa_irrigation_app",
+              "to": "p135b1_0704174deb58_main_a",
+              "occurrences": 4
+            }
+          ],
+          "sourceSha256": "20de4109c7d16925ef0d12b7fb1d26491507242124f21dfa26107765e513e499",
+          "mappedSha256": "50607bbdf968627e936616e9548f1999b7198327e728f4d4840540b5c19cfd36",
+          "reversible": true
+        }
+      }
+    },
+    {
+      "label": "rollback",
+      "name": "smart_agriculture_rehearsal_0704174deb58_rollback",
+      "migrator": "p135b1_0704174deb58_rollback_m",
+      "app": "p135b1_0704174deb58_rollback_a",
+      "created": true,
+      "mapping": {
+        "00-prerequisites.review.sql": {
+          "changes": [
+            {
+              "from": "7472695863566132416",
+              "to": "7698826681383327460",
+              "occurrences": 1
+            },
+            {
+              "from": "C:/Program Files/PostgreSQL/17/data",
+              "to": "C:/DATN/test-instances/phase13-3b/data",
+              "occurrences": 1
+            },
+            {
+              "from": "'smart_agriculture'",
+              "to": "'smart_agriculture_rehearsal_0704174deb58_rollback'",
+              "occurrences": 1
+            },
+            {
+              "from": "ON DATABASE smart_agriculture ",
+              "to": "ON DATABASE smart_agriculture_rehearsal_0704174deb58_rollback ",
+              "occurrences": 1
+            },
+            {
+              "from": "5432",
+              "to": "55433",
+              "occurrences": 1
+            },
+            {
+              "from": "'postgres'",
+              "to": "'phase13_test_admin'",
+              "occurrences": 1
+            },
+            {
+              "from": "sa_irrigation_migrator",
+              "to": "p135b1_0704174deb58_rollback_m",
+              "occurrences": 10
+            },
+            {
+              "from": "sa_irrigation_app",
+              "to": "p135b1_0704174deb58_rollback_a",
+              "occurrences": 6
+            }
+          ],
+          "sourceSha256": "c96a200e4996cfbf86a274840abd7d4d0a02a9aec766395cfbdd5522a50e5a32",
+          "mappedSha256": "811a488fe566fef952e3baab2878176f5d735d7de7bb433a17b70825ab4fc6fb",
+          "reversible": true
+        },
+        "01-ledgers.review.sql": {
+          "changes": [
+            {
+              "from": "7472695863566132416",
+              "to": "7698826681383327460",
+              "occurrences": 1
+            },
+            {
+              "from": "'smart_agriculture'",
+              "to": "'smart_agriculture_rehearsal_0704174deb58_rollback'",
+              "occurrences": 1
+            },
+            {
+              "from": "5432",
+              "to": "55433",
+              "occurrences": 1
+            },
+            {
+              "from": "sa_irrigation_migrator",
+              "to": "p135b1_0704174deb58_rollback_m",
+              "occurrences": 3
+            },
+            {
+              "from": "sa_irrigation_app",
+              "to": "p135b1_0704174deb58_rollback_a",
+              "occurrences": 17
+            }
+          ],
+          "sourceSha256": "dac6a431a4598bea18cd0ff3290fb2009c36c30809247d258aea161d637a8b8a",
+          "mappedSha256": "ef18e64b2ac11a4dd49d38271605cba581816401b65e62e7cff6c82b76851526",
+          "reversible": true
+        },
+        "02-finalize-dba.review.sql": {
+          "changes": [
+            {
+              "from": "7472695863566132416",
+              "to": "7698826681383327460",
+              "occurrences": 1
+            },
+            {
+              "from": "'smart_agriculture'",
+              "to": "'smart_agriculture_rehearsal_0704174deb58_rollback'",
+              "occurrences": 1
+            },
+            {
+              "from": "5432",
+              "to": "55433",
+              "occurrences": 1
+            },
+            {
+              "from": "'postgres'",
+              "to": "'phase13_test_admin'",
+              "occurrences": 1
+            },
+            {
+              "from": "sa_irrigation_migrator",
+              "to": "p135b1_0704174deb58_rollback_m",
+              "occurrences": 9
+            },
+            {
+              "from": "sa_irrigation_app",
+              "to": "p135b1_0704174deb58_rollback_a",
+              "occurrences": 4
+            }
+          ],
+          "sourceSha256": "20de4109c7d16925ef0d12b7fb1d26491507242124f21dfa26107765e513e499",
+          "mappedSha256": "b71e202e579583a76ae813769d006bea6a1d4de58d3530604503683aa2bbebad",
+          "reversible": true
+        }
+      }
+    },
+    {
+      "label": "conflict",
+      "name": "smart_agriculture_rehearsal_0704174deb58_conflict",
+      "migrator": "p135b1_0704174deb58_conflict_m",
+      "app": "p135b1_0704174deb58_conflict_a",
+      "created": true,
+      "mapping": {
+        "00-prerequisites.review.sql": {
+          "changes": [
+            {
+              "from": "7472695863566132416",
+              "to": "7698826681383327460",
+              "occurrences": 1
+            },
+            {
+              "from": "C:/Program Files/PostgreSQL/17/data",
+              "to": "C:/DATN/test-instances/phase13-3b/data",
+              "occurrences": 1
+            },
+            {
+              "from": "'smart_agriculture'",
+              "to": "'smart_agriculture_rehearsal_0704174deb58_conflict'",
+              "occurrences": 1
+            },
+            {
+              "from": "ON DATABASE smart_agriculture ",
+              "to": "ON DATABASE smart_agriculture_rehearsal_0704174deb58_conflict ",
+              "occurrences": 1
+            },
+            {
+              "from": "5432",
+              "to": "55433",
+              "occurrences": 1
+            },
+            {
+              "from": "'postgres'",
+              "to": "'phase13_test_admin'",
+              "occurrences": 1
+            },
+            {
+              "from": "sa_irrigation_migrator",
+              "to": "p135b1_0704174deb58_conflict_m",
+              "occurrences": 10
+            },
+            {
+              "from": "sa_irrigation_app",
+              "to": "p135b1_0704174deb58_conflict_a",
+              "occurrences": 6
+            }
+          ],
+          "sourceSha256": "c96a200e4996cfbf86a274840abd7d4d0a02a9aec766395cfbdd5522a50e5a32",
+          "mappedSha256": "e3e95f75c55fb0bb0d54ab58948c1c288f57218eb52316b3474462656c1fc95b",
+          "reversible": true
+        },
+        "01-ledgers.review.sql": {
+          "changes": [
+            {
+              "from": "7472695863566132416",
+              "to": "7698826681383327460",
+              "occurrences": 1
+            },
+            {
+              "from": "'smart_agriculture'",
+              "to": "'smart_agriculture_rehearsal_0704174deb58_conflict'",
+              "occurrences": 1
+            },
+            {
+              "from": "5432",
+              "to": "55433",
+              "occurrences": 1
+            },
+            {
+              "from": "sa_irrigation_migrator",
+              "to": "p135b1_0704174deb58_conflict_m",
+              "occurrences": 3
+            },
+            {
+              "from": "sa_irrigation_app",
+              "to": "p135b1_0704174deb58_conflict_a",
+              "occurrences": 17
+            }
+          ],
+          "sourceSha256": "dac6a431a4598bea18cd0ff3290fb2009c36c30809247d258aea161d637a8b8a",
+          "mappedSha256": "c4481d3bcdd4433113c6dbe525f7ce06665492fbad11c5b3880a96829ca75de2",
+          "reversible": true
+        },
+        "02-finalize-dba.review.sql": {
+          "changes": [
+            {
+              "from": "7472695863566132416",
+              "to": "7698826681383327460",
+              "occurrences": 1
+            },
+            {
+              "from": "'smart_agriculture'",
+              "to": "'smart_agriculture_rehearsal_0704174deb58_conflict'",
+              "occurrences": 1
+            },
+            {
+              "from": "5432",
+              "to": "55433",
+              "occurrences": 1
+            },
+            {
+              "from": "'postgres'",
+              "to": "'phase13_test_admin'",
+              "occurrences": 1
+            },
+            {
+              "from": "sa_irrigation_migrator",
+              "to": "p135b1_0704174deb58_conflict_m",
+              "occurrences": 9
+            },
+            {
+              "from": "sa_irrigation_app",
+              "to": "p135b1_0704174deb58_conflict_a",
+              "occurrences": 4
+            }
+          ],
+          "sourceSha256": "20de4109c7d16925ef0d12b7fb1d26491507242124f21dfa26107765e513e499",
+          "mappedSha256": "97ec0fe5a8d851fb0a7ec4c7ce99d487e6d1e8aa22eb103154750d4866354e6a",
+          "reversible": true
+        }
+      }
+    },
+    {
+      "label": "lock",
+      "name": "smart_agriculture_rehearsal_0704174deb58_lock",
+      "migrator": "p135b1_0704174deb58_lock_m",
+      "app": "p135b1_0704174deb58_lock_a",
+      "created": true,
+      "mapping": {
+        "00-prerequisites.review.sql": {
+          "changes": [
+            {
+              "from": "7472695863566132416",
+              "to": "7698826681383327460",
+              "occurrences": 1
+            },
+            {
+              "from": "C:/Program Files/PostgreSQL/17/data",
+              "to": "C:/DATN/test-instances/phase13-3b/data",
+              "occurrences": 1
+            },
+            {
+              "from": "'smart_agriculture'",
+              "to": "'smart_agriculture_rehearsal_0704174deb58_lock'",
+              "occurrences": 1
+            },
+            {
+              "from": "ON DATABASE smart_agriculture ",
+              "to": "ON DATABASE smart_agriculture_rehearsal_0704174deb58_lock ",
+              "occurrences": 1
+            },
+            {
+              "from": "5432",
+              "to": "55433",
+              "occurrences": 1
+            },
+            {
+              "from": "'postgres'",
+              "to": "'phase13_test_admin'",
+              "occurrences": 1
+            },
+            {
+              "from": "sa_irrigation_migrator",
+              "to": "p135b1_0704174deb58_lock_m",
+              "occurrences": 10
+            },
+            {
+              "from": "sa_irrigation_app",
+              "to": "p135b1_0704174deb58_lock_a",
+              "occurrences": 6
+            }
+          ],
+          "sourceSha256": "c96a200e4996cfbf86a274840abd7d4d0a02a9aec766395cfbdd5522a50e5a32",
+          "mappedSha256": "44c948e911de326d98abc5b72a2b4956d113923ccf28b49020ceaf49c058ca45",
+          "reversible": true
+        },
+        "01-ledgers.review.sql": {
+          "changes": [
+            {
+              "from": "7472695863566132416",
+              "to": "7698826681383327460",
+              "occurrences": 1
+            },
+            {
+              "from": "'smart_agriculture'",
+              "to": "'smart_agriculture_rehearsal_0704174deb58_lock'",
+              "occurrences": 1
+            },
+            {
+              "from": "5432",
+              "to": "55433",
+              "occurrences": 1
+            },
+            {
+              "from": "sa_irrigation_migrator",
+              "to": "p135b1_0704174deb58_lock_m",
+              "occurrences": 3
+            },
+            {
+              "from": "sa_irrigation_app",
+              "to": "p135b1_0704174deb58_lock_a",
+              "occurrences": 17
+            }
+          ],
+          "sourceSha256": "dac6a431a4598bea18cd0ff3290fb2009c36c30809247d258aea161d637a8b8a",
+          "mappedSha256": "9243490aa319845eca7529c55923445f3b21087cac094c1b7785a517a75fcdb3",
+          "reversible": true
+        },
+        "02-finalize-dba.review.sql": {
+          "changes": [
+            {
+              "from": "7472695863566132416",
+              "to": "7698826681383327460",
+              "occurrences": 1
+            },
+            {
+              "from": "'smart_agriculture'",
+              "to": "'smart_agriculture_rehearsal_0704174deb58_lock'",
+              "occurrences": 1
+            },
+            {
+              "from": "5432",
+              "to": "55433",
+              "occurrences": 1
+            },
+            {
+              "from": "'postgres'",
+              "to": "'phase13_test_admin'",
+              "occurrences": 1
+            },
+            {
+              "from": "sa_irrigation_migrator",
+              "to": "p135b1_0704174deb58_lock_m",
+              "occurrences": 9
+            },
+            {
+              "from": "sa_irrigation_app",
+              "to": "p135b1_0704174deb58_lock_a",
+              "occurrences": 4
+            }
+          ],
+          "sourceSha256": "20de4109c7d16925ef0d12b7fb1d26491507242124f21dfa26107765e513e499",
+          "mappedSha256": "d94fa0152af72d40eeb86f70c33a656c0952898e1b619bfee2e7739cbf17de00",
+          "reversible": true
+        }
+      }
+    }
+  ],
+  "commandsIssued": 0,
+  "productionMutation": false,
+  "sourceManifest": {
+    "version": "20261022_irrigation_v1_v2",
+    "generatedAt": "2026-10-22T07:02:43.673Z",
+    "reviewOnly": true,
+    "sqlExecuted": false,
+    "datamodelValidation": "PASS",
+    "productionSchemaSha256": "a45a2b799ecd666328a911424a75d12986ef4248f15fc716455197cd62957b4d",
+    "inventorySha256": "236605b71e4d306fe039bc77d5e6cd58267536c0a3bd38bd5597cc19937ac29e",
+    "v2Sha256": "33eb31404ccdac7ab5dd2cf778330cb3b6796128733938739c5170ecfd088e5d",
+    "files": [
+      {
+        "kind": "bootstrap",
+        "sha256": "c96a200e4996cfbf86a274840abd7d4d0a02a9aec766395cfbdd5522a50e5a32"
+      },
+      {
+        "kind": "migration",
+        "sha256": "dac6a431a4598bea18cd0ff3290fb2009c36c30809247d258aea161d637a8b8a"
+      },
+      {
+        "kind": "finalize",
+        "sha256": "20de4109c7d16925ef0d12b7fb1d26491507242124f21dfa26107765e513e499"
+      }
+    ],
+    "tables": [
+      "irrigation_cycles",
+      "irrigation_decision_logs",
+      "irrigation_daily_budgets",
+      "irrigation_budget_reservations",
+      "irrigation_command_intents",
+      "irrigation_safety_states"
+    ],
+    "requiresSeparateApproval": true,
+    "sqlExecutionOnIsolatedTarget": "NOT_VERIFIED_FOR_THIS_ARTIFACT"
+  },
+  "controlBefore": {
+    "systemId": "7698826681383327460",
+    "state": "shut down"
+  },
+  "identity": {
+    "db": "postgres",
+    "role": "phase13_test_admin",
+    "session_role": "phase13_test_admin",
+    "host": "127.0.0.1/32",
+    "port": 55433,
+    "started": "2026-10-22 14:04:17.960606+07",
+    "pgdata": "C:/DATN/test-instances/phase13-3b/data",
+    "system_id": "7698826681383327460"
+  },
+  "existingRoles": [
+    {
+      "rolname": "phase13_test_admin",
+      "rolsuper": true,
+      "rolcreatedb": true,
+      "rolcreaterole": true,
+      "rolcanlogin": true
+    },
+    {
+      "rolname": "phase13_test_app",
+      "rolsuper": false,
+      "rolcreatedb": false,
+      "rolcreaterole": false,
+      "rolcanlogin": true
+    },
+    {
+      "rolname": "phase13_test_migrator",
+      "rolsuper": false,
+      "rolcreatedb": false,
+      "rolcreaterole": false,
+      "rolcanlogin": true
+    }
+  ],
+  "oldPhaseBefore": {
+    "rows": [
+      {
+        "relname": "activity_logs",
+        "owner": "phase13_test_migrator"
+      },
+      {
+        "relname": "actuators",
+        "owner": "phase13_test_migrator"
+      },
+      {
+        "relname": "alert_rules",
+        "owner": "phase13_test_migrator"
+      },
+      {
+        "relname": "alerts",
+        "owner": "phase13_test_migrator"
+      },
+      {
+        "relname": "automation_rules",
+        "owner": "phase13_test_migrator"
+      },
+      {
+        "relname": "crops",
+        "owner": "phase13_test_migrator"
+      },
+      {
+        "relname": "device_commands",
+        "owner": "phase13_test_migrator"
+      },
+      {
+        "relname": "devices",
+        "owner": "phase13_test_migrator"
+      },
+      {
+        "relname": "farm_staff_assignments",
+        "owner": "phase13_test_migrator"
+      },
+      {
+        "relname": "farms",
+        "owner": "phase13_test_migrator"
+      },
+      {
+        "relname": "irrigation_budget_reservations",
+        "owner": "phase13_test_migrator"
+      },
+      {
+        "relname": "irrigation_command_intents",
+        "owner": "phase13_test_migrator"
+      },
+      {
+        "relname": "irrigation_cycles",
+        "owner": "phase13_test_migrator"
+      },
+      {
+        "relname": "irrigation_daily_budgets",
+        "owner": "phase13_test_migrator"
+      },
+      {
+        "relname": "irrigation_decision_logs",
+        "owner": "phase13_test_migrator"
+      },
+      {
+        "relname": "irrigation_safety_states",
+        "owner": "phase13_test_migrator"
+      },
+      {
+        "relname": "sensor_readings",
+        "owner": "phase13_test_migrator"
+      },
+      {
+        "relname": "sensors",
+        "owner": "phase13_test_migrator"
+      },
+      {
+        "relname": "users",
+        "owner": "phase13_test_migrator"
+      },
+      {
+        "relname": "zones",
+        "owner": "phase13_test_migrator"
+      }
+    ],
+    "counts": {
+      "irrigation_cycles": 291,
+      "irrigation_decision_logs": 232,
+      "irrigation_daily_budgets": 235,
+      "irrigation_budget_reservations": 148,
+      "irrigation_command_intents": 148,
+      "irrigation_safety_states": 1
+    },
+    "audit": "f4dc02962bdfd5c5a96262403eb2c537"
+  },
+  "operations": [
+    {
+      "database": "smart_agriculture_rehearsal_0704174deb58_main",
+      "step": "baseline",
+      "role": "phase13_test_admin",
+      "exitCode": 0,
+      "sqlstate": null,
+      "sha256": "ece3448c355d19f88de869a2153179b237173bd7f3be8ef163cbbd6c97aa47af",
+      "log": "rehearsal-13-5b1-20261022070417_4deb58\\main-baseline.log"
+    },
+    {
+      "database": "smart_agriculture_rehearsal_0704174deb58_main",
+      "step": "00",
+      "role": "phase13_test_admin",
+      "exitCode": 0,
+      "sqlstate": null,
+      "sha256": "b76ee031dacb2d078abceab79fc9e6cc52403700ad284c1197085baa016fb57a",
+      "log": "rehearsal-13-5b1-20261022070417_4deb58\\main-00.log"
+    },
+    {
+      "database": "smart_agriculture_rehearsal_0704174deb58_main",
+      "step": "01",
+      "role": "p135b1_0704174deb58_main_m",
+      "exitCode": 0,
+      "sqlstate": null,
+      "sha256": "8be9e64f3ba99d7758c780b3049b72f0e70281e26d209b7add1dd243587f4230",
+      "log": "rehearsal-13-5b1-20261022070417_4deb58\\main-01.log"
+    },
+    {
+      "database": "smart_agriculture_rehearsal_0704174deb58_main",
+      "step": "02",
+      "role": "phase13_test_admin",
+      "exitCode": 0,
+      "sqlstate": null,
+      "sha256": "50607bbdf968627e936616e9548f1999b7198327e728f4d4840540b5c19cfd36",
+      "log": "rehearsal-13-5b1-20261022070417_4deb58\\main-02.log"
+    },
+    {
+      "database": "smart_agriculture_rehearsal_0704174deb58_main",
+      "step": "wrong-role",
+      "role": "p135b1_0704174deb58_main_a",
+      "exitCode": 3,
+      "sqlstate": "P0001",
+      "sha256": "8be9e64f3ba99d7758c780b3049b72f0e70281e26d209b7add1dd243587f4230",
+      "log": "rehearsal-13-5b1-20261022070417_4deb58\\main-wrong-role.log"
+    },
+    {
+      "database": "smart_agriculture_rehearsal_0704174deb58_rollback",
+      "step": "baseline",
+      "role": "phase13_test_admin",
+      "exitCode": 0,
+      "sqlstate": null,
+      "sha256": "8b17d7bf348a83d22369d42fe53cdf11848644c3cf077be617ef4e0d88bb4165",
+      "log": "rehearsal-13-5b1-20261022070417_4deb58\\rollback-baseline.log"
+    },
+    {
+      "database": "smart_agriculture_rehearsal_0704174deb58_rollback",
+      "step": "00",
+      "role": "phase13_test_admin",
+      "exitCode": 0,
+      "sqlstate": null,
+      "sha256": "811a488fe566fef952e3baab2878176f5d735d7de7bb433a17b70825ab4fc6fb",
+      "log": "rehearsal-13-5b1-20261022070417_4deb58\\rollback-00.log"
+    },
+    {
+      "database": "smart_agriculture_rehearsal_0704174deb58_rollback",
+      "step": "01-injected-fault",
+      "role": "p135b1_0704174deb58_rollback_m",
+      "exitCode": 3,
+      "sqlstate": "22012",
+      "sha256": "cf7efd9f995dea5c3187ea97911adba6f9cb16a54902d347e323f5354a86b299",
+      "log": "rehearsal-13-5b1-20261022070417_4deb58\\rollback-01-injected-fault.log"
+    },
+    {
+      "database": "smart_agriculture_rehearsal_0704174deb58_rollback",
+      "step": "duplicate-00",
+      "role": "phase13_test_admin",
+      "exitCode": 3,
+      "sqlstate": "P0001",
+      "sha256": "811a488fe566fef952e3baab2878176f5d735d7de7bb433a17b70825ab4fc6fb",
+      "log": "rehearsal-13-5b1-20261022070417_4deb58\\rollback-duplicate-00.log"
+    },
+    {
+      "database": "smart_agriculture_rehearsal_0704174deb58_conflict",
+      "step": "baseline",
+      "role": "phase13_test_admin",
+      "exitCode": 0,
+      "sqlstate": null,
+      "sha256": "caa5174230c7876016bdcf39cc1454969eb55a602bf9700efd28809c7ccaae2e",
+      "log": "rehearsal-13-5b1-20261022070417_4deb58\\conflict-baseline.log"
+    },
+    {
+      "database": "smart_agriculture_rehearsal_0704174deb58_conflict",
+      "step": "00-index-conflict",
+      "role": "phase13_test_admin",
+      "exitCode": 3,
+      "sqlstate": "42P07",
+      "sha256": "e3e95f75c55fb0bb0d54ab58948c1c288f57218eb52316b3474462656c1fc95b",
+      "log": "rehearsal-13-5b1-20261022070417_4deb58\\conflict-00-index-conflict.log"
+    },
+    {
+      "database": "smart_agriculture_rehearsal_0704174deb58_lock",
+      "step": "baseline",
+      "role": "phase13_test_admin",
+      "exitCode": 0,
+      "sqlstate": null,
+      "sha256": "9988390d28e30cfff6c334f0975155ba9eb7cf5eeca357d329fcbe35219ae2b5",
+      "log": "rehearsal-13-5b1-20261022070417_4deb58\\lock-baseline.log"
+    },
+    {
+      "database": "smart_agriculture_rehearsal_0704174deb58_lock",
+      "step": "00-lock-timeout",
+      "role": "phase13_test_admin",
+      "exitCode": 3,
+      "sqlstate": "55P03",
+      "sha256": "44c948e911de326d98abc5b72a2b4956d113923ccf28b49020ceaf49c058ca45",
+      "log": "rehearsal-13-5b1-20261022070417_4deb58\\lock-00-lock-timeout.log"
+    }
+  ],
+  "catalogBeforeFinalize": {
+    "tables": [
+      {
+        "relname": "irrigation_budget_reservations",
+        "owner": "p135b1_0704174deb58_main_m"
+      },
+      {
+        "relname": "irrigation_command_intents",
+        "owner": "p135b1_0704174deb58_main_m"
+      },
+      {
+        "relname": "irrigation_cycles",
+        "owner": "p135b1_0704174deb58_main_m"
+      },
+      {
+        "relname": "irrigation_daily_budgets",
+        "owner": "p135b1_0704174deb58_main_m"
+      },
+      {
+        "relname": "irrigation_decision_logs",
+        "owner": "p135b1_0704174deb58_main_m"
+      },
+      {
+        "relname": "irrigation_safety_states",
+        "owner": "p135b1_0704174deb58_main_m"
+      }
+    ],
+    "constraints": [
+      {
+        "relname": "irrigation_budget_reservations",
+        "conname": "irr_budget_reservations_shadow_fence",
+        "contype": "c",
+        "convalidated": true,
+        "confdeltype": " ",
+        "confupdtype": " ",
+        "definition": "CHECK ((mode = ANY (ARRAY['DISABLED'::\"IrrigationPersistenceMode\", 'SHADOW'::\"IrrigationPersistenceMode\"])))"
+      },
+      {
+        "relname": "irrigation_budget_reservations",
+        "conname": "irrigation_budget_reservations_budget_id_actuator_id_mode_fkey",
+        "contype": "f",
+        "convalidated": true,
+        "confdeltype": "r",
+        "confupdtype": "r",
+        "definition": "FOREIGN KEY (budget_id, actuator_id, mode) REFERENCES irrigation_daily_budgets(id, actuator_id, mode) ON UPDATE RESTRICT ON DELETE RESTRICT"
+      },
+      {
+        "relname": "irrigation_budget_reservations",
+        "conname": "irrigation_budget_reservations_cycle_id_actuator_id_mode_fkey",
+        "contype": "f",
+        "convalidated": true,
+        "confdeltype": "r",
+        "confupdtype": "r",
+        "definition": "FOREIGN KEY (cycle_id, actuator_id, mode) REFERENCES irrigation_cycles(id, actuator_id, mode) ON UPDATE RESTRICT ON DELETE RESTRICT"
+      },
+      {
+        "relname": "irrigation_budget_reservations",
+        "conname": "irrigation_budget_reservations_intent_id_cycle_id_actuator_fkey",
+        "contype": "f",
+        "convalidated": true,
+        "confdeltype": "r",
+        "confupdtype": "r",
+        "definition": "FOREIGN KEY (intent_id, cycle_id, actuator_id, mode) REFERENCES irrigation_command_intents(id, cycle_id, actuator_id, mode) ON UPDATE RESTRICT ON DELETE RESTRICT"
+      },
+      {
+        "relname": "irrigation_budget_reservations",
+        "conname": "irrigation_budget_reservations_pkey",
+        "contype": "p",
+        "convalidated": true,
+        "confdeltype": " ",
+        "confupdtype": " ",
+        "definition": "PRIMARY KEY (id)"
+      },
+      {
+        "relname": "irrigation_budget_reservations",
+        "conname": "irrigation_reservation_bounds",
+        "contype": "c",
+        "convalidated": true,
+        "confdeltype": " ",
+        "confupdtype": " ",
+        "definition": "CHECK (((version >= 0) AND ((seconds >= 1) AND (seconds <= 5))))"
+      },
+      {
+        "relname": "irrigation_budget_reservations",
+        "conname": "irrigation_v2_settlement",
+        "contype": "c",
+        "convalidated": true,
+        "confdeltype": " ",
+        "confupdtype": " ",
+        "definition": "CHECK ((((status <> ALL (ARRAY['RELEASED'::\"IrrigationReservationStatus\", 'CHARGED'::\"IrrigationReservationStatus\"])) OR (settled_at IS NOT NULL)) AND ((settled_at IS NULL) OR (settled_at >= created_at))))"
+      },
+      {
+        "relname": "irrigation_command_intents",
+        "conname": "irr_command_intents_shadow_fence",
+        "contype": "c",
+        "convalidated": true,
+        "confdeltype": " ",
+        "confupdtype": " ",
+        "definition": "CHECK ((mode = ANY (ARRAY['DISABLED'::\"IrrigationPersistenceMode\", 'SHADOW'::\"IrrigationPersistenceMode\"])))"
+      },
+      {
+        "relname": "irrigation_command_intents",
+        "conname": "irrigation_command_intents_cycle_id_actuator_id_mode_fkey",
+        "contype": "f",
+        "convalidated": true,
+        "confdeltype": "r",
+        "confupdtype": "r",
+        "definition": "FOREIGN KEY (cycle_id, actuator_id, mode) REFERENCES irrigation_cycles(id, actuator_id, mode) ON UPDATE RESTRICT ON DELETE RESTRICT"
+      },
+      {
+        "relname": "irrigation_command_intents",
+        "conname": "irrigation_command_intents_device_command_id_actuator_id_fkey",
+        "contype": "f",
+        "convalidated": true,
+        "confdeltype": "r",
+        "confupdtype": "r",
+        "definition": "FOREIGN KEY (device_command_id, actuator_id) REFERENCES device_commands(id, actuator_id) ON UPDATE RESTRICT ON DELETE RESTRICT"
+      },
+      {
+        "relname": "irrigation_command_intents",
+        "conname": "irrigation_command_intents_pkey",
+        "contype": "p",
+        "convalidated": true,
+        "confdeltype": " ",
+        "confupdtype": " ",
+        "definition": "PRIMARY KEY (id)"
+      },
+      {
+        "relname": "irrigation_command_intents",
+        "conname": "irrigation_intent_bounds",
+        "contype": "c",
+        "convalidated": true,
+        "confdeltype": " ",
+        "confupdtype": " ",
+        "definition": "CHECK (((version >= 0) AND (pulse_index >= 0) AND ((max_run_seconds >= 1) AND (max_run_seconds <= 5)) AND (expires_at > issued_at) AND (expires_at <= (issued_at + '00:00:30'::interval))))"
+      },
+      {
+        "relname": "irrigation_command_intents",
+        "conname": "irrigation_shadow_one_second",
+        "contype": "c",
+        "convalidated": true,
+        "confdeltype": " ",
+        "confupdtype": " ",
+        "definition": "CHECK (((mode <> 'SHADOW'::\"IrrigationPersistenceMode\") OR (max_run_seconds = 1)))"
+      },
+      {
+        "relname": "irrigation_command_intents",
+        "conname": "irrigation_v2_dispatch_order",
+        "contype": "c",
+        "convalidated": true,
+        "confdeltype": " ",
+        "confupdtype": " ",
+        "definition": "CHECK ((((published_at IS NULL) OR ((dispatch_claimed_at IS NOT NULL) AND (published_at >= dispatch_claimed_at))) AND ((dispatch_claimed_at IS NULL) OR (dispatch_claimed_at >= issued_at)) AND ((acknowledged_at IS NULL) OR ((published_at IS NOT NULL) AND (acknowledged_at >= published_at)))))"
+      },
+      {
+        "relname": "irrigation_cycles",
+        "conname": "irr_cycles_shadow_fence",
+        "contype": "c",
+        "convalidated": true,
+        "confdeltype": " ",
+        "confupdtype": " ",
+        "definition": "CHECK ((mode = ANY (ARRAY['DISABLED'::\"IrrigationPersistenceMode\", 'SHADOW'::\"IrrigationPersistenceMode\"])))"
+      },
+      {
+        "relname": "irrigation_cycles",
+        "conname": "irrigation_active_rule",
+        "contype": "c",
+        "convalidated": true,
+        "confdeltype": " ",
+        "confupdtype": " ",
+        "definition": "CHECK (((mode <> 'ACTIVE'::\"IrrigationPersistenceMode\") OR (automation_rule_id IS NOT NULL)))"
+      },
+      {
+        "relname": "irrigation_cycles",
+        "conname": "irrigation_cycle_counts",
+        "contype": "c",
+        "convalidated": true,
+        "confdeltype": " ",
+        "confupdtype": " ",
+        "definition": "CHECK (((version >= 0) AND (pulses >= 0) AND (policy_version > 0) AND (jsonb_typeof(consumed_keys) = 'array'::text)))"
+      },
+      {
+        "relname": "irrigation_cycles",
+        "conname": "irrigation_cycles_actuator_id_device_id_fkey",
+        "contype": "f",
+        "convalidated": true,
+        "confdeltype": "r",
+        "confupdtype": "r",
+        "definition": "FOREIGN KEY (actuator_id, device_id) REFERENCES actuators(id, device_id) ON UPDATE RESTRICT ON DELETE RESTRICT"
+      },
+      {
+        "relname": "irrigation_cycles",
+        "conname": "irrigation_cycles_automation_rule_id_actuator_id_fkey",
+        "contype": "f",
+        "convalidated": true,
+        "confdeltype": "r",
+        "confupdtype": "r",
+        "definition": "FOREIGN KEY (automation_rule_id, actuator_id) REFERENCES automation_rules(id, actuator_id) ON UPDATE RESTRICT ON DELETE RESTRICT"
+      },
+      {
+        "relname": "irrigation_cycles",
+        "conname": "irrigation_cycles_device_id_fkey",
+        "contype": "f",
+        "convalidated": true,
+        "confdeltype": "r",
+        "confupdtype": "r",
+        "definition": "FOREIGN KEY (device_id) REFERENCES devices(id) ON UPDATE RESTRICT ON DELETE RESTRICT"
+      },
+      {
+        "relname": "irrigation_cycles",
+        "conname": "irrigation_cycles_pkey",
+        "contype": "p",
+        "convalidated": true,
+        "confdeltype": " ",
+        "confupdtype": " ",
+        "definition": "PRIMARY KEY (id)"
+      },
+      {
+        "relname": "irrigation_daily_budgets",
+        "conname": "irr_daily_budgets_shadow_fence",
+        "contype": "c",
+        "convalidated": true,
+        "confdeltype": " ",
+        "confupdtype": " ",
+        "definition": "CHECK ((mode = ANY (ARRAY['DISABLED'::\"IrrigationPersistenceMode\", 'SHADOW'::\"IrrigationPersistenceMode\"])))"
+      },
+      {
+        "relname": "irrigation_daily_budgets",
+        "conname": "irrigation_budget_bounds",
+        "contype": "c",
+        "convalidated": true,
+        "confdeltype": " ",
+        "confupdtype": " ",
+        "definition": "CHECK (((version >= 0) AND (max_runs > 0) AND (max_seconds > 0) AND ((reserved_runs >= 0) AND (reserved_runs <= max_runs)) AND ((reserved_seconds >= 0) AND (reserved_seconds <= max_seconds))))"
+      },
+      {
+        "relname": "irrigation_daily_budgets",
+        "conname": "irrigation_daily_budgets_actuator_id_fkey",
+        "contype": "f",
+        "convalidated": true,
+        "confdeltype": "r",
+        "confupdtype": "r",
+        "definition": "FOREIGN KEY (actuator_id) REFERENCES actuators(id) ON UPDATE RESTRICT ON DELETE RESTRICT"
+      },
+      {
+        "relname": "irrigation_daily_budgets",
+        "conname": "irrigation_daily_budgets_pkey",
+        "contype": "p",
+        "convalidated": true,
+        "confdeltype": " ",
+        "confupdtype": " ",
+        "definition": "PRIMARY KEY (id)"
+      },
+      {
+        "relname": "irrigation_decision_logs",
+        "conname": "irr_decision_logs_shadow_fence",
+        "contype": "c",
+        "convalidated": true,
+        "confdeltype": " ",
+        "confupdtype": " ",
+        "definition": "CHECK ((mode = ANY (ARRAY['DISABLED'::\"IrrigationPersistenceMode\", 'SHADOW'::\"IrrigationPersistenceMode\"])))"
+      },
+      {
+        "relname": "irrigation_decision_logs",
+        "conname": "irrigation_active_provenance",
+        "contype": "c",
+        "convalidated": true,
+        "confdeltype": " ",
+        "confupdtype": " ",
+        "definition": "CHECK (((mode <> 'ACTIVE'::\"IrrigationPersistenceMode\") OR (source = 'VERIFIED_LIVE'::\"IrrigationDecisionSource\")))"
+      },
+      {
+        "relname": "irrigation_decision_logs",
+        "conname": "irrigation_decision_logs_actuator_id_fkey",
+        "contype": "f",
+        "convalidated": true,
+        "confdeltype": "r",
+        "confupdtype": "r",
+        "definition": "FOREIGN KEY (actuator_id) REFERENCES actuators(id) ON UPDATE RESTRICT ON DELETE RESTRICT"
+      },
+      {
+        "relname": "irrigation_decision_logs",
+        "conname": "irrigation_decision_logs_cycle_id_actuator_id_mode_fkey",
+        "contype": "f",
+        "convalidated": true,
+        "confdeltype": "r",
+        "confupdtype": "r",
+        "definition": "FOREIGN KEY (cycle_id, actuator_id, mode) REFERENCES irrigation_cycles(id, actuator_id, mode) ON UPDATE RESTRICT ON DELETE RESTRICT"
+      },
+      {
+        "relname": "irrigation_decision_logs",
+        "conname": "irrigation_decision_logs_intent_id_actuator_id_mode_fkey",
+        "contype": "f",
+        "convalidated": true,
+        "confdeltype": "r",
+        "confupdtype": "r",
+        "definition": "FOREIGN KEY (intent_id, actuator_id, mode) REFERENCES irrigation_command_intents(id, actuator_id, mode) ON UPDATE RESTRICT ON DELETE RESTRICT"
+      },
+      {
+        "relname": "irrigation_decision_logs",
+        "conname": "irrigation_decision_logs_pkey",
+        "contype": "p",
+        "convalidated": true,
+        "confdeltype": " ",
+        "confupdtype": " ",
+        "definition": "PRIMARY KEY (id)"
+      },
+      {
+        "relname": "irrigation_decision_logs",
+        "conname": "irrigation_decision_logs_sensor_reading_id_fkey",
+        "contype": "f",
+        "convalidated": true,
+        "confdeltype": "r",
+        "confupdtype": "r",
+        "definition": "FOREIGN KEY (sensor_reading_id) REFERENCES sensor_readings(id) ON UPDATE RESTRICT ON DELETE RESTRICT"
+      },
+      {
+        "relname": "irrigation_decision_logs",
+        "conname": "irrigation_decision_provenance",
+        "contype": "c",
+        "convalidated": true,
+        "confdeltype": " ",
+        "confupdtype": " ",
+        "definition": "CHECK (((source <> 'VERIFIED_LIVE'::\"IrrigationDecisionSource\") OR (sensor_reading_id IS NOT NULL)))"
+      },
+      {
+        "relname": "irrigation_decision_logs",
+        "conname": "irrigation_unverified_source_fence",
+        "contype": "c",
+        "convalidated": true,
+        "confdeltype": " ",
+        "confupdtype": " ",
+        "definition": "CHECK ((source = ANY (ARRAY['FIXTURE'::\"IrrigationDecisionSource\", 'MOCK'::\"IrrigationDecisionSource\"])))"
+      },
+      {
+        "relname": "irrigation_safety_states",
+        "conname": "irr_safety_states_shadow_fence",
+        "contype": "c",
+        "convalidated": true,
+        "confdeltype": " ",
+        "confupdtype": " ",
+        "definition": "CHECK ((mode = ANY (ARRAY['DISABLED'::\"IrrigationPersistenceMode\", 'SHADOW'::\"IrrigationPersistenceMode\"])))"
+      },
+      {
+        "relname": "irrigation_safety_states",
+        "conname": "irrigation_safety_states_actuator_id_device_id_fkey",
+        "contype": "f",
+        "convalidated": true,
+        "confdeltype": "r",
+        "confupdtype": "r",
+        "definition": "FOREIGN KEY (actuator_id, device_id) REFERENCES actuators(id, device_id) ON UPDATE RESTRICT ON DELETE RESTRICT"
+      },
+      {
+        "relname": "irrigation_safety_states",
+        "conname": "irrigation_safety_states_pkey",
+        "contype": "p",
+        "convalidated": true,
+        "confdeltype": " ",
+        "confupdtype": " ",
+        "definition": "PRIMARY KEY (actuator_id, mode)"
+      },
+      {
+        "relname": "irrigation_safety_states",
+        "conname": "irrigation_safety_version",
+        "contype": "c",
+        "convalidated": true,
+        "confdeltype": " ",
+        "confupdtype": " ",
+        "definition": "CHECK ((version >= 0))"
+      }
+    ],
+    "indexes": [
+      {
+        "table_name": "_prisma_migrations",
+        "index_name": "_prisma_migrations_pkey",
+        "indisvalid": true,
+        "definition": "CREATE UNIQUE INDEX _prisma_migrations_pkey ON public._prisma_migrations USING btree (id)"
+      },
+      {
+        "table_name": "activity_logs",
+        "index_name": "activity_logs_action_idx",
+        "indisvalid": true,
+        "definition": "CREATE INDEX activity_logs_action_idx ON public.activity_logs USING btree (action)"
+      },
+      {
+        "table_name": "activity_logs",
+        "index_name": "activity_logs_created_at_idx",
+        "indisvalid": true,
+        "definition": "CREATE INDEX activity_logs_created_at_idx ON public.activity_logs USING btree (created_at)"
+      },
+      {
+        "table_name": "activity_logs",
+        "index_name": "activity_logs_farm_id_created_at_idx",
+        "indisvalid": true,
+        "definition": "CREATE INDEX activity_logs_farm_id_created_at_idx ON public.activity_logs USING btree (farm_id, created_at)"
+      },
+      {
+        "table_name": "activity_logs",
+        "index_name": "activity_logs_pkey",
+        "indisvalid": true,
+        "definition": "CREATE UNIQUE INDEX activity_logs_pkey ON public.activity_logs USING btree (id)"
+      },
+      {
+        "table_name": "activity_logs",
+        "index_name": "activity_logs_user_id_created_at_idx",
+        "indisvalid": true,
+        "definition": "CREATE INDEX activity_logs_user_id_created_at_idx ON public.activity_logs USING btree (user_id, created_at)"
+      },
+      {
+        "table_name": "actuators",
+        "index_name": "actuators_current_state_idx",
+        "indisvalid": true,
+        "definition": "CREATE INDEX actuators_current_state_idx ON public.actuators USING btree (current_state)"
+      },
+      {
+        "table_name": "actuators",
+        "index_name": "actuators_device_id_actuator_code_key",
+        "indisvalid": true,
+        "definition": "CREATE UNIQUE INDEX actuators_device_id_actuator_code_key ON public.actuators USING btree (device_id, actuator_code)"
+      },
+      {
+        "table_name": "actuators",
+        "index_name": "actuators_device_id_idx",
+        "indisvalid": true,
+        "definition": "CREATE INDEX actuators_device_id_idx ON public.actuators USING btree (device_id)"
+      },
+      {
+        "table_name": "actuators",
+        "index_name": "actuators_id_device_id_key",
+        "indisvalid": true,
+        "definition": "CREATE UNIQUE INDEX actuators_id_device_id_key ON public.actuators USING btree (id, device_id)"
+      },
+      {
+        "table_name": "actuators",
+        "index_name": "actuators_pkey",
+        "indisvalid": true,
+        "definition": "CREATE UNIQUE INDEX actuators_pkey ON public.actuators USING btree (id)"
+      },
+      {
+        "table_name": "actuators",
+        "index_name": "actuators_status_idx",
+        "indisvalid": true,
+        "definition": "CREATE INDEX actuators_status_idx ON public.actuators USING btree (status)"
+      },
+      {
+        "table_name": "actuators",
+        "index_name": "actuators_type_idx",
+        "indisvalid": true,
+        "definition": "CREATE INDEX actuators_type_idx ON public.actuators USING btree (type)"
+      },
+      {
+        "table_name": "alert_rules",
+        "index_name": "alert_rules_enabled_idx",
+        "indisvalid": true,
+        "definition": "CREATE INDEX alert_rules_enabled_idx ON public.alert_rules USING btree (enabled)"
+      },
+      {
+        "table_name": "alert_rules",
+        "index_name": "alert_rules_pkey",
+        "indisvalid": true,
+        "definition": "CREATE UNIQUE INDEX alert_rules_pkey ON public.alert_rules USING btree (id)"
+      },
+      {
+        "table_name": "alert_rules",
+        "index_name": "alert_rules_sensor_id_idx",
+        "indisvalid": true,
+        "definition": "CREATE INDEX alert_rules_sensor_id_idx ON public.alert_rules USING btree (sensor_id)"
+      },
+      {
+        "table_name": "alert_rules",
+        "index_name": "alert_rules_severity_idx",
+        "indisvalid": true,
+        "definition": "CREATE INDEX alert_rules_severity_idx ON public.alert_rules USING btree (severity)"
+      },
+      {
+        "table_name": "alerts",
+        "index_name": "alerts_alert_rule_id_status_idx",
+        "indisvalid": true,
+        "definition": "CREATE INDEX alerts_alert_rule_id_status_idx ON public.alerts USING btree (alert_rule_id, status)"
+      },
+      {
+        "table_name": "alerts",
+        "index_name": "alerts_one_active_per_rule_idx",
+        "indisvalid": true,
+        "definition": "CREATE UNIQUE INDEX alerts_one_active_per_rule_idx ON public.alerts USING btree (alert_rule_id) WHERE (status = ANY (ARRAY['OPEN'::\"AlertStatus\", 'ACKNOWLEDGED'::\"AlertStatus\"]))"
+      },
+      {
+        "table_name": "alerts",
+        "index_name": "alerts_opened_at_idx",
+        "indisvalid": true,
+        "definition": "CREATE INDEX alerts_opened_at_idx ON public.alerts USING btree (opened_at)"
+      },
+      {
+        "table_name": "alerts",
+        "index_name": "alerts_pkey",
+        "indisvalid": true,
+        "definition": "CREATE UNIQUE INDEX alerts_pkey ON public.alerts USING btree (id)"
+      },
+      {
+        "table_name": "alerts",
+        "index_name": "alerts_sensor_id_idx",
+        "indisvalid": true,
+        "definition": "CREATE INDEX alerts_sensor_id_idx ON public.alerts USING btree (sensor_id)"
+      },
+      {
+        "table_name": "alerts",
+        "index_name": "alerts_severity_snapshot_idx",
+        "indisvalid": true,
+        "definition": "CREATE INDEX alerts_severity_snapshot_idx ON public.alerts USING btree (severity_snapshot)"
+      },
+      {
+        "table_name": "alerts",
+        "index_name": "alerts_status_idx",
+        "indisvalid": true,
+        "definition": "CREATE INDEX alerts_status_idx ON public.alerts USING btree (status)"
+      },
+      {
+        "table_name": "automation_rules",
+        "index_name": "automation_rules_actuator_id_idx",
+        "indisvalid": true,
+        "definition": "CREATE INDEX automation_rules_actuator_id_idx ON public.automation_rules USING btree (actuator_id)"
+      },
+      {
+        "table_name": "automation_rules",
+        "index_name": "automation_rules_created_at_idx",
+        "indisvalid": true,
+        "definition": "CREATE INDEX automation_rules_created_at_idx ON public.automation_rules USING btree (created_at)"
+      },
+      {
+        "table_name": "automation_rules",
+        "index_name": "automation_rules_enabled_idx",
+        "indisvalid": true,
+        "definition": "CREATE INDEX automation_rules_enabled_idx ON public.automation_rules USING btree (enabled)"
+      },
+      {
+        "table_name": "automation_rules",
+        "index_name": "automation_rules_id_actuator_id_key",
+        "indisvalid": true,
+        "definition": "CREATE UNIQUE INDEX automation_rules_id_actuator_id_key ON public.automation_rules USING btree (id, actuator_id)"
+      },
+      {
+        "table_name": "automation_rules",
+        "index_name": "automation_rules_one_enabled_per_actuator_idx",
+        "indisvalid": true,
+        "definition": "CREATE UNIQUE INDEX automation_rules_one_enabled_per_actuator_idx ON public.automation_rules USING btree (actuator_id) WHERE (enabled = true)"
+      },
+      {
+        "table_name": "automation_rules",
+        "index_name": "automation_rules_pkey",
+        "indisvalid": true,
+        "definition": "CREATE UNIQUE INDEX automation_rules_pkey ON public.automation_rules USING btree (id)"
+      },
+      {
+        "table_name": "automation_rules",
+        "index_name": "automation_rules_sensor_id_idx",
+        "indisvalid": true,
+        "definition": "CREATE INDEX automation_rules_sensor_id_idx ON public.automation_rules USING btree (sensor_id)"
+      },
+      {
+        "table_name": "crops",
+        "index_name": "crops_created_at_idx",
+        "indisvalid": true,
+        "definition": "CREATE INDEX crops_created_at_idx ON public.crops USING btree (created_at)"
+      },
+      {
+        "table_name": "crops",
+        "index_name": "crops_pkey",
+        "indisvalid": true,
+        "definition": "CREATE UNIQUE INDEX crops_pkey ON public.crops USING btree (id)"
+      },
+      {
+        "table_name": "crops",
+        "index_name": "crops_planting_date_idx",
+        "indisvalid": true,
+        "definition": "CREATE INDEX crops_planting_date_idx ON public.crops USING btree (planting_date)"
+      },
+      {
+        "table_name": "crops",
+        "index_name": "crops_status_idx",
+        "indisvalid": true,
+        "definition": "CREATE INDEX crops_status_idx ON public.crops USING btree (status)"
+      },
+      {
+        "table_name": "crops",
+        "index_name": "crops_zone_id_idx",
+        "indisvalid": true,
+        "definition": "CREATE INDEX crops_zone_id_idx ON public.crops USING btree (zone_id)"
+      },
+      {
+        "table_name": "device_commands",
+        "index_name": "device_commands_actuator_id_idx",
+        "indisvalid": true,
+        "definition": "CREATE INDEX device_commands_actuator_id_idx ON public.device_commands USING btree (actuator_id)"
+      },
+      {
+        "table_name": "device_commands",
+        "index_name": "device_commands_automation_rule_id_idx",
+        "indisvalid": true,
+        "definition": "CREATE INDEX device_commands_automation_rule_id_idx ON public.device_commands USING btree (automation_rule_id)"
+      },
+      {
+        "table_name": "device_commands",
+        "index_name": "device_commands_correlation_id_key",
+        "indisvalid": true,
+        "definition": "CREATE UNIQUE INDEX device_commands_correlation_id_key ON public.device_commands USING btree (correlation_id)"
+      },
+      {
+        "table_name": "device_commands",
+        "index_name": "device_commands_id_actuator_id_key",
+        "indisvalid": true,
+        "definition": "CREATE UNIQUE INDEX device_commands_id_actuator_id_key ON public.device_commands USING btree (id, actuator_id)"
+      },
+      {
+        "table_name": "device_commands",
+        "index_name": "device_commands_one_pending_per_actuator_idx",
+        "indisvalid": true,
+        "definition": "CREATE UNIQUE INDEX device_commands_one_pending_per_actuator_idx ON public.device_commands USING btree (actuator_id) WHERE (status = 'PENDING'::\"DeviceCommandStatus\")"
+      },
+      {
+        "table_name": "device_commands",
+        "index_name": "device_commands_pkey",
+        "indisvalid": true,
+        "definition": "CREATE UNIQUE INDEX device_commands_pkey ON public.device_commands USING btree (id)"
+      },
+      {
+        "table_name": "device_commands",
+        "index_name": "device_commands_requested_at_idx",
+        "indisvalid": true,
+        "definition": "CREATE INDEX device_commands_requested_at_idx ON public.device_commands USING btree (requested_at)"
+      },
+      {
+        "table_name": "device_commands",
+        "index_name": "device_commands_requested_by_id_idx",
+        "indisvalid": true,
+        "definition": "CREATE INDEX device_commands_requested_by_id_idx ON public.device_commands USING btree (requested_by_id)"
+      },
+      {
+        "table_name": "device_commands",
+        "index_name": "device_commands_status_idx",
+        "indisvalid": true,
+        "definition": "CREATE INDEX device_commands_status_idx ON public.device_commands USING btree (status)"
+      },
+      {
+        "table_name": "devices",
+        "index_name": "devices_connection_status_idx",
+        "indisvalid": true,
+        "definition": "CREATE INDEX devices_connection_status_idx ON public.devices USING btree (connection_status)"
+      },
+      {
+        "table_name": "devices",
+        "index_name": "devices_created_at_idx",
+        "indisvalid": true,
+        "definition": "CREATE INDEX devices_created_at_idx ON public.devices USING btree (created_at)"
+      },
+      {
+        "table_name": "devices",
+        "index_name": "devices_device_code_key",
+        "indisvalid": true,
+        "definition": "CREATE UNIQUE INDEX devices_device_code_key ON public.devices USING btree (device_code)"
+      },
+      {
+        "table_name": "devices",
+        "index_name": "devices_pkey",
+        "indisvalid": true,
+        "definition": "CREATE UNIQUE INDEX devices_pkey ON public.devices USING btree (id)"
+      },
+      {
+        "table_name": "devices",
+        "index_name": "devices_status_idx",
+        "indisvalid": true,
+        "definition": "CREATE INDEX devices_status_idx ON public.devices USING btree (status)"
+      },
+      {
+        "table_name": "devices",
+        "index_name": "devices_zone_id_idx",
+        "indisvalid": true,
+        "definition": "CREATE INDEX devices_zone_id_idx ON public.devices USING btree (zone_id)"
+      },
+      {
+        "table_name": "farm_staff_assignments",
+        "index_name": "farm_staff_assignments_farm_id_idx",
+        "indisvalid": true,
+        "definition": "CREATE INDEX farm_staff_assignments_farm_id_idx ON public.farm_staff_assignments USING btree (farm_id)"
+      },
+      {
+        "table_name": "farm_staff_assignments",
+        "index_name": "farm_staff_assignments_farm_id_staff_id_key",
+        "indisvalid": true,
+        "definition": "CREATE UNIQUE INDEX farm_staff_assignments_farm_id_staff_id_key ON public.farm_staff_assignments USING btree (farm_id, staff_id)"
+      },
+      {
+        "table_name": "farm_staff_assignments",
+        "index_name": "farm_staff_assignments_pkey",
+        "indisvalid": true,
+        "definition": "CREATE UNIQUE INDEX farm_staff_assignments_pkey ON public.farm_staff_assignments USING btree (id)"
+      },
+      {
+        "table_name": "farm_staff_assignments",
+        "index_name": "farm_staff_assignments_staff_id_idx",
+        "indisvalid": true,
+        "definition": "CREATE INDEX farm_staff_assignments_staff_id_idx ON public.farm_staff_assignments USING btree (staff_id)"
+      },
+      {
+        "table_name": "farms",
+        "index_name": "farms_created_at_idx",
+        "indisvalid": true,
+        "definition": "CREATE INDEX farms_created_at_idx ON public.farms USING btree (created_at)"
+      },
+      {
+        "table_name": "farms",
+        "index_name": "farms_owner_id_idx",
+        "indisvalid": true,
+        "definition": "CREATE INDEX farms_owner_id_idx ON public.farms USING btree (owner_id)"
+      },
+      {
+        "table_name": "farms",
+        "index_name": "farms_pkey",
+        "indisvalid": true,
+        "definition": "CREATE UNIQUE INDEX farms_pkey ON public.farms USING btree (id)"
+      },
+      {
+        "table_name": "farms",
+        "index_name": "farms_status_idx",
+        "indisvalid": true,
+        "definition": "CREATE INDEX farms_status_idx ON public.farms USING btree (status)"
+      },
+      {
+        "table_name": "irrigation_budget_reservations",
+        "index_name": "irrigation_budget_reservations_budget_id_status_idx",
+        "indisvalid": true,
+        "definition": "CREATE INDEX irrigation_budget_reservations_budget_id_status_idx ON public.irrigation_budget_reservations USING btree (budget_id, status)"
+      },
+      {
+        "table_name": "irrigation_budget_reservations",
+        "index_name": "irrigation_budget_reservations_cycle_id_idx",
+        "indisvalid": true,
+        "definition": "CREATE INDEX irrigation_budget_reservations_cycle_id_idx ON public.irrigation_budget_reservations USING btree (cycle_id)"
+      },
+      {
+        "table_name": "irrigation_budget_reservations",
+        "index_name": "irrigation_budget_reservations_intent_id_cycle_id_actuator__key",
+        "indisvalid": true,
+        "definition": "CREATE UNIQUE INDEX irrigation_budget_reservations_intent_id_cycle_id_actuator__key ON public.irrigation_budget_reservations USING btree (intent_id, cycle_id, actuator_id, mode)"
+      },
+      {
+        "table_name": "irrigation_budget_reservations",
+        "index_name": "irrigation_budget_reservations_intent_id_key",
+        "indisvalid": true,
+        "definition": "CREATE UNIQUE INDEX irrigation_budget_reservations_intent_id_key ON public.irrigation_budget_reservations USING btree (intent_id)"
+      },
+      {
+        "table_name": "irrigation_budget_reservations",
+        "index_name": "irrigation_budget_reservations_pkey",
+        "indisvalid": true,
+        "definition": "CREATE UNIQUE INDEX irrigation_budget_reservations_pkey ON public.irrigation_budget_reservations USING btree (id)"
+      },
+      {
+        "table_name": "irrigation_command_intents",
+        "index_name": "irrigation_command_intents_actuator_id_status_idx",
+        "indisvalid": true,
+        "definition": "CREATE INDEX irrigation_command_intents_actuator_id_status_idx ON public.irrigation_command_intents USING btree (actuator_id, status)"
+      },
+      {
+        "table_name": "irrigation_command_intents",
+        "index_name": "irrigation_command_intents_correlation_id_key",
+        "indisvalid": true,
+        "definition": "CREATE UNIQUE INDEX irrigation_command_intents_correlation_id_key ON public.irrigation_command_intents USING btree (correlation_id)"
+      },
+      {
+        "table_name": "irrigation_command_intents",
+        "index_name": "irrigation_command_intents_cycle_id_pulse_index_key",
+        "indisvalid": true,
+        "definition": "CREATE UNIQUE INDEX irrigation_command_intents_cycle_id_pulse_index_key ON public.irrigation_command_intents USING btree (cycle_id, pulse_index)"
+      },
+      {
+        "table_name": "irrigation_command_intents",
+        "index_name": "irrigation_command_intents_device_command_id_actuator_id_key",
+        "indisvalid": true,
+        "definition": "CREATE UNIQUE INDEX irrigation_command_intents_device_command_id_actuator_id_key ON public.irrigation_command_intents USING btree (device_command_id, actuator_id)"
+      },
+      {
+        "table_name": "irrigation_command_intents",
+        "index_name": "irrigation_command_intents_device_command_id_key",
+        "indisvalid": true,
+        "definition": "CREATE UNIQUE INDEX irrigation_command_intents_device_command_id_key ON public.irrigation_command_intents USING btree (device_command_id)"
+      },
+      {
+        "table_name": "irrigation_command_intents",
+        "index_name": "irrigation_command_intents_id_actuator_id_mode_key",
+        "indisvalid": true,
+        "definition": "CREATE UNIQUE INDEX irrigation_command_intents_id_actuator_id_mode_key ON public.irrigation_command_intents USING btree (id, actuator_id, mode)"
+      },
+      {
+        "table_name": "irrigation_command_intents",
+        "index_name": "irrigation_command_intents_id_cycle_id_actuator_id_mode_key",
+        "indisvalid": true,
+        "definition": "CREATE UNIQUE INDEX irrigation_command_intents_id_cycle_id_actuator_id_mode_key ON public.irrigation_command_intents USING btree (id, cycle_id, actuator_id, mode)"
+      },
+      {
+        "table_name": "irrigation_command_intents",
+        "index_name": "irrigation_command_intents_mode_idempotency_key_key",
+        "indisvalid": true,
+        "definition": "CREATE UNIQUE INDEX irrigation_command_intents_mode_idempotency_key_key ON public.irrigation_command_intents USING btree (mode, idempotency_key)"
+      },
+      {
+        "table_name": "irrigation_command_intents",
+        "index_name": "irrigation_command_intents_pkey",
+        "indisvalid": true,
+        "definition": "CREATE UNIQUE INDEX irrigation_command_intents_pkey ON public.irrigation_command_intents USING btree (id)"
+      },
+      {
+        "table_name": "irrigation_cycles",
+        "index_name": "irrigation_cycles_actuator_id_phase_idx",
+        "indisvalid": true,
+        "definition": "CREATE INDEX irrigation_cycles_actuator_id_phase_idx ON public.irrigation_cycles USING btree (actuator_id, phase)"
+      },
+      {
+        "table_name": "irrigation_cycles",
+        "index_name": "irrigation_cycles_automation_rule_id_idx",
+        "indisvalid": true,
+        "definition": "CREATE INDEX irrigation_cycles_automation_rule_id_idx ON public.irrigation_cycles USING btree (automation_rule_id)"
+      },
+      {
+        "table_name": "irrigation_cycles",
+        "index_name": "irrigation_cycles_device_id_idx",
+        "indisvalid": true,
+        "definition": "CREATE INDEX irrigation_cycles_device_id_idx ON public.irrigation_cycles USING btree (device_id)"
+      },
+      {
+        "table_name": "irrigation_cycles",
+        "index_name": "irrigation_cycles_id_actuator_id_mode_key",
+        "indisvalid": true,
+        "definition": "CREATE UNIQUE INDEX irrigation_cycles_id_actuator_id_mode_key ON public.irrigation_cycles USING btree (id, actuator_id, mode)"
+      },
+      {
+        "table_name": "irrigation_cycles",
+        "index_name": "irrigation_cycles_pkey",
+        "indisvalid": true,
+        "definition": "CREATE UNIQUE INDEX irrigation_cycles_pkey ON public.irrigation_cycles USING btree (id)"
+      },
+      {
+        "table_name": "irrigation_daily_budgets",
+        "index_name": "irrigation_daily_budgets_actuator_id_mode_local_day_key",
+        "indisvalid": true,
+        "definition": "CREATE UNIQUE INDEX irrigation_daily_budgets_actuator_id_mode_local_day_key ON public.irrigation_daily_budgets USING btree (actuator_id, mode, local_day)"
+      },
+      {
+        "table_name": "irrigation_daily_budgets",
+        "index_name": "irrigation_daily_budgets_id_actuator_id_mode_key",
+        "indisvalid": true,
+        "definition": "CREATE UNIQUE INDEX irrigation_daily_budgets_id_actuator_id_mode_key ON public.irrigation_daily_budgets USING btree (id, actuator_id, mode)"
+      },
+      {
+        "table_name": "irrigation_daily_budgets",
+        "index_name": "irrigation_daily_budgets_pkey",
+        "indisvalid": true,
+        "definition": "CREATE UNIQUE INDEX irrigation_daily_budgets_pkey ON public.irrigation_daily_budgets USING btree (id)"
+      },
+      {
+        "table_name": "irrigation_decision_logs",
+        "index_name": "irrigation_decision_logs_actuator_id_evaluated_at_idx",
+        "indisvalid": true,
+        "definition": "CREATE INDEX irrigation_decision_logs_actuator_id_evaluated_at_idx ON public.irrigation_decision_logs USING btree (actuator_id, evaluated_at)"
+      },
+      {
+        "table_name": "irrigation_decision_logs",
+        "index_name": "irrigation_decision_logs_cycle_id_idx",
+        "indisvalid": true,
+        "definition": "CREATE INDEX irrigation_decision_logs_cycle_id_idx ON public.irrigation_decision_logs USING btree (cycle_id)"
+      },
+      {
+        "table_name": "irrigation_decision_logs",
+        "index_name": "irrigation_decision_logs_evaluation_key_key",
+        "indisvalid": true,
+        "definition": "CREATE UNIQUE INDEX irrigation_decision_logs_evaluation_key_key ON public.irrigation_decision_logs USING btree (evaluation_key)"
+      },
+      {
+        "table_name": "irrigation_decision_logs",
+        "index_name": "irrigation_decision_logs_intent_id_idx",
+        "indisvalid": true,
+        "definition": "CREATE INDEX irrigation_decision_logs_intent_id_idx ON public.irrigation_decision_logs USING btree (intent_id)"
+      },
+      {
+        "table_name": "irrigation_decision_logs",
+        "index_name": "irrigation_decision_logs_pkey",
+        "indisvalid": true,
+        "definition": "CREATE UNIQUE INDEX irrigation_decision_logs_pkey ON public.irrigation_decision_logs USING btree (id)"
+      },
+      {
+        "table_name": "irrigation_decision_logs",
+        "index_name": "irrigation_decision_logs_sensor_reading_id_idx",
+        "indisvalid": true,
+        "definition": "CREATE INDEX irrigation_decision_logs_sensor_reading_id_idx ON public.irrigation_decision_logs USING btree (sensor_reading_id)"
+      },
+      {
+        "table_name": "irrigation_cycles",
+        "index_name": "irrigation_one_open_cycle",
+        "indisvalid": true,
+        "definition": "CREATE UNIQUE INDEX irrigation_one_open_cycle ON public.irrigation_cycles USING btree (actuator_id, mode) WHERE (closed_at IS NULL)"
+      },
+      {
+        "table_name": "irrigation_command_intents",
+        "index_name": "irrigation_one_open_intent",
+        "indisvalid": true,
+        "definition": "CREATE UNIQUE INDEX irrigation_one_open_intent ON public.irrigation_command_intents USING btree (actuator_id, mode) WHERE (status = ANY (ARRAY['RESERVED'::\"IrrigationIntentStatus\", 'DISPATCH_CLAIMED'::\"IrrigationIntentStatus\", 'PUBLISHED'::\"IrrigationIntentStatus\", 'ACKED'::\"IrrigationIntentStatus\", 'UNCERTAIN'::\"IrrigationIntentStatus\"]))"
+      },
+      {
+        "table_name": "irrigation_safety_states",
+        "index_name": "irrigation_safety_states_pkey",
+        "indisvalid": true,
+        "definition": "CREATE UNIQUE INDEX irrigation_safety_states_pkey ON public.irrigation_safety_states USING btree (actuator_id, mode)"
+      },
+      {
+        "table_name": "sensor_readings",
+        "index_name": "sensor_readings_pkey",
+        "indisvalid": true,
+        "definition": "CREATE UNIQUE INDEX sensor_readings_pkey ON public.sensor_readings USING btree (id)"
+      },
+      {
+        "table_name": "sensor_readings",
+        "index_name": "sensor_readings_recorded_at_idx",
+        "indisvalid": true,
+        "definition": "CREATE INDEX sensor_readings_recorded_at_idx ON public.sensor_readings USING btree (recorded_at)"
+      },
+      {
+        "table_name": "sensor_readings",
+        "index_name": "sensor_readings_sensor_id_recorded_at_idx",
+        "indisvalid": true,
+        "definition": "CREATE INDEX sensor_readings_sensor_id_recorded_at_idx ON public.sensor_readings USING btree (sensor_id, recorded_at DESC)"
+      },
+      {
+        "table_name": "sensor_readings",
+        "index_name": "sensor_readings_sensor_id_recorded_at_key",
+        "indisvalid": true,
+        "definition": "CREATE UNIQUE INDEX sensor_readings_sensor_id_recorded_at_key ON public.sensor_readings USING btree (sensor_id, recorded_at)"
+      },
+      {
+        "table_name": "sensors",
+        "index_name": "sensors_device_id_idx",
+        "indisvalid": true,
+        "definition": "CREATE INDEX sensors_device_id_idx ON public.sensors USING btree (device_id)"
+      },
+      {
+        "table_name": "sensors",
+        "index_name": "sensors_device_id_sensor_code_key",
+        "indisvalid": true,
+        "definition": "CREATE UNIQUE INDEX sensors_device_id_sensor_code_key ON public.sensors USING btree (device_id, sensor_code)"
+      },
+      {
+        "table_name": "sensors",
+        "index_name": "sensors_pkey",
+        "indisvalid": true,
+        "definition": "CREATE UNIQUE INDEX sensors_pkey ON public.sensors USING btree (id)"
+      },
+      {
+        "table_name": "sensors",
+        "index_name": "sensors_status_idx",
+        "indisvalid": true,
+        "definition": "CREATE INDEX sensors_status_idx ON public.sensors USING btree (status)"
+      },
+      {
+        "table_name": "sensors",
+        "index_name": "sensors_type_idx",
+        "indisvalid": true,
+        "definition": "CREATE INDEX sensors_type_idx ON public.sensors USING btree (type)"
+      },
+      {
+        "table_name": "users",
+        "index_name": "users_created_at_idx",
+        "indisvalid": true,
+        "definition": "CREATE INDEX users_created_at_idx ON public.users USING btree (created_at)"
+      },
+      {
+        "table_name": "users",
+        "index_name": "users_email_key",
+        "indisvalid": true,
+        "definition": "CREATE UNIQUE INDEX users_email_key ON public.users USING btree (email)"
+      },
+      {
+        "table_name": "users",
+        "index_name": "users_pkey",
+        "indisvalid": true,
+        "definition": "CREATE UNIQUE INDEX users_pkey ON public.users USING btree (id)"
+      },
+      {
+        "table_name": "users",
+        "index_name": "users_role_idx",
+        "indisvalid": true,
+        "definition": "CREATE INDEX users_role_idx ON public.users USING btree (role)"
+      },
+      {
+        "table_name": "users",
+        "index_name": "users_status_idx",
+        "indisvalid": true,
+        "definition": "CREATE INDEX users_status_idx ON public.users USING btree (status)"
+      },
+      {
+        "table_name": "zones",
+        "index_name": "zones_created_at_idx",
+        "indisvalid": true,
+        "definition": "CREATE INDEX zones_created_at_idx ON public.zones USING btree (created_at)"
+      },
+      {
+        "table_name": "zones",
+        "index_name": "zones_farm_id_idx",
+        "indisvalid": true,
+        "definition": "CREATE INDEX zones_farm_id_idx ON public.zones USING btree (farm_id)"
+      },
+      {
+        "table_name": "zones",
+        "index_name": "zones_farm_id_name_key",
+        "indisvalid": true,
+        "definition": "CREATE UNIQUE INDEX zones_farm_id_name_key ON public.zones USING btree (farm_id, name)"
+      },
+      {
+        "table_name": "zones",
+        "index_name": "zones_pkey",
+        "indisvalid": true,
+        "definition": "CREATE UNIQUE INDEX zones_pkey ON public.zones USING btree (id)"
+      },
+      {
+        "table_name": "zones",
+        "index_name": "zones_status_idx",
+        "indisvalid": true,
+        "definition": "CREATE INDEX zones_status_idx ON public.zones USING btree (status)"
+      }
+    ],
+    "enums": [
+      {
+        "typname": "IrrigationCyclePhase",
+        "labels": "{IDLE,ELIGIBLE,PENDING_ACK,PULSE_ACTIVE,WAIT_FRESH_OFF,SOAK,REEVALUATE,FAULT_LOCKED}"
+      },
+      {
+        "typname": "IrrigationDecisionOutcome",
+        "labels": "{WOULD_ON,WOULD_SKIP,BLOCKED}"
+      },
+      {
+        "typname": "IrrigationDecisionSource",
+        "labels": "{FIXTURE,MOCK,VERIFIED_LIVE}"
+      },
+      {
+        "typname": "IrrigationIntentStatus",
+        "labels": "{RESERVED,DISPATCH_CLAIMED,PUBLISHED,ACKED,COMPLETED,REJECTED,UNCERTAIN,CANCELLED}"
+      },
+      {
+        "typname": "IrrigationPersistenceMode",
+        "labels": "{DISABLED,SHADOW,ACTIVE}"
+      },
+      {
+        "typname": "IrrigationReservationStatus",
+        "labels": "{RESERVED,CHARGED,UNCERTAIN,RELEASED}"
+      }
+    ],
+    "triggers": [
+      {
+        "tgname": "irrigation_v2_append_only",
+        "tgenabled": "O",
+        "definition": "CREATE TRIGGER irrigation_v2_append_only BEFORE DELETE OR UPDATE ON public.irrigation_decision_logs FOR EACH ROW EXECUTE FUNCTION irrigation_v2_deny_audit_mutation()"
+      },
+      {
+        "tgname": "irrigation_v2_no_truncate",
+        "tgenabled": "O",
+        "definition": "CREATE TRIGGER irrigation_v2_no_truncate BEFORE TRUNCATE ON public.irrigation_decision_logs FOR EACH STATEMENT EXECUTE FUNCTION irrigation_v2_deny_audit_mutation()"
+      }
+    ]
+  },
+  "finalizationPrivileges": {
+    "create_schema": false,
+    "history_select": false,
+    "actuator_reference": false,
+    "command_reference": false,
+    "rule_reference": false,
+    "reading_reference": false,
+    "control_execute": true,
+    "direct_control_execute": false,
+    "baselineControlPublicExecute": true
+  },
+  "testLogins": {
+    "app": "p135b1_0704174deb58_main_a_login",
+    "migrator": "p135b1_0704174deb58_main_m_login",
+    "secrets": "GENERATED_TEST_ONLY_RAM_NOT_PERSISTED",
+    "disabledAfterTests": true
+  },
+  "oldPhaseAfter": {
+    "rows": [
+      {
+        "relname": "activity_logs",
+        "owner": "phase13_test_migrator"
+      },
+      {
+        "relname": "actuators",
+        "owner": "phase13_test_migrator"
+      },
+      {
+        "relname": "alert_rules",
+        "owner": "phase13_test_migrator"
+      },
+      {
+        "relname": "alerts",
+        "owner": "phase13_test_migrator"
+      },
+      {
+        "relname": "automation_rules",
+        "owner": "phase13_test_migrator"
+      },
+      {
+        "relname": "crops",
+        "owner": "phase13_test_migrator"
+      },
+      {
+        "relname": "device_commands",
+        "owner": "phase13_test_migrator"
+      },
+      {
+        "relname": "devices",
+        "owner": "phase13_test_migrator"
+      },
+      {
+        "relname": "farm_staff_assignments",
+        "owner": "phase13_test_migrator"
+      },
+      {
+        "relname": "farms",
+        "owner": "phase13_test_migrator"
+      },
+      {
+        "relname": "irrigation_budget_reservations",
+        "owner": "phase13_test_migrator"
+      },
+      {
+        "relname": "irrigation_command_intents",
+        "owner": "phase13_test_migrator"
+      },
+      {
+        "relname": "irrigation_cycles",
+        "owner": "phase13_test_migrator"
+      },
+      {
+        "relname": "irrigation_daily_budgets",
+        "owner": "phase13_test_migrator"
+      },
+      {
+        "relname": "irrigation_decision_logs",
+        "owner": "phase13_test_migrator"
+      },
+      {
+        "relname": "irrigation_safety_states",
+        "owner": "phase13_test_migrator"
+      },
+      {
+        "relname": "sensor_readings",
+        "owner": "phase13_test_migrator"
+      },
+      {
+        "relname": "sensors",
+        "owner": "phase13_test_migrator"
+      },
+      {
+        "relname": "users",
+        "owner": "phase13_test_migrator"
+      },
+      {
+        "relname": "zones",
+        "owner": "phase13_test_migrator"
+      }
+    ],
+    "counts": {
+      "irrigation_cycles": 291,
+      "irrigation_decision_logs": 232,
+      "irrigation_daily_budgets": 235,
+      "irrigation_budget_reservations": 148,
+      "irrigation_command_intents": 148,
+      "irrigation_safety_states": 1
+    },
+    "audit": "f4dc02962bdfd5c5a96262403eb2c537"
+  },
+  "catalogFinal": {
+    "tables": [
+      {
+        "relname": "irrigation_budget_reservations",
+        "owner": "p135b1_0704174deb58_main_m"
+      },
+      {
+        "relname": "irrigation_command_intents",
+        "owner": "p135b1_0704174deb58_main_m"
+      },
+      {
+        "relname": "irrigation_cycles",
+        "owner": "p135b1_0704174deb58_main_m"
+      },
+      {
+        "relname": "irrigation_daily_budgets",
+        "owner": "p135b1_0704174deb58_main_m"
+      },
+      {
+        "relname": "irrigation_decision_logs",
+        "owner": "p135b1_0704174deb58_main_m"
+      },
+      {
+        "relname": "irrigation_safety_states",
+        "owner": "p135b1_0704174deb58_main_m"
+      }
+    ],
+    "constraints": [
+      {
+        "relname": "irrigation_budget_reservations",
+        "conname": "irr_budget_reservations_shadow_fence",
+        "contype": "c",
+        "convalidated": true,
+        "confdeltype": " ",
+        "confupdtype": " ",
+        "definition": "CHECK ((mode = ANY (ARRAY['DISABLED'::\"IrrigationPersistenceMode\", 'SHADOW'::\"IrrigationPersistenceMode\"])))"
+      },
+      {
+        "relname": "irrigation_budget_reservations",
+        "conname": "irrigation_budget_reservations_budget_id_actuator_id_mode_fkey",
+        "contype": "f",
+        "convalidated": true,
+        "confdeltype": "r",
+        "confupdtype": "r",
+        "definition": "FOREIGN KEY (budget_id, actuator_id, mode) REFERENCES irrigation_daily_budgets(id, actuator_id, mode) ON UPDATE RESTRICT ON DELETE RESTRICT"
+      },
+      {
+        "relname": "irrigation_budget_reservations",
+        "conname": "irrigation_budget_reservations_cycle_id_actuator_id_mode_fkey",
+        "contype": "f",
+        "convalidated": true,
+        "confdeltype": "r",
+        "confupdtype": "r",
+        "definition": "FOREIGN KEY (cycle_id, actuator_id, mode) REFERENCES irrigation_cycles(id, actuator_id, mode) ON UPDATE RESTRICT ON DELETE RESTRICT"
+      },
+      {
+        "relname": "irrigation_budget_reservations",
+        "conname": "irrigation_budget_reservations_intent_id_cycle_id_actuator_fkey",
+        "contype": "f",
+        "convalidated": true,
+        "confdeltype": "r",
+        "confupdtype": "r",
+        "definition": "FOREIGN KEY (intent_id, cycle_id, actuator_id, mode) REFERENCES irrigation_command_intents(id, cycle_id, actuator_id, mode) ON UPDATE RESTRICT ON DELETE RESTRICT"
+      },
+      {
+        "relname": "irrigation_budget_reservations",
+        "conname": "irrigation_budget_reservations_pkey",
+        "contype": "p",
+        "convalidated": true,
+        "confdeltype": " ",
+        "confupdtype": " ",
+        "definition": "PRIMARY KEY (id)"
+      },
+      {
+        "relname": "irrigation_budget_reservations",
+        "conname": "irrigation_reservation_bounds",
+        "contype": "c",
+        "convalidated": true,
+        "confdeltype": " ",
+        "confupdtype": " ",
+        "definition": "CHECK (((version >= 0) AND ((seconds >= 1) AND (seconds <= 5))))"
+      },
+      {
+        "relname": "irrigation_budget_reservations",
+        "conname": "irrigation_v2_settlement",
+        "contype": "c",
+        "convalidated": true,
+        "confdeltype": " ",
+        "confupdtype": " ",
+        "definition": "CHECK ((((status <> ALL (ARRAY['RELEASED'::\"IrrigationReservationStatus\", 'CHARGED'::\"IrrigationReservationStatus\"])) OR (settled_at IS NOT NULL)) AND ((settled_at IS NULL) OR (settled_at >= created_at))))"
+      },
+      {
+        "relname": "irrigation_command_intents",
+        "conname": "irr_command_intents_shadow_fence",
+        "contype": "c",
+        "convalidated": true,
+        "confdeltype": " ",
+        "confupdtype": " ",
+        "definition": "CHECK ((mode = ANY (ARRAY['DISABLED'::\"IrrigationPersistenceMode\", 'SHADOW'::\"IrrigationPersistenceMode\"])))"
+      },
+      {
+        "relname": "irrigation_command_intents",
+        "conname": "irrigation_command_intents_cycle_id_actuator_id_mode_fkey",
+        "contype": "f",
+        "convalidated": true,
+        "confdeltype": "r",
+        "confupdtype": "r",
+        "definition": "FOREIGN KEY (cycle_id, actuator_id, mode) REFERENCES irrigation_cycles(id, actuator_id, mode) ON UPDATE RESTRICT ON DELETE RESTRICT"
+      },
+      {
+        "relname": "irrigation_command_intents",
+        "conname": "irrigation_command_intents_device_command_id_actuator_id_fkey",
+        "contype": "f",
+        "convalidated": true,
+        "confdeltype": "r",
+        "confupdtype": "r",
+        "definition": "FOREIGN KEY (device_command_id, actuator_id) REFERENCES device_commands(id, actuator_id) ON UPDATE RESTRICT ON DELETE RESTRICT"
+      },
+      {
+        "relname": "irrigation_command_intents",
+        "conname": "irrigation_command_intents_pkey",
+        "contype": "p",
+        "convalidated": true,
+        "confdeltype": " ",
+        "confupdtype": " ",
+        "definition": "PRIMARY KEY (id)"
+      },
+      {
+        "relname": "irrigation_command_intents",
+        "conname": "irrigation_intent_bounds",
+        "contype": "c",
+        "convalidated": true,
+        "confdeltype": " ",
+        "confupdtype": " ",
+        "definition": "CHECK (((version >= 0) AND (pulse_index >= 0) AND ((max_run_seconds >= 1) AND (max_run_seconds <= 5)) AND (expires_at > issued_at) AND (expires_at <= (issued_at + '00:00:30'::interval))))"
+      },
+      {
+        "relname": "irrigation_command_intents",
+        "conname": "irrigation_shadow_one_second",
+        "contype": "c",
+        "convalidated": true,
+        "confdeltype": " ",
+        "confupdtype": " ",
+        "definition": "CHECK (((mode <> 'SHADOW'::\"IrrigationPersistenceMode\") OR (max_run_seconds = 1)))"
+      },
+      {
+        "relname": "irrigation_command_intents",
+        "conname": "irrigation_v2_dispatch_order",
+        "contype": "c",
+        "convalidated": true,
+        "confdeltype": " ",
+        "confupdtype": " ",
+        "definition": "CHECK ((((published_at IS NULL) OR ((dispatch_claimed_at IS NOT NULL) AND (published_at >= dispatch_claimed_at))) AND ((dispatch_claimed_at IS NULL) OR (dispatch_claimed_at >= issued_at)) AND ((acknowledged_at IS NULL) OR ((published_at IS NOT NULL) AND (acknowledged_at >= published_at)))))"
+      },
+      {
+        "relname": "irrigation_cycles",
+        "conname": "irr_cycles_shadow_fence",
+        "contype": "c",
+        "convalidated": true,
+        "confdeltype": " ",
+        "confupdtype": " ",
+        "definition": "CHECK ((mode = ANY (ARRAY['DISABLED'::\"IrrigationPersistenceMode\", 'SHADOW'::\"IrrigationPersistenceMode\"])))"
+      },
+      {
+        "relname": "irrigation_cycles",
+        "conname": "irrigation_active_rule",
+        "contype": "c",
+        "convalidated": true,
+        "confdeltype": " ",
+        "confupdtype": " ",
+        "definition": "CHECK (((mode <> 'ACTIVE'::\"IrrigationPersistenceMode\") OR (automation_rule_id IS NOT NULL)))"
+      },
+      {
+        "relname": "irrigation_cycles",
+        "conname": "irrigation_cycle_counts",
+        "contype": "c",
+        "convalidated": true,
+        "confdeltype": " ",
+        "confupdtype": " ",
+        "definition": "CHECK (((version >= 0) AND (pulses >= 0) AND (policy_version > 0) AND (jsonb_typeof(consumed_keys) = 'array'::text)))"
+      },
+      {
+        "relname": "irrigation_cycles",
+        "conname": "irrigation_cycles_actuator_id_device_id_fkey",
+        "contype": "f",
+        "convalidated": true,
+        "confdeltype": "r",
+        "confupdtype": "r",
+        "definition": "FOREIGN KEY (actuator_id, device_id) REFERENCES actuators(id, device_id) ON UPDATE RESTRICT ON DELETE RESTRICT"
+      },
+      {
+        "relname": "irrigation_cycles",
+        "conname": "irrigation_cycles_automation_rule_id_actuator_id_fkey",
+        "contype": "f",
+        "convalidated": true,
+        "confdeltype": "r",
+        "confupdtype": "r",
+        "definition": "FOREIGN KEY (automation_rule_id, actuator_id) REFERENCES automation_rules(id, actuator_id) ON UPDATE RESTRICT ON DELETE RESTRICT"
+      },
+      {
+        "relname": "irrigation_cycles",
+        "conname": "irrigation_cycles_device_id_fkey",
+        "contype": "f",
+        "convalidated": true,
+        "confdeltype": "r",
+        "confupdtype": "r",
+        "definition": "FOREIGN KEY (device_id) REFERENCES devices(id) ON UPDATE RESTRICT ON DELETE RESTRICT"
+      },
+      {
+        "relname": "irrigation_cycles",
+        "conname": "irrigation_cycles_pkey",
+        "contype": "p",
+        "convalidated": true,
+        "confdeltype": " ",
+        "confupdtype": " ",
+        "definition": "PRIMARY KEY (id)"
+      },
+      {
+        "relname": "irrigation_daily_budgets",
+        "conname": "irr_daily_budgets_shadow_fence",
+        "contype": "c",
+        "convalidated": true,
+        "confdeltype": " ",
+        "confupdtype": " ",
+        "definition": "CHECK ((mode = ANY (ARRAY['DISABLED'::\"IrrigationPersistenceMode\", 'SHADOW'::\"IrrigationPersistenceMode\"])))"
+      },
+      {
+        "relname": "irrigation_daily_budgets",
+        "conname": "irrigation_budget_bounds",
+        "contype": "c",
+        "convalidated": true,
+        "confdeltype": " ",
+        "confupdtype": " ",
+        "definition": "CHECK (((version >= 0) AND (max_runs > 0) AND (max_seconds > 0) AND ((reserved_runs >= 0) AND (reserved_runs <= max_runs)) AND ((reserved_seconds >= 0) AND (reserved_seconds <= max_seconds))))"
+      },
+      {
+        "relname": "irrigation_daily_budgets",
+        "conname": "irrigation_daily_budgets_actuator_id_fkey",
+        "contype": "f",
+        "convalidated": true,
+        "confdeltype": "r",
+        "confupdtype": "r",
+        "definition": "FOREIGN KEY (actuator_id) REFERENCES actuators(id) ON UPDATE RESTRICT ON DELETE RESTRICT"
+      },
+      {
+        "relname": "irrigation_daily_budgets",
+        "conname": "irrigation_daily_budgets_pkey",
+        "contype": "p",
+        "convalidated": true,
+        "confdeltype": " ",
+        "confupdtype": " ",
+        "definition": "PRIMARY KEY (id)"
+      },
+      {
+        "relname": "irrigation_decision_logs",
+        "conname": "irr_decision_logs_shadow_fence",
+        "contype": "c",
+        "convalidated": true,
+        "confdeltype": " ",
+        "confupdtype": " ",
+        "definition": "CHECK ((mode = ANY (ARRAY['DISABLED'::\"IrrigationPersistenceMode\", 'SHADOW'::\"IrrigationPersistenceMode\"])))"
+      },
+      {
+        "relname": "irrigation_decision_logs",
+        "conname": "irrigation_active_provenance",
+        "contype": "c",
+        "convalidated": true,
+        "confdeltype": " ",
+        "confupdtype": " ",
+        "definition": "CHECK (((mode <> 'ACTIVE'::\"IrrigationPersistenceMode\") OR (source = 'VERIFIED_LIVE'::\"IrrigationDecisionSource\")))"
+      },
+      {
+        "relname": "irrigation_decision_logs",
+        "conname": "irrigation_decision_logs_actuator_id_fkey",
+        "contype": "f",
+        "convalidated": true,
+        "confdeltype": "r",
+        "confupdtype": "r",
+        "definition": "FOREIGN KEY (actuator_id) REFERENCES actuators(id) ON UPDATE RESTRICT ON DELETE RESTRICT"
+      },
+      {
+        "relname": "irrigation_decision_logs",
+        "conname": "irrigation_decision_logs_cycle_id_actuator_id_mode_fkey",
+        "contype": "f",
+        "convalidated": true,
+        "confdeltype": "r",
+        "confupdtype": "r",
+        "definition": "FOREIGN KEY (cycle_id, actuator_id, mode) REFERENCES irrigation_cycles(id, actuator_id, mode) ON UPDATE RESTRICT ON DELETE RESTRICT"
+      },
+      {
+        "relname": "irrigation_decision_logs",
+        "conname": "irrigation_decision_logs_intent_id_actuator_id_mode_fkey",
+        "contype": "f",
+        "convalidated": true,
+        "confdeltype": "r",
+        "confupdtype": "r",
+        "definition": "FOREIGN KEY (intent_id, actuator_id, mode) REFERENCES irrigation_command_intents(id, actuator_id, mode) ON UPDATE RESTRICT ON DELETE RESTRICT"
+      },
+      {
+        "relname": "irrigation_decision_logs",
+        "conname": "irrigation_decision_logs_pkey",
+        "contype": "p",
+        "convalidated": true,
+        "confdeltype": " ",
+        "confupdtype": " ",
+        "definition": "PRIMARY KEY (id)"
+      },
+      {
+        "relname": "irrigation_decision_logs",
+        "conname": "irrigation_decision_logs_sensor_reading_id_fkey",
+        "contype": "f",
+        "convalidated": true,
+        "confdeltype": "r",
+        "confupdtype": "r",
+        "definition": "FOREIGN KEY (sensor_reading_id) REFERENCES sensor_readings(id) ON UPDATE RESTRICT ON DELETE RESTRICT"
+      },
+      {
+        "relname": "irrigation_decision_logs",
+        "conname": "irrigation_decision_provenance",
+        "contype": "c",
+        "convalidated": true,
+        "confdeltype": " ",
+        "confupdtype": " ",
+        "definition": "CHECK (((source <> 'VERIFIED_LIVE'::\"IrrigationDecisionSource\") OR (sensor_reading_id IS NOT NULL)))"
+      },
+      {
+        "relname": "irrigation_decision_logs",
+        "conname": "irrigation_unverified_source_fence",
+        "contype": "c",
+        "convalidated": true,
+        "confdeltype": " ",
+        "confupdtype": " ",
+        "definition": "CHECK ((source = ANY (ARRAY['FIXTURE'::\"IrrigationDecisionSource\", 'MOCK'::\"IrrigationDecisionSource\"])))"
+      },
+      {
+        "relname": "irrigation_safety_states",
+        "conname": "irr_safety_states_shadow_fence",
+        "contype": "c",
+        "convalidated": true,
+        "confdeltype": " ",
+        "confupdtype": " ",
+        "definition": "CHECK ((mode = ANY (ARRAY['DISABLED'::\"IrrigationPersistenceMode\", 'SHADOW'::\"IrrigationPersistenceMode\"])))"
+      },
+      {
+        "relname": "irrigation_safety_states",
+        "conname": "irrigation_safety_states_actuator_id_device_id_fkey",
+        "contype": "f",
+        "convalidated": true,
+        "confdeltype": "r",
+        "confupdtype": "r",
+        "definition": "FOREIGN KEY (actuator_id, device_id) REFERENCES actuators(id, device_id) ON UPDATE RESTRICT ON DELETE RESTRICT"
+      },
+      {
+        "relname": "irrigation_safety_states",
+        "conname": "irrigation_safety_states_pkey",
+        "contype": "p",
+        "convalidated": true,
+        "confdeltype": " ",
+        "confupdtype": " ",
+        "definition": "PRIMARY KEY (actuator_id, mode)"
+      },
+      {
+        "relname": "irrigation_safety_states",
+        "conname": "irrigation_safety_version",
+        "contype": "c",
+        "convalidated": true,
+        "confdeltype": " ",
+        "confupdtype": " ",
+        "definition": "CHECK ((version >= 0))"
+      }
+    ],
+    "indexes": [
+      {
+        "table_name": "_prisma_migrations",
+        "index_name": "_prisma_migrations_pkey",
+        "indisvalid": true,
+        "definition": "CREATE UNIQUE INDEX _prisma_migrations_pkey ON public._prisma_migrations USING btree (id)"
+      },
+      {
+        "table_name": "activity_logs",
+        "index_name": "activity_logs_action_idx",
+        "indisvalid": true,
+        "definition": "CREATE INDEX activity_logs_action_idx ON public.activity_logs USING btree (action)"
+      },
+      {
+        "table_name": "activity_logs",
+        "index_name": "activity_logs_created_at_idx",
+        "indisvalid": true,
+        "definition": "CREATE INDEX activity_logs_created_at_idx ON public.activity_logs USING btree (created_at)"
+      },
+      {
+        "table_name": "activity_logs",
+        "index_name": "activity_logs_farm_id_created_at_idx",
+        "indisvalid": true,
+        "definition": "CREATE INDEX activity_logs_farm_id_created_at_idx ON public.activity_logs USING btree (farm_id, created_at)"
+      },
+      {
+        "table_name": "activity_logs",
+        "index_name": "activity_logs_pkey",
+        "indisvalid": true,
+        "definition": "CREATE UNIQUE INDEX activity_logs_pkey ON public.activity_logs USING btree (id)"
+      },
+      {
+        "table_name": "activity_logs",
+        "index_name": "activity_logs_user_id_created_at_idx",
+        "indisvalid": true,
+        "definition": "CREATE INDEX activity_logs_user_id_created_at_idx ON public.activity_logs USING btree (user_id, created_at)"
+      },
+      {
+        "table_name": "actuators",
+        "index_name": "actuators_current_state_idx",
+        "indisvalid": true,
+        "definition": "CREATE INDEX actuators_current_state_idx ON public.actuators USING btree (current_state)"
+      },
+      {
+        "table_name": "actuators",
+        "index_name": "actuators_device_id_actuator_code_key",
+        "indisvalid": true,
+        "definition": "CREATE UNIQUE INDEX actuators_device_id_actuator_code_key ON public.actuators USING btree (device_id, actuator_code)"
+      },
+      {
+        "table_name": "actuators",
+        "index_name": "actuators_device_id_idx",
+        "indisvalid": true,
+        "definition": "CREATE INDEX actuators_device_id_idx ON public.actuators USING btree (device_id)"
+      },
+      {
+        "table_name": "actuators",
+        "index_name": "actuators_id_device_id_key",
+        "indisvalid": true,
+        "definition": "CREATE UNIQUE INDEX actuators_id_device_id_key ON public.actuators USING btree (id, device_id)"
+      },
+      {
+        "table_name": "actuators",
+        "index_name": "actuators_pkey",
+        "indisvalid": true,
+        "definition": "CREATE UNIQUE INDEX actuators_pkey ON public.actuators USING btree (id)"
+      },
+      {
+        "table_name": "actuators",
+        "index_name": "actuators_status_idx",
+        "indisvalid": true,
+        "definition": "CREATE INDEX actuators_status_idx ON public.actuators USING btree (status)"
+      },
+      {
+        "table_name": "actuators",
+        "index_name": "actuators_type_idx",
+        "indisvalid": true,
+        "definition": "CREATE INDEX actuators_type_idx ON public.actuators USING btree (type)"
+      },
+      {
+        "table_name": "alert_rules",
+        "index_name": "alert_rules_enabled_idx",
+        "indisvalid": true,
+        "definition": "CREATE INDEX alert_rules_enabled_idx ON public.alert_rules USING btree (enabled)"
+      },
+      {
+        "table_name": "alert_rules",
+        "index_name": "alert_rules_pkey",
+        "indisvalid": true,
+        "definition": "CREATE UNIQUE INDEX alert_rules_pkey ON public.alert_rules USING btree (id)"
+      },
+      {
+        "table_name": "alert_rules",
+        "index_name": "alert_rules_sensor_id_idx",
+        "indisvalid": true,
+        "definition": "CREATE INDEX alert_rules_sensor_id_idx ON public.alert_rules USING btree (sensor_id)"
+      },
+      {
+        "table_name": "alert_rules",
+        "index_name": "alert_rules_severity_idx",
+        "indisvalid": true,
+        "definition": "CREATE INDEX alert_rules_severity_idx ON public.alert_rules USING btree (severity)"
+      },
+      {
+        "table_name": "alerts",
+        "index_name": "alerts_alert_rule_id_status_idx",
+        "indisvalid": true,
+        "definition": "CREATE INDEX alerts_alert_rule_id_status_idx ON public.alerts USING btree (alert_rule_id, status)"
+      },
+      {
+        "table_name": "alerts",
+        "index_name": "alerts_one_active_per_rule_idx",
+        "indisvalid": true,
+        "definition": "CREATE UNIQUE INDEX alerts_one_active_per_rule_idx ON public.alerts USING btree (alert_rule_id) WHERE (status = ANY (ARRAY['OPEN'::\"AlertStatus\", 'ACKNOWLEDGED'::\"AlertStatus\"]))"
+      },
+      {
+        "table_name": "alerts",
+        "index_name": "alerts_opened_at_idx",
+        "indisvalid": true,
+        "definition": "CREATE INDEX alerts_opened_at_idx ON public.alerts USING btree (opened_at)"
+      },
+      {
+        "table_name": "alerts",
+        "index_name": "alerts_pkey",
+        "indisvalid": true,
+        "definition": "CREATE UNIQUE INDEX alerts_pkey ON public.alerts USING btree (id)"
+      },
+      {
+        "table_name": "alerts",
+        "index_name": "alerts_sensor_id_idx",
+        "indisvalid": true,
+        "definition": "CREATE INDEX alerts_sensor_id_idx ON public.alerts USING btree (sensor_id)"
+      },
+      {
+        "table_name": "alerts",
+        "index_name": "alerts_severity_snapshot_idx",
+        "indisvalid": true,
+        "definition": "CREATE INDEX alerts_severity_snapshot_idx ON public.alerts USING btree (severity_snapshot)"
+      },
+      {
+        "table_name": "alerts",
+        "index_name": "alerts_status_idx",
+        "indisvalid": true,
+        "definition": "CREATE INDEX alerts_status_idx ON public.alerts USING btree (status)"
+      },
+      {
+        "table_name": "automation_rules",
+        "index_name": "automation_rules_actuator_id_idx",
+        "indisvalid": true,
+        "definition": "CREATE INDEX automation_rules_actuator_id_idx ON public.automation_rules USING btree (actuator_id)"
+      },
+      {
+        "table_name": "automation_rules",
+        "index_name": "automation_rules_created_at_idx",
+        "indisvalid": true,
+        "definition": "CREATE INDEX automation_rules_created_at_idx ON public.automation_rules USING btree (created_at)"
+      },
+      {
+        "table_name": "automation_rules",
+        "index_name": "automation_rules_enabled_idx",
+        "indisvalid": true,
+        "definition": "CREATE INDEX automation_rules_enabled_idx ON public.automation_rules USING btree (enabled)"
+      },
+      {
+        "table_name": "automation_rules",
+        "index_name": "automation_rules_id_actuator_id_key",
+        "indisvalid": true,
+        "definition": "CREATE UNIQUE INDEX automation_rules_id_actuator_id_key ON public.automation_rules USING btree (id, actuator_id)"
+      },
+      {
+        "table_name": "automation_rules",
+        "index_name": "automation_rules_one_enabled_per_actuator_idx",
+        "indisvalid": true,
+        "definition": "CREATE UNIQUE INDEX automation_rules_one_enabled_per_actuator_idx ON public.automation_rules USING btree (actuator_id) WHERE (enabled = true)"
+      },
+      {
+        "table_name": "automation_rules",
+        "index_name": "automation_rules_pkey",
+        "indisvalid": true,
+        "definition": "CREATE UNIQUE INDEX automation_rules_pkey ON public.automation_rules USING btree (id)"
+      },
+      {
+        "table_name": "automation_rules",
+        "index_name": "automation_rules_sensor_id_idx",
+        "indisvalid": true,
+        "definition": "CREATE INDEX automation_rules_sensor_id_idx ON public.automation_rules USING btree (sensor_id)"
+      },
+      {
+        "table_name": "crops",
+        "index_name": "crops_created_at_idx",
+        "indisvalid": true,
+        "definition": "CREATE INDEX crops_created_at_idx ON public.crops USING btree (created_at)"
+      },
+      {
+        "table_name": "crops",
+        "index_name": "crops_pkey",
+        "indisvalid": true,
+        "definition": "CREATE UNIQUE INDEX crops_pkey ON public.crops USING btree (id)"
+      },
+      {
+        "table_name": "crops",
+        "index_name": "crops_planting_date_idx",
+        "indisvalid": true,
+        "definition": "CREATE INDEX crops_planting_date_idx ON public.crops USING btree (planting_date)"
+      },
+      {
+        "table_name": "crops",
+        "index_name": "crops_status_idx",
+        "indisvalid": true,
+        "definition": "CREATE INDEX crops_status_idx ON public.crops USING btree (status)"
+      },
+      {
+        "table_name": "crops",
+        "index_name": "crops_zone_id_idx",
+        "indisvalid": true,
+        "definition": "CREATE INDEX crops_zone_id_idx ON public.crops USING btree (zone_id)"
+      },
+      {
+        "table_name": "device_commands",
+        "index_name": "device_commands_actuator_id_idx",
+        "indisvalid": true,
+        "definition": "CREATE INDEX device_commands_actuator_id_idx ON public.device_commands USING btree (actuator_id)"
+      },
+      {
+        "table_name": "device_commands",
+        "index_name": "device_commands_automation_rule_id_idx",
+        "indisvalid": true,
+        "definition": "CREATE INDEX device_commands_automation_rule_id_idx ON public.device_commands USING btree (automation_rule_id)"
+      },
+      {
+        "table_name": "device_commands",
+        "index_name": "device_commands_correlation_id_key",
+        "indisvalid": true,
+        "definition": "CREATE UNIQUE INDEX device_commands_correlation_id_key ON public.device_commands USING btree (correlation_id)"
+      },
+      {
+        "table_name": "device_commands",
+        "index_name": "device_commands_id_actuator_id_key",
+        "indisvalid": true,
+        "definition": "CREATE UNIQUE INDEX device_commands_id_actuator_id_key ON public.device_commands USING btree (id, actuator_id)"
+      },
+      {
+        "table_name": "device_commands",
+        "index_name": "device_commands_one_pending_per_actuator_idx",
+        "indisvalid": true,
+        "definition": "CREATE UNIQUE INDEX device_commands_one_pending_per_actuator_idx ON public.device_commands USING btree (actuator_id) WHERE (status = 'PENDING'::\"DeviceCommandStatus\")"
+      },
+      {
+        "table_name": "device_commands",
+        "index_name": "device_commands_pkey",
+        "indisvalid": true,
+        "definition": "CREATE UNIQUE INDEX device_commands_pkey ON public.device_commands USING btree (id)"
+      },
+      {
+        "table_name": "device_commands",
+        "index_name": "device_commands_requested_at_idx",
+        "indisvalid": true,
+        "definition": "CREATE INDEX device_commands_requested_at_idx ON public.device_commands USING btree (requested_at)"
+      },
+      {
+        "table_name": "device_commands",
+        "index_name": "device_commands_requested_by_id_idx",
+        "indisvalid": true,
+        "definition": "CREATE INDEX device_commands_requested_by_id_idx ON public.device_commands USING btree (requested_by_id)"
+      },
+      {
+        "table_name": "device_commands",
+        "index_name": "device_commands_status_idx",
+        "indisvalid": true,
+        "definition": "CREATE INDEX device_commands_status_idx ON public.device_commands USING btree (status)"
+      },
+      {
+        "table_name": "devices",
+        "index_name": "devices_connection_status_idx",
+        "indisvalid": true,
+        "definition": "CREATE INDEX devices_connection_status_idx ON public.devices USING btree (connection_status)"
+      },
+      {
+        "table_name": "devices",
+        "index_name": "devices_created_at_idx",
+        "indisvalid": true,
+        "definition": "CREATE INDEX devices_created_at_idx ON public.devices USING btree (created_at)"
+      },
+      {
+        "table_name": "devices",
+        "index_name": "devices_device_code_key",
+        "indisvalid": true,
+        "definition": "CREATE UNIQUE INDEX devices_device_code_key ON public.devices USING btree (device_code)"
+      },
+      {
+        "table_name": "devices",
+        "index_name": "devices_pkey",
+        "indisvalid": true,
+        "definition": "CREATE UNIQUE INDEX devices_pkey ON public.devices USING btree (id)"
+      },
+      {
+        "table_name": "devices",
+        "index_name": "devices_status_idx",
+        "indisvalid": true,
+        "definition": "CREATE INDEX devices_status_idx ON public.devices USING btree (status)"
+      },
+      {
+        "table_name": "devices",
+        "index_name": "devices_zone_id_idx",
+        "indisvalid": true,
+        "definition": "CREATE INDEX devices_zone_id_idx ON public.devices USING btree (zone_id)"
+      },
+      {
+        "table_name": "farm_staff_assignments",
+        "index_name": "farm_staff_assignments_farm_id_idx",
+        "indisvalid": true,
+        "definition": "CREATE INDEX farm_staff_assignments_farm_id_idx ON public.farm_staff_assignments USING btree (farm_id)"
+      },
+      {
+        "table_name": "farm_staff_assignments",
+        "index_name": "farm_staff_assignments_farm_id_staff_id_key",
+        "indisvalid": true,
+        "definition": "CREATE UNIQUE INDEX farm_staff_assignments_farm_id_staff_id_key ON public.farm_staff_assignments USING btree (farm_id, staff_id)"
+      },
+      {
+        "table_name": "farm_staff_assignments",
+        "index_name": "farm_staff_assignments_pkey",
+        "indisvalid": true,
+        "definition": "CREATE UNIQUE INDEX farm_staff_assignments_pkey ON public.farm_staff_assignments USING btree (id)"
+      },
+      {
+        "table_name": "farm_staff_assignments",
+        "index_name": "farm_staff_assignments_staff_id_idx",
+        "indisvalid": true,
+        "definition": "CREATE INDEX farm_staff_assignments_staff_id_idx ON public.farm_staff_assignments USING btree (staff_id)"
+      },
+      {
+        "table_name": "farms",
+        "index_name": "farms_created_at_idx",
+        "indisvalid": true,
+        "definition": "CREATE INDEX farms_created_at_idx ON public.farms USING btree (created_at)"
+      },
+      {
+        "table_name": "farms",
+        "index_name": "farms_owner_id_idx",
+        "indisvalid": true,
+        "definition": "CREATE INDEX farms_owner_id_idx ON public.farms USING btree (owner_id)"
+      },
+      {
+        "table_name": "farms",
+        "index_name": "farms_pkey",
+        "indisvalid": true,
+        "definition": "CREATE UNIQUE INDEX farms_pkey ON public.farms USING btree (id)"
+      },
+      {
+        "table_name": "farms",
+        "index_name": "farms_status_idx",
+        "indisvalid": true,
+        "definition": "CREATE INDEX farms_status_idx ON public.farms USING btree (status)"
+      },
+      {
+        "table_name": "irrigation_budget_reservations",
+        "index_name": "irrigation_budget_reservations_budget_id_status_idx",
+        "indisvalid": true,
+        "definition": "CREATE INDEX irrigation_budget_reservations_budget_id_status_idx ON public.irrigation_budget_reservations USING btree (budget_id, status)"
+      },
+      {
+        "table_name": "irrigation_budget_reservations",
+        "index_name": "irrigation_budget_reservations_cycle_id_idx",
+        "indisvalid": true,
+        "definition": "CREATE INDEX irrigation_budget_reservations_cycle_id_idx ON public.irrigation_budget_reservations USING btree (cycle_id)"
+      },
+      {
+        "table_name": "irrigation_budget_reservations",
+        "index_name": "irrigation_budget_reservations_intent_id_cycle_id_actuator__key",
+        "indisvalid": true,
+        "definition": "CREATE UNIQUE INDEX irrigation_budget_reservations_intent_id_cycle_id_actuator__key ON public.irrigation_budget_reservations USING btree (intent_id, cycle_id, actuator_id, mode)"
+      },
+      {
+        "table_name": "irrigation_budget_reservations",
+        "index_name": "irrigation_budget_reservations_intent_id_key",
+        "indisvalid": true,
+        "definition": "CREATE UNIQUE INDEX irrigation_budget_reservations_intent_id_key ON public.irrigation_budget_reservations USING btree (intent_id)"
+      },
+      {
+        "table_name": "irrigation_budget_reservations",
+        "index_name": "irrigation_budget_reservations_pkey",
+        "indisvalid": true,
+        "definition": "CREATE UNIQUE INDEX irrigation_budget_reservations_pkey ON public.irrigation_budget_reservations USING btree (id)"
+      },
+      {
+        "table_name": "irrigation_command_intents",
+        "index_name": "irrigation_command_intents_actuator_id_status_idx",
+        "indisvalid": true,
+        "definition": "CREATE INDEX irrigation_command_intents_actuator_id_status_idx ON public.irrigation_command_intents USING btree (actuator_id, status)"
+      },
+      {
+        "table_name": "irrigation_command_intents",
+        "index_name": "irrigation_command_intents_correlation_id_key",
+        "indisvalid": true,
+        "definition": "CREATE UNIQUE INDEX irrigation_command_intents_correlation_id_key ON public.irrigation_command_intents USING btree (correlation_id)"
+      },
+      {
+        "table_name": "irrigation_command_intents",
+        "index_name": "irrigation_command_intents_cycle_id_pulse_index_key",
+        "indisvalid": true,
+        "definition": "CREATE UNIQUE INDEX irrigation_command_intents_cycle_id_pulse_index_key ON public.irrigation_command_intents USING btree (cycle_id, pulse_index)"
+      },
+      {
+        "table_name": "irrigation_command_intents",
+        "index_name": "irrigation_command_intents_device_command_id_actuator_id_key",
+        "indisvalid": true,
+        "definition": "CREATE UNIQUE INDEX irrigation_command_intents_device_command_id_actuator_id_key ON public.irrigation_command_intents USING btree (device_command_id, actuator_id)"
+      },
+      {
+        "table_name": "irrigation_command_intents",
+        "index_name": "irrigation_command_intents_device_command_id_key",
+        "indisvalid": true,
+        "definition": "CREATE UNIQUE INDEX irrigation_command_intents_device_command_id_key ON public.irrigation_command_intents USING btree (device_command_id)"
+      },
+      {
+        "table_name": "irrigation_command_intents",
+        "index_name": "irrigation_command_intents_id_actuator_id_mode_key",
+        "indisvalid": true,
+        "definition": "CREATE UNIQUE INDEX irrigation_command_intents_id_actuator_id_mode_key ON public.irrigation_command_intents USING btree (id, actuator_id, mode)"
+      },
+      {
+        "table_name": "irrigation_command_intents",
+        "index_name": "irrigation_command_intents_id_cycle_id_actuator_id_mode_key",
+        "indisvalid": true,
+        "definition": "CREATE UNIQUE INDEX irrigation_command_intents_id_cycle_id_actuator_id_mode_key ON public.irrigation_command_intents USING btree (id, cycle_id, actuator_id, mode)"
+      },
+      {
+        "table_name": "irrigation_command_intents",
+        "index_name": "irrigation_command_intents_mode_idempotency_key_key",
+        "indisvalid": true,
+        "definition": "CREATE UNIQUE INDEX irrigation_command_intents_mode_idempotency_key_key ON public.irrigation_command_intents USING btree (mode, idempotency_key)"
+      },
+      {
+        "table_name": "irrigation_command_intents",
+        "index_name": "irrigation_command_intents_pkey",
+        "indisvalid": true,
+        "definition": "CREATE UNIQUE INDEX irrigation_command_intents_pkey ON public.irrigation_command_intents USING btree (id)"
+      },
+      {
+        "table_name": "irrigation_cycles",
+        "index_name": "irrigation_cycles_actuator_id_phase_idx",
+        "indisvalid": true,
+        "definition": "CREATE INDEX irrigation_cycles_actuator_id_phase_idx ON public.irrigation_cycles USING btree (actuator_id, phase)"
+      },
+      {
+        "table_name": "irrigation_cycles",
+        "index_name": "irrigation_cycles_automation_rule_id_idx",
+        "indisvalid": true,
+        "definition": "CREATE INDEX irrigation_cycles_automation_rule_id_idx ON public.irrigation_cycles USING btree (automation_rule_id)"
+      },
+      {
+        "table_name": "irrigation_cycles",
+        "index_name": "irrigation_cycles_device_id_idx",
+        "indisvalid": true,
+        "definition": "CREATE INDEX irrigation_cycles_device_id_idx ON public.irrigation_cycles USING btree (device_id)"
+      },
+      {
+        "table_name": "irrigation_cycles",
+        "index_name": "irrigation_cycles_id_actuator_id_mode_key",
+        "indisvalid": true,
+        "definition": "CREATE UNIQUE INDEX irrigation_cycles_id_actuator_id_mode_key ON public.irrigation_cycles USING btree (id, actuator_id, mode)"
+      },
+      {
+        "table_name": "irrigation_cycles",
+        "index_name": "irrigation_cycles_pkey",
+        "indisvalid": true,
+        "definition": "CREATE UNIQUE INDEX irrigation_cycles_pkey ON public.irrigation_cycles USING btree (id)"
+      },
+      {
+        "table_name": "irrigation_daily_budgets",
+        "index_name": "irrigation_daily_budgets_actuator_id_mode_local_day_key",
+        "indisvalid": true,
+        "definition": "CREATE UNIQUE INDEX irrigation_daily_budgets_actuator_id_mode_local_day_key ON public.irrigation_daily_budgets USING btree (actuator_id, mode, local_day)"
+      },
+      {
+        "table_name": "irrigation_daily_budgets",
+        "index_name": "irrigation_daily_budgets_id_actuator_id_mode_key",
+        "indisvalid": true,
+        "definition": "CREATE UNIQUE INDEX irrigation_daily_budgets_id_actuator_id_mode_key ON public.irrigation_daily_budgets USING btree (id, actuator_id, mode)"
+      },
+      {
+        "table_name": "irrigation_daily_budgets",
+        "index_name": "irrigation_daily_budgets_pkey",
+        "indisvalid": true,
+        "definition": "CREATE UNIQUE INDEX irrigation_daily_budgets_pkey ON public.irrigation_daily_budgets USING btree (id)"
+      },
+      {
+        "table_name": "irrigation_decision_logs",
+        "index_name": "irrigation_decision_logs_actuator_id_evaluated_at_idx",
+        "indisvalid": true,
+        "definition": "CREATE INDEX irrigation_decision_logs_actuator_id_evaluated_at_idx ON public.irrigation_decision_logs USING btree (actuator_id, evaluated_at)"
+      },
+      {
+        "table_name": "irrigation_decision_logs",
+        "index_name": "irrigation_decision_logs_cycle_id_idx",
+        "indisvalid": true,
+        "definition": "CREATE INDEX irrigation_decision_logs_cycle_id_idx ON public.irrigation_decision_logs USING btree (cycle_id)"
+      },
+      {
+        "table_name": "irrigation_decision_logs",
+        "index_name": "irrigation_decision_logs_evaluation_key_key",
+        "indisvalid": true,
+        "definition": "CREATE UNIQUE INDEX irrigation_decision_logs_evaluation_key_key ON public.irrigation_decision_logs USING btree (evaluation_key)"
+      },
+      {
+        "table_name": "irrigation_decision_logs",
+        "index_name": "irrigation_decision_logs_intent_id_idx",
+        "indisvalid": true,
+        "definition": "CREATE INDEX irrigation_decision_logs_intent_id_idx ON public.irrigation_decision_logs USING btree (intent_id)"
+      },
+      {
+        "table_name": "irrigation_decision_logs",
+        "index_name": "irrigation_decision_logs_pkey",
+        "indisvalid": true,
+        "definition": "CREATE UNIQUE INDEX irrigation_decision_logs_pkey ON public.irrigation_decision_logs USING btree (id)"
+      },
+      {
+        "table_name": "irrigation_decision_logs",
+        "index_name": "irrigation_decision_logs_sensor_reading_id_idx",
+        "indisvalid": true,
+        "definition": "CREATE INDEX irrigation_decision_logs_sensor_reading_id_idx ON public.irrigation_decision_logs USING btree (sensor_reading_id)"
+      },
+      {
+        "table_name": "irrigation_cycles",
+        "index_name": "irrigation_one_open_cycle",
+        "indisvalid": true,
+        "definition": "CREATE UNIQUE INDEX irrigation_one_open_cycle ON public.irrigation_cycles USING btree (actuator_id, mode) WHERE (closed_at IS NULL)"
+      },
+      {
+        "table_name": "irrigation_command_intents",
+        "index_name": "irrigation_one_open_intent",
+        "indisvalid": true,
+        "definition": "CREATE UNIQUE INDEX irrigation_one_open_intent ON public.irrigation_command_intents USING btree (actuator_id, mode) WHERE (status = ANY (ARRAY['RESERVED'::\"IrrigationIntentStatus\", 'DISPATCH_CLAIMED'::\"IrrigationIntentStatus\", 'PUBLISHED'::\"IrrigationIntentStatus\", 'ACKED'::\"IrrigationIntentStatus\", 'UNCERTAIN'::\"IrrigationIntentStatus\"]))"
+      },
+      {
+        "table_name": "irrigation_safety_states",
+        "index_name": "irrigation_safety_states_pkey",
+        "indisvalid": true,
+        "definition": "CREATE UNIQUE INDEX irrigation_safety_states_pkey ON public.irrigation_safety_states USING btree (actuator_id, mode)"
+      },
+      {
+        "table_name": "sensor_readings",
+        "index_name": "sensor_readings_pkey",
+        "indisvalid": true,
+        "definition": "CREATE UNIQUE INDEX sensor_readings_pkey ON public.sensor_readings USING btree (id)"
+      },
+      {
+        "table_name": "sensor_readings",
+        "index_name": "sensor_readings_recorded_at_idx",
+        "indisvalid": true,
+        "definition": "CREATE INDEX sensor_readings_recorded_at_idx ON public.sensor_readings USING btree (recorded_at)"
+      },
+      {
+        "table_name": "sensor_readings",
+        "index_name": "sensor_readings_sensor_id_recorded_at_idx",
+        "indisvalid": true,
+        "definition": "CREATE INDEX sensor_readings_sensor_id_recorded_at_idx ON public.sensor_readings USING btree (sensor_id, recorded_at DESC)"
+      },
+      {
+        "table_name": "sensor_readings",
+        "index_name": "sensor_readings_sensor_id_recorded_at_key",
+        "indisvalid": true,
+        "definition": "CREATE UNIQUE INDEX sensor_readings_sensor_id_recorded_at_key ON public.sensor_readings USING btree (sensor_id, recorded_at)"
+      },
+      {
+        "table_name": "sensors",
+        "index_name": "sensors_device_id_idx",
+        "indisvalid": true,
+        "definition": "CREATE INDEX sensors_device_id_idx ON public.sensors USING btree (device_id)"
+      },
+      {
+        "table_name": "sensors",
+        "index_name": "sensors_device_id_sensor_code_key",
+        "indisvalid": true,
+        "definition": "CREATE UNIQUE INDEX sensors_device_id_sensor_code_key ON public.sensors USING btree (device_id, sensor_code)"
+      },
+      {
+        "table_name": "sensors",
+        "index_name": "sensors_pkey",
+        "indisvalid": true,
+        "definition": "CREATE UNIQUE INDEX sensors_pkey ON public.sensors USING btree (id)"
+      },
+      {
+        "table_name": "sensors",
+        "index_name": "sensors_status_idx",
+        "indisvalid": true,
+        "definition": "CREATE INDEX sensors_status_idx ON public.sensors USING btree (status)"
+      },
+      {
+        "table_name": "sensors",
+        "index_name": "sensors_type_idx",
+        "indisvalid": true,
+        "definition": "CREATE INDEX sensors_type_idx ON public.sensors USING btree (type)"
+      },
+      {
+        "table_name": "users",
+        "index_name": "users_created_at_idx",
+        "indisvalid": true,
+        "definition": "CREATE INDEX users_created_at_idx ON public.users USING btree (created_at)"
+      },
+      {
+        "table_name": "users",
+        "index_name": "users_email_key",
+        "indisvalid": true,
+        "definition": "CREATE UNIQUE INDEX users_email_key ON public.users USING btree (email)"
+      },
+      {
+        "table_name": "users",
+        "index_name": "users_pkey",
+        "indisvalid": true,
+        "definition": "CREATE UNIQUE INDEX users_pkey ON public.users USING btree (id)"
+      },
+      {
+        "table_name": "users",
+        "index_name": "users_role_idx",
+        "indisvalid": true,
+        "definition": "CREATE INDEX users_role_idx ON public.users USING btree (role)"
+      },
+      {
+        "table_name": "users",
+        "index_name": "users_status_idx",
+        "indisvalid": true,
+        "definition": "CREATE INDEX users_status_idx ON public.users USING btree (status)"
+      },
+      {
+        "table_name": "zones",
+        "index_name": "zones_created_at_idx",
+        "indisvalid": true,
+        "definition": "CREATE INDEX zones_created_at_idx ON public.zones USING btree (created_at)"
+      },
+      {
+        "table_name": "zones",
+        "index_name": "zones_farm_id_idx",
+        "indisvalid": true,
+        "definition": "CREATE INDEX zones_farm_id_idx ON public.zones USING btree (farm_id)"
+      },
+      {
+        "table_name": "zones",
+        "index_name": "zones_farm_id_name_key",
+        "indisvalid": true,
+        "definition": "CREATE UNIQUE INDEX zones_farm_id_name_key ON public.zones USING btree (farm_id, name)"
+      },
+      {
+        "table_name": "zones",
+        "index_name": "zones_pkey",
+        "indisvalid": true,
+        "definition": "CREATE UNIQUE INDEX zones_pkey ON public.zones USING btree (id)"
+      },
+      {
+        "table_name": "zones",
+        "index_name": "zones_status_idx",
+        "indisvalid": true,
+        "definition": "CREATE INDEX zones_status_idx ON public.zones USING btree (status)"
+      }
+    ],
+    "enums": [
+      {
+        "typname": "IrrigationCyclePhase",
+        "labels": "{IDLE,ELIGIBLE,PENDING_ACK,PULSE_ACTIVE,WAIT_FRESH_OFF,SOAK,REEVALUATE,FAULT_LOCKED}"
+      },
+      {
+        "typname": "IrrigationDecisionOutcome",
+        "labels": "{WOULD_ON,WOULD_SKIP,BLOCKED}"
+      },
+      {
+        "typname": "IrrigationDecisionSource",
+        "labels": "{FIXTURE,MOCK,VERIFIED_LIVE}"
+      },
+      {
+        "typname": "IrrigationIntentStatus",
+        "labels": "{RESERVED,DISPATCH_CLAIMED,PUBLISHED,ACKED,COMPLETED,REJECTED,UNCERTAIN,CANCELLED}"
+      },
+      {
+        "typname": "IrrigationPersistenceMode",
+        "labels": "{DISABLED,SHADOW,ACTIVE}"
+      },
+      {
+        "typname": "IrrigationReservationStatus",
+        "labels": "{RESERVED,CHARGED,UNCERTAIN,RELEASED}"
+      }
+    ],
+    "triggers": [
+      {
+        "tgname": "irrigation_v2_append_only",
+        "tgenabled": "O",
+        "definition": "CREATE TRIGGER irrigation_v2_append_only BEFORE DELETE OR UPDATE ON public.irrigation_decision_logs FOR EACH ROW EXECUTE FUNCTION irrigation_v2_deny_audit_mutation()"
+      },
+      {
+        "tgname": "irrigation_v2_no_truncate",
+        "tgenabled": "O",
+        "definition": "CREATE TRIGGER irrigation_v2_no_truncate BEFORE TRUNCATE ON public.irrigation_decision_logs FOR EACH STATEMENT EXECUTE FUNCTION irrigation_v2_deny_audit_mutation()"
+      }
+    ]
+  },
+  "pass": true,
+  "finishedAt": "2026-10-22T07:04:32.476Z"
+}

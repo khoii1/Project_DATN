@@ -1,0 +1,30 @@
+// Closed-loader tests; no env/DB/MQTT/network or runtime module import.
+const test=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path'),vm=require('node:vm');
+const ts=require('typescript');
+const file=path.resolve(__dirname,'../proposals/live-trust/soil-metadata-contract.ts');
+const source=fs.readFileSync(file,'utf8');
+const exportsObject={};
+vm.runInNewContext(ts.transpileModule(source,{compilerOptions:{target:ts.ScriptTarget.ES2022,module:ts.ModuleKind.CommonJS}}).outputText,{exports:exportsObject,Date,Number,Object,Set,require(){throw Error('Side-effect dependency forbidden');}},{filename:file});
+const {inspectSoilMetadata}=exportsObject;
+const binding=()=>({deviceCode:'ESP32-GF-A-01',sensorCode:'SOIL_01',recordedAt:'2026-10-21T12:00:00.000Z',deviceSessionId:'SYNTHETIC-NOT-AUTHENTICATED',measurementSequence:12,calibrationVersion:'SYNTHETIC-NOT-APPROVED'});
+const metadata=()=>({...binding(),metadataVersion:'soil-diagnostics-proposal-v1',adcResolutionBits:12,adcSamples:8,rawAdc:3000,adcMin:2990,adcMax:3010,contactHealth:'UNKNOWN'});
+const inspect=(v=metadata(),b=binding())=>inspectSoilMetadata(v,b);
+function untrusted(r){assert.equal(r.publisherIdentityVerified,false);assert.equal(r.deviceIdentityVerified,false);assert.equal(r.irrigationAuthorized,false);assert.equal(r.productionAdapterImplemented,false);assert.equal(r.qualityStatus,'NOT_VERIFIED');}
+test('valid synthetic metadata is structure only, never trust',()=>{const r=inspect();assert.equal(r.status,'STRUCTURALLY_VALID');untrusted(r);});
+for(const value of [null,undefined])test('missing diagnostics '+String(value),()=>{const r=inspectSoilMetadata(value,binding());assert.equal(r.status,'MISSING');assert.equal(r.metadata,null);untrusted(r);});
+for(const value of [[],1,'rawADC',true])test('reject non-object '+JSON.stringify(value),()=>assert.equal(inspect(value).status,'INVALID'));
+for(const key of ['trusted','approved','publisherIdentityVerified','irrigationAuthorized','__proto__','schemaVersion'])test('reject self-asserted/unknown field '+key,()=>{const v=metadata();Object.defineProperty(v,key,{value:true,enumerable:true});const r=inspect(v);assert.equal(r.status,'INVALID');untrusted(r);});
+for(const key of ['deviceCode','sensorCode','recordedAt','deviceSessionId','measurementSequence','calibrationVersion'])test('binding mismatch '+key,()=>{const v=metadata();v[key]=key==='measurementSequence'?13:'wrong';assert.equal(inspect(v).status,'INVALID');});
+for(const key of ['rawAdc','adcMin','adcMax','adcSamples','contactHealth'])test('missing required '+key,()=>{const v=metadata();delete v[key];assert.equal(inspect(v).status,'INVALID');});
+for(const value of [-1,4096,NaN,Infinity,1.5,'3000',null])test('reject raw ADC '+String(value),()=>assert.equal(inspect({...metadata(),rawAdc:value}).status,'INVALID'));
+for(const value of [0,65,1.5,'8'])test('reject sample count '+value,()=>assert.equal(inspect({...metadata(),adcSamples:value}).status,'INVALID'));
+test('ADC min/raw/max ordering required',()=>assert.equal(inspect({...metadata(),adcMin:3001}).status,'INVALID'));
+test('one ADC sample cannot claim a spread',()=>{assert.equal(inspect({...metadata(),adcSamples:1}).status,'INVALID');assert.equal(inspect({...metadata(),adcSamples:1,adcMin:3000,adcMax:3000}).status,'STRUCTURALLY_VALID');});
+test('rail remains warning, not proof of sensor quality or zero substitution',()=>{const r=inspect({...metadata(),rawAdc:0,adcMin:0,adcMax:4095});assert.equal(r.status,'STRUCTURALLY_VALID');assert.equal(r.metadata.rawAdc,0);assert.ok(r.reasons.includes('ADC_RAIL_REQUIRES_QUALITY_REVIEW'));untrusted(r);});
+test('self-reported connected cannot establish contact proof',()=>{const r=inspect({...metadata(),contactHealth:'SELF_REPORTED_CONNECTED'});assert.ok(r.reasons.includes('CONTACT_CONNECTED_IS_SELF_REPORT_ONLY'));untrusted(r);});
+test('disconnected remains visible without authorizing irrigation',()=>{const r=inspect({...metadata(),contactHealth:'DISCONNECTED'});assert.equal(r.metadata.contactHealth,'DISCONNECTED');untrusted(r);});
+test('reject unsupported version/resolution',()=>{assert.equal(inspect({...metadata(),metadataVersion:'v2'}).status,'INVALID');assert.equal(inspect({...metadata(),adcResolutionBits:10}).status,'INVALID');});
+for(const change of [{recordedAt:'2026-02-30T00:00:00.000Z'},{recordedAt:'2026-10-21'},{deviceCode:'bad-code'},{measurementSequence:Number.MAX_SAFE_INTEGER+1},{calibrationVersion:''},{deviceSessionId:''}])test('reject malformed expected binding '+Object.keys(change)[0]+':'+JSON.stringify(change),()=>{const b={...binding(),...change};const r=inspect({...metadata(),...change},b);assert.equal(r.status,'INVALID');untrusted(r);});
+test('no input mutation or returned reference alias',()=>{const v=metadata(),b=binding(),before=JSON.stringify({v,b});const r=inspect(v,b);r.metadata.rawAdc=1;assert.equal(JSON.stringify({v,b}),before);});
+test('proposal cannot import command/persistence/engine capabilities',()=>{assert.doesNotMatch(source,/^import\s/m);assert.doesNotMatch(source,/\b(Date\.now|fetch|setTimeout|process\.env|prisma|mqtt\.publish)\b/);});
+test('production source does not import this unapproved contract',()=>{function walk(dir){return fs.readdirSync(dir,{withFileTypes:true}).flatMap(e=>e.isDirectory()?walk(path.join(dir,e.name)):[path.join(dir,e.name)]);}for(const p of walk(path.resolve(__dirname,'../src')).filter(p=>p.endsWith('.ts')))assert.doesNotMatch(fs.readFileSync(p,'utf8'),/from\s+['"][^'"]*soil-metadata-contract['"]/);});

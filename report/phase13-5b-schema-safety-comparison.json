@@ -1,0 +1,85 @@
+{
+  "before": "2026-10-22T06:09:50.689Z",
+  "after": "2026-10-22T06:17:32.127Z",
+  "unchanged": {
+    "identity": true,
+    "migrations": true,
+    "relations": true,
+    "columns": true,
+    "constraints": true,
+    "indexes": true,
+    "enums": true,
+    "functions": true,
+    "roles": true,
+    "memberships": true,
+    "schemaPrivileges": true,
+    "fingerprint": true,
+    "constraintFingerprint": true,
+    "ledgersPresent": true
+  },
+  "commandCountBefore": 43,
+  "commandCountAfter": 43,
+  "pending": 0,
+  "health": {
+    "success": true,
+    "message": "Smart Agriculture API is running",
+    "data": {
+      "database": "connected",
+      "mqtt": "connected",
+      "timestamp": "2026-10-22T06:17:32.117Z"
+    }
+  },
+  "device": {
+    "connectionStatus": "ONLINE",
+    "lastSeenAt": "2026-10-22T06:17:28.403Z",
+    "actuators": [
+      {
+        "currentState": "OFF",
+        "lastStateChangedAt": "2026-10-22T06:17:26.879Z"
+      }
+    ],
+    "sensors": [
+      {
+        "sensorCode": "TEMP_01",
+        "readings": [
+          {
+            "value": 25.6,
+            "recordedAt": "2026-10-22T06:17:19.564Z",
+            "receivedAt": "2026-10-22T06:17:19.915Z"
+          }
+        ]
+      },
+      {
+        "sensorCode": "HUM_01",
+        "readings": [
+          {
+            "value": 50.3,
+            "recordedAt": "2026-10-22T06:17:19.564Z",
+            "receivedAt": "2026-10-22T06:17:19.915Z"
+          }
+        ]
+      },
+      {
+        "sensorCode": "SOIL_01",
+        "readings": [
+          {
+            "value": 6.97,
+            "recordedAt": "2026-10-22T06:17:19.564Z",
+            "receivedAt": "2026-10-22T06:17:19.915Z"
+          }
+        ]
+      },
+      {
+        "sensorCode": "LIGHT_01",
+        "readings": [
+          {
+            "value": 0,
+            "recordedAt": "2026-10-22T06:17:19.564Z",
+            "receivedAt": "2026-10-22T06:17:19.915Z"
+          }
+        ]
+      }
+    ]
+  },
+  "sqlMutationPerformed": false
+}

@@ -1,0 +1,70 @@
+{
+  "phase": "13.5D.1G",
+  "verdict": "PHASE13_5D1G_ISOLATED_SQL_INTEGRATION_PARTIAL/BLOCKED",
+  "attempt": {
+    "preparationInvocations": 1,
+    "outerNodeExitCode": 1,
+    "reason": "ROOT_CREATION_OR_NTFS_STOP",
+    "nestedPowerShellExitCode": null,
+    "nestedNativeCapture": "NOT_PERSISTED_BEFORE_THROW",
+    "initdbAttempts": 0,
+    "clusterStartAttempts": 0,
+    "postgresConnections": 0,
+    "r1Executions": 0,
+    "automaticRetry": false
+  },
+  "target": {
+    "host": "127.0.0.1",
+    "port": 55435,
+    "root": "C:\\DATN\\test-instances\\phase13-5d1g",
+    "data": "C:\\DATN\\test-instances\\phase13-5d1g\\data",
+    "systemId": null,
+    "rootInitiallyAbsent": true,
+    "rootNowExists": true,
+    "rootEmpty": true,
+    "ownerIsOperator": true,
+    "rootReparse": false,
+    "protectedDacl": false,
+    "pgdataExists": false,
+    "finalListenerCount": 0,
+    "shutdown": "NOT_APPLICABLE_NO_CLUSTER_CREATED"
+  },
+  "rootCause": {
+    "operation": "DirectorySecurity.AddAccessRule",
+    "exception": "System.Security.Principal.IdentityNotMappedException",
+    "cause": "SID_STRING_ACCOUNT_NAME_OVERLOAD",
+    "independentInMemoryReproduction": "PASS",
+    "securityIdentifierObjectCandidateInMemory": "PASS",
+    "filesystemRepairApplied": false
+  },
+  "mapping": {
+    "sourceR1Sha256": "9C47BD805608012D74916033AB061495311C29AD9A588D3AAFAD36578A2F9774",
+    "sourceUnchanged": true,
+    "replacementCounts": [3,3,3,3,6],
+    "byteReversibleOfflineTest": "PASS",
+    "actualClusterMappedSql": "NOT_CREATED"
+  },
+  "offlineTests": {
+    "d1g": 13,
+    "d1f": 69,
+    "d1e": 126,
+    "total": 208,
+    "passed": 208,
+    "failed": 0,
+    "skipped": 0,
+    "runnerExitCode": 0,
+    "sqlIntegrationTestsExecuted": 0
+  },
+  "sourceSha256": {
+    "phase13-5d1g-isolated-run.cjs": "7DB10BE4BAB21454CCB03C8D48981907AD442E7046C2C54F145346AF152C7C27",
+    "phase13-5d1g-mapping.cjs": "C5D83DB451C984E53EFCFCE187B9CB5591A344AA2604F742F674435B416AE2C0",
+    "phase13-5d1g-mapping.test.cjs": "CB18EB929980292A06824B81FD03C289AE6363A831CE91E4B6C33DE5365ACBA1"
+  },
+  "restrictions": [
+    "LIVE_PRODUCTION_PREFLIGHT_NOT_PERFORMED",
+    "BACKEND_RECOVERY_NOT_PERFORMED",
+    "PRODUCTION_MIGRATION_NOT_PERFORMED",
+    "PRODUCTION_STARTUP_NOT_AUTHORIZED",
+    "PHYSICAL_PUMP_NOT_TRIGGERED"
+  ]
+}

@@ -1,0 +1,533 @@
+{
+  "snapshots": [
+    {
+      "at": "2026-10-21T04:35:29.954Z",
+      "data": {
+        "mode": "SHADOW",
+        "source": "LIVE_OBSERVED_NOT_VERIFIED",
+        "status": "LIVE_OBSERVED_NOT_VERIFIED",
+        "verifiedLiveReady": false,
+        "publisherIdentityAssurance": "NOT_VERIFIED",
+        "deviceBootSession": "NOT_PROVIDED_BY_FIRMWARE",
+        "notice": "Đã nhận dữ liệu cảm biến thật — Chưa đủ bằng chứng để cấp VERIFIED_LIVE.",
+        "reasons": [
+          "PUBLISHER_IDENTITY_NOT_VERIFIED",
+          "PRODUCTION_POLICY_CYCLE_BUDGET_SAFETY_UNAVAILABLE"
+        ],
+        "evaluatedAt": "2026-10-21T04:35:29.894Z",
+        "reading": {
+          "receiptId": "1bf6399d-b067-42eb-8c70-6dad99f4fc68",
+          "deviceCode": "ESP32-GF-A-01",
+          "sensorCode": "SOIL_01",
+          "topic": "smart-agriculture/v1/devices/ESP32-GF-A-01/telemetry",
+          "payloadDigest": "96296ae9a58fdfea0e07d59f308f842a6bd1163f207492f39bef080bb926b222",
+          "recordedAt": "2026-10-21T04:35:23.285Z",
+          "callbackReceivedAt": "2026-10-21T04:35:23.629Z",
+          "qos": 1,
+          "retain": false,
+          "dup": false,
+          "topicMatches": true,
+          "generation": 1,
+          "sessionId": "backend-observer:97ade4d7-a7d8-43d4-becf-cb78877a606d",
+          "sessionStartedAt": "2026-10-21T04:10:04.992Z",
+          "sessionKind": "BACKEND_OBSERVER",
+          "policyVersion": "13.4A-observation-v1",
+          "publisherIdentityAssurance": "NOT_VERIFIED",
+          "value": 23.18,
+          "reading": {
+            "id": "cmvhmcj1t00bnumr8d1d4ytp6",
+            "sensorCode": "SOIL_01",
+            "value": 23.18,
+            "source": "MQTT",
+            "recordedAt": "2026-10-21T04:35:23.285Z",
+            "dbReceivedAt": "2026-10-21T04:35:23.633Z"
+          }
+        },
+        "off": {
+          "receiptId": "22e68865-8269-44d2-962e-2e77893f1432",
+          "deviceCode": "ESP32-GF-A-01",
+          "actuatorCode": "PUMP_01",
+          "topic": "smart-agriculture/v1/devices/ESP32-GF-A-01/actuator/state",
+          "state": "OFF",
+          "reason": "PERIODIC",
+          "payloadDigest": "e20d7c2b669c40618730232689eaccf1991375f29247d2353371de250926b820",
+          "recordedAt": "2026-10-21T04:35:19.800Z",
+          "callbackReceivedAt": "2026-10-21T04:35:20.149Z",
+          "qos": 1,
+          "retain": false,
+          "dup": false,
+          "topicMatches": true,
+          "generation": 1,
+          "sessionId": "backend-observer:97ade4d7-a7d8-43d4-becf-cb78877a606d",
+          "sessionStartedAt": "2026-10-21T04:10:04.992Z",
+          "sessionKind": "BACKEND_OBSERVER",
+          "policyVersion": "13.4A-observation-v1",
+          "publisherIdentityAssurance": "NOT_VERIFIED",
+          "sourceVerification": "BACKEND_COMMIT_OBSERVED_NOT_PUBLISHER_AUTHENTICATED"
+        },
+        "clock": {
+          "health": "HEALTHY",
+          "reason": "SHORT_TERM_NTP_MEASUREMENT_OK",
+          "source": "time.windows.com,0x8",
+          "lastSuccessfulSync": "2026-10-21T04:22:12.468Z",
+          "lastSyncError": 0,
+          "lastSuccessfulSyncBasis": "STATUS_AGE_APPROXIMATE",
+          "leapIndicator": 0,
+          "stratum": 5,
+          "offsetMs": -45.2564,
+          "checkedAt": "2026-10-21T04:35:05.723Z",
+          "ttlMs": 60000,
+          "clockJumpDetected": false,
+          "assurance": "SHORT_TERM_READ_ONLY_MEASUREMENT",
+          "longTermStability": "NOT_VERIFIED"
+        },
+        "presence": {
+          "connectionStatus": "ONLINE",
+          "lastSeenAt": "2026-10-21T04:35:23.629Z"
+        },
+        "policy": null,
+        "cycle": null,
+        "budget": null,
+        "safety": null,
+        "snapshot": null,
+        "decision": null,
+        "engineCalled": false,
+        "commandCreated": false,
+        "observer": {
+          "sessionKind": "BACKEND_OBSERVER",
+          "generation": 1,
+          "sessionId": "backend-observer:97ade4d7-a7d8-43d4-becf-cb78877a606d",
+          "sessionStartedAt": "2026-10-21T04:10:04.992Z",
+          "entries": 12,
+          "lastRejection": null,
+          "ttlMs": 45000,
+          "publisherIdentityAssurance": "NOT_VERIFIED"
+        },
+        "runtime": {
+          "commandsEnabled": false,
+          "automationEnabled": false,
+          "pumpTestMode": true
+        }
+      },
+      "database": {
+        "reading": {
+          "id": "cmvhmcj1t00bnumr8d1d4ytp6",
+          "value": 23.18,
+          "recordedAt": "2026-10-21T04:35:23.285Z",
+          "receivedAt": "2026-10-21T04:35:23.633Z",
+          "source": "MQTT",
+          "sensor": {
+            "sensorCode": "SOIL_01"
+          }
+        },
+        "device": {
+          "connectionStatus": "ONLINE",
+          "lastSeenAt": "2026-10-21T04:35:23.629Z",
+          "actuators": [
+            {
+              "currentState": "OFF",
+              "lastStateChangedAt": "2026-10-21T04:35:19.800Z"
+            }
+          ]
+        },
+        "batch": [
+          {
+            "id": "cmvhmcj1t00bkumr8kt9zn2s9",
+            "value": 33.3,
+            "source": "MQTT",
+            "recordedAt": "2026-10-21T04:35:23.285Z",
+            "receivedAt": "2026-10-21T04:35:23.633Z",
+            "sensor": {
+              "sensorCode": "TEMP_01"
+            }
+          },
+          {
+            "id": "cmvhmcj1t00blumr8pmmit3fs",
+            "value": 68.3,
+            "source": "MQTT",
+            "recordedAt": "2026-10-21T04:35:23.285Z",
+            "receivedAt": "2026-10-21T04:35:23.633Z",
+            "sensor": {
+              "sensorCode": "HUM_01"
+            }
+          },
+          {
+            "id": "cmvhmcj1t00bmumr8rdtj86tz",
+            "value": 0,
+            "source": "MQTT",
+            "recordedAt": "2026-10-21T04:35:23.285Z",
+            "receivedAt": "2026-10-21T04:35:23.633Z",
+            "sensor": {
+              "sensorCode": "LIGHT_01"
+            }
+          },
+          {
+            "id": "cmvhmcj1t00bnumr8d1d4ytp6",
+            "value": 23.18,
+            "source": "MQTT",
+            "recordedAt": "2026-10-21T04:35:23.285Z",
+            "receivedAt": "2026-10-21T04:35:23.633Z",
+            "sensor": {
+              "sensorCode": "SOIL_01"
+            }
+          }
+        ],
+        "pending": 0
+      }
+    },
+    {
+      "at": "2026-10-21T04:35:49.644Z",
+      "data": {
+        "mode": "SHADOW",
+        "source": "LIVE_OBSERVED_NOT_VERIFIED",
+        "status": "LIVE_OBSERVED_NOT_VERIFIED",
+        "verifiedLiveReady": false,
+        "publisherIdentityAssurance": "NOT_VERIFIED",
+        "deviceBootSession": "NOT_PROVIDED_BY_FIRMWARE",
+        "notice": "Đã nhận dữ liệu cảm biến thật — Chưa đủ bằng chứng để cấp VERIFIED_LIVE.",
+        "reasons": [
+          "PUBLISHER_IDENTITY_NOT_VERIFIED",
+          "PRODUCTION_POLICY_CYCLE_BUDGET_SAFETY_UNAVAILABLE"
+        ],
+        "evaluatedAt": "2026-10-21T04:35:49.630Z",
+        "reading": {
+          "receiptId": "ceafc6c1-1cee-4f53-8d8c-212c1b15ae1b",
+          "deviceCode": "ESP32-GF-A-01",
+          "sensorCode": "SOIL_01",
+          "topic": "smart-agriculture/v1/devices/ESP32-GF-A-01/telemetry",
+          "payloadDigest": "688731ab1b0c8ec311db91935641e0a105813c2ff2c88846b6911dff41985681",
+          "recordedAt": "2026-10-21T04:35:38.285Z",
+          "callbackReceivedAt": "2026-10-21T04:35:38.675Z",
+          "qos": 1,
+          "retain": false,
+          "dup": false,
+          "topicMatches": true,
+          "generation": 1,
+          "sessionId": "backend-observer:97ade4d7-a7d8-43d4-becf-cb78877a606d",
+          "sessionStartedAt": "2026-10-21T04:10:04.992Z",
+          "sessionKind": "BACKEND_OBSERVER",
+          "policyVersion": "13.4A-observation-v1",
+          "publisherIdentityAssurance": "NOT_VERIFIED",
+          "value": 23.18,
+          "reading": {
+            "id": "cmvhmcunr00btumr8cqrasear",
+            "sensorCode": "SOIL_01",
+            "value": 23.18,
+            "source": "MQTT",
+            "recordedAt": "2026-10-21T04:35:38.285Z",
+            "dbReceivedAt": "2026-10-21T04:35:38.680Z"
+          }
+        },
+        "off": {
+          "receiptId": "ca9aa2fa-3425-4d87-8d48-3d336bdc38b5",
+          "deviceCode": "ESP32-GF-A-01",
+          "actuatorCode": "PUMP_01",
+          "topic": "smart-agriculture/v1/devices/ESP32-GF-A-01/actuator/state",
+          "state": "OFF",
+          "reason": "PERIODIC",
+          "payloadDigest": "d48e6bab8c96dd34ec191679ccae4b226bf20bb9c19082ef4ced8e0317f8232a",
+          "recordedAt": "2026-10-21T04:35:34.951Z",
+          "callbackReceivedAt": "2026-10-21T04:35:35.303Z",
+          "qos": 1,
+          "retain": false,
+          "dup": false,
+          "topicMatches": true,
+          "generation": 1,
+          "sessionId": "backend-observer:97ade4d7-a7d8-43d4-becf-cb78877a606d",
+          "sessionStartedAt": "2026-10-21T04:10:04.992Z",
+          "sessionKind": "BACKEND_OBSERVER",
+          "policyVersion": "13.4A-observation-v1",
+          "publisherIdentityAssurance": "NOT_VERIFIED",
+          "sourceVerification": "BACKEND_COMMIT_OBSERVED_NOT_PUBLISHER_AUTHENTICATED"
+        },
+        "clock": {
+          "health": "HEALTHY",
+          "reason": "SHORT_TERM_NTP_MEASUREMENT_OK",
+          "source": "time.windows.com,0x8",
+          "lastSuccessfulSync": "2026-10-21T04:22:12.485Z",
+          "lastSyncError": 0,
+          "lastSuccessfulSyncBasis": "STATUS_AGE_APPROXIMATE",
+          "leapIndicator": 0,
+          "stratum": 5,
+          "offsetMs": -46.5116,
+          "checkedAt": "2026-10-21T04:35:49.624Z",
+          "ttlMs": 60000,
+          "clockJumpDetected": false,
+          "assurance": "SHORT_TERM_READ_ONLY_MEASUREMENT",
+          "longTermStability": "NOT_VERIFIED"
+        },
+        "presence": {
+          "connectionStatus": "ONLINE",
+          "lastSeenAt": "2026-10-21T04:35:38.675Z"
+        },
+        "policy": null,
+        "cycle": null,
+        "budget": null,
+        "safety": null,
+        "snapshot": null,
+        "decision": null,
+        "engineCalled": false,
+        "commandCreated": false,
+        "observer": {
+          "sessionKind": "BACKEND_OBSERVER",
+          "generation": 1,
+          "sessionId": "backend-observer:97ade4d7-a7d8-43d4-becf-cb78877a606d",
+          "sessionStartedAt": "2026-10-21T04:10:04.992Z",
+          "entries": 12,
+          "lastRejection": null,
+          "ttlMs": 45000,
+          "publisherIdentityAssurance": "NOT_VERIFIED"
+        },
+        "runtime": {
+          "commandsEnabled": false,
+          "automationEnabled": false,
+          "pumpTestMode": true
+        }
+      },
+      "database": {
+        "reading": {
+          "id": "cmvhmcunr00btumr8cqrasear",
+          "value": 23.18,
+          "recordedAt": "2026-10-21T04:35:38.285Z",
+          "receivedAt": "2026-10-21T04:35:38.680Z",
+          "source": "MQTT",
+          "sensor": {
+            "sensorCode": "SOIL_01"
+          }
+        },
+        "device": {
+          "connectionStatus": "ONLINE",
+          "lastSeenAt": "2026-10-21T04:35:38.675Z",
+          "actuators": [
+            {
+              "currentState": "OFF",
+              "lastStateChangedAt": "2026-10-21T04:35:34.951Z"
+            }
+          ]
+        },
+        "batch": [
+          {
+            "id": "cmvhmcunr00bqumr8qq5he48l",
+            "value": 33.2,
+            "source": "MQTT",
+            "recordedAt": "2026-10-21T04:35:38.285Z",
+            "receivedAt": "2026-10-21T04:35:38.680Z",
+            "sensor": {
+              "sensorCode": "TEMP_01"
+            }
+          },
+          {
+            "id": "cmvhmcunr00brumr8mlzc1n5j",
+            "value": 68.3,
+            "source": "MQTT",
+            "recordedAt": "2026-10-21T04:35:38.285Z",
+            "receivedAt": "2026-10-21T04:35:38.680Z",
+            "sensor": {
+              "sensorCode": "HUM_01"
+            }
+          },
+          {
+            "id": "cmvhmcunr00bsumr87xb3hfqy",
+            "value": 0,
+            "source": "MQTT",
+            "recordedAt": "2026-10-21T04:35:38.285Z",
+            "receivedAt": "2026-10-21T04:35:38.680Z",
+            "sensor": {
+              "sensorCode": "LIGHT_01"
+            }
+          },
+          {
+            "id": "cmvhmcunr00btumr8cqrasear",
+            "value": 23.18,
+            "source": "MQTT",
+            "recordedAt": "2026-10-21T04:35:38.285Z",
+            "receivedAt": "2026-10-21T04:35:38.680Z",
+            "sensor": {
+              "sensorCode": "SOIL_01"
+            }
+          }
+        ],
+        "pending": 0
+      }
+    },
+    {
+      "at": "2026-10-21T04:36:04.680Z",
+      "data": {
+        "mode": "SHADOW",
+        "source": "LIVE_OBSERVED_NOT_VERIFIED",
+        "status": "LIVE_OBSERVED_NOT_VERIFIED",
+        "verifiedLiveReady": false,
+        "publisherIdentityAssurance": "NOT_VERIFIED",
+        "deviceBootSession": "NOT_PROVIDED_BY_FIRMWARE",
+        "notice": "Đã nhận dữ liệu cảm biến thật — Chưa đủ bằng chứng để cấp VERIFIED_LIVE.",
+        "reasons": [
+          "PUBLISHER_IDENTITY_NOT_VERIFIED",
+          "PRODUCTION_POLICY_CYCLE_BUDGET_SAFETY_UNAVAILABLE"
+        ],
+        "evaluatedAt": "2026-10-21T04:36:04.666Z",
+        "reading": {
+          "receiptId": "004a8006-a893-4ff6-946c-48e223d8d435",
+          "deviceCode": "ESP32-GF-A-01",
+          "sensorCode": "SOIL_01",
+          "topic": "smart-agriculture/v1/devices/ESP32-GF-A-01/telemetry",
+          "payloadDigest": "26a92f764858f5766a69bc36fb70c84c48b4347c3ab64b422434dec3636f2bbb",
+          "recordedAt": "2026-10-21T04:35:53.285Z",
+          "callbackReceivedAt": "2026-10-21T04:35:58.654Z",
+          "qos": 1,
+          "retain": false,
+          "dup": false,
+          "topicMatches": true,
+          "generation": 1,
+          "sessionId": "backend-observer:97ade4d7-a7d8-43d4-becf-cb78877a606d",
+          "sessionStartedAt": "2026-10-21T04:10:04.992Z",
+          "sessionKind": "BACKEND_OBSERVER",
+          "policyVersion": "13.4A-observation-v1",
+          "publisherIdentityAssurance": "NOT_VERIFIED",
+          "value": 24.89,
+          "reading": {
+            "id": "cmvhmda2p00bxumr8v06q2bjg",
+            "sensorCode": "SOIL_01",
+            "value": 24.89,
+            "source": "MQTT",
+            "recordedAt": "2026-10-21T04:35:53.285Z",
+            "dbReceivedAt": "2026-10-21T04:35:58.658Z"
+          }
+        },
+        "off": {
+          "receiptId": "a6e77e9c-2130-4fe3-858f-90380894ecd2",
+          "deviceCode": "ESP32-GF-A-01",
+          "actuatorCode": "PUMP_01",
+          "topic": "smart-agriculture/v1/devices/ESP32-GF-A-01/actuator/state",
+          "state": "OFF",
+          "reason": "MQTT_LOST",
+          "payloadDigest": "10a11e73d5fd3490178c8f968d30a6c6c9e5bae3ebc550d3308615f6e21d7b34",
+          "recordedAt": "2026-10-21T04:35:54.376Z",
+          "callbackReceivedAt": "2026-10-21T04:35:54.680Z",
+          "qos": 1,
+          "retain": false,
+          "dup": false,
+          "topicMatches": true,
+          "generation": 1,
+          "sessionId": "backend-observer:97ade4d7-a7d8-43d4-becf-cb78877a606d",
+          "sessionStartedAt": "2026-10-21T04:10:04.992Z",
+          "sessionKind": "BACKEND_OBSERVER",
+          "policyVersion": "13.4A-observation-v1",
+          "publisherIdentityAssurance": "NOT_VERIFIED",
+          "sourceVerification": "BACKEND_COMMIT_OBSERVED_NOT_PUBLISHER_AUTHENTICATED"
+        },
+        "clock": {
+          "health": "HEALTHY",
+          "reason": "SHORT_TERM_NTP_MEASUREMENT_OK",
+          "source": "time.windows.com,0x8",
+          "lastSuccessfulSync": "2026-10-21T04:22:12.485Z",
+          "lastSyncError": 0,
+          "lastSuccessfulSyncBasis": "STATUS_AGE_APPROXIMATE",
+          "leapIndicator": 0,
+          "stratum": 5,
+          "offsetMs": -46.5116,
+          "checkedAt": "2026-10-21T04:35:49.624Z",
+          "ttlMs": 60000,
+          "clockJumpDetected": false,
+          "assurance": "SHORT_TERM_READ_ONLY_MEASUREMENT",
+          "longTermStability": "NOT_VERIFIED"
+        },
+        "presence": {
+          "connectionStatus": "ONLINE",
+          "lastSeenAt": "2026-10-21T04:35:58.654Z"
+        },
+        "policy": null,
+        "cycle": null,
+        "budget": null,
+        "safety": null,
+        "snapshot": null,
+        "decision": null,
+        "engineCalled": false,
+        "commandCreated": false,
+        "observer": {
+          "sessionKind": "BACKEND_OBSERVER",
+          "generation": 1,
+          "sessionId": "backend-observer:97ade4d7-a7d8-43d4-becf-cb78877a606d",
+          "sessionStartedAt": "2026-10-21T04:10:04.992Z",
+          "entries": 12,
+          "lastRejection": null,
+          "ttlMs": 45000,
+          "publisherIdentityAssurance": "NOT_VERIFIED"
+        },
+        "runtime": {
+          "commandsEnabled": false,
+          "automationEnabled": false,
+          "pumpTestMode": true
+        }
+      },
+      "database": {
+        "reading": {
+          "id": "cmvhmda2p00bxumr8v06q2bjg",
+          "value": 24.89,
+          "recordedAt": "2026-10-21T04:35:53.285Z",
+          "receivedAt": "2026-10-21T04:35:58.658Z",
+          "source": "MQTT",
+          "sensor": {
+            "sensorCode": "SOIL_01"
+          }
+        },
+        "device": {
+          "connectionStatus": "ONLINE",
+          "lastSeenAt": "2026-10-21T04:35:58.654Z",
+          "actuators": [
+            {
+              "currentState": "OFF",
+              "lastStateChangedAt": "2026-10-21T04:35:54.376Z"
+            }
+          ]
+        },
+        "batch": [
+          {
+            "id": "cmvhmda2p00buumr82bknft9j",
+            "value": 33.3,
+            "source": "MQTT",
+            "recordedAt": "2026-10-21T04:35:53.285Z",
+            "receivedAt": "2026-10-21T04:35:58.658Z",
+            "sensor": {
+              "sensorCode": "TEMP_01"
+            }
+          },
+          {
+            "id": "cmvhmda2p00bvumr86qt8j8cu",
+            "value": 68.3,
+            "source": "MQTT",
+            "recordedAt": "2026-10-21T04:35:53.285Z",
+            "receivedAt": "2026-10-21T04:35:58.658Z",
+            "sensor": {
+              "sensorCode": "HUM_01"
+            }
+          },
+          {
+            "id": "cmvhmda2p00bwumr8xnys5kpk",
+            "value": 0,
+            "source": "MQTT",
+            "recordedAt": "2026-10-21T04:35:53.285Z",
+            "receivedAt": "2026-10-21T04:35:58.658Z",
+            "sensor": {
+              "sensorCode": "LIGHT_01"
+            }
+          },
+          {
+            "id": "cmvhmda2p00bxumr8v06q2bjg",
+            "value": 24.89,
+            "source": "MQTT",
+            "recordedAt": "2026-10-21T04:35:53.285Z",
+            "receivedAt": "2026-10-21T04:35:58.658Z",
+            "sensor": {
+              "sensorCode": "SOIL_01"
+            }
+          }
+        ],
+        "pending": 0
+      }
+    }
+  ],
+  "unauthenticated": 401,
+  "trustInjectionRejected": 400,
+  "commandsPublished": 0,
+  "productionManuallyMutated": false
+}

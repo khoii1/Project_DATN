@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
+    "qa:offline": "node scripts/acceptance-offline.cjs",
+    "qa:acceptance-browser": "node scripts/acceptance-browser.cjs",
+    "demo:simulation": "node scripts/acceptance-browser.cjs --headed",
     "dev": "concurrently -n BACKEND,FRONTEND -c green,cyan \"npm run dev --prefix backend\" \"npm run dev --prefix frontend\"",
     "build": "npm run build --prefix backend && npm run build --prefix frontend",
     "lint": "npm run lint --prefix frontend",

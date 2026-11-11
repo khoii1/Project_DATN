@@ -1,0 +1,45 @@
+{
+  "phase": "13.5D.1F",
+  "scope": "OFFLINE_ONLY",
+  "verdict": "PHASE13_5D1F_OFFLINE_NATIVE_TRANSPORT_READY",
+  "productionAuthorized": false,
+  "liveExecutionEnabled": false,
+  "tests": {
+    "newTestsPassed": 69,
+    "d1eRegressionPassed": 126,
+    "total": 195,
+    "passed": 195,
+    "failed": 0,
+    "skipped": 0,
+    "runnerExitCode": 0,
+    "nodeSyntaxChecks": "PASS",
+    "powerShellAst": "PASS",
+    "powerShellPlanAndDeniedFixture": "PASS",
+    "nativePsqlExecution": "NOT_PERFORMED",
+    "inheritedSourceHashAssertions": 12,
+    "inheritedSourceChanged": false
+  },
+  "sourceSha256": {
+    "phase13-5d1f-native-transport.cjs": "99AE01D0E5585611D5CB8A8A1136E96332F1E9833EF57B1635DF9B48290AC078",
+    "phase13-5d1f-sql-revision.cjs": "27553EBCD7B3905C1C6368AB39298DC1651A32F0FDF2F60FCC0C05F5730F4839",
+    "phase13-5d1f-windows-transport.ps1": "665BBB23C818E3670DF8472FF4D2CB83FB1907AF3D8099A51A17FE5B901CA594",
+    "phase13-5d1f-fixtures.cjs": "4C7C195FDF2A3011643238E5E9031B4A4B51DDA5B3E06B3C9FD69AC18540F04A",
+    "phase13-5d1f-native-transport.test.cjs": "9CBB54F06BE202068C7CA58EF9261D3BD22B4A9A4B57360DB23698DBC2374877"
+  },
+  "sqlRevision": "13.5D.1F-R1",
+  "sqlUtf8Sha256": "9C47BD805608012D74916033AB061495311C29AD9A588D3AAFAD36578A2F9774",
+  "notVerified": [
+    "SQL_SYNTAX_PRIVILEGES_AND_DDL_RACE_BEHAVIOR_ON_POSTGRESQL",
+    "LIVE_NATIVE_IO_CREDENTIAL_HANDOFF_AND_PRIVATE_CAPTURE",
+    "REAL_WINDOWS_PROCESS_AND_BROKER_METADATA_NORMALIZATION",
+    "LIVE_COLLECTOR_ATTESTATION",
+    "CURRENT_PRODUCTION_RUNTIME_FLAGS_PENDING_AND_DEVICE_STATE"
+  ],
+  "restrictions": [
+    "LIVE_PRODUCTION_PREFLIGHT_NOT_PERFORMED",
+    "BACKEND_RECOVERY_NOT_PERFORMED",
+    "PRODUCTION_MIGRATION_NOT_PERFORMED",
+    "PRODUCTION_STARTUP_NOT_AUTHORIZED",
+    "PHYSICAL_PUMP_NOT_TRIGGERED"
+  ]
+}

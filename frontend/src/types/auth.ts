@@ -18,6 +18,16 @@ export interface LoginCredentials {
   remember: boolean;
 }
 
+export interface UpdateProfileInput {
+  fullName: string;
+  phone: string | null;
+}
+
+export interface ChangePasswordInput {
+  currentPassword: string;
+  newPassword: string;
+}
+
 export const roleLabels: Record<UserRole, string> = {
   ADMIN: "Quản trị viên",
   FARM_OWNER: "Chủ trang trại",

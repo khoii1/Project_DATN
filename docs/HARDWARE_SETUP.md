@@ -2,6 +2,8 @@
 
 ## Phạm vi bằng chứng
 
+**Cập nhật05/11/2026:** các mục phía dưới là ghi chép ban đầu, đã lỗi thời về việc chưa có firmware/DHT22/relay. Repository hiện có `firmware/SmartAgricultureESP32` hotfix13.4F.1; PhaseY đã đối chiếu12readings MQTT→DEV DB/API và3PERIODIC OFF; Phase12D4 có quan sát motor chạy/tựdừng~1s nhưng toàn phiênPARTIAL. SOIL chưa hiệu chuẩn, không dùng tự tưới. Xem [ma trận hiện hành](FINAL_FEATURE_ACCEPTANCE.md), [kiến trúc](FINAL_SYSTEM_ARCHITECTURE.md) và [12D4](archive/PHASE12D4_PHYSICAL_PUMP_ACCEPTANCE.md). Không dùng danh sách “chưa triển khai” lịch sử bên dưới làm tình trạng hiện tại hoặc chỉ dẫn phải flash/tạo lại firmware.
+
 Repository hiện không có file `.ino`, PlatformIO project, firmware C/C++ hoặc log hardware. Trạng thái “xác minh” bên dưới dựa trên báo cáo thử nghiệm của chủ dự án ngoài repository; người mới chưa thể tái lập nếu chỉ clone source.
 
 ## Board và pin map mục tiêu

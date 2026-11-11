@@ -1,0 +1,249 @@
+{
+  "verdict": "CANDIDATE_HASH_REVIEW_PASS",
+  "activationPerformed": false,
+  "executionApproved": false,
+  "candidateFile": "docs/PHASE_AE_UI_ONLY_SOURCE_MANIFEST.rev10.candidate.json",
+  "candidateSha256": "47e8072cdc0a711dd277c5468976b6deb0d297264b41b1ce83a02f6ebf72e3bb",
+  "revision9Sha256": "2b23c8cd86f288d7ba5842e3f2850e37cbaf7f0221c1d8075a1f597d337e9af9",
+  "proposalSha256": "60713f6902951c137002256a672884116f6cf1f021fe740a2701526a67b70de0",
+  "sourceCount": 250,
+  "unchangedSourceCount": 229,
+  "changedSourcePins": [
+    {
+      "file": "frontend/src/App.tsx",
+      "revision9Sha256": "a0c945bfe4d880e1fcd5d894d752b758aac840e5678fbbb8566cab5faf591171",
+      "currentSha256": "d95963bb2b3b70e4591f9bfee05bb9f3f9418053a7d15d46422e9e165467e20c"
+    },
+    {
+      "file": "frontend/src/components/auth/ProtectedRoute.tsx",
+      "revision9Sha256": "c53b3cc5668df5f64b8eaa7b38a6eda484868bfb840dd07a06cb2a05039d55c9",
+      "currentSha256": "28a78fb47efd3a0b1c3be2b021ac04800e8a527164eef5af657ec2d0f9cb692c"
+    },
+    {
+      "file": "frontend/src/components/common/ConfirmDialog.tsx",
+      "revision9Sha256": "f1ede42e0b665072fa7a131373e51292645b1bcde397881d92ca054b1cac8123",
+      "currentSha256": "7c09145e21328b338d11a8b57d339e64c077aeb8df8b9e873dc327c0efdd577c"
+    },
+    {
+      "file": "frontend/src/components/layout/Sidebar.tsx",
+      "revision9Sha256": "fb64ab1d11409dff9b0302159a4ad692250385c448a4114074e855721fafcefc",
+      "currentSha256": "f131c69b6fbe195fe749e084ba87f4785296cad0dfd0cf447339b58731e2e091"
+    },
+    {
+      "file": "frontend/src/components/layout/Topbar.tsx",
+      "revision9Sha256": "43d040c254d850d507541a0d105d7d5663a71ba5c98c695aea5205473fd3a78b",
+      "currentSha256": "b79ab501c10c51a5012024a18e0eb5fa79760ac0f181da5744b5872d190d908b"
+    },
+    {
+      "file": "frontend/src/components/sensors/SensorHistoryChart.tsx",
+      "revision9Sha256": "2c5db03c94d8a24175f9310681fb270e0fdd24f0e03952d4a396b6dec3213f31",
+      "currentSha256": "01161da5f7aec8bfce130d9ba9bab04b14371e1e2bb93dcf4c143ad63eda2a80"
+    },
+    {
+      "file": "frontend/src/components/sensors/SensorValueCard.tsx",
+      "revision9Sha256": "1be5934a4533540bf310b0473d1833dd9de4e99bb94e27da5b01459aaf454f51",
+      "currentSha256": "95332e4199d1e95821916fe105725024efa4b7ee290158e7acad08378069c795"
+    },
+    {
+      "file": "frontend/src/index.css",
+      "revision9Sha256": "e4fd49e61f16f2ebf9685a26046b7930c77c15d9172e9493d6e772d5b6edaba9",
+      "currentSha256": "09d356904e2eda8f5ca4cd410457e43300c499fbc221af27e751d7c18cfd1fd2"
+    },
+    {
+      "file": "frontend/src/pages/activity-logs/ActivityLogsPage.tsx",
+      "revision9Sha256": "837804714d633d66c263d92f2081ee8dbbfd57c6b7580d9e747862cb06594daf",
+      "currentSha256": "cc644c5c9f8cb2765a6cf367094873f43d825212b1336e9b15e3340d438d3f8a"
+    },
+    {
+      "file": "frontend/src/pages/alerts/AlertsPage.tsx",
+      "revision9Sha256": "6ac4429d9e3a1f0eeb87daec90339346abb404a484006e09df7cd118848765f1",
+      "currentSha256": "1c0af52c63002431c558305d6cf04970427c5aa110df9298674b610cd729c65e"
+    },
+    {
+      "file": "frontend/src/pages/auth/LoginPage.tsx",
+      "revision9Sha256": "12740a2afacc1ee31f18d4e675c12c16490eee61c8cbaffe91d4a7a57432d34e",
+      "currentSha256": "3e71efb05c4bd028f85d78a659ad2b12138119e5e7bb8d82c6ddde7d63f70692"
+    },
+    {
+      "file": "frontend/src/pages/crops/CropsPage.tsx",
+      "revision9Sha256": "807c19cf5315f70510a2e0a5c07452ca3fb49965fc1cd62a29bc60a504aac264",
+      "currentSha256": "5f9757349c53b4a1cbcd3a394d3f01ef04163a540e19e944e2a938a72cdb6326"
+    },
+    {
+      "file": "frontend/src/pages/devices/DevicesPage.tsx",
+      "revision9Sha256": "458338b6c2d0e65b9638b48b6daaa346be5d65d2a9adb4c5dea2b456fb2c5150",
+      "currentSha256": "0a15d49fb868d1c18fb1f0ec9f45069eccd3d1f2c88bb98c0f45414ad36406bf"
+    },
+    {
+      "file": "frontend/src/pages/farms/FarmsPage.tsx",
+      "revision9Sha256": "39f189f44af42577f47f7bf7d2e64bb08fbc78296a89568f035cfe49f73c44db",
+      "currentSha256": "bfdd397f44596f49856cb9fffb0ee42d5ee022d70841a9a64fe5ca0c74cd8ead"
+    },
+    {
+      "file": "frontend/src/pages/reports/ReportsPage.tsx",
+      "revision9Sha256": "03b1276d36313610a7c5f732371f228c319309e964352f56c275015cca7f1893",
+      "currentSha256": "9ecd082013d1c19327d198faf93dce3fd7dd5c88f0c1ab8f6476e788713fe0a4"
+    },
+    {
+      "file": "frontend/src/pages/sensors/SensorHistoryPage.tsx",
+      "revision9Sha256": "8b8dad45d23cffca265c00ec2f846265cfb6fb113ea34da6451dfdb2eb2a95aa",
+      "currentSha256": "20d6351abb397ba2285ca904c1bd58c8f23316cf7c1bf76583bda7bcd6756e3e"
+    },
+    {
+      "file": "frontend/src/pages/sensors/SensorsPage.tsx",
+      "revision9Sha256": "fa327581d9d7406909849e9ef5f19e4805c211ffc5b2dbcaed7909a29bc9c076",
+      "currentSha256": "b6c5196772c387250ef16146a351cd0a4953736c1c38400e179e10f844f103eb"
+    },
+    {
+      "file": "frontend/src/pages/settings/SettingsPage.tsx",
+      "revision9Sha256": "3d6ff990b9072d0342c7a14b26dd03667c66a696a08a3ce6b226338a818a01b1",
+      "currentSha256": "967a0e8dd8d588f9c9579708b2c31070ccb2ba1a57082f5933503a61a362051c"
+    },
+    {
+      "file": "frontend/src/pages/users/UsersPage.tsx",
+      "revision9Sha256": "49911687afd14c9a09099fa867a7ec0db41fed5c3aad00216e15883d702459df",
+      "currentSha256": "3ad7f3168c89c688112495526df97397df2336665f25db178e86c23cc27c59a5"
+    },
+    {
+      "file": "frontend/src/pages/zones/ZonesPage.tsx",
+      "revision9Sha256": "57da5aac586ffbe47973bc6fb2021a3954c6e08c44af6048dd94a7e030cdd51d",
+      "currentSha256": "b677612b67e8032f719e9b24f0330f2cc2d2e7791d42a77777a29cb082daf272"
+    },
+    {
+      "file": "scripts/mvp-ui-only-presentation.cjs",
+      "revision9Sha256": "f1f6dd63847a37ceddefccc49ee1c171db2bde9881aacceee5ff074324bc6915",
+      "currentSha256": "b6719922a600210d398b593c8ab500a7b9ded55e5719d158ece2ef5ed13e0ba3"
+    }
+  ],
+  "runtimeCount": 4,
+  "allRuntimeHashesMatch": true,
+  "existingOfflineTestPinCount": 3,
+  "changedExistingOfflineTestPins": [
+    {
+      "file": "scripts/mvp-ui-only.test.cjs",
+      "revision9Sha256": "65d447497670ba60c53c1425862074a1e8adcf51b27c2d695b4a5781c959319e",
+      "currentSha256": "af66a2a7329c1de9dd06a0be513a60157337782d6ece9179f169bf52adadd236"
+    }
+  ],
+  "addedOfflineTestPin": {
+    "file": "frontend/scripts/ui-completion.test.cjs",
+    "sha256": "0d6a321bc1944fccb14e8a5c7270319278a1a953cde9c05757b45e44feabb0c1"
+  },
+  "candidateOfflineTestPinCount": 4,
+  "sourceCatalogueMatchesRuntimeContract": true,
+  "unexpectedPinnedDrift": [],
+  "auxiliaryDependencyReview": {
+    "file": "frontend/package.json",
+    "sha256": "932b2c7b38a243728e6147ac685bfb7105391eb02294ef53c50e0a024b329e4d",
+    "limitation": "package.json is not pinned by the existing runtime source catalogue; declarations match frozen lockfile. This is an auxiliary review hash, not an expanded launch contract.",
+    "lockFile": "frontend/package-lock.json",
+    "lockSha256": "5021e8f8a10b5ef84ae0ca1621f13d6206b8946e5ab1e40159b323d5d7cbd317",
+    "dependencies": [
+      {
+        "name": "axios",
+        "declaredRange": "^1.11.0",
+        "installedVersion": "1.19.0"
+      },
+      {
+        "name": "lucide-react",
+        "declaredRange": "^0.542.0",
+        "installedVersion": "0.542.0"
+      },
+      {
+        "name": "react",
+        "declaredRange": "^19.1.1",
+        "installedVersion": "19.2.8"
+      },
+      {
+        "name": "react-dom",
+        "declaredRange": "^19.1.1",
+        "installedVersion": "19.2.8"
+      },
+      {
+        "name": "react-router-dom",
+        "declaredRange": "^7.8.2",
+        "installedVersion": "7.18.2"
+      },
+      {
+        "name": "recharts",
+        "declaredRange": "^3.10.1",
+        "installedVersion": "3.10.1"
+      },
+      {
+        "name": "@eslint/js",
+        "declaredRange": "^9.34.0",
+        "installedVersion": "9.39.5"
+      },
+      {
+        "name": "@types/node",
+        "declaredRange": "^24.3.0",
+        "installedVersion": "24.13.3"
+      },
+      {
+        "name": "@types/react",
+        "declaredRange": "^19.1.12",
+        "installedVersion": "19.2.18"
+      },
+      {
+        "name": "@types/react-dom",
+        "declaredRange": "^19.1.9",
+        "installedVersion": "19.2.5"
+      },
+      {
+        "name": "@vitejs/plugin-react",
+        "declaredRange": "^5.0.2",
+        "installedVersion": "5.2.0"
+      },
+      {
+        "name": "autoprefixer",
+        "declaredRange": "^10.4.21",
+        "installedVersion": "10.5.4"
+      },
+      {
+        "name": "eslint",
+        "declaredRange": "^9.34.0",
+        "installedVersion": "9.39.5"
+      },
+      {
+        "name": "eslint-plugin-react-hooks",
+        "declaredRange": "^5.2.0",
+        "installedVersion": "5.2.0"
+      },
+      {
+        "name": "eslint-plugin-react-refresh",
+        "declaredRange": "^0.4.20",
+        "installedVersion": "0.4.26"
+      },
+      {
+        "name": "globals",
+        "declaredRange": "^16.3.0",
+        "installedVersion": "16.5.0"
+      },
+      {
+        "name": "postcss",
+        "declaredRange": "^8.5.6",
+        "installedVersion": "8.5.26"
+      },
+      {
+        "name": "tailwindcss",
+        "declaredRange": "^3.4.17",
+        "installedVersion": "3.4.19"
+      },
+      {
+        "name": "typescript",
+        "declaredRange": "~5.8.3",
+        "installedVersion": "5.8.3"
+      },
+      {
+        "name": "typescript-eslint",
+        "declaredRange": "^8.41.0",
+        "installedVersion": "8.68.0"
+      },
+      {
+        "name": "vite",
+        "declaredRange": "^7.1.3",
+        "installedVersion": "7.3.6"
+      }
+    ]
+  }
+}

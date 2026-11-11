@@ -1,0 +1,41 @@
+{
+  "notice": "OFFLINE TEST FIXTURE ONLY. Thresholds and budgets are illustrative, not crop/production configuration.",
+  "snapshot": {
+    "mode": "SHADOW",
+    "now": "2026-10-20T12:00:00.000Z",
+    "reading": {
+      "readingId": "fixture-reading-1", "deviceCode": "ESP32-GF-A-01", "sensorCode": "SOIL_01",
+      "source": "MQTT", "value": 18, "recordedAt": "2026-10-20T11:59:58.000Z", "receivedAt": "2026-10-20T11:59:59.000Z",
+      "mqtt": { "verified": true, "topicMatches": true, "authenticated": true, "retained": false, "duplicate": false, "outOfOrder": false }
+    },
+    "device": {
+      "deviceCode": "ESP32-GF-A-01", "connectionStatus": "ONLINE", "lastSeenAt": "2026-10-20T11:59:59.000Z",
+      "sessionId": "fixture-session-1", "sessionStartedAt": "2026-10-20T11:00:00.000Z", "brokerHealthy": true
+    },
+    "actuator": {
+      "actuatorCode": "PUMP_01", "state": "OFF", "pending": false,
+      "off": { "sessionId": "fixture-session-1", "recordedAt": "2026-10-20T11:59:59.000Z", "receivedAt": "2026-10-20T11:59:59.100Z", "source": "MQTT", "verified": true, "retained": false, "duplicate": false }
+    },
+    "rule": {
+      "id": "fixture-rule", "version": 1, "enabled": true, "thresholdOn": 20, "thresholdOff": 40,
+      "minRestSeconds": 30, "soakSeconds": 60, "pulseSeconds": 1,
+      "maxRunsPerDay": 3, "dailyBudgetSeconds": 3, "maxPulsesPerCycle": 3,
+      "maxReadingAgeSeconds": 45, "presenceTtlSeconds": 30, "offTtlSeconds": 30,
+      "clockTtlSeconds": 60, "maxClockOffsetMs": 500, "futureToleranceMs": 2000
+    },
+    "safety": { "manualOverrideUntil": null, "faultLatched": false, "emergencyStop": false, "lastActuatorOffAt": null },
+    "clock": { "health": "HEALTHY", "checkedAt": "2026-10-20T11:59:55.000Z", "offsetMs": -50 },
+    "cycle": {
+      "id": "fixture-cycle-1", "sessionId": "fixture-session-1", "ruleId": "fixture-rule", "ruleVersion": 1,
+      "actuatorCode": "PUMP_01", "trusted": true, "phase": "IDLE", "lastEvaluatedAt": null,
+      "lastReadingId": null, "lastReadingRecordedAt": null, "lastPulseStartedAt": null, "lastOffAt": null,
+      "pulsesInCycle": 0, "consumedKeys": []
+    },
+    "budget": { "actuatorCode": "PUMP_01", "day": "2026-10-20", "trusted": true, "reservedRuns": 0, "reservedSeconds": 0 }
+  },
+  "examples": [
+    { "name": "dry soil", "soilMoisture": 18, "clockHealth": "HEALTHY" },
+    { "name": "sufficient moisture", "soilMoisture": 45, "clockHealth": "HEALTHY" },
+    { "name": "untrusted clock", "soilMoisture": 18, "clockHealth": "UNKNOWN" }
+  ]
+}

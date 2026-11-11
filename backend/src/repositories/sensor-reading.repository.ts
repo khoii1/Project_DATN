@@ -39,7 +39,7 @@ export const sensorReadingRepository = {
       GROUP BY 1 ORDER BY 1 ASC
     `);
   },
-  createMany(data: Array<{ sensorId: string; value: number; source: SensorReadingSource; recordedAt: Date }>) { return prisma.sensorReading.createManyAndReturn({ data, skipDuplicates: true, select: { id: true, sensorId: true, value: true, recordedAt: true } }); },
+  createMany(data: Array<{ sensorId: string; value: number; source: SensorReadingSource; recordedAt: Date }>) { return prisma.sensorReading.createManyAndReturn({ data, skipDuplicates: true, select: { id: true, sensorId: true, value: true, recordedAt: true, receivedAt: true } }); },
   latest(sensorId: string) { return prisma.sensorReading.findFirst({ where: { sensorId }, orderBy: { recordedAt: "desc" } }); },
   countAt(sensorIds: string[], recordedAt: Date) { return prisma.sensorReading.count({ where: { sensorId: { in: sensorIds }, recordedAt } }); },
 };

@@ -14,6 +14,8 @@ import { deviceCommandRouter } from "./device-command.route";
 import { automationRuleRouter } from "./automation-rule.route";
 import { reportRouter } from './report.route';
 import { activityLogRouter } from './activity-log.route';
+import { shadowPreviewRouter } from "./shadow-preview.route";
+import { liveEvidenceRouter } from "./live-evidence.route";
 
 export const apiRouter = Router();
 
@@ -32,3 +34,5 @@ apiRouter.use("/device-commands", deviceCommandRouter);
 apiRouter.use("/automation-rules", automationRuleRouter);
 apiRouter.use('/reports', reportRouter);
 apiRouter.use('/activity-logs', activityLogRouter);
+apiRouter.use("/shadow-preview", shadowPreviewRouter);
+apiRouter.use("/live-evidence", liveEvidenceRouter);

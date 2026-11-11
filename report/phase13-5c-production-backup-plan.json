@@ -1,0 +1,14 @@
+{
+  "Mode": "PLAN_ONLY",
+  "Host": "127.0.0.1",
+  "Port": 5432,
+  "Database": "smart_agriculture",
+  "Format": "custom",
+  "Root": "C:\\Users\\Acer Swift3\\AppData\\Local\\SmartAgriculturePostgresBackups\\production",
+  "ProductionBackupPerformed": false,
+  "CredentialsRequested": false,
+  "RequiresSeparateStorageApproval": true,
+  "RequiresSeparateBackupApproval": true,
+  "RestoreTarget": "INDEPENDENT_SEPARATELY_APPROVED_ONLY",
+  "RolePasswordsIncluded": false
+}

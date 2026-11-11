@@ -1,0 +1,229 @@
+{
+  "execution": {
+    "sessionStartUtc": "2026-10-21T10:48:00.2415361+00:00",
+    "handshakeAttempts": 1,
+    "handshakeExitCode": 0,
+    "writeAttempts": 1,
+    "uploadStartUtc": "2026-10-21T10:48:03.1569281+00:00",
+    "uploadExitCode": 0,
+    "uploadEndUtc": "2026-10-21T10:49:09.1899529+00:00",
+    "bootUtc": "2026-10-21T10:49:09.4297657+00:00",
+    "captureEndUtc": "2026-10-21T10:53:29.4991686+00:00",
+    "captureSeconds": 260.05,
+    "fatalDetected": false,
+    "serialClosed": true
+  },
+  "initialSyncUtc": "2026-10-21T10:49:11.806Z",
+  "stableObservationSecondsApprox": 257.673,
+  "bootCount": 1,
+  "crashDetected": false,
+  "workerSnapshots": [
+    {
+      "running": "true",
+      "intervalMs": 1800000,
+      "millis": 30207,
+      "callbacks": 1,
+      "callbackAgeMs": 27882,
+      "clock": "RELIABLE",
+      "reason": "OK"
+    },
+    {
+      "running": "true",
+      "intervalMs": 1800000,
+      "millis": 60218,
+      "callbacks": 1,
+      "callbackAgeMs": 57893,
+      "clock": "RELIABLE",
+      "reason": "OK"
+    },
+    {
+      "running": "true",
+      "intervalMs": 1800000,
+      "millis": 90229,
+      "callbacks": 1,
+      "callbackAgeMs": 87904,
+      "clock": "RELIABLE",
+      "reason": "OK"
+    },
+    {
+      "running": "true",
+      "intervalMs": 1800000,
+      "millis": 120240,
+      "callbacks": 1,
+      "callbackAgeMs": 117915,
+      "clock": "RELIABLE",
+      "reason": "OK"
+    },
+    {
+      "running": "true",
+      "intervalMs": 1800000,
+      "millis": 150251,
+      "callbacks": 1,
+      "callbackAgeMs": 147926,
+      "clock": "RELIABLE",
+      "reason": "OK"
+    },
+    {
+      "running": "true",
+      "intervalMs": 1800000,
+      "millis": 180262,
+      "callbacks": 1,
+      "callbackAgeMs": 177937,
+      "clock": "RELIABLE",
+      "reason": "OK"
+    },
+    {
+      "running": "true",
+      "intervalMs": 1800000,
+      "millis": 210273,
+      "callbacks": 1,
+      "callbackAgeMs": 207948,
+      "clock": "RELIABLE",
+      "reason": "OK"
+    },
+    {
+      "running": "true",
+      "intervalMs": 1800000,
+      "millis": 240287,
+      "callbacks": 1,
+      "callbackAgeMs": 237962,
+      "clock": "RELIABLE",
+      "reason": "OK"
+    }
+  ],
+  "sentTelemetryCount": 17,
+  "samples": [
+    {
+      "sequence": 1,
+      "recordedAt": "2026-10-21T10:49:24.588Z",
+      "publishMs": 208
+    },
+    {
+      "sequence": 2,
+      "recordedAt": "2026-10-21T10:49:39.588Z",
+      "publishMs": 538
+    },
+    {
+      "sequence": 3,
+      "recordedAt": "2026-10-21T10:49:54.588Z",
+      "publishMs": 222
+    },
+    {
+      "sequence": 4,
+      "recordedAt": "2026-10-21T10:50:09.588Z",
+      "publishMs": 73
+    },
+    {
+      "sequence": 5,
+      "recordedAt": "2026-10-21T10:50:24.588Z",
+      "publishMs": 189
+    },
+    {
+      "sequence": 6,
+      "recordedAt": "2026-10-21T10:50:39.588Z",
+      "publishMs": 159
+    },
+    {
+      "sequence": 7,
+      "recordedAt": "2026-10-21T10:50:54.588Z",
+      "publishMs": 59
+    },
+    {
+      "sequence": 8,
+      "recordedAt": "2026-10-21T10:51:09.588Z",
+      "publishMs": 31
+    },
+    {
+      "sequence": 9,
+      "recordedAt": "2026-10-21T10:51:24.588Z",
+      "publishMs": 96
+    },
+    {
+      "sequence": 10,
+      "recordedAt": "2026-10-21T10:51:39.588Z",
+      "publishMs": 240
+    },
+    {
+      "sequence": 11,
+      "recordedAt": "2026-10-21T10:51:54.588Z",
+      "publishMs": 79
+    },
+    {
+      "sequence": 12,
+      "recordedAt": "2026-10-21T10:52:09.588Z",
+      "publishMs": 68
+    },
+    {
+      "sequence": 13,
+      "recordedAt": "2026-10-21T10:52:24.588Z",
+      "publishMs": 67
+    },
+    {
+      "sequence": 14,
+      "recordedAt": "2026-10-21T10:52:39.588Z",
+      "publishMs": 178
+    },
+    {
+      "sequence": 15,
+      "recordedAt": "2026-10-21T10:52:54.588Z",
+      "publishMs": 120
+    },
+    {
+      "sequence": 16,
+      "recordedAt": "2026-10-21T10:53:09.588Z",
+      "publishMs": 75
+    },
+    {
+      "sequence": 17,
+      "recordedAt": "2026-10-21T10:53:24.588Z",
+      "publishMs": 107
+    }
+  ],
+  "slowPubackMs": [
+    208,
+    538,
+    224,
+    204,
+    222,
+    202,
+    204,
+    240,
+    224,
+    203
+  ],
+  "matchedReadings": 12,
+  "periodicOffEvidence": [
+    {
+      "recordedAt": "2026-10-21T10:49:29.689Z",
+      "qos": 1,
+      "retain": false,
+      "dup": false,
+      "generation": 6,
+      "sessionKind": "BACKEND_OBSERVER",
+      "publisherIdentityAssurance": "NOT_VERIFIED"
+    },
+    {
+      "recordedAt": "2026-10-21T10:49:44.861Z",
+      "qos": 1,
+      "retain": false,
+      "dup": false,
+      "generation": 6,
+      "sessionKind": "BACKEND_OBSERVER",
+      "publisherIdentityAssurance": "NOT_VERIFIED"
+    },
+    {
+      "recordedAt": "2026-10-21T10:50:15.272Z",
+      "qos": 1,
+      "retain": false,
+      "dup": false,
+      "generation": 6,
+      "sessionKind": "BACKEND_OBSERVER",
+      "publisherIdentityAssurance": "NOT_VERIFIED"
+    }
+  ],
+  "heapStackWatermark": "NOT_PROVIDED",
+  "safetyTaskLatency": "NOT_DIRECTLY_MEASURED",
+  "sntpPeriodicRefresh": "NOT_YET_VERIFIED",
+  "sntpFailureRecovery": "NOT_YET_VERIFIED",
+  "longTermStability": "NOT_VERIFIED"
+}

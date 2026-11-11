@@ -1,0 +1,38 @@
+{
+  "scope": "READ_ONLY_DATABASE_HISTORY_NOT_RAW_MQTT_PACKET_LOG",
+  "nativeExit": 0,
+  "systemId": "7472695863566132416",
+  "capturedAt": "2026-10-30T17:12:09.430779+07:00",
+  "commands": [
+    {
+      "device_code": "ESP32-GF-A-01",
+      "actuator_code": "PUMP_01",
+      "command_id": "4a93eb02-ba36-40a5-bb78-fdc7e81015b6",
+      "command": "TURN_ON",
+      "source": "MANUAL",
+      "transport": "MQTT",
+      "max_run_seconds": 1,
+      "status": "SUCCESS",
+      "requested_at": "2026-10-30T10:01:18.108",
+      "sent_at": "2026-10-30T10:01:18.136",
+      "acknowledged_at": "2026-10-30T10:01:18.292",
+      "completed_at": "2026-10-30T10:01:18.293",
+      "failure_reason": null
+    },
+    {
+      "device_code": "ESP32-GF-A-01",
+      "actuator_code": "PUMP_01",
+      "command_id": "0cefc135-ff16-418d-bc3f-70ccaabee8bd",
+      "command": "TURN_ON",
+      "source": "MANUAL",
+      "transport": "MQTT",
+      "max_run_seconds": 1,
+      "status": "SUCCESS",
+      "requested_at": "2026-10-30T10:01:33.833",
+      "sent_at": "2026-10-30T10:01:33.846",
+      "acknowledged_at": "2026-10-30T10:01:34.091",
+      "completed_at": "2026-10-30T10:01:34.092",
+      "failure_reason": null
+    }
+  ]
+}

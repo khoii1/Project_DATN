@@ -1,0 +1,397 @@
+{
+  "startedAt": "2026-10-21T03:04:49.029Z",
+  "endedAt": "2026-10-21T03:05:29.404Z",
+  "backendFlagsFromDiagnostic": {
+    "commands": false,
+    "automation": false,
+    "testMode": true
+  },
+  "packets": [
+    {
+      "receivedAt": "2026-10-21T03:04:49.294Z",
+      "topic": "smart-agriculture/v1/devices/ESP32-GF-A-01/status",
+      "retained": true,
+      "duplicate": false,
+      "qos": 1,
+      "digest": "d1a6e2530ca78683b2728718aebecff36d88b0fdebcda3e4ae5df426dbdccc2a",
+      "body": {
+        "deviceCode": "ESP32-GF-A-01",
+        "status": "OFFLINE"
+      }
+    },
+    {
+      "receivedAt": "2026-10-21T03:04:53.451Z",
+      "topic": "smart-agriculture/v1/devices/ESP32-GF-A-01/telemetry",
+      "retained": false,
+      "duplicate": false,
+      "qos": 1,
+      "digest": "7e8e30064fd3daafcd9a48a2da0945ef119a08826e9979ad532c8cd63cb9a649",
+      "body": {
+        "deviceCode": "ESP32-GF-A-01",
+        "recordedAt": "2026-10-21T03:04:53.285Z",
+        "readings": [
+          {
+            "sensorCode": "TEMP_01",
+            "value": 30.9
+          },
+          {
+            "sensorCode": "HUM_01",
+            "value": 70.3
+          },
+          {
+            "sensorCode": "LIGHT_01",
+            "value": 0
+          },
+          {
+            "sensorCode": "SOIL_01",
+            "value": 16.21
+          }
+        ]
+      }
+    },
+    {
+      "receivedAt": "2026-10-21T03:04:53.817Z",
+      "topic": "smart-agriculture/v1/devices/ESP32-GF-A-01/actuator/state",
+      "retained": false,
+      "duplicate": false,
+      "qos": 1,
+      "digest": "6b973d2317105e5d7b8dcadadad881b6cd9a89ca33148c6ec55e98adbd71a1ad",
+      "body": {
+        "deviceCode": "ESP32-GF-A-01",
+        "actuatorCode": "PUMP_01",
+        "recordedAt": "2026-10-21T03:04:53.606Z",
+        "state": "OFF",
+        "reason": "PERIODIC"
+      }
+    },
+    {
+      "receivedAt": "2026-10-21T03:04:53.920Z",
+      "topic": "smart-agriculture/v1/devices/ESP32-GF-A-01/status",
+      "retained": false,
+      "duplicate": false,
+      "qos": 1,
+      "digest": "8116e5fe952d1cc66487d9cd7ed81632319cadc6c0b458cb442a4473ff5786d6",
+      "body": {
+        "deviceCode": "ESP32-GF-A-01",
+        "status": "ONLINE"
+      }
+    },
+    {
+      "receivedAt": "2026-10-21T03:05:08.472Z",
+      "topic": "smart-agriculture/v1/devices/ESP32-GF-A-01/telemetry",
+      "retained": false,
+      "duplicate": false,
+      "qos": 1,
+      "digest": "806786809312e70116632d020bc966fdd704f7187b77de8333aa5dfbb15ab4d9",
+      "body": {
+        "deviceCode": "ESP32-GF-A-01",
+        "recordedAt": "2026-10-21T03:05:08.285Z",
+        "readings": [
+          {
+            "sensorCode": "TEMP_01",
+            "value": 30.9
+          },
+          {
+            "sensorCode": "HUM_01",
+            "value": 70.4
+          },
+          {
+            "sensorCode": "LIGHT_01",
+            "value": 0
+          },
+          {
+            "sensorCode": "SOIL_01",
+            "value": 16.26
+          }
+        ]
+      }
+    },
+    {
+      "receivedAt": "2026-10-21T03:05:09.009Z",
+      "topic": "smart-agriculture/v1/devices/ESP32-GF-A-01/actuator/state",
+      "retained": false,
+      "duplicate": false,
+      "qos": 1,
+      "digest": "f3291a721cd440ea14affd28dc4a5514f738b132bab470cc0e7fabf765ff85ea",
+      "body": {
+        "deviceCode": "ESP32-GF-A-01",
+        "actuatorCode": "PUMP_01",
+        "recordedAt": "2026-10-21T03:05:08.784Z",
+        "state": "OFF",
+        "reason": "PERIODIC"
+      }
+    },
+    {
+      "receivedAt": "2026-10-21T03:05:09.180Z",
+      "topic": "smart-agriculture/v1/devices/ESP32-GF-A-01/status",
+      "retained": false,
+      "duplicate": false,
+      "qos": 1,
+      "digest": "8116e5fe952d1cc66487d9cd7ed81632319cadc6c0b458cb442a4473ff5786d6",
+      "body": {
+        "deviceCode": "ESP32-GF-A-01",
+        "status": "ONLINE"
+      }
+    },
+    {
+      "receivedAt": "2026-10-21T03:05:23.616Z",
+      "topic": "smart-agriculture/v1/devices/ESP32-GF-A-01/telemetry",
+      "retained": false,
+      "duplicate": false,
+      "qos": 1,
+      "digest": "55fafcf0e8a91dea89e206441a057b206a9126d2748d016e11df5c91d464abae",
+      "body": {
+        "deviceCode": "ESP32-GF-A-01",
+        "recordedAt": "2026-10-21T03:05:23.285Z",
+        "readings": [
+          {
+            "sensorCode": "TEMP_01",
+            "value": 30.9
+          },
+          {
+            "sensorCode": "HUM_01",
+            "value": 70.3
+          },
+          {
+            "sensorCode": "LIGHT_01",
+            "value": 0
+          },
+          {
+            "sensorCode": "SOIL_01",
+            "value": 16.01
+          }
+        ]
+      }
+    },
+    {
+      "receivedAt": "2026-10-21T03:05:24.166Z",
+      "topic": "smart-agriculture/v1/devices/ESP32-GF-A-01/actuator/state",
+      "retained": false,
+      "duplicate": false,
+      "qos": 1,
+      "digest": "8a20ca7c500b449a00d4a4a30f6618296832fa1f1c550fb1f20aab812697f98f",
+      "body": {
+        "deviceCode": "ESP32-GF-A-01",
+        "actuatorCode": "PUMP_01",
+        "recordedAt": "2026-10-21T03:05:23.970Z",
+        "state": "OFF",
+        "reason": "PERIODIC"
+      }
+    },
+    {
+      "receivedAt": "2026-10-21T03:05:24.369Z",
+      "topic": "smart-agriculture/v1/devices/ESP32-GF-A-01/status",
+      "retained": false,
+      "duplicate": false,
+      "qos": 1,
+      "digest": "8116e5fe952d1cc66487d9cd7ed81632319cadc6c0b458cb442a4473ff5786d6",
+      "body": {
+        "deviceCode": "ESP32-GF-A-01",
+        "status": "ONLINE"
+      }
+    }
+  ],
+  "database": {
+    "batches": [
+      {
+        "recordedAt": "2026-10-21T03:04:53.285Z",
+        "allFourMatch": true,
+        "rows": [
+          {
+            "id": "cmvhj453p000gumaw4ffv5ipm",
+            "value": 30.9,
+            "source": "MQTT",
+            "recordedAt": "2026-10-21T03:04:53.285Z",
+            "receivedAt": "2026-10-21T03:04:53.462Z",
+            "sensor": {
+              "sensorCode": "TEMP_01"
+            }
+          },
+          {
+            "id": "cmvhj453p000humawn907u0ft",
+            "value": 70.3,
+            "source": "MQTT",
+            "recordedAt": "2026-10-21T03:04:53.285Z",
+            "receivedAt": "2026-10-21T03:04:53.462Z",
+            "sensor": {
+              "sensorCode": "HUM_01"
+            }
+          },
+          {
+            "id": "cmvhj453p000iumawqa80jokw",
+            "value": 0,
+            "source": "MQTT",
+            "recordedAt": "2026-10-21T03:04:53.285Z",
+            "receivedAt": "2026-10-21T03:04:53.462Z",
+            "sensor": {
+              "sensorCode": "LIGHT_01"
+            }
+          },
+          {
+            "id": "cmvhj453p000jumawiu8sluco",
+            "value": 16.21,
+            "source": "MQTT",
+            "recordedAt": "2026-10-21T03:04:53.285Z",
+            "receivedAt": "2026-10-21T03:04:53.462Z",
+            "sensor": {
+              "sensorCode": "SOIL_01"
+            }
+          }
+        ]
+      },
+      {
+        "recordedAt": "2026-10-21T03:05:08.285Z",
+        "allFourMatch": true,
+        "rows": [
+          {
+            "id": "cmvhj4gov000kumawn44razb1",
+            "value": 30.9,
+            "source": "MQTT",
+            "recordedAt": "2026-10-21T03:05:08.285Z",
+            "receivedAt": "2026-10-21T03:05:08.479Z",
+            "sensor": {
+              "sensorCode": "TEMP_01"
+            }
+          },
+          {
+            "id": "cmvhj4gov000lumawrd50iwip",
+            "value": 70.4,
+            "source": "MQTT",
+            "recordedAt": "2026-10-21T03:05:08.285Z",
+            "receivedAt": "2026-10-21T03:05:08.479Z",
+            "sensor": {
+              "sensorCode": "HUM_01"
+            }
+          },
+          {
+            "id": "cmvhj4gov000mumawn4wv7fxe",
+            "value": 0,
+            "source": "MQTT",
+            "recordedAt": "2026-10-21T03:05:08.285Z",
+            "receivedAt": "2026-10-21T03:05:08.479Z",
+            "sensor": {
+              "sensorCode": "LIGHT_01"
+            }
+          },
+          {
+            "id": "cmvhj4gov000numawbvotsa77",
+            "value": 16.26,
+            "source": "MQTT",
+            "recordedAt": "2026-10-21T03:05:08.285Z",
+            "receivedAt": "2026-10-21T03:05:08.479Z",
+            "sensor": {
+              "sensorCode": "SOIL_01"
+            }
+          }
+        ]
+      },
+      {
+        "recordedAt": "2026-10-21T03:05:23.285Z",
+        "allFourMatch": true,
+        "rows": [
+          {
+            "id": "cmvhj4sdi000oumaw34y3d9zf",
+            "value": 30.9,
+            "source": "MQTT",
+            "recordedAt": "2026-10-21T03:05:23.285Z",
+            "receivedAt": "2026-10-21T03:05:23.622Z",
+            "sensor": {
+              "sensorCode": "TEMP_01"
+            }
+          },
+          {
+            "id": "cmvhj4sdi000pumawyl6rs7w8",
+            "value": 70.3,
+            "source": "MQTT",
+            "recordedAt": "2026-10-21T03:05:23.285Z",
+            "receivedAt": "2026-10-21T03:05:23.622Z",
+            "sensor": {
+              "sensorCode": "HUM_01"
+            }
+          },
+          {
+            "id": "cmvhj4sdi000qumaw1xzdwfrn",
+            "value": 0,
+            "source": "MQTT",
+            "recordedAt": "2026-10-21T03:05:23.285Z",
+            "receivedAt": "2026-10-21T03:05:23.622Z",
+            "sensor": {
+              "sensorCode": "LIGHT_01"
+            }
+          },
+          {
+            "id": "cmvhj4sdi000rumaw4jklmwrc",
+            "value": 16.01,
+            "source": "MQTT",
+            "recordedAt": "2026-10-21T03:05:23.285Z",
+            "receivedAt": "2026-10-21T03:05:23.622Z",
+            "sensor": {
+              "sensorCode": "SOIL_01"
+            }
+          }
+        ]
+      }
+    ],
+    "device": {
+      "deviceCode": "ESP32-GF-A-01",
+      "connectionStatus": "ONLINE",
+      "lastSeenAt": "2026-10-21T03:05:24.370Z",
+      "actuators": [
+        {
+          "currentState": "OFF",
+          "lastStateChangedAt": "2026-10-21T03:05:23.970Z"
+        }
+      ]
+    },
+    "pending": 0
+  },
+  "periodicOff": [
+    {
+      "receivedAt": "2026-10-21T03:04:53.817Z",
+      "topic": "smart-agriculture/v1/devices/ESP32-GF-A-01/actuator/state",
+      "retained": false,
+      "duplicate": false,
+      "qos": 1,
+      "digest": "6b973d2317105e5d7b8dcadadad881b6cd9a89ca33148c6ec55e98adbd71a1ad",
+      "body": {
+        "deviceCode": "ESP32-GF-A-01",
+        "actuatorCode": "PUMP_01",
+        "recordedAt": "2026-10-21T03:04:53.606Z",
+        "state": "OFF",
+        "reason": "PERIODIC"
+      }
+    },
+    {
+      "receivedAt": "2026-10-21T03:05:09.009Z",
+      "topic": "smart-agriculture/v1/devices/ESP32-GF-A-01/actuator/state",
+      "retained": false,
+      "duplicate": false,
+      "qos": 1,
+      "digest": "f3291a721cd440ea14affd28dc4a5514f738b132bab470cc0e7fabf765ff85ea",
+      "body": {
+        "deviceCode": "ESP32-GF-A-01",
+        "actuatorCode": "PUMP_01",
+        "recordedAt": "2026-10-21T03:05:08.784Z",
+        "state": "OFF",
+        "reason": "PERIODIC"
+      }
+    },
+    {
+      "receivedAt": "2026-10-21T03:05:24.166Z",
+      "topic": "smart-agriculture/v1/devices/ESP32-GF-A-01/actuator/state",
+      "retained": false,
+      "duplicate": false,
+      "qos": 1,
+      "digest": "8a20ca7c500b449a00d4a4a30f6618296832fa1f1c550fb1f20aab812697f98f",
+      "body": {
+        "deviceCode": "ESP32-GF-A-01",
+        "actuatorCode": "PUMP_01",
+        "recordedAt": "2026-10-21T03:05:23.970Z",
+        "state": "OFF",
+        "reason": "PERIODIC"
+      }
+    }
+  ],
+  "productionDatabaseManuallyMutated": false,
+  "mqttPublished": false
+}

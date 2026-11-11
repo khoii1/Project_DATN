@@ -1,0 +1,635 @@
+{
+  "checkedAt": "2026-10-21T05:46:28.871Z",
+  "identity": [
+    {
+      "database": "smart_agriculture",
+      "schema": "public",
+      "port": 5432,
+      "started": "2026-10-16T05:13:43.656Z"
+    }
+  ],
+  "device": {
+    "id": "demo_device_esp32_a",
+    "connectionStatus": "ONLINE",
+    "lastSeenAt": "2026-10-21T05:46:10.138Z",
+    "actuators": [
+      {
+        "currentState": "OFF",
+        "lastStateChangedAt": "2026-10-21T05:00:39.402Z"
+      }
+    ],
+    "sensors": [
+      {
+        "sensorCode": "TEMP_01",
+        "readings": [
+          {
+            "id": "cmvhn903f00mwumr8yqvrlqxq",
+            "value": 33.2,
+            "source": "MQTT",
+            "recordedAt": "2026-10-21T05:00:38.285Z",
+            "receivedAt": "2026-10-21T05:00:38.715Z"
+          }
+        ]
+      },
+      {
+        "sensorCode": "HUM_01",
+        "readings": [
+          {
+            "id": "cmvhn903f00mxumr8pvizl18z",
+            "value": 69.3,
+            "source": "MQTT",
+            "recordedAt": "2026-10-21T05:00:38.285Z",
+            "receivedAt": "2026-10-21T05:00:38.715Z"
+          }
+        ]
+      },
+      {
+        "sensorCode": "SOIL_01",
+        "readings": [
+          {
+            "id": "cmvhn903f00mzumr8dty83vua",
+            "value": 24.44,
+            "source": "MQTT",
+            "recordedAt": "2026-10-21T05:00:38.285Z",
+            "receivedAt": "2026-10-21T05:00:38.715Z"
+          }
+        ]
+      },
+      {
+        "sensorCode": "LIGHT_01",
+        "readings": [
+          {
+            "id": "cmvhn903f00myumr83n2hs4eu",
+            "value": 0,
+            "source": "MQTT",
+            "recordedAt": "2026-10-21T05:00:38.285Z",
+            "receivedAt": "2026-10-21T05:00:38.715Z"
+          }
+        ]
+      }
+    ]
+  },
+  "incident": [
+    {
+      "id": "cmvhmc7ii00beumr87q4yccpm",
+      "value": 33.3,
+      "source": "MQTT",
+      "recordedAt": "2026-10-21T04:35:08.285Z",
+      "receivedAt": "2026-10-21T04:35:08.683Z",
+      "sensor": {
+        "sensorCode": "TEMP_01"
+      }
+    },
+    {
+      "id": "cmvhmc7ii00bfumr8ef2hmn9z",
+      "value": 68.3,
+      "source": "MQTT",
+      "recordedAt": "2026-10-21T04:35:08.285Z",
+      "receivedAt": "2026-10-21T04:35:08.683Z",
+      "sensor": {
+        "sensorCode": "HUM_01"
+      }
+    },
+    {
+      "id": "cmvhmc7ii00bgumr8hi577jhf",
+      "value": 0,
+      "source": "MQTT",
+      "recordedAt": "2026-10-21T04:35:08.285Z",
+      "receivedAt": "2026-10-21T04:35:08.683Z",
+      "sensor": {
+        "sensorCode": "LIGHT_01"
+      }
+    },
+    {
+      "id": "cmvhmc7ii00bhumr8pmecdge9",
+      "value": 23.18,
+      "source": "MQTT",
+      "recordedAt": "2026-10-21T04:35:08.285Z",
+      "receivedAt": "2026-10-21T04:35:08.683Z",
+      "sensor": {
+        "sensorCode": "SOIL_01"
+      }
+    },
+    {
+      "id": "cmvhmcj1t00bkumr8kt9zn2s9",
+      "value": 33.3,
+      "source": "MQTT",
+      "recordedAt": "2026-10-21T04:35:23.285Z",
+      "receivedAt": "2026-10-21T04:35:23.633Z",
+      "sensor": {
+        "sensorCode": "TEMP_01"
+      }
+    },
+    {
+      "id": "cmvhmcj1t00blumr8pmmit3fs",
+      "value": 68.3,
+      "source": "MQTT",
+      "recordedAt": "2026-10-21T04:35:23.285Z",
+      "receivedAt": "2026-10-21T04:35:23.633Z",
+      "sensor": {
+        "sensorCode": "HUM_01"
+      }
+    },
+    {
+      "id": "cmvhmcj1t00bmumr8rdtj86tz",
+      "value": 0,
+      "source": "MQTT",
+      "recordedAt": "2026-10-21T04:35:23.285Z",
+      "receivedAt": "2026-10-21T04:35:23.633Z",
+      "sensor": {
+        "sensorCode": "LIGHT_01"
+      }
+    },
+    {
+      "id": "cmvhmcj1t00bnumr8d1d4ytp6",
+      "value": 23.18,
+      "source": "MQTT",
+      "recordedAt": "2026-10-21T04:35:23.285Z",
+      "receivedAt": "2026-10-21T04:35:23.633Z",
+      "sensor": {
+        "sensorCode": "SOIL_01"
+      }
+    },
+    {
+      "id": "cmvhmcunr00bqumr8qq5he48l",
+      "value": 33.2,
+      "source": "MQTT",
+      "recordedAt": "2026-10-21T04:35:38.285Z",
+      "receivedAt": "2026-10-21T04:35:38.680Z",
+      "sensor": {
+        "sensorCode": "TEMP_01"
+      }
+    },
+    {
+      "id": "cmvhmcunr00brumr8mlzc1n5j",
+      "value": 68.3,
+      "source": "MQTT",
+      "recordedAt": "2026-10-21T04:35:38.285Z",
+      "receivedAt": "2026-10-21T04:35:38.680Z",
+      "sensor": {
+        "sensorCode": "HUM_01"
+      }
+    },
+    {
+      "id": "cmvhmcunr00bsumr87xb3hfqy",
+      "value": 0,
+      "source": "MQTT",
+      "recordedAt": "2026-10-21T04:35:38.285Z",
+      "receivedAt": "2026-10-21T04:35:38.680Z",
+      "sensor": {
+        "sensorCode": "LIGHT_01"
+      }
+    },
+    {
+      "id": "cmvhmcunr00btumr8cqrasear",
+      "value": 23.18,
+      "source": "MQTT",
+      "recordedAt": "2026-10-21T04:35:38.285Z",
+      "receivedAt": "2026-10-21T04:35:38.680Z",
+      "sensor": {
+        "sensorCode": "SOIL_01"
+      }
+    },
+    {
+      "id": "cmvhmda2p00buumr82bknft9j",
+      "value": 33.3,
+      "source": "MQTT",
+      "recordedAt": "2026-10-21T04:35:53.285Z",
+      "receivedAt": "2026-10-21T04:35:58.658Z",
+      "sensor": {
+        "sensorCode": "TEMP_01"
+      }
+    },
+    {
+      "id": "cmvhmda2p00bvumr86qt8j8cu",
+      "value": 68.3,
+      "source": "MQTT",
+      "recordedAt": "2026-10-21T04:35:53.285Z",
+      "receivedAt": "2026-10-21T04:35:58.658Z",
+      "sensor": {
+        "sensorCode": "HUM_01"
+      }
+    },
+    {
+      "id": "cmvhmda2p00bwumr8xnys5kpk",
+      "value": 0,
+      "source": "MQTT",
+      "recordedAt": "2026-10-21T04:35:53.285Z",
+      "receivedAt": "2026-10-21T04:35:58.658Z",
+      "sensor": {
+        "sensorCode": "LIGHT_01"
+      }
+    },
+    {
+      "id": "cmvhmda2p00bxumr8v06q2bjg",
+      "value": 24.89,
+      "source": "MQTT",
+      "recordedAt": "2026-10-21T04:35:53.285Z",
+      "receivedAt": "2026-10-21T04:35:58.658Z",
+      "sensor": {
+        "sensorCode": "SOIL_01"
+      }
+    },
+    {
+      "id": "cmvhmdhqs00byumr8oed3v4de",
+      "value": 33.3,
+      "source": "MQTT",
+      "recordedAt": "2026-10-21T04:36:08.285Z",
+      "receivedAt": "2026-10-21T04:36:08.597Z",
+      "sensor": {
+        "sensorCode": "TEMP_01"
+      }
+    },
+    {
+      "id": "cmvhmdhqs00bzumr8bg1ning7",
+      "value": 68.3,
+      "source": "MQTT",
+      "recordedAt": "2026-10-21T04:36:08.285Z",
+      "receivedAt": "2026-10-21T04:36:08.597Z",
+      "sensor": {
+        "sensorCode": "HUM_01"
+      }
+    },
+    {
+      "id": "cmvhmdhqs00c0umr8ptkdb2vc",
+      "value": 0,
+      "source": "MQTT",
+      "recordedAt": "2026-10-21T04:36:08.285Z",
+      "receivedAt": "2026-10-21T04:36:08.597Z",
+      "sensor": {
+        "sensorCode": "LIGHT_01"
+      }
+    },
+    {
+      "id": "cmvhmdhqs00c1umr8513mzuzn",
+      "value": 23.13,
+      "source": "MQTT",
+      "recordedAt": "2026-10-21T04:36:08.285Z",
+      "receivedAt": "2026-10-21T04:36:08.597Z",
+      "sensor": {
+        "sensorCode": "SOIL_01"
+      }
+    },
+    {
+      "id": "cmvhmdtbm00c2umr87okiqpsq",
+      "value": 33.3,
+      "source": "MQTT",
+      "recordedAt": "2026-10-21T04:36:23.285Z",
+      "receivedAt": "2026-10-21T04:36:23.603Z",
+      "sensor": {
+        "sensorCode": "TEMP_01"
+      }
+    },
+    {
+      "id": "cmvhmdtbm00c3umr8tafvxxqr",
+      "value": 68.3,
+      "source": "MQTT",
+      "recordedAt": "2026-10-21T04:36:23.285Z",
+      "receivedAt": "2026-10-21T04:36:23.603Z",
+      "sensor": {
+        "sensorCode": "HUM_01"
+      }
+    },
+    {
+      "id": "cmvhmdtbm00c4umr8937uxsjo",
+      "value": 0,
+      "source": "MQTT",
+      "recordedAt": "2026-10-21T04:36:23.285Z",
+      "receivedAt": "2026-10-21T04:36:23.603Z",
+      "sensor": {
+        "sensorCode": "LIGHT_01"
+      }
+    },
+    {
+      "id": "cmvhmdtbm00c5umr84se9v17l",
+      "value": 23.43,
+      "source": "MQTT",
+      "recordedAt": "2026-10-21T04:36:23.285Z",
+      "receivedAt": "2026-10-21T04:36:23.603Z",
+      "sensor": {
+        "sensorCode": "SOIL_01"
+      }
+    },
+    {
+      "id": "cmvhme4wk00c6umr8ovtzmnwe",
+      "value": 33.2,
+      "source": "MQTT",
+      "recordedAt": "2026-10-21T04:36:38.285Z",
+      "receivedAt": "2026-10-21T04:36:38.612Z",
+      "sensor": {
+        "sensorCode": "TEMP_01"
+      }
+    },
+    {
+      "id": "cmvhme4wk00c7umr88dw7unds",
+      "value": 68.4,
+      "source": "MQTT",
+      "recordedAt": "2026-10-21T04:36:38.285Z",
+      "receivedAt": "2026-10-21T04:36:38.612Z",
+      "sensor": {
+        "sensorCode": "HUM_01"
+      }
+    },
+    {
+      "id": "cmvhme4wk00c8umr8fd550n54",
+      "value": 0,
+      "source": "MQTT",
+      "recordedAt": "2026-10-21T04:36:38.285Z",
+      "receivedAt": "2026-10-21T04:36:38.612Z",
+      "sensor": {
+        "sensorCode": "LIGHT_01"
+      }
+    },
+    {
+      "id": "cmvhme4wk00c9umr8ge4os6ux",
+      "value": 24.08,
+      "source": "MQTT",
+      "recordedAt": "2026-10-21T04:36:38.285Z",
+      "receivedAt": "2026-10-21T04:36:38.612Z",
+      "sensor": {
+        "sensorCode": "SOIL_01"
+      }
+    }
+  ],
+  "proposalTables": [],
+  "pending": 0,
+  "commandCount": 43,
+  "live": {
+    "mode": "SHADOW",
+    "source": "LIVE_OBSERVED_NOT_VERIFIED",
+    "status": "BLOCKED",
+    "verifiedLiveReady": false,
+    "publisherIdentityAssurance": "NOT_VERIFIED",
+    "deviceBootSession": "NOT_PROVIDED_BY_FIRMWARE",
+    "notice": "Chưa có đủ evidence cảm biến mới đã đối chiếu trong phiên hiện tại.",
+    "reasons": [
+      "PUBLISHER_IDENTITY_NOT_VERIFIED",
+      "PRODUCTION_POLICY_CYCLE_BUDGET_SAFETY_UNAVAILABLE",
+      "READING_CORRELATION_NOT_PROVEN",
+      "FRESH_OFF_SAME_OBSERVER_SESSION_REQUIRED"
+    ],
+    "evaluatedAt": "2026-10-21T05:46:28.869Z",
+    "reading": null,
+    "off": null,
+    "clock": {
+      "health": "HEALTHY",
+      "reason": "SHORT_TERM_NTP_MEASUREMENT_OK",
+      "source": "time.windows.com,0x8",
+      "lastSuccessfulSync": "2026-10-21T05:30:28.494Z",
+      "lastSyncError": 0,
+      "lastSuccessfulSyncBasis": "STATUS_AGE_APPROXIMATE",
+      "leapIndicator": 0,
+      "stratum": 5,
+      "offsetMs": -31.166,
+      "checkedAt": "2026-10-21T05:46:28.844Z",
+      "ttlMs": 60000,
+      "clockJumpDetected": false,
+      "assurance": "SHORT_TERM_READ_ONLY_MEASUREMENT",
+      "longTermStability": "NOT_VERIFIED"
+    },
+    "presence": {
+      "connectionStatus": "ONLINE",
+      "lastSeenAt": "2026-10-21T05:46:25.330Z"
+    },
+    "policy": null,
+    "cycle": null,
+    "budget": null,
+    "safety": null,
+    "snapshot": null,
+    "decision": null,
+    "engineCalled": false,
+    "commandCreated": false,
+    "observer": {
+      "sessionKind": "BACKEND_OBSERVER",
+      "generation": 1,
+      "sessionId": "backend-observer:97ade4d7-a7d8-43d4-becf-cb78877a606d",
+      "sessionStartedAt": "2026-10-21T04:10:04.992Z",
+      "entries": 0,
+      "lastRejection": null,
+      "ttlMs": 45000,
+      "publisherIdentityAssurance": "NOT_VERIFIED"
+    },
+    "runtime": {
+      "commandsEnabled": false,
+      "automationEnabled": false,
+      "pumpTestMode": true
+    }
+  },
+  "publisher": {
+    "level": "NOT_VERIFIED",
+    "packetPublisherIdentity": "NOT_VERIFIED",
+    "deviceIdentity": "NOT_VERIFIED",
+    "reasons": [
+      "CORRELATED_RECEIPT_REQUIRED",
+      "BROKER_ATTESTATION_MISSING"
+    ],
+    "deviceIdentityVerifierImplemented": false
+  },
+  "historicalQuality": [
+    {
+      "archivedObservedAt": "2026-10-21T04:35:29.954Z",
+      "currentLiveEvidence": false,
+      "assessmentAtHistoricalObservation": {
+        "status": "NOT_VERIFIED",
+        "reasons": [
+          "QUALITY_OR_CALIBRATION_POLICY_NOT_APPROVED",
+          "CALIBRATION_VERSION_MISSING",
+          "RAW_ADC_MISSING",
+          "CONTACT_HEALTH_MISSING",
+          "QUALITY_WINDOW_IDENTITY_ORDER_UNPROVEN",
+          "CONSECUTIVE_VALID_SAMPLES_MISSING"
+        ],
+        "value": 23.18,
+        "policyVersion": "13.4C-quality-proposal-v1",
+        "consecutiveValidSamples": 0,
+        "checkedAt": "2026-10-21T04:35:29.954Z",
+        "validUntil": "2026-10-21T04:36:08.285Z",
+        "publisherIdentityVerified": false,
+        "irrigationAuthorized": false
+      },
+      "assessmentNow": {
+        "status": "INVALID",
+        "reasons": [
+          "READING_TIME_INVALID_OR_STALE",
+          "QUALITY_OR_CALIBRATION_POLICY_NOT_APPROVED",
+          "CALIBRATION_VERSION_MISSING",
+          "RAW_ADC_MISSING",
+          "CONTACT_HEALTH_MISSING",
+          "QUALITY_WINDOW_IDENTITY_ORDER_UNPROVEN",
+          "CONSECUTIVE_VALID_SAMPLES_MISSING"
+        ],
+        "value": 23.18,
+        "policyVersion": "13.4C-quality-proposal-v1",
+        "consecutiveValidSamples": 0,
+        "checkedAt": "2026-10-21T05:46:28.871Z",
+        "validUntil": "2026-10-21T04:36:08.285Z",
+        "publisherIdentityVerified": false,
+        "irrigationAuthorized": false
+      }
+    },
+    {
+      "archivedObservedAt": "2026-10-21T04:35:49.644Z",
+      "currentLiveEvidence": false,
+      "assessmentAtHistoricalObservation": {
+        "status": "NOT_VERIFIED",
+        "reasons": [
+          "QUALITY_OR_CALIBRATION_POLICY_NOT_APPROVED",
+          "CALIBRATION_VERSION_MISSING",
+          "RAW_ADC_MISSING",
+          "CONTACT_HEALTH_MISSING",
+          "QUALITY_WINDOW_IDENTITY_ORDER_UNPROVEN",
+          "CONSECUTIVE_VALID_SAMPLES_MISSING"
+        ],
+        "value": 23.18,
+        "policyVersion": "13.4C-quality-proposal-v1",
+        "consecutiveValidSamples": 0,
+        "checkedAt": "2026-10-21T04:35:49.644Z",
+        "validUntil": "2026-10-21T04:36:23.285Z",
+        "publisherIdentityVerified": false,
+        "irrigationAuthorized": false
+      },
+      "assessmentNow": {
+        "status": "INVALID",
+        "reasons": [
+          "READING_TIME_INVALID_OR_STALE",
+          "QUALITY_OR_CALIBRATION_POLICY_NOT_APPROVED",
+          "CALIBRATION_VERSION_MISSING",
+          "RAW_ADC_MISSING",
+          "CONTACT_HEALTH_MISSING",
+          "QUALITY_WINDOW_IDENTITY_ORDER_UNPROVEN",
+          "CONSECUTIVE_VALID_SAMPLES_MISSING"
+        ],
+        "value": 23.18,
+        "policyVersion": "13.4C-quality-proposal-v1",
+        "consecutiveValidSamples": 0,
+        "checkedAt": "2026-10-21T05:46:28.871Z",
+        "validUntil": "2026-10-21T04:36:23.285Z",
+        "publisherIdentityVerified": false,
+        "irrigationAuthorized": false
+      }
+    },
+    {
+      "archivedObservedAt": "2026-10-21T04:36:04.680Z",
+      "currentLiveEvidence": false,
+      "assessmentAtHistoricalObservation": {
+        "status": "NOT_VERIFIED",
+        "reasons": [
+          "QUALITY_OR_CALIBRATION_POLICY_NOT_APPROVED",
+          "CALIBRATION_VERSION_MISSING",
+          "RAW_ADC_MISSING",
+          "CONTACT_HEALTH_MISSING",
+          "QUALITY_WINDOW_IDENTITY_ORDER_UNPROVEN",
+          "CONSECUTIVE_VALID_SAMPLES_MISSING"
+        ],
+        "value": 24.89,
+        "policyVersion": "13.4C-quality-proposal-v1",
+        "consecutiveValidSamples": 0,
+        "checkedAt": "2026-10-21T04:36:04.680Z",
+        "validUntil": "2026-10-21T04:36:38.285Z",
+        "publisherIdentityVerified": false,
+        "irrigationAuthorized": false
+      },
+      "assessmentNow": {
+        "status": "INVALID",
+        "reasons": [
+          "READING_TIME_INVALID_OR_STALE",
+          "QUALITY_OR_CALIBRATION_POLICY_NOT_APPROVED",
+          "CALIBRATION_VERSION_MISSING",
+          "RAW_ADC_MISSING",
+          "CONTACT_HEALTH_MISSING",
+          "QUALITY_WINDOW_IDENTITY_ORDER_UNPROVEN",
+          "CONSECUTIVE_VALID_SAMPLES_MISSING"
+        ],
+        "value": 24.89,
+        "policyVersion": "13.4C-quality-proposal-v1",
+        "consecutiveValidSamples": 0,
+        "checkedAt": "2026-10-21T05:46:28.871Z",
+        "validUntil": "2026-10-21T04:36:38.285Z",
+        "publisherIdentityVerified": false,
+        "irrigationAuthorized": false
+      }
+    }
+  ],
+  "matrix": {
+    "matrix": [
+      {
+        "gate": "receiptCorrelation",
+        "status": "NOT_VERIFIED",
+        "evidenceId": null
+      },
+      {
+        "gate": "publisherAssurance",
+        "status": "NOT_VERIFIED",
+        "evidenceId": null
+      },
+      {
+        "gate": "deviceSession",
+        "status": "NOT_VERIFIED",
+        "evidenceId": null
+      },
+      {
+        "gate": "soilQuality",
+        "status": "NOT_VERIFIED",
+        "evidenceId": null
+      },
+      {
+        "gate": "freshOff",
+        "status": "NOT_VERIFIED",
+        "evidenceId": null
+      },
+      {
+        "gate": "productionPolicy",
+        "status": "NOT_IMPLEMENTED",
+        "evidenceId": null
+      },
+      {
+        "gate": "persistentCycle",
+        "status": "NOT_IMPLEMENTED",
+        "evidenceId": null
+      },
+      {
+        "gate": "persistentBudget",
+        "status": "NOT_IMPLEMENTED",
+        "evidenceId": null
+      },
+      {
+        "gate": "persistentSafety",
+        "status": "NOT_IMPLEMENTED",
+        "evidenceId": null
+      },
+      {
+        "gate": "idempotency",
+        "status": "NOT_IMPLEMENTED",
+        "evidenceId": null
+      },
+      {
+        "gate": "farmDeviceRbac",
+        "status": "PASS",
+        "evidenceId": "readonly-probe:2026-10-21T05:46:28.871Z"
+      },
+      {
+        "gate": "emergencyStop",
+        "status": "NOT_IMPLEMENTED",
+        "evidenceId": null
+      },
+      {
+        "gate": "restartRecovery",
+        "status": "NOT_VERIFIED",
+        "evidenceId": null
+      },
+      {
+        "gate": "clockHealth",
+        "status": "PASS",
+        "evidenceId": "2026-10-21T05:46:28.844Z"
+      }
+    ],
+    "observationConditionsComplete": false,
+    "verifiedLiveReady": false,
+    "reason": "PRODUCTION_TRUST_ADAPTERS_NOT_DEPLOYED",
+    "engineCalled": false,
+    "commandCreated": false,
+    "automationActive": false
+  },
+  "manuallyMutatedDatabase": false,
+  "commandsSent": 0
+}

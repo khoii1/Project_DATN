@@ -25,7 +25,7 @@ async function evaluateRule(ruleId: string, reading: AutomationReading, options:
   if (attempt.count === 0) return "COOLDOWN";
   try {
     const result = await deviceCommandService.executeAutomationCommand(rule.actuatorId, desired === ActuatorState.ON ? DeviceCommandType.TURN_ON : DeviceCommandType.TURN_OFF, rule.id, { gateway: options.gateway, simulateFailure: options.simulateFailure });
-    return result.command.status === DeviceCommandStatus.SUCCESS ? "SUCCESS" : "FAILED";
+    return result.command.status === DeviceCommandStatus.SUCCESS ? "SUCCESS" : result.command.status === DeviceCommandStatus.PENDING ? "PENDING" : "FAILED";
   } catch { return "SAFETY_BLOCKED"; }
 }
 

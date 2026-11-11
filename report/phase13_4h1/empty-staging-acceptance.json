@@ -1,0 +1,222 @@
+﻿{
+    "CheckedAtUtc":  "2026-10-21T11:55:27.0284284+00:00",
+    "Status":  "STAGING_CREATED",
+    "NtfsStatus":  "STAGING_NTFS_VERIFIED",
+    "DirectoryCount":  10,
+    "FileCount":  0,
+    "ExistingAclUnchanged":  true,
+    "CloudBackupScope":  "NOT_VERIFIED",
+    "SecretStorageAllowed":  false,
+    "Directories":  [
+                        {
+                            "Path":  "C:\\Users\\Acer Swift3\\AppData\\Local\\SmartAgriculture",
+                            "Owner":  "S-1-5-21-1432835263-483988321-3159128977-1001",
+                            "ProtectedDacl":  true,
+                            "Reparse":  false,
+                            "Rules":  [
+                                          {
+                                              "Sid":  "S-1-5-18",
+                                              "Rights":  "FullControl",
+                                              "Inherited":  false,
+                                              "Inheritance":  "ContainerInherit, ObjectInherit"
+                                          },
+                                          {
+                                              "Sid":  "S-1-5-21-1432835263-483988321-3159128977-1001",
+                                              "Rights":  "FullControl",
+                                              "Inherited":  false,
+                                              "Inheritance":  "ContainerInherit, ObjectInherit"
+                                          }
+                                      ],
+                            "Verified":  true
+                        },
+                        {
+                            "Path":  "C:\\Users\\Acer Swift3\\AppData\\Local\\SmartAgriculture\\credential-rotation",
+                            "Owner":  "S-1-5-21-1432835263-483988321-3159128977-1001",
+                            "ProtectedDacl":  true,
+                            "Reparse":  false,
+                            "Rules":  [
+                                          {
+                                              "Sid":  "S-1-5-18",
+                                              "Rights":  "FullControl",
+                                              "Inherited":  false,
+                                              "Inheritance":  "ContainerInherit, ObjectInherit"
+                                          },
+                                          {
+                                              "Sid":  "S-1-5-21-1432835263-483988321-3159128977-1001",
+                                              "Rights":  "FullControl",
+                                              "Inherited":  false,
+                                              "Inheritance":  "ContainerInherit, ObjectInherit"
+                                          }
+                                      ],
+                            "Verified":  true
+                        },
+                        {
+                            "Path":  "C:\\Users\\Acer Swift3\\AppData\\Local\\SmartAgriculture\\credential-rotation\\inputs-private",
+                            "Owner":  "S-1-5-21-1432835263-483988321-3159128977-1001",
+                            "ProtectedDacl":  true,
+                            "Reparse":  false,
+                            "Rules":  [
+                                          {
+                                              "Sid":  "S-1-5-18",
+                                              "Rights":  "FullControl",
+                                              "Inherited":  false,
+                                              "Inheritance":  "ContainerInherit, ObjectInherit"
+                                          },
+                                          {
+                                              "Sid":  "S-1-5-21-1432835263-483988321-3159128977-1001",
+                                              "Rights":  "FullControl",
+                                              "Inherited":  false,
+                                              "Inheritance":  "ContainerInherit, ObjectInherit"
+                                          }
+                                      ],
+                            "Verified":  true
+                        },
+                        {
+                            "Path":  "C:\\Users\\Acer Swift3\\AppData\\Local\\SmartAgriculture\\credential-rotation\\source-enabled",
+                            "Owner":  "S-1-5-21-1432835263-483988321-3159128977-1001",
+                            "ProtectedDacl":  true,
+                            "Reparse":  false,
+                            "Rules":  [
+                                          {
+                                              "Sid":  "S-1-5-18",
+                                              "Rights":  "FullControl",
+                                              "Inherited":  false,
+                                              "Inheritance":  "ContainerInherit, ObjectInherit"
+                                          },
+                                          {
+                                              "Sid":  "S-1-5-21-1432835263-483988321-3159128977-1001",
+                                              "Rights":  "FullControl",
+                                              "Inherited":  false,
+                                              "Inheritance":  "ContainerInherit, ObjectInherit"
+                                          }
+                                      ],
+                            "Verified":  true
+                        },
+                        {
+                            "Path":  "C:\\Users\\Acer Swift3\\AppData\\Local\\SmartAgriculture\\credential-rotation\\source-disabled",
+                            "Owner":  "S-1-5-21-1432835263-483988321-3159128977-1001",
+                            "ProtectedDacl":  true,
+                            "Reparse":  false,
+                            "Rules":  [
+                                          {
+                                              "Sid":  "S-1-5-18",
+                                              "Rights":  "FullControl",
+                                              "Inherited":  false,
+                                              "Inheritance":  "ContainerInherit, ObjectInherit"
+                                          },
+                                          {
+                                              "Sid":  "S-1-5-21-1432835263-483988321-3159128977-1001",
+                                              "Rights":  "FullControl",
+                                              "Inherited":  false,
+                                              "Inheritance":  "ContainerInherit, ObjectInherit"
+                                          }
+                                      ],
+                            "Verified":  true
+                        },
+                        {
+                            "Path":  "C:\\Users\\Acer Swift3\\AppData\\Local\\SmartAgriculture\\credential-rotation\\build-enabled",
+                            "Owner":  "S-1-5-21-1432835263-483988321-3159128977-1001",
+                            "ProtectedDacl":  true,
+                            "Reparse":  false,
+                            "Rules":  [
+                                          {
+                                              "Sid":  "S-1-5-18",
+                                              "Rights":  "FullControl",
+                                              "Inherited":  false,
+                                              "Inheritance":  "ContainerInherit, ObjectInherit"
+                                          },
+                                          {
+                                              "Sid":  "S-1-5-21-1432835263-483988321-3159128977-1001",
+                                              "Rights":  "FullControl",
+                                              "Inherited":  false,
+                                              "Inheritance":  "ContainerInherit, ObjectInherit"
+                                          }
+                                      ],
+                            "Verified":  true
+                        },
+                        {
+                            "Path":  "C:\\Users\\Acer Swift3\\AppData\\Local\\SmartAgriculture\\credential-rotation\\build-disabled",
+                            "Owner":  "S-1-5-21-1432835263-483988321-3159128977-1001",
+                            "ProtectedDacl":  true,
+                            "Reparse":  false,
+                            "Rules":  [
+                                          {
+                                              "Sid":  "S-1-5-18",
+                                              "Rights":  "FullControl",
+                                              "Inherited":  false,
+                                              "Inheritance":  "ContainerInherit, ObjectInherit"
+                                          },
+                                          {
+                                              "Sid":  "S-1-5-21-1432835263-483988321-3159128977-1001",
+                                              "Rights":  "FullControl",
+                                              "Inherited":  false,
+                                              "Inheritance":  "ContainerInherit, ObjectInherit"
+                                          }
+                                      ],
+                            "Verified":  true
+                        },
+                        {
+                            "Path":  "C:\\Users\\Acer Swift3\\AppData\\Local\\SmartAgriculture\\credential-rotation\\logs-private",
+                            "Owner":  "S-1-5-21-1432835263-483988321-3159128977-1001",
+                            "ProtectedDacl":  true,
+                            "Reparse":  false,
+                            "Rules":  [
+                                          {
+                                              "Sid":  "S-1-5-18",
+                                              "Rights":  "FullControl",
+                                              "Inherited":  false,
+                                              "Inheritance":  "ContainerInherit, ObjectInherit"
+                                          },
+                                          {
+                                              "Sid":  "S-1-5-21-1432835263-483988321-3159128977-1001",
+                                              "Rights":  "FullControl",
+                                              "Inherited":  false,
+                                              "Inheritance":  "ContainerInherit, ObjectInherit"
+                                          }
+                                      ],
+                            "Verified":  true
+                        },
+                        {
+                            "Path":  "C:\\Users\\Acer Swift3\\AppData\\Local\\SmartAgriculture\\credential-rotation\\manifests-redacted",
+                            "Owner":  "S-1-5-21-1432835263-483988321-3159128977-1001",
+                            "ProtectedDacl":  true,
+                            "Reparse":  false,
+                            "Rules":  [
+                                          {
+                                              "Sid":  "S-1-5-18",
+                                              "Rights":  "FullControl",
+                                              "Inherited":  false,
+                                              "Inheritance":  "ContainerInherit, ObjectInherit"
+                                          },
+                                          {
+                                              "Sid":  "S-1-5-21-1432835263-483988321-3159128977-1001",
+                                              "Rights":  "FullControl",
+                                              "Inherited":  false,
+                                              "Inheritance":  "ContainerInherit, ObjectInherit"
+                                          }
+                                      ],
+                            "Verified":  true
+                        },
+                        {
+                            "Path":  "C:\\Users\\Acer Swift3\\AppData\\Local\\SmartAgriculture\\credential-rotation\\recovery-private",
+                            "Owner":  "S-1-5-21-1432835263-483988321-3159128977-1001",
+                            "ProtectedDacl":  true,
+                            "Reparse":  false,
+                            "Rules":  [
+                                          {
+                                              "Sid":  "S-1-5-18",
+                                              "Rights":  "FullControl",
+                                              "Inherited":  false,
+                                              "Inheritance":  "ContainerInherit, ObjectInherit"
+                                          },
+                                          {
+                                              "Sid":  "S-1-5-21-1432835263-483988321-3159128977-1001",
+                                              "Rights":  "FullControl",
+                                              "Inherited":  false,
+                                              "Inheritance":  "ContainerInherit, ObjectInherit"
+                                          }
+                                      ],
+                            "Verified":  true
+                        }
+                    ]
+}

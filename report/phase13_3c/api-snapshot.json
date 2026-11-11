@@ -1,0 +1,35 @@
+{
+  "at": "2026-10-21T03:06:06.120Z",
+  "state": "OFF",
+  "stateAt": "2026-10-21T03:05:54.244Z",
+  "controlEnabled": false,
+  "gatewayMode": "DISABLED",
+  "connectionStatus": "ONLINE",
+  "lastSeenAt": "2026-10-21T03:05:54.681Z",
+  "readings": [
+    {
+      "sensorCode": "TEMP_01",
+      "value": 30.9,
+      "recordedAt": "2026-10-21T03:05:53.285Z",
+      "source": "MQTT"
+    },
+    {
+      "sensorCode": "HUM_01",
+      "value": 70.4,
+      "recordedAt": "2026-10-21T03:05:53.285Z",
+      "source": "MQTT"
+    },
+    {
+      "sensorCode": "SOIL_01",
+      "value": 16.41,
+      "recordedAt": "2026-10-21T03:05:53.285Z",
+      "source": "MQTT"
+    },
+    {
+      "sensorCode": "LIGHT_01",
+      "value": 0,
+      "recordedAt": "2026-10-21T03:05:53.285Z",
+      "source": "MQTT"
+    }
+  ]
+}

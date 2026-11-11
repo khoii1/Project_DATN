@@ -1,4 +1,4 @@
-import type { AuthUser } from "../types/auth";
+import type { AuthUser, ChangePasswordInput, UpdateProfileInput } from "../types/auth";
 import { api } from "./api";
 
 interface LoginResponse {
@@ -21,6 +21,13 @@ export const authService = {
   async getMe(): Promise<AuthUser> {
     const response = await api.get<MeResponse>("/auth/me");
     return response.data.data.user;
+  },
+  async updateProfile(input: UpdateProfileInput): Promise<AuthUser> {
+    const response = await api.patch<MeResponse>("/auth/me", input);
+    return response.data.data.user;
+  },
+  async changePassword(input: ChangePasswordInput): Promise<void> {
+    await api.patch("/auth/change-password", input);
   },
   async logout(): Promise<void> {
     await api.post("/auth/logout");

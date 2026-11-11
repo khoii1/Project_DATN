@@ -1,0 +1,126 @@
+{
+  "checkedAt": "2026-10-21T18:04:05.343Z",
+  "identity": {
+    "db": "smart_agriculture",
+    "schema": "public",
+    "port": 5432,
+    "started": "2026-10-16 12:13:43.656514+07",
+    "data": "C:/Program Files/PostgreSQL/17/data",
+    "system_id": "7472695863566132416"
+  },
+  "device": {
+    "connectionStatus": "OFFLINE",
+    "lastSeenAt": "2026-10-21T12:06:15.174Z",
+    "actuators": [
+      {
+        "actuatorCode": "PUMP_01",
+        "currentState": "OFF",
+        "lastStateChangedAt": "2026-10-21T12:06:14.500Z"
+      }
+    ],
+    "sensors": [
+      {
+        "sensorCode": "TEMP_01",
+        "readings": [
+          {
+            "id": "cmvi2g88f04e4umr8k87trrud",
+            "value": 31.3,
+            "source": "MQTT",
+            "recordedAt": "2026-10-21T12:06:09.759Z",
+            "receivedAt": "2026-10-21T12:06:10.096Z"
+          }
+        ]
+      },
+      {
+        "sensorCode": "HUM_01",
+        "readings": [
+          {
+            "id": "cmvi2g88g04e5umr8p1tmvqwa",
+            "value": 69.1,
+            "source": "MQTT",
+            "recordedAt": "2026-10-21T12:06:09.759Z",
+            "receivedAt": "2026-10-21T12:06:10.096Z"
+          }
+        ]
+      },
+      {
+        "sensorCode": "SOIL_01",
+        "readings": [
+          {
+            "id": "cmvi2g88g04e7umr8b7hnzv74",
+            "value": 26.49,
+            "source": "MQTT",
+            "recordedAt": "2026-10-21T12:06:09.759Z",
+            "receivedAt": "2026-10-21T12:06:10.096Z"
+          }
+        ]
+      },
+      {
+        "sensorCode": "LIGHT_01",
+        "readings": [
+          {
+            "id": "cmvi2g88g04e6umr8x8f8lqgs",
+            "value": 2.5,
+            "source": "MQTT",
+            "recordedAt": "2026-10-21T12:06:09.759Z",
+            "receivedAt": "2026-10-21T12:06:10.096Z"
+          }
+        ]
+      }
+    ]
+  },
+  "pending": 0,
+  "commandCount": 43,
+  "sensorReadingCount": 28135,
+  "automationRuleCount": 1,
+  "userSerialCorrelation": {
+    "frame": 871,
+    "recordedAt": "2026-10-21T18:03:18.345Z",
+    "matchingMqttRows": 0
+  },
+  "testControl": {
+    "systemId": "7698826681383327460",
+    "state": "shut down"
+  },
+  "systemIdentifiersDistinct": true,
+  "logs": [
+    {
+      "path": "build/phase13-4a/backend-final.err.log",
+      "modifiedAt": "2026-10-21T12:06:50.091Z",
+      "bytes": 782,
+      "refusedEndpoints": [
+        "ECONNREFUSED 172.20.10.2:1883"
+      ],
+      "signatures": [
+        "ECONNREFUSED",
+        "MQTT disconnected"
+      ],
+      "errorClassNames": []
+    },
+    {
+      "path": "build/phase13-4a/backend-final.out.log",
+      "modifiedAt": "2026-10-21T12:06:15.103Z",
+      "bytes": 179623,
+      "refusedEndpoints": [],
+      "signatures": [
+        "Database: connected",
+        "MQTT connected"
+      ],
+      "errorClassNames": []
+    },
+    {
+      "path": "build/phase13-3c/backend.err.log",
+      "modifiedAt": "2026-10-21T03:03:33.710Z",
+      "bytes": 0,
+      "refusedEndpoints": [],
+      "signatures": [],
+      "errorClassNames": []
+    }
+  ],
+  "runtimeFlags": "NOT_VERIFIED_WITHOUT_RUNNING_API",
+  "configuredDefaultsOnly": {
+    "commands": false,
+    "automation": false,
+    "testMode": true
+  }
+}

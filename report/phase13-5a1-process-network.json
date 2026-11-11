@@ -1,0 +1,131 @@
+﻿{
+    "checkedAt":  "2026-10-21T18:08:32.4916518Z",
+    "connections":  [
+                        {
+                            "LocalAddress":  "::",
+                            "LocalPort":  5432,
+                            "RemoteAddress":  "::",
+                            "RemotePort":  0,
+                            "State":  2,
+                            "OwningProcess":  7848
+                        },
+                        {
+                            "LocalAddress":  "::1",
+                            "LocalPort":  1883,
+                            "RemoteAddress":  "::",
+                            "RemotePort":  0,
+                            "State":  2,
+                            "OwningProcess":  4572
+                        },
+                        {
+                            "LocalAddress":  "::",
+                            "LocalPort":  1883,
+                            "RemoteAddress":  "::",
+                            "RemotePort":  0,
+                            "State":  2,
+                            "OwningProcess":  21012
+                        },
+                        {
+                            "LocalAddress":  "0.0.0.0",
+                            "LocalPort":  5432,
+                            "RemoteAddress":  "0.0.0.0",
+                            "RemotePort":  0,
+                            "State":  2,
+                            "OwningProcess":  7848
+                        },
+                        {
+                            "LocalAddress":  "172.20.10.2",
+                            "LocalPort":  1883,
+                            "RemoteAddress":  "172.20.10.3",
+                            "RemotePort":  56971,
+                            "State":  5,
+                            "OwningProcess":  21012
+                        },
+                        {
+                            "LocalAddress":  "127.0.0.1",
+                            "LocalPort":  1883,
+                            "RemoteAddress":  "0.0.0.0",
+                            "RemotePort":  0,
+                            "State":  2,
+                            "OwningProcess":  4572
+                        },
+                        {
+                            "LocalAddress":  "0.0.0.0",
+                            "LocalPort":  1883,
+                            "RemoteAddress":  "0.0.0.0",
+                            "RemotePort":  0,
+                            "State":  2,
+                            "OwningProcess":  21012
+                        }
+                    ],
+    "processes":  [
+                      {
+                          "ProcessId":  4572,
+                          "ParentProcessId":  1160,
+                          "Name":  "mosquitto.exe",
+                          "CreationDate":  "\/Date(1792127620396)\/"
+                      },
+                      {
+                          "ProcessId":  7848,
+                          "ParentProcessId":  5444,
+                          "Name":  "postgres.exe",
+                          "CreationDate":  "\/Date(1792127622392)\/"
+                      },
+                      {
+                          "ProcessId":  8964,
+                          "ParentProcessId":  7848,
+                          "Name":  "postgres.exe",
+                          "CreationDate":  "\/Date(1792127623626)\/"
+                      },
+                      {
+                          "ProcessId":  9008,
+                          "ParentProcessId":  7848,
+                          "Name":  "postgres.exe",
+                          "CreationDate":  "\/Date(1792127623658)\/"
+                      },
+                      {
+                          "ProcessId":  9016,
+                          "ParentProcessId":  7848,
+                          "Name":  "postgres.exe",
+                          "CreationDate":  "\/Date(1792127623661)\/"
+                      },
+                      {
+                          "ProcessId":  9144,
+                          "ParentProcessId":  7848,
+                          "Name":  "postgres.exe",
+                          "CreationDate":  "\/Date(1792127623905)\/"
+                      },
+                      {
+                          "ProcessId":  9152,
+                          "ParentProcessId":  7848,
+                          "Name":  "postgres.exe",
+                          "CreationDate":  "\/Date(1792127623907)\/"
+                      },
+                      {
+                          "ProcessId":  9160,
+                          "ParentProcessId":  7848,
+                          "Name":  "postgres.exe",
+                          "CreationDate":  "\/Date(1792127623910)\/"
+                      },
+                      {
+                          "ProcessId":  21012,
+                          "ParentProcessId":  17684,
+                          "Name":  "mosquitto.exe",
+                          "CreationDate":  "\/Date(1792593144499)\/"
+                      }
+                  ],
+    "wifi":  [
+                 {
+                     "InterfaceAlias":  "Wi-Fi",
+                     "IPAddress":  "172.20.10.2",
+                     "AddressState":  4
+                 }
+             ],
+    "applicationErrorQuery":  "READ_OK",
+    "nodeErrorEvents":  [
+
+                        ],
+    "backend5000Listening":  false,
+    "test55433Listening":  false,
+    "clockEndpoint":  "NOT_AVAILABLE_WITHOUT_BACKEND"
+}

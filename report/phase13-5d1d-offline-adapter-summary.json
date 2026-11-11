@@ -1,0 +1,44 @@
+{
+  "phase": "13.5D.1D",
+  "scope": "OFFLINE_ONLY",
+  "verdict": "PHASE13_5D1D_OFFLINE_ADAPTER_READY",
+  "productionAuthorized": false,
+  "liveEvidenceCollected": false,
+  "tests": {
+    "newAdapter": { "total": 75, "passed": 75, "failed": 0, "exitCode": 0 },
+    "inheritedLauncher": { "total": 21, "passed": 21, "failed": 0, "exitCode": 0 },
+    "distinctTotal": 96,
+    "syntaxChecks": "PASS",
+    "latestSyntheticPrefix": "d1d-1792945910260-2f98a0",
+    "d1dSyntheticRunsPreserved": 10,
+    "matchingSyntheticChildOrHostRemaining": 0,
+    "forceKillUsed": false,
+    "productionCallsMade": false
+  },
+  "codeSha256": {
+    "phase13-5d1d-contracts.cjs": "22E12B76C328EA9E2B6A93564F2FCEF2BA0F2CD56B77817265A6092521030B86",
+    "phase13-5d1d-recovery-adapter.cjs": "1AEC6EB4A1A6CA866CCD396372D4BA80ACFEFBB74549A3F3E56BC1BA5B62261E",
+    "phase13-5d1d-recovery-adapter.test.cjs": "6E80C0F000E0B9A4F4310FDFE1FE628542CD83867F50B16FF02860835AC58C7E"
+  },
+  "inheritedArtifactsUnchanged": true,
+  "inheritedBeforeAndAfterSha256": {
+    "phase13-5d1c-launcher.cjs": "051EE903D7B7988E6FF151459EE6DB0451768A19BDF826B78187906CF628C75A",
+    "phase13-5d1c-console-host.ps1": "C9810B5D56A34C9AC46CA65E51CE2ED12F5333950A1DD3D877C2685575617EA3",
+    "phase13-5d1c-synthetic-child.cjs": "DB97A4BB4FCA87E9231DDC1B5D39AB75A662FCE240E544C192669DDC1BA904CF",
+    "phase13-5d1c-launcher.test.cjs": "990BCC218E2DF5987C033C432B974065D3845F4E5A0A7BBEAADDA31B63AC9E10"
+  },
+  "notVerified": [
+    "CURRENT_PRODUCTION_RUNTIME_AND_PENDING",
+    "LIVE_EVIDENCE_COLLECTORS",
+    "PRIVATE_PRODUCTION_LOG_STORAGE_ACCEPTANCE",
+    "ACTUAL_HTTP_MQTT_PRISMA_SHUTDOWN",
+    "LIVE_TELEMETRY_AND_FRESH_OFF_CORRELATION"
+  ],
+  "restrictions": [
+    "PRODUCTION_STARTUP_NOT_AUTHORIZED",
+    "BACKEND_RECOVERY_NOT_PERFORMED",
+    "PRODUCTION_MIGRATION_NOT_PERFORMED",
+    "AUTOMATION_ACTIVE_NOT_AUTHORIZED",
+    "PHYSICAL_PUMP_NOT_TRIGGERED"
+  ]
+}

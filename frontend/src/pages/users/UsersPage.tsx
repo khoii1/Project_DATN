@@ -105,10 +105,10 @@ export function UsersPage() {
 
       <section className="surface-card overflow-hidden">
         <div className="border-b border-slate-100 p-4 sm:p-5">
-          <form onSubmit={handleSearch} className="grid gap-3 md:grid-cols-[minmax(240px,1fr)_190px_190px_auto]">
-            <div className="relative"><Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" /><input value={searchInput} onChange={(event) => setSearchInput(event.target.value)} placeholder="Tìm theo tên, email, số điện thoại" className="h-10 w-full rounded-xl border border-slate-200 pl-9 pr-3 text-sm focus:border-brand-500" /></div>
-            <select value={role} onChange={(event) => { setRole(event.target.value as UserRole | ""); setPage(1); }} className="h-10 rounded-xl border border-slate-200 px-3 text-sm text-slate-600"><option value="">Tất cả vai trò</option><option value="ADMIN">Quản trị viên</option><option value="FARM_OWNER">Chủ trang trại</option><option value="STAFF">Nhân viên</option></select>
-            <select value={status} onChange={(event) => { setStatus(event.target.value as UserStatus | ""); setPage(1); }} className="h-10 rounded-xl border border-slate-200 px-3 text-sm text-slate-600"><option value="">Tất cả trạng thái</option><option value="ACTIVE">Hoạt động</option><option value="INACTIVE">Ngừng hoạt động</option></select>
+          <form onSubmit={handleSearch} className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+            <div className="relative"><Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" /><input aria-label="Tìm theo tên, email, số điện thoại" value={searchInput} onChange={(event) => setSearchInput(event.target.value)} placeholder="Tìm theo tên, email, số điện thoại" className="h-10 w-full rounded-xl border border-slate-200 pl-9 pr-3 text-sm focus:border-brand-500" /></div>
+            <select aria-label="Tất cả vai trò" value={role} onChange={(event) => { setRole(event.target.value as UserRole | ""); setPage(1); }} className="h-10 rounded-xl border border-slate-200 px-3 text-sm text-slate-600"><option value="">Tất cả vai trò</option><option value="ADMIN">Quản trị viên</option><option value="FARM_OWNER">Chủ trang trại</option><option value="STAFF">Nhân viên</option></select>
+            <select aria-label="Tất cả trạng thái" value={status} onChange={(event) => { setStatus(event.target.value as UserStatus | ""); setPage(1); }} className="h-10 rounded-xl border border-slate-200 px-3 text-sm text-slate-600"><option value="">Tất cả trạng thái</option><option value="ACTIVE">Hoạt động</option><option value="INACTIVE">Ngừng hoạt động</option></select>
             <button type="submit" className="rounded-xl border border-slate-200 px-4 py-2 text-sm font-semibold text-slate-600 hover:bg-slate-50">Tìm kiếm</button>
           </form>
         </div>

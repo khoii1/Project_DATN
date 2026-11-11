@@ -1,0 +1,43 @@
+{
+  "at": "2026-10-22T05:44:57.758Z",
+  "identity": {
+    "database": "smart_agriculture",
+    "schema": "public",
+    "port": 5432,
+    "started": "2026-10-16 12:13:43.656514+07"
+  },
+  "device": {
+    "id": "demo_device_esp32_a",
+    "deviceCode": "ESP32-GF-A-01",
+    "connectionStatus": "OFFLINE",
+    "lastSeenAt": "2026-10-21T12:06:15.174Z",
+    "sensors": [
+      {
+        "id": "demo_sensor_temp",
+        "sensorCode": "TEMP_01"
+      },
+      {
+        "id": "demo_sensor_hum",
+        "sensorCode": "HUM_01"
+      },
+      {
+        "id": "demo_sensor_soil",
+        "sensorCode": "SOIL_01"
+      },
+      {
+        "id": "demo_sensor_light",
+        "sensorCode": "LIGHT_01"
+      }
+    ],
+    "actuators": [
+      {
+        "id": "demo_actuator_pump_a",
+        "currentState": "OFF",
+        "lastStateChangedAt": "2026-10-21T12:06:14.500Z"
+      }
+    ]
+  },
+  "rows": [],
+  "pending": 0,
+  "commandCount": 43
+}

@@ -1,0 +1,119 @@
+{
+  "At": "2026-10-22T07:47:02.4388867+00:00",
+  "OperatorSid": "S-1-5-21-1432835263-483988321-3159128977-1001",
+  "Proposal": "C:\\Users\\Acer Swift3\\AppData\\Local\\SmartAgriculturePostgresBackups\\production",
+  "ProposalExists": false,
+  "KnownSyncOverlap": false,
+  "CustomSyncBackupScope": "NOT_VERIFIED_NOT_INVENTORIED",
+  "Disk": {
+    "Filesystem": "NTFS",
+    "SizeBytes": 511054254080,
+    "Device": "C:",
+    "FreeBytes": 105827487744
+  },
+  "Encryption": "NOT_VERIFIED_PROVIDER_OR_ACCESS_UNAVAILABLE",
+  "AclInventory": [
+    {
+      "Path": "C:\\DATN\\backups",
+      "Owner": "S-1-5-21-1432835263-483988321-3159128977-1001",
+      "Protected": false,
+      "Rules": [
+        {
+          "Sid": "S-1-5-32-544",
+          "Rights": "FullControl",
+          "Inherited": true,
+          "Type": "Allow"
+        },
+        {
+          "Sid": "S-1-5-18",
+          "Rights": "FullControl",
+          "Inherited": true,
+          "Type": "Allow"
+        },
+        {
+          "Sid": "S-1-5-32-545",
+          "Rights": "ReadAndExecute, Synchronize",
+          "Inherited": true,
+          "Type": "Allow"
+        },
+        {
+          "Sid": "S-1-5-11",
+          "Rights": "Modify, Synchronize",
+          "Inherited": true,
+          "Type": "Allow"
+        },
+        {
+          "Sid": "S-1-5-11",
+          "Rights": "-536805376",
+          "Inherited": true,
+          "Type": "Allow"
+        }
+      ]
+    },
+    {
+      "Path": "C:\\DATN\\test-instances\\phase13-3b",
+      "Owner": "S-1-5-21-1432835263-483988321-3159128977-1001",
+      "Protected": true,
+      "Rules": [
+        {
+          "Sid": "S-1-5-21-1432835263-483988321-3159128977-1001",
+          "Rights": "FullControl",
+          "Inherited": false,
+          "Type": "Allow"
+        }
+      ]
+    },
+    {
+      "Path": "C:\\DATN\\test-instances\\phase13-3b\\backup-restore-13-5c-20261022074504_334f3f\\synthetic-rehearsal.dump",
+      "Owner": "S-1-5-21-1432835263-483988321-3159128977-1001",
+      "Protected": false,
+      "Rules": [
+        {
+          "Sid": "S-1-5-21-1432835263-483988321-3159128977-1001",
+          "Rights": "FullControl",
+          "Inherited": true,
+          "Type": "Allow"
+        }
+      ]
+    }
+  ],
+  "Listeners": [
+    {
+      "LocalAddress": "::",
+      "LocalPort": 5432,
+      "OwningProcess": 7848
+    },
+    {
+      "LocalAddress": "::",
+      "LocalPort": 5000,
+      "OwningProcess": 22400
+    },
+    {
+      "LocalAddress": "::1",
+      "LocalPort": 1883,
+      "OwningProcess": 4572
+    },
+    {
+      "LocalAddress": "::",
+      "LocalPort": 1883,
+      "OwningProcess": 3592
+    },
+    {
+      "LocalAddress": "0.0.0.0",
+      "LocalPort": 5432,
+      "OwningProcess": 7848
+    },
+    {
+      "LocalAddress": "127.0.0.1",
+      "LocalPort": 1883,
+      "OwningProcess": 4572
+    },
+    {
+      "LocalAddress": "0.0.0.0",
+      "LocalPort": 1883,
+      "OwningProcess": 3592
+    }
+  ],
+  "WritesPerformed": false,
+  "ParentAclChanges": false
+}

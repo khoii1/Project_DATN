@@ -1,0 +1,131 @@
+{
+  "checkedAt": "2026-10-22T07:05:53.323Z",
+  "runId": "20261022070417_4deb58",
+  "sqlTests": 35,
+  "identity": {
+    "db": "postgres",
+    "role": "phase13_test_admin",
+    "session_role": "phase13_test_admin",
+    "host": "127.0.0.1/32",
+    "port": 55433,
+    "started": "2026-10-22 14:04:17.960606+07",
+    "pgdata": "C:/DATN/test-instances/phase13-3b/data",
+    "system_id": "7698826681383327460"
+  },
+  "sourceFiles": [
+    {
+      "kind": "bootstrap",
+      "sha256": "c96a200e4996cfbf86a274840abd7d4d0a02a9aec766395cfbdd5522a50e5a32"
+    },
+    {
+      "kind": "migration",
+      "sha256": "dac6a431a4598bea18cd0ff3290fb2009c36c30809247d258aea161d637a8b8a"
+    },
+    {
+      "kind": "finalize",
+      "sha256": "20de4109c7d16925ef0d12b7fb1d26491507242124f21dfa26107765e513e499"
+    }
+  ],
+  "productionCatalogUnchanged": {
+    "identity": true,
+    "migrations": true,
+    "relations": true,
+    "columns": true,
+    "constraints": true,
+    "indexes": true,
+    "enums": true,
+    "functions": true,
+    "roles": true,
+    "memberships": true,
+    "schemaPrivileges": true,
+    "fingerprint": true,
+    "constraintFingerprint": true,
+    "ledgersPresent": true
+  },
+  "countsBefore": {
+    "pending": 0,
+    "commands": 43,
+    "automationRules": 1
+  },
+  "countsAfter": {
+    "pending": 0,
+    "commands": 43,
+    "automationRules": 1
+  },
+  "oldPhaseDataPreserved": true,
+  "testClusterStopped": true,
+  "productionMigrationPerformed": false,
+  "finalizationPrivileges": {
+    "create_schema": false,
+    "history_select": false,
+    "actuator_reference": false,
+    "command_reference": false,
+    "rule_reference": false,
+    "reading_reference": false,
+    "control_execute": true,
+    "direct_control_execute": false,
+    "baselineControlPublicExecute": true
+  },
+  "health": {
+    "success": true,
+    "message": "Smart Agriculture API is running",
+    "data": {
+      "database": "connected",
+      "mqtt": "connected",
+      "timestamp": "2026-10-22T07:05:53.168Z"
+    }
+  },
+  "device": {
+    "connectionStatus": "ONLINE",
+    "lastSeenAt": "2026-10-22T07:05:50.882Z",
+    "actuators": [
+      {
+        "currentState": "OFF",
+        "lastStateChangedAt": "2026-10-22T07:05:50.612Z"
+      }
+    ],
+    "sensors": [
+      {
+        "sensorCode": "TEMP_01",
+        "readings": [
+          {
+            "value": 24.9,
+            "recordedAt": "2026-10-22T07:05:49.582Z",
+            "receivedAt": "2026-10-22T07:05:50.079Z"
+          }
+        ]
+      },
+      {
+        "sensorCode": "HUM_01",
+        "readings": [
+          {
+            "value": 46.9,
+            "recordedAt": "2026-10-22T07:05:49.582Z",
+            "receivedAt": "2026-10-22T07:05:50.079Z"
+          }
+        ]
+      },
+      {
+        "sensorCode": "SOIL_01",
+        "readings": [
+          {
+            "value": 6.47,
+            "recordedAt": "2026-10-22T07:05:49.582Z",
+            "receivedAt": "2026-10-22T07:05:50.079Z"
+          }
+        ]
+      },
+      {
+        "sensorCode": "LIGHT_01",
+        "readings": [
+          {
+            "value": 0,
+            "recordedAt": "2026-10-22T07:05:49.582Z",
+            "receivedAt": "2026-10-22T07:05:50.079Z"
+          }
+        ]
+      }
+    ]
+  },
+  "sourceArtifactStatus": "SQL_PRODUCTION_ARTIFACT_READY_FOR_REVIEW_NOT_DEPLOYMENT_APPROVAL"
+}

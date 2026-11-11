@@ -1,0 +1,23 @@
+{
+    "purpose":  "OFFLINE_ADAPTER_SOURCE_PINS_ONLY_NOT_EXECUTION_APPROVAL",
+    "preparedAtUtc":  "2026-11-06T06:08:15.4105698Z",
+    "activeManifestRevision":  10,
+    "activeManifestSha256":  "47e8072cdc0a711dd277c5468976b6deb0d297264b41b1ce83a02f6ebf72e3bb",
+    "adapterHashes":  {
+                          "scripts/frontend-acceptance/adapter.cjs":  "a97cdde69b9b02bf5cb6a9f3c1ec5ea4bb84114b64141535ca3ebf47be1df742",
+                          "scripts/frontend-acceptance/adapter.test.cjs":  "aee8027df3f8c4a1399f1c76192a600e5661941c6c6d0ba66e68a6eed87620c8",
+                          "scripts/frontend-acceptance/contract.cjs":  "a0be73f63accce5e872a256dabeab8adb6fdcd91da9177ac8a7269a0e30e99df",
+                          "scripts/frontend-acceptance/credential-handoff.ps1":  "6e12f2bdefcd7020b9f04211d27359c18785232bf92b13062c49648f2cf636ae",
+                          "scripts/frontend-acceptance/credential-source.cjs":  "fc7409f6efa4b1fe5fe18db86b78467ff5c0f1fb9fd9b1ae36004a00df238ef3",
+                          "scripts/frontend-acceptance/policy.cjs":  "e70a7c922fe902434fa4f5712a8805ad5c649971d1b8e09781c821279d07f119"
+                      },
+    "unchangedDependencyHashes":  {
+                                      "scripts/mvp-credential-input.cjs":  "74f0fc2427312edf2a8428b322e5d143e10f6bf40d833bb5b3b18e246a10246c",
+                                      "scripts/mvp-ui-only-session.ps1":  "d01b1c6b78ef9cdb07c9a8dd7b3b8977799729d82b32d26c13593084f9f5be86",
+                                      "scripts/mvp-ui-only-supervisor.cjs":  "2ac398b3d654c2af2beb5bd8e5adabfbe18eeb24bccf7ca9d18562c3d9166e4b",
+                                      "scripts/mvp-ui-only-runtime.cjs":  "671f45fc7c4cc3e237a4035e2db950405c4412dba7bd28dfe60ff15f62c772bf"
+                                  },
+    "actualBrowserLaunches":  0,
+    "websiteAttemptsUsed":  0,
+    "liveBindingImplemented":  false
+}

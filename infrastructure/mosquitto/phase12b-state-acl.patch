@@ -1,0 +1,8 @@
+--- C:/mosquitto/config/acl (read-only snapshot reviewed in Phase 12B)
++++ C:/mosquitto/config/acl (proposed; operator must review/apply/reload)
+@@
+ topic read smart-agriculture/v1/devices/+/command-acks/+
++topic read smart-agriculture/v1/devices/+/actuator/state
+@@
+ pattern write smart-agriculture/v1/devices/%u/command-acks/+
++pattern write smart-agriculture/v1/devices/%u/actuator/state

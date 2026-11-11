@@ -1,0 +1,17 @@
+{
+  "source": "USER_SUPPLIED_SERIAL_MONITOR_NOT_AGENT_COM_CAPTURE",
+  "frame": 871,
+  "recordedAt": "2026-10-21T18:03:18.345Z",
+  "timeAtSample": "SYNCED",
+  "wifi": "CONNECTED",
+  "mqtt": "CONNECTED",
+  "ntp": "SYNCED",
+  "pumpCommands": "ENABLED",
+  "relay": "OFF_GPIO_ONLY_NOT_MOTOR_OR_WATER_FEEDBACK",
+  "telemetryResult": "SENT_BROKER_PUBACK_NOT_DB_PROOF",
+  "publishMilliseconds": 81,
+  "readings": { "TEMP_01": 22.9, "HUM_01": 59.9, "LIGHT_01": 0, "SOIL_01": 8.53 },
+  "soilRawAdc": { "mean": 3330, "min": 3318, "max": 3344 },
+  "publisherCryptographicIdentityVerified": false,
+  "physicalAdapterPowerIndependentlyVerified": false
+}

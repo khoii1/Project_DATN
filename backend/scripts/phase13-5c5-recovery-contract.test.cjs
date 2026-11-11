@@ -1,0 +1,14 @@
+const test=require('node:test'),assert=require('node:assert/strict');
+const c=require('./phase13-5c5-recovery-contract.cjs'),p=c.PLAN;
+const registered='8888888888888888888'; // synthetic pure fixture, NOT a real cluster identity
+const empty=()=>({systemId:registered,host:p.host,port:p.port,pgdata:p.pgdata,schema:'public',user:p.admin,versionNum:170002,inRecovery:false,database:p.database,userRelations:0,userRoutines:0,userTypes:0,nonDefaultExtensions:0,userSchemas:['public']});
+test('plan cannot create or restore cluster',()=>{assert.equal(p.mode,'PLAN_ONLY');assert.equal(p.clusterCreated,false);assert.equal(p.productionDataRestored,false);assert.equal(p.cloudBackupScope,'NOT_VERIFIED');});
+test('independent empty identity accepted',()=>assert.doesNotThrow(()=>c.assertEmptyTarget(empty(),registered)));
+for(const bad of [c.PRODUCTION_SYSTEM,c.SYNTHETIC_TEST_SYSTEM,'','123'])test('registered system rejects '+bad,()=>assert.throws(()=>c.assertIdentity(empty(),bad)));
+for(const [key,value]of [['host','localhost'],['host','0.0.0.0'],['port',5432],['port',55433],['pgdata','C:/Program Files/PostgreSQL/17/data'],['pgdata','C:/DATN/test-instances/phase13-3b/data'],['database','smart_agriculture'],['database','postgres'],['user','postgres'],['systemId',c.PRODUCTION_SYSTEM],['versionNum',160000],['inRecovery',true],['schema','other']])test('identity mismatch rejected: '+key+'='+value,()=>assert.throws(()=>c.assertEmptyTarget({...empty(),[key]:value},registered)));
+for(const key of ['userRelations','userRoutines','userTypes','nonDefaultExtensions'])test('nonempty target rejected: '+key,()=>assert.throws(()=>c.assertEmptyTarget({...empty(),[key]:1},registered)));
+test('unexpected schema rejected',()=>assert.throws(()=>c.assertEmptyTarget({...empty(),userSchemas:['public','existing']},registered)));
+test('no restore approval gives no argument list',()=>assert.throws(()=>c.restoreArgs(empty(),registered,p.dump,{archiveSha256:p.sha256})));
+test('wrong archive/hash rejected',()=>{assert.throws(()=>c.restoreArgs(empty(),registered,'other.dump',{restoreApproved:true,archiveSha256:p.sha256}));assert.throws(()=>c.restoreArgs(empty(),registered,p.dump,{restoreApproved:true,archiveSha256:'bad'}));});
+test('reference DB needs separate approval in scope',()=>{const e={...empty(),database:p.optionalReferenceDatabase};assert.throws(()=>c.assertEmptyTarget(e,registered));assert.doesNotThrow(()=>c.assertEmptyTarget(e,registered,{referenceApproved:true}));});
+test('restore args preserve ownership/ACL and refuse clean/overwrite',()=>{const args=c.restoreArgs(empty(),registered,p.dump,{restoreApproved:true,archiveSha256:p.sha256});assert(args.includes('--exit-on-error'));assert(args.includes('--single-transaction'));assert.equal(args[args.indexOf('-p')+1],'55434');for(const bad of ['--clean','--create','--no-owner','--no-acl'])assert(!args.includes(bad));});

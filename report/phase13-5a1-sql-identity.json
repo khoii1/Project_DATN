@@ -1,0 +1,14 @@
+{
+  "identity": {
+    "db": "smart_agriculture_test_phase13_3b",
+    "role": "phase13_test_migrator",
+    "host": "127.0.0.1/32",
+    "port": 55433,
+    "schema": "phase13_test_phase13_3b",
+    "started": "2026-10-22 00:59:42.466625+07"
+  },
+  "pgdata": "C:\\DATN\\test-instances\\phase13-3b\\data",
+  "systemId": "7698826681383327460",
+  "productionSystemId": "7472695863566132416",
+  "runId": "73d53627-a2bb-434c-aed6-f21b9c88979c"
+}

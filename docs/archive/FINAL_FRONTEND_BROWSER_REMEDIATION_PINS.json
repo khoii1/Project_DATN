@@ -1,0 +1,54 @@
+{
+  "purpose": "OFFLINE_HARDENING_PINS_NOT_EXECUTION_APPROVAL",
+  "approvalFile": "C:\\Users\\Acer Swift3\\.codex\\attachments\\f3cad0e5-c086-4e40-b872-de66947ae466\\Pasted text.txt",
+  "approvalSha256": "d4ff17ff9f6d470e740163407fb7b3924fbad598a66a4d89f118426aeef9bd64",
+  "replacements": {
+    "scripts/frontend-acceptance/source-contract.cjs": {
+      "old": "52341c6627fc82552173335cda31af08679697522ea8498b16a38b3274c2d8ad",
+      "new": "26c5fd2b6661e7afcc8c9ee3497487b04d7d56ce156a21f9a0fa0a1ca4966392"
+    },
+    "scripts/frontend-acceptance/bridge.test.cjs": {
+      "old": "45230c9f3e991e6d71b8b98cb06ee0f5f4f52d753a66f57e7e47ce246f83faf2",
+      "new": "cb0eb1c00f97cbdf301737f9bcca6d677463146014b3598fe9fc033bfb7db273"
+    }
+  },
+  "additions": {
+    "scripts/frontend-acceptance/strict-lineage.cjs": "cfc799600ad71f65c1b299d2325823cd61e97bdd10decf3f26b2c5ed936198de",
+    "scripts/frontend-acceptance/lineage-fs.cjs": "e99bb38d4e04a3f6f3d819ace0d6cb91c3b1a030c60c955af52f5b71d32887d8"
+  },
+  "readyPolicyUpdate": {
+    "path": "scripts/frontend-acceptance/bridge.cjs",
+    "old": "2c667c0b5a46389f9fee3494a0b1c07ad4e275d8538362c80c2b1c694c7cabbb",
+    "new": "f09b5c89f8278e3c27d49067b7ffe25fdb759e808eb6a231ebb1d228b26d49d1",
+    "preparationApprovalFile": "C:\\Users\\Acer Swift3\\.codex\\attachments\\765e707f-c586-4aa6-a96e-9dbb47b1d92a\\Pasted text.txt",
+    "preparationApprovalSha256": "364cb7448bf5fbdbb1a063c04b3f4bd0d7e7cda359b61c7fba83596de0cb4fa1",
+    "parentFile": "docs/FINAL_FRONTEND_STRICT_HARDENING_PINS.json",
+    "parentSha256": "4f336378455fc5bc7a9bb570d324e18cab6b43fe1c932842ba85e530728f3c07",
+    "purpose": "STAGED_READY_POLICY_SOURCE_REVIEW_NOT_LIVE_APPROVAL"
+  },
+  "browserRemediation": {
+    "purpose": "STAGED_BROWSER_REMEDIATION_REVIEW_NOT_EXECUTION",
+    "preparationApprovalFile": "C:\\Users\\Acer Swift3\\.codex\\attachments\\9637d66a-599b-4b6b-b608-719bd47bdd2f\\Pasted text.txt",
+    "preparationApprovalSha256": "41aa934eec56c834d61101b23a539d6a1ba551c0f9c118c24059820cfcb96e7f",
+    "parentFile": "docs/FINAL_FRONTEND_READY_POLICY_HARDENING_PINS.json",
+    "parentSha256": "c634f044958c4684420d957c1adea23bed2d7e5125d4b05fdd757d2f4061c79d",
+    "changes": {
+      "scripts/frontend-acceptance/adapter.cjs": {
+        "old": "1617f6a221f899c1f8107417a8a175bc4ec58673adbd55324bbe38a3215ae19e",
+        "new": "4b78f3c928db2c40939d5e17f2672cb6c801ee1a9a0f24d4f5fe294d3e8457c2"
+      },
+      "scripts/frontend-acceptance/policy.cjs": {
+        "old": "e70a7c922fe902434fa4f5712a8805ad5c649971d1b8e09781c821279d07f119",
+        "new": "2af4991d3425434c15f66368b221c07f046722217c84f94120ec6f9de2f2a4f8"
+      },
+      "scripts/frontend-acceptance/assertions.cjs": {
+        "old": "c5fc747f4f31da4945a029f18e9b7b8338955bf7f608cd43dc0b9ebd9cabff65",
+        "new": "ca9fe0b7c03831e4e66c8f560b59a4b5691abda91aaebba40c5f0c62e673d191"
+      },
+      "scripts/frontend-acceptance/contract.cjs": {
+        "old": "a0be73f63accce5e872a256dabeab8adb6fdcd91da9177ac8a7269a0e30e99df",
+        "new": "89c00551046464a7397b224691a17cf01f932a0a8b48f3da4ab0a29ccc1826c7"
+      }
+    }
+  }
+}

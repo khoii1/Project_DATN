@@ -1,0 +1,14 @@
+{
+  "checkedAt": "2026-10-21T11:04:11.171Z",
+  "ledger": [],
+  "cadence": [
+    {
+      "batches": 0,
+      "first": null,
+      "latest": null,
+      "min_readings_per_batch": null,
+      "max_readings_per_batch": null,
+      "max_gap_seconds": null
+    }
+  ]
+}

@@ -1,0 +1,205 @@
+{
+  "runId": "controlled-20261022-01",
+  "started": "2026-10-22T05:45:17.394Z",
+  "batches": [],
+  "offs": [
+    {
+      "receiptId": "a35b4c87-2db0-4443-a128-ea60c0b39344",
+      "deviceCode": "ESP32-GF-A-01",
+      "actuatorCode": "PUMP_01",
+      "topic": "smart-agriculture/v1/devices/ESP32-GF-A-01/actuator/state",
+      "state": "OFF",
+      "reason": "PERIODIC",
+      "payloadDigest": "c3c8e42529640f6fb39df74e4f3e3874127f47ebed4ec1975749903fb0ede2f8",
+      "recordedAt": "2026-10-22T05:45:11.631Z",
+      "callbackReceivedAt": "2026-10-22T05:45:11.981Z",
+      "qos": 1,
+      "retain": false,
+      "dup": false,
+      "topicMatches": true,
+      "generation": 1,
+      "sessionId": "backend-observer:b8f0fe0e-474d-4247-b7c8-49ea36c9c935",
+      "sessionStartedAt": "2026-10-22T05:45:11.443Z",
+      "sessionKind": "BACKEND_OBSERVER",
+      "policyVersion": "13.4A-observation-v1",
+      "publisherIdentityAssurance": "NOT_VERIFIED",
+      "sourceVerification": "BACKEND_COMMIT_OBSERVED_NOT_PUBLISHER_AUTHENTICATED"
+    }
+  ],
+  "states": [
+    {
+      "at": "2026-10-22T05:45:19.741Z",
+      "connectionStatus": "ONLINE",
+      "lastSeenAt": "2026-10-22T05:45:12.090Z",
+      "id": "demo_actuator_pump_a",
+      "currentState": "OFF",
+      "lastStateChangedAt": "2026-10-22T05:45:11.631Z"
+    },
+    {
+      "at": "2026-10-22T05:45:25.441Z",
+      "connectionStatus": "ONLINE",
+      "lastSeenAt": "2026-10-22T05:45:19.966Z",
+      "id": "demo_actuator_pump_a",
+      "currentState": "OFF",
+      "lastStateChangedAt": "2026-10-22T05:45:11.631Z"
+    }
+  ],
+  "checks": [],
+  "physicalPumpTriggered": false,
+  "commandsIssued": 0,
+  "baseline": {
+    "at": "2026-10-22T05:44:57.758Z",
+    "identity": {
+      "database": "smart_agriculture",
+      "schema": "public",
+      "port": 5432,
+      "started": "2026-10-16 12:13:43.656514+07"
+    },
+    "device": {
+      "id": "demo_device_esp32_a",
+      "deviceCode": "ESP32-GF-A-01",
+      "connectionStatus": "OFFLINE",
+      "lastSeenAt": "2026-10-21T12:06:15.174Z",
+      "sensors": [
+        {
+          "id": "demo_sensor_temp",
+          "sensorCode": "TEMP_01"
+        },
+        {
+          "id": "demo_sensor_hum",
+          "sensorCode": "HUM_01"
+        },
+        {
+          "id": "demo_sensor_soil",
+          "sensorCode": "SOIL_01"
+        },
+        {
+          "id": "demo_sensor_light",
+          "sensorCode": "LIGHT_01"
+        }
+      ],
+      "actuators": [
+        {
+          "id": "demo_actuator_pump_a",
+          "currentState": "OFF",
+          "lastStateChangedAt": "2026-10-21T12:06:14.500Z"
+        }
+      ]
+    },
+    "rows": [],
+    "pending": 0,
+    "commandCount": 43
+  },
+  "process": {
+    "mode": "Backend",
+    "runId": "controlled-20261022-01",
+    "pid": 22400,
+    "startedAt": "2026-10-22T05:45:03.8780667Z",
+    "command": "--import tsx src/server.ts",
+    "workingDirectory": "C:\\DATN\\Project_datn\\backend",
+    "state": "RUNNING",
+    "stdout": "C:\\DATN\\Project_datn\\build\\phase13-5a3-controlled-20261022-01.stdout.log",
+    "stderr": "C:\\DATN\\Project_datn\\build\\phase13-5a3-controlled-20261022-01.stderr.log",
+    "exitEvidence": "C:\\DATN\\Project_datn\\build\\phase13-5a3-controlled-20261022-01.exit.json"
+  },
+  "health": {
+    "database": "connected",
+    "mqtt": "connected",
+    "timestamp": "2026-10-22T05:45:17.465Z"
+  },
+  "runtime": {
+    "pid": 22400,
+    "startedAt": "2026-10-22T05:45:11.435Z",
+    "testMode": true,
+    "effectiveMaxRunSeconds": 1,
+    "commandsEnabled": false,
+    "automationEnabled": false
+  },
+  "mqttLogs": {
+    "connackAcceptedEvent": true,
+    "subscriptionsRestored": true,
+    "offSubscription": true
+  },
+  "listenerPids": [
+    22400
+  ],
+  "auth": {
+    "method": "NORMAL_EXISTING_ACCOUNT_LOGIN",
+    "loginActivityExpected": true,
+    "tokenPersisted": false
+  },
+  "observer": {
+    "sessionKind": "BACKEND_OBSERVER",
+    "generation": 1,
+    "sessionId": "backend-observer:b8f0fe0e-474d-4247-b7c8-49ea36c9c935",
+    "sessionStartedAt": "2026-10-22T05:45:11.443Z",
+    "entries": 4,
+    "lastRejection": null,
+    "ttlMs": 45000,
+    "publisherIdentityAssurance": "NOT_VERIFIED"
+  },
+  "clock": {
+    "health": "HEALTHY",
+    "reason": "SHORT_TERM_NTP_MEASUREMENT_OK",
+    "source": "time.windows.com,0x8",
+    "lastSuccessfulSync": "2026-10-22T05:40:00.482Z",
+    "lastSyncError": 0,
+    "lastSuccessfulSyncBasis": "STATUS_AGE_APPROXIMATE",
+    "leapIndicator": 0,
+    "stratum": 5,
+    "offsetMs": -158.39839999999998,
+    "checkedAt": "2026-10-22T05:45:24.370Z",
+    "ttlMs": 60000,
+    "clockJumpDetected": false,
+    "assurance": "SHORT_TERM_READ_ONLY_MEASUREMENT",
+    "longTermStability": "NOT_VERIFIED"
+  },
+  "actuatorApi": {
+    "id": "demo_actuator_pump_a",
+    "currentState": "OFF",
+    "gatewayMode": "DISABLED",
+    "controlEnabled": false,
+    "lastStateChangedAt": "2026-10-22T05:45:11.631Z"
+  },
+  "finalDatabase": {
+    "at": "2026-10-22T05:45:19.741Z",
+    "pending": 0,
+    "commandCount": 43,
+    "device": {
+      "id": "demo_device_esp32_a",
+      "deviceCode": "ESP32-GF-A-01",
+      "connectionStatus": "ONLINE",
+      "lastSeenAt": "2026-10-22T05:45:12.090Z",
+      "sensors": [
+        {
+          "id": "demo_sensor_temp",
+          "sensorCode": "TEMP_01"
+        },
+        {
+          "id": "demo_sensor_hum",
+          "sensorCode": "HUM_01"
+        },
+        {
+          "id": "demo_sensor_soil",
+          "sensorCode": "SOIL_01"
+        },
+        {
+          "id": "demo_sensor_light",
+          "sensorCode": "LIGHT_01"
+        }
+      ],
+      "actuators": [
+        {
+          "id": "demo_actuator_pump_a",
+          "currentState": "OFF",
+          "lastStateChangedAt": "2026-10-22T05:45:11.631Z"
+        }
+      ]
+    }
+  },
+  "error": {
+    "type": "Error",
+    "reason": "API_GET_FAILED_400"
+  },
+  "ended": "2026-10-22T05:45:25.524Z"
+}

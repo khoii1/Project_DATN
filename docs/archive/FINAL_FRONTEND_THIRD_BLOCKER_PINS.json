@@ -1,0 +1,79 @@
+{
+  "purpose": "OFFLINE_HARDENING_PINS_NOT_EXECUTION_APPROVAL",
+  "approvalFile": "C:\\Users\\Acer Swift3\\.codex\\attachments\\f3cad0e5-c086-4e40-b872-de66947ae466\\Pasted text.txt",
+  "approvalSha256": "d4ff17ff9f6d470e740163407fb7b3924fbad598a66a4d89f118426aeef9bd64",
+  "replacements": {
+    "scripts/frontend-acceptance/source-contract.cjs": {
+      "old": "52341c6627fc82552173335cda31af08679697522ea8498b16a38b3274c2d8ad",
+      "new": "26c5fd2b6661e7afcc8c9ee3497487b04d7d56ce156a21f9a0fa0a1ca4966392"
+    },
+    "scripts/frontend-acceptance/bridge.test.cjs": {
+      "old": "45230c9f3e991e6d71b8b98cb06ee0f5f4f52d753a66f57e7e47ce246f83faf2",
+      "new": "cb0eb1c00f97cbdf301737f9bcca6d677463146014b3598fe9fc033bfb7db273"
+    }
+  },
+  "additions": {
+    "scripts/frontend-acceptance/strict-lineage.cjs": "2dc1300ac926e8a8348afacf569113531130b62f24a9d9499737796670a1043a",
+    "scripts/frontend-acceptance/lineage-fs.cjs": "fab9d64c3235ea730b63a34ab6299dd3409e4d6be88d062ac7aa9bd429694f3b"
+  },
+  "readyPolicyUpdate": {
+    "path": "scripts/frontend-acceptance/bridge.cjs",
+    "old": "2c667c0b5a46389f9fee3494a0b1c07ad4e275d8538362c80c2b1c694c7cabbb",
+    "new": "f09b5c89f8278e3c27d49067b7ffe25fdb759e808eb6a231ebb1d228b26d49d1",
+    "preparationApprovalFile": "C:\\Users\\Acer Swift3\\.codex\\attachments\\765e707f-c586-4aa6-a96e-9dbb47b1d92a\\Pasted text.txt",
+    "preparationApprovalSha256": "364cb7448bf5fbdbb1a063c04b3f4bd0d7e7cda359b61c7fba83596de0cb4fa1",
+    "parentFile": "docs/FINAL_FRONTEND_STRICT_HARDENING_PINS.json",
+    "parentSha256": "4f336378455fc5bc7a9bb570d324e18cab6b43fe1c932842ba85e530728f3c07",
+    "purpose": "STAGED_READY_POLICY_SOURCE_REVIEW_NOT_LIVE_APPROVAL"
+  },
+  "browserRemediation": {
+    "purpose": "STAGED_BROWSER_REMEDIATION_REVIEW_NOT_EXECUTION",
+    "preparationApprovalFile": "C:\\Users\\Acer Swift3\\.codex\\attachments\\9637d66a-599b-4b6b-b608-719bd47bdd2f\\Pasted text.txt",
+    "preparationApprovalSha256": "41aa934eec56c834d61101b23a539d6a1ba551c0f9c118c24059820cfcb96e7f",
+    "parentFile": "docs/FINAL_FRONTEND_READY_POLICY_HARDENING_PINS.json",
+    "parentSha256": "c634f044958c4684420d957c1adea23bed2d7e5125d4b05fdd757d2f4061c79d",
+    "changes": {
+      "scripts/frontend-acceptance/adapter.cjs": {
+        "old": "1617f6a221f899c1f8107417a8a175bc4ec58673adbd55324bbe38a3215ae19e",
+        "new": "4b78f3c928db2c40939d5e17f2672cb6c801ee1a9a0f24d4f5fe294d3e8457c2"
+      },
+      "scripts/frontend-acceptance/policy.cjs": {
+        "old": "e70a7c922fe902434fa4f5712a8805ad5c649971d1b8e09781c821279d07f119",
+        "new": "2af4991d3425434c15f66368b221c07f046722217c84f94120ec6f9de2f2a4f8"
+      },
+      "scripts/frontend-acceptance/assertions.cjs": {
+        "old": "c5fc747f4f31da4945a029f18e9b7b8338955bf7f608cd43dc0b9ebd9cabff65",
+        "new": "ca9fe0b7c03831e4e66c8f560b59a4b5691abda91aaebba40c5f0c62e673d191"
+      },
+      "scripts/frontend-acceptance/contract.cjs": {
+        "old": "a0be73f63accce5e872a256dabeab8adb6fdcd91da9177ac8a7269a0e30e99df",
+        "new": "89c00551046464a7397b224691a17cf01f932a0a8b48f3da4ab0a29ccc1826c7"
+      }
+    }
+  },
+  "thirdBlockerRemediation": {
+    "purpose": "THIRD_BLOCKER_PREPARATION_NOT_ACTIVATION",
+    "parentFile": "docs/FINAL_FRONTEND_BROWSER_REMEDIATION_PINS.json",
+    "parentSha256": "f097e563ce287ba31bef1dad3377e90c5e16a672727b56e9b0f17471f8bed635",
+    "preparationFile": "C:\\Users\\Acer Swift3\\.codex\\attachments\\538b1157-f6d0-4a16-b1c5-c7ad14b5003e\\Pasted text.txt",
+    "preparationSha256": "dbcd6fbaabad5ced15c540252fba4c76e777adaa0202ed8d6078a9491d55db85",
+    "changes": {
+      "scripts/frontend-acceptance/policy.cjs": {
+        "old": "2af4991d3425434c15f66368b221c07f046722217c84f94120ec6f9de2f2a4f8",
+        "new": "4e9c282e925f132832a4aa5e3b295b7c040da1b25d35e98a7d4d384d0d9c30e8"
+      },
+      "scripts/frontend-acceptance/adapter.cjs": {
+        "old": "4b78f3c928db2c40939d5e17f2672cb6c801ee1a9a0f24d4f5fe294d3e8457c2",
+        "new": "44c9f7dd5750dbe44e942e6baaf6923e037ec58754870c6bb52db798c9b0f7f4"
+      },
+      "scripts/frontend-acceptance/worker.cjs": {
+        "old": "8da79aba15c74a84f864e7e6d1d2ecd4653e4ea75c4b3102bc057f0bc7e0e2b4",
+        "new": "b5430a2d7d1de0971424b613e0e1703e2e50485b222207e36677d3d5f0c7440c"
+      },
+      "scripts/frontend-acceptance/native-host.ps1": {
+        "old": "381d7da2ad388dbd5595e46b554ff73c88922a9008c5bb83531de6c9f8ab3823",
+        "new": "612c907bb17a386e0734ee119781537dd7539c3580196aebff8ba3d93a6db8bf"
+      }
+    }
+  }
+}

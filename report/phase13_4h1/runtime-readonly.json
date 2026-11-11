@@ -1,0 +1,40 @@
+{
+  "at": "2026-10-21T11:32:44.979Z",
+  "artifactHashPass": true,
+  "configUnchanged": true,
+  "rollbackHashPass": true,
+  "secretScan": {
+    "tracked": {
+      "checkedFiles": 269,
+      "candidateFiles": []
+    },
+    "sharedDocsReports": {
+      "checkedFiles": 75,
+      "candidateFiles": []
+    },
+    "localBuildLogs": {
+      "checkedFiles": 29,
+      "candidateFiles": []
+    },
+    "knownPriorExposure": "Tool-output assertion in Phase13.4F.1; values not reproduced",
+    "binaryAndConfigContainSecretsByDesign": true
+  },
+  "pending": 0,
+  "commandCount": 43,
+  "device": {
+    "id": "demo_device_esp32_a",
+    "connectionStatus": "ONLINE",
+    "lastSeenAt": "2026-10-21T11:32:40.112Z"
+  },
+  "runtime": {
+    "commandsEnabled": false,
+    "automationEnabled": false,
+    "pumpTestMode": true
+  },
+  "clockHealth": "UNKNOWN",
+  "off": {
+    "state": "OFF",
+    "reason": "PERIODIC",
+    "recordedAt": "2026-10-21T11:32:41.062Z"
+  }
+}

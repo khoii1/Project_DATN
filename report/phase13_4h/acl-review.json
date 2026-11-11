@@ -1,0 +1,110 @@
+﻿[
+    {
+        "Path":  "C:\\DATN\\Project_datn\\build",
+        "InheritanceDisabled":  false,
+        "DenyRules":  0,
+        "BroadAllowRules":  [
+                                {
+                                    "Group":  "BUILTIN\\Users",
+                                    "Rights":  "ReadAndExecute, Synchronize",
+                                    "Inherited":  true
+                                },
+                                {
+                                    "Group":  "NT AUTHORITY\\Authenticated Users",
+                                    "Rights":  "Modify, Synchronize",
+                                    "Inherited":  true
+                                },
+                                {
+                                    "Group":  "NT AUTHORITY\\Authenticated Users",
+                                    "Rights":  "-536805376",
+                                    "Inherited":  true
+                                }
+                            ]
+    },
+    {
+        "Path":  "C:\\DATN\\Project_datn\\firmware\\SmartAgricultureESP32\\config.local.h",
+        "InheritanceDisabled":  false,
+        "DenyRules":  0,
+        "BroadAllowRules":  [
+                                {
+                                    "Group":  "BUILTIN\\Users",
+                                    "Rights":  "ReadAndExecute, Synchronize",
+                                    "Inherited":  true
+                                },
+                                {
+                                    "Group":  "NT AUTHORITY\\Authenticated Users",
+                                    "Rights":  "Modify, Synchronize",
+                                    "Inherited":  true
+                                }
+                            ]
+    },
+    {
+        "Path":  "C:\\DATN\\Project_datn\\backend\\.env",
+        "InheritanceDisabled":  false,
+        "DenyRules":  0,
+        "BroadAllowRules":  [
+                                {
+                                    "Group":  "BUILTIN\\Users",
+                                    "Rights":  "ReadAndExecute, Synchronize",
+                                    "Inherited":  true
+                                },
+                                {
+                                    "Group":  "NT AUTHORITY\\Authenticated Users",
+                                    "Rights":  "Modify, Synchronize",
+                                    "Inherited":  true
+                                }
+                            ]
+    },
+    {
+        "Path":  "C:\\DATN\\backups",
+        "InheritanceDisabled":  false,
+        "DenyRules":  0,
+        "BroadAllowRules":  [
+                                {
+                                    "Group":  "BUILTIN\\Users",
+                                    "Rights":  "ReadAndExecute, Synchronize",
+                                    "Inherited":  true
+                                },
+                                {
+                                    "Group":  "NT AUTHORITY\\Authenticated Users",
+                                    "Rights":  "Modify, Synchronize",
+                                    "Inherited":  true
+                                },
+                                {
+                                    "Group":  "NT AUTHORITY\\Authenticated Users",
+                                    "Rights":  "-536805376",
+                                    "Inherited":  true
+                                }
+                            ]
+    },
+    {
+        "Path":  "C:\\mosquitto\\config",
+        "InheritanceDisabled":  false,
+        "DenyRules":  0,
+        "BroadAllowRules":  [
+                                {
+                                    "Group":  "BUILTIN\\Users",
+                                    "Rights":  "ReadAndExecute, Synchronize",
+                                    "Inherited":  true
+                                },
+                                {
+                                    "Group":  "NT AUTHORITY\\Authenticated Users",
+                                    "Rights":  "Modify, Synchronize",
+                                    "Inherited":  true
+                                },
+                                {
+                                    "Group":  "NT AUTHORITY\\Authenticated Users",
+                                    "Rights":  "-536805376",
+                                    "Inherited":  true
+                                }
+                            ]
+    },
+    {
+        "Path":  "C:\\mosquitto\\config\\passwords",
+        "InheritanceDisabled":  true,
+        "DenyRules":  0,
+        "BroadAllowRules":  [
+
+                            ]
+    }
+]

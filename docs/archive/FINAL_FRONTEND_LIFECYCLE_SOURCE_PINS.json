@@ -1,0 +1,64 @@
+{
+  "purpose": "OFFLINE_IMPLEMENTATION_AND_STAGED_PATCH_REVIEW_ONLY_NOT_EXECUTION_APPROVAL",
+  "atUtc": "2026-11-06T06:54:25.986Z",
+  "activeManifest": {
+    "revision": 10,
+    "sha256": "47e8072cdc0a711dd277c5468976b6deb0d297264b41b1ce83a02f6ebf72e3bb",
+    "sourcePins": 250,
+    "runtimePins": 4,
+    "offlineTestPins": 4,
+    "drift": []
+  },
+  "runtimeSourceHashes": {
+    "scripts/frontend-acceptance/adapter.cjs": "1617f6a221f899c1f8107417a8a175bc4ec58673adbd55324bbe38a3215ae19e",
+    "scripts/frontend-acceptance/contract.cjs": "a0be73f63accce5e872a256dabeab8adb6fdcd91da9177ac8a7269a0e30e99df",
+    "scripts/frontend-acceptance/policy.cjs": "e70a7c922fe902434fa4f5712a8805ad5c649971d1b8e09781c821279d07f119",
+    "scripts/frontend-acceptance/credential-source.cjs": "fc7409f6efa4b1fe5fe18db86b78467ff5c0f1fb9fd9b1ae36004a00df238ef3",
+    "scripts/frontend-acceptance/bridge.cjs": "2c667c0b5a46389f9fee3494a0b1c07ad4e275d8538362c80c2b1c694c7cabbb",
+    "scripts/frontend-acceptance/live-provider.cjs": "a93dc7227c89a4a7ec17b3d10b00b9dc304e1dc5edcab0a5d587f0c26a4787d1",
+    "scripts/frontend-acceptance/worker.cjs": "8da79aba15c74a84f864e7e6d1d2ecd4653e4ea75c4b3102bc057f0bc7e0e2b4",
+    "scripts/frontend-acceptance/browser-environment.cjs": "b1387aaf769b20b7a9fa65a371c8b8a500accdbd9d05c1c99c9e98f7d5f09b5d",
+    "scripts/frontend-acceptance/native-host.ps1": "381d7da2ad388dbd5595e46b554ff73c88922a9008c5bb83531de6c9f8ab3823",
+    "scripts/frontend-acceptance/assertions.cjs": "c5fc747f4f31da4945a029f18e9b7b8338955bf7f608cd43dc0b9ebd9cabff65",
+    "scripts/frontend-acceptance/source-contract.cjs": "52341c6627fc82552173335cda31af08679697522ea8498b16a38b3274c2d8ad",
+    "scripts/mvp-credential-input.cjs": "74f0fc2427312edf2a8428b322e5d143e10f6bf40d833bb5b3b18e246a10246c",
+    "scripts/mvp-edge-smoke-observer.cjs": "ab8afa61f54471ba16a224c9be71a9c4e3ecd1f6c4c854c1182b74e200b4b137"
+  },
+  "offlineTestAndHandoffHashes": {
+    "scripts/frontend-acceptance/adapter.test.cjs": "bb60408ba9563742578f853d080d75d3b59781360de20c0a2ad510fab7a6bdb5",
+    "scripts/frontend-acceptance/bridge.test.cjs": "45230c9f3e991e6d71b8b98cb06ee0f5f4f52d753a66f57e7e47ce246f83faf2",
+    "scripts/frontend-acceptance/test-support.cjs": "cb41b095b02d11d6b403b46c2c4d25438239e2443e0d7afe6cfcfc3bfc00f51f",
+    "scripts/frontend-acceptance/credential-handoff.ps1": "6e12f2bdefcd7020b9f04211d27359c18785232bf92b13062c49648f2cf636ae"
+  },
+  "browserBinaryHashes": {
+    "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe": "d35d48b11f0439eeeddbbff0bf54856e922f5e1506a2f3098b5a808fcec4068b",
+    "C:\\DATN\\Project_datn\\node_modules\\playwright-core\\package.json": "07c47543631fef9508760365dee9fbe958c562093ec8d122543949ed231f233f",
+    "C:\\DATN\\Project_datn\\node_modules\\playwright-core\\lib\\coreBundle.js": "9393fa79e1c67c74edc26b610d65a4f7ed73d345a762465cc88340a33a2454ac",
+    "C:\\DATN\\Project_datn\\node_modules\\playwright-core\\browsers.json": "f306eed529599b1eaf2f8a85db9de2b23e1a3fe36c2b66434b7c9434fb627a99"
+  },
+  "stagedPinnedChanges": {
+    "scripts/mvp-ui-only-supervisor.cjs": {
+      "originalSha256": "2ac398b3d654c2af2beb5bd8e5adabfbe18eeb24bccf7ca9d18562c3d9166e4b",
+      "candidateFile": "build/frontend-lifecycle-integration-4d13ea9ad1794ce0a1fd549f4fb63094/staged/scripts/mvp-ui-only-supervisor.cjs",
+      "candidateSha256": "b7d62547db2b8bd10b49fcd82a33f98cdea7d6623177ea21e433396ba7a5e0b2",
+      "patchFile": "build/frontend-lifecycle-integration-4d13ea9ad1794ce0a1fd549f4fb63094/mvp-ui-only-supervisor.cjs.patch",
+      "patchSha256": "fa2a16d4794038bf44daa17a9d4cba146e99605233d0f4799c9b9900b93e78b8",
+      "addedLines": 16,
+      "removedLines": 5
+    },
+    "scripts/mvp-ui-only-runtime.cjs": {
+      "originalSha256": "671f45fc7c4cc3e237a4035e2db950405c4412dba7bd28dfe60ff15f62c772bf",
+      "candidateFile": "build/frontend-lifecycle-integration-4d13ea9ad1794ce0a1fd549f4fb63094/staged/scripts/mvp-ui-only-runtime.cjs",
+      "candidateSha256": "ad31e89eba5980c792c72a5afc4594ed8c8a89ade7f6195bf8678368664f1e83",
+      "patchFile": "build/frontend-lifecycle-integration-4d13ea9ad1794ce0a1fd549f4fb63094/mvp-ui-only-runtime.cjs.patch",
+      "patchSha256": "55a2038d5681a640d0cd2e271274363cd96eb1bff54b11cc5cdf9cac44b12a50",
+      "addedLines": 17,
+      "removedLines": 1
+    }
+  },
+  "pinnedSourceChangesApplied": 0,
+  "actualBrowserLaunches": 0,
+  "websiteAttemptsUsed": 0,
+  "offlineTests": 90,
+  "supervisorRegressions": 83
+}

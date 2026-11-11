@@ -1,0 +1,2407 @@
+{
+  "checkedAt": "2026-10-22T07:45:10.165Z",
+  "identity": {
+    "database": "smart_agriculture",
+    "schema": "public",
+    "role": "postgres",
+    "host": "127.0.0.1/32",
+    "port": 5432,
+    "read_only": "on",
+    "version": "17.2",
+    "pgdata": "C:/Program Files/PostgreSQL/17/data",
+    "started": "2026-10-16 12:13:43.656514+07",
+    "system_id": "7472695863566132416"
+  },
+  "migrations": [
+    {
+      "migration_name": "20260826044448_add_users_auth",
+      "checksum": "76b3bf2f8ebc4c546968bd58a4e53aad6df82c90af2977e589ab50f6e793df30",
+      "finished_at": "2026-08-26T04:44:48.691Z",
+      "rolled_back_at": null
+    },
+    {
+      "migration_name": "20260826053517_add_farms_zones_crops",
+      "checksum": "35f717305819cc2399770595bd83e7156e9015e39ee0d7f76b70116067f45da6",
+      "finished_at": "2026-08-26T05:35:18.063Z",
+      "rolled_back_at": null
+    },
+    {
+      "migration_name": "20260826064902_add_iot_devices",
+      "checksum": "1bf8a8bde5fe2b15494972a9860f868ee4d0390c39e0362c9c1d5e9ab3bfb950",
+      "finished_at": "2026-08-26T06:49:02.424Z",
+      "rolled_back_at": null
+    },
+    {
+      "migration_name": "20260826091140_add_sensors_and_readings",
+      "checksum": "426c3af4a3084563b2e430993210e66df40f65646f2a5852bc0557a708202c68",
+      "finished_at": "2026-08-26T09:11:40.960Z",
+      "rolled_back_at": null
+    },
+    {
+      "migration_name": "20260826143000_rename_temperature_sensor_type_to_temp",
+      "checksum": "183dfec7e273f4e49598b623bfcd180b795fe1f46280d7131d3c1836a4071a5a",
+      "finished_at": "2026-08-26T10:13:22.436Z",
+      "rolled_back_at": null
+    },
+    {
+      "migration_name": "20260827022817_add_alert_rules_and_alerts",
+      "checksum": "d1c72dfea3cfc3a4aa4e40cfada2d117bb11d45e966e8f455f39eb300602c83c",
+      "finished_at": "2026-08-27T02:29:25.868Z",
+      "rolled_back_at": null
+    },
+    {
+      "migration_name": "20260827032735_add_actuators_and_device_commands",
+      "checksum": "21c26cc5d219040d4a8d1a960e6d185ef17877a1af09ce0fe38c56cfe47356dc",
+      "finished_at": "2026-08-27T03:27:56.868Z",
+      "rolled_back_at": null
+    },
+    {
+      "migration_name": "20260827113854_add_automation_rules",
+      "checksum": "1d70eb0324962afd4451f95c86df81a95e1b324db7631070263572dcfa22aea3",
+      "finished_at": "2026-08-27T11:38:54.282Z",
+      "rolled_back_at": null
+    },
+    {
+      "migration_name": "20260827120000_add_automation_enabled_rule_index",
+      "checksum": "2a011f06e820a1efbc7a0db1e4bf78e55222997e22a891f42e9577eea07ae8a5",
+      "finished_at": "2026-08-27T12:07:05.599Z",
+      "rolled_back_at": null
+    },
+    {
+      "migration_name": "20260827150000_add_activity_log_farm_scope",
+      "checksum": "0a0365622567856c7eaae02f11955f9368b40eaf6a787a3d0f2f6ad6b5e594b8",
+      "finished_at": "2026-08-27T13:46:39.686Z",
+      "rolled_back_at": null
+    },
+    {
+      "migration_name": "20261014090000_mqtt_pump_commands",
+      "checksum": "2a38418373a21de5d33e522efa74b0734d80a37e61eca28e905bd12e8b06f221",
+      "finished_at": "2026-10-16T11:09:39.621Z",
+      "rolled_back_at": null
+    }
+  ],
+  "local": [
+    {
+      "name": "20260826044448_add_users_auth",
+      "checksum": "76b3bf2f8ebc4c546968bd58a4e53aad6df82c90af2977e589ab50f6e793df30"
+    },
+    {
+      "name": "20260826053517_add_farms_zones_crops",
+      "checksum": "35f717305819cc2399770595bd83e7156e9015e39ee0d7f76b70116067f45da6"
+    },
+    {
+      "name": "20260826064902_add_iot_devices",
+      "checksum": "1bf8a8bde5fe2b15494972a9860f868ee4d0390c39e0362c9c1d5e9ab3bfb950"
+    },
+    {
+      "name": "20260826091140_add_sensors_and_readings",
+      "checksum": "426c3af4a3084563b2e430993210e66df40f65646f2a5852bc0557a708202c68"
+    },
+    {
+      "name": "20260826143000_rename_temperature_sensor_type_to_temp",
+      "checksum": "183dfec7e273f4e49598b623bfcd180b795fe1f46280d7131d3c1836a4071a5a"
+    },
+    {
+      "name": "20260827022817_add_alert_rules_and_alerts",
+      "checksum": "d1c72dfea3cfc3a4aa4e40cfada2d117bb11d45e966e8f455f39eb300602c83c"
+    },
+    {
+      "name": "20260827032735_add_actuators_and_device_commands",
+      "checksum": "21c26cc5d219040d4a8d1a960e6d185ef17877a1af09ce0fe38c56cfe47356dc"
+    },
+    {
+      "name": "20260827113854_add_automation_rules",
+      "checksum": "1d70eb0324962afd4451f95c86df81a95e1b324db7631070263572dcfa22aea3"
+    },
+    {
+      "name": "20260827120000_add_automation_enabled_rule_index",
+      "checksum": "2a011f06e820a1efbc7a0db1e4bf78e55222997e22a891f42e9577eea07ae8a5"
+    },
+    {
+      "name": "20260827150000_add_activity_log_farm_scope",
+      "checksum": "0a0365622567856c7eaae02f11955f9368b40eaf6a787a3d0f2f6ad6b5e594b8"
+    },
+    {
+      "name": "20261014090000_mqtt_pump_commands",
+      "checksum": "2a38418373a21de5d33e522efa74b0734d80a37e61eca28e905bd12e8b06f221"
+    }
+  ],
+  "migrationMatch": true,
+  "relations": [
+    {
+      "relname": "_prisma_migrations",
+      "relkind": "r",
+      "owner": "postgres",
+      "acl": null
+    },
+    {
+      "relname": "_prisma_migrations_pkey",
+      "relkind": "i",
+      "owner": "postgres",
+      "acl": null
+    },
+    {
+      "relname": "activity_logs",
+      "relkind": "r",
+      "owner": "postgres",
+      "acl": null
+    },
+    {
+      "relname": "activity_logs_action_idx",
+      "relkind": "i",
+      "owner": "postgres",
+      "acl": null
+    },
+    {
+      "relname": "activity_logs_created_at_idx",
+      "relkind": "i",
+      "owner": "postgres",
+      "acl": null
+    },
+    {
+      "relname": "activity_logs_farm_id_created_at_idx",
+      "relkind": "i",
+      "owner": "postgres",
+      "acl": null
+    },
+    {
+      "relname": "activity_logs_pkey",
+      "relkind": "i",
+      "owner": "postgres",
+      "acl": null
+    },
+    {
+      "relname": "activity_logs_user_id_created_at_idx",
+      "relkind": "i",
+      "owner": "postgres",
+      "acl": null
+    },
+    {
+      "relname": "actuators",
+      "relkind": "r",
+      "owner": "postgres",
+      "acl": null
+    },
+    {
+      "relname": "actuators_current_state_idx",
+      "relkind": "i",
+      "owner": "postgres",
+      "acl": null
+    },
+    {
+      "relname": "actuators_device_id_actuator_code_key",
+      "relkind": "i",
+      "owner": "postgres",
+      "acl": null
+    },
+    {
+      "relname": "actuators_device_id_idx",
+      "relkind": "i",
+      "owner": "postgres",
+      "acl": null
+    },
+    {
+      "relname": "actuators_pkey",
+      "relkind": "i",
+      "owner": "postgres",
+      "acl": null
+    },
+    {
+      "relname": "actuators_status_idx",
+      "relkind": "i",
+      "owner": "postgres",
+      "acl": null
+    },
+    {
+      "relname": "actuators_type_idx",
+      "relkind": "i",
+      "owner": "postgres",
+      "acl": null
+    },
+    {
+      "relname": "alert_rules",
+      "relkind": "r",
+      "owner": "postgres",
+      "acl": null
+    },
+    {
+      "relname": "alert_rules_enabled_idx",
+      "relkind": "i",
+      "owner": "postgres",
+      "acl": null
+    },
+    {
+      "relname": "alert_rules_pkey",
+      "relkind": "i",
+      "owner": "postgres",
+      "acl": null
+    },
+    {
+      "relname": "alert_rules_sensor_id_idx",
+      "relkind": "i",
+      "owner": "postgres",
+      "acl": null
+    },
+    {
+      "relname": "alert_rules_severity_idx",
+      "relkind": "i",
+      "owner": "postgres",
+      "acl": null
+    },
+    {
+      "relname": "alerts",
+      "relkind": "r",
+      "owner": "postgres",
+      "acl": null
+    },
+    {
+      "relname": "alerts_alert_rule_id_status_idx",
+      "relkind": "i",
+      "owner": "postgres",
+      "acl": null
+    },
+    {
+      "relname": "alerts_one_active_per_rule_idx",
+      "relkind": "i",
+      "owner": "postgres",
+      "acl": null
+    },
+    {
+      "relname": "alerts_opened_at_idx",
+      "relkind": "i",
+      "owner": "postgres",
+      "acl": null
+    },
+    {
+      "relname": "alerts_pkey",
+      "relkind": "i",
+      "owner": "postgres",
+      "acl": null
+    },
+    {
+      "relname": "alerts_sensor_id_idx",
+      "relkind": "i",
+      "owner": "postgres",
+      "acl": null
+    },
+    {
+      "relname": "alerts_severity_snapshot_idx",
+      "relkind": "i",
+      "owner": "postgres",
+      "acl": null
+    },
+    {
+      "relname": "alerts_status_idx",
+      "relkind": "i",
+      "owner": "postgres",
+      "acl": null
+    },
+    {
+      "relname": "automation_rules",
+      "relkind": "r",
+      "owner": "postgres",
+      "acl": null
+    },
+    {
+      "relname": "automation_rules_actuator_id_idx",
+      "relkind": "i",
+      "owner": "postgres",
+      "acl": null
+    },
+    {
+      "relname": "automation_rules_created_at_idx",
+      "relkind": "i",
+      "owner": "postgres",
+      "acl": null
+    },
+    {
+      "relname": "automation_rules_enabled_idx",
+      "relkind": "i",
+      "owner": "postgres",
+      "acl": null
+    },
+    {
+      "relname": "automation_rules_one_enabled_per_actuator_idx",
+      "relkind": "i",
+      "owner": "postgres",
+      "acl": null
+    },
+    {
+      "relname": "automation_rules_pkey",
+      "relkind": "i",
+      "owner": "postgres",
+      "acl": null
+    },
+    {
+      "relname": "automation_rules_sensor_id_idx",
+      "relkind": "i",
+      "owner": "postgres",
+      "acl": null
+    },
+    {
+      "relname": "crops",
+      "relkind": "r",
+      "owner": "postgres",
+      "acl": null
+    },
+    {
+      "relname": "crops_created_at_idx",
+      "relkind": "i",
+      "owner": "postgres",
+      "acl": null
+    },
+    {
+      "relname": "crops_pkey",
+      "relkind": "i",
+      "owner": "postgres",
+      "acl": null
+    },
+    {
+      "relname": "crops_planting_date_idx",
+      "relkind": "i",
+      "owner": "postgres",
+      "acl": null
+    },
+    {
+      "relname": "crops_status_idx",
+      "relkind": "i",
+      "owner": "postgres",
+      "acl": null
+    },
+    {
+      "relname": "crops_zone_id_idx",
+      "relkind": "i",
+      "owner": "postgres",
+      "acl": null
+    },
+    {
+      "relname": "device_commands",
+      "relkind": "r",
+      "owner": "postgres",
+      "acl": null
+    },
+    {
+      "relname": "device_commands_actuator_id_idx",
+      "relkind": "i",
+      "owner": "postgres",
+      "acl": null
+    },
+    {
+      "relname": "device_commands_automation_rule_id_idx",
+      "relkind": "i",
+      "owner": "postgres",
+      "acl": null
+    },
+    {
+      "relname": "device_commands_correlation_id_key",
+      "relkind": "i",
+      "owner": "postgres",
+      "acl": null
+    },
+    {
+      "relname": "device_commands_one_pending_per_actuator_idx",
+      "relkind": "i",
+      "owner": "postgres",
+      "acl": null
+    },
+    {
+      "relname": "device_commands_pkey",
+      "relkind": "i",
+      "owner": "postgres",
+      "acl": null
+    },
+    {
+      "relname": "device_commands_requested_at_idx",
+      "relkind": "i",
+      "owner": "postgres",
+      "acl": null
+    },
+    {
+      "relname": "device_commands_requested_by_id_idx",
+      "relkind": "i",
+      "owner": "postgres",
+      "acl": null
+    },
+    {
+      "relname": "device_commands_status_idx",
+      "relkind": "i",
+      "owner": "postgres",
+      "acl": null
+    },
+    {
+      "relname": "devices",
+      "relkind": "r",
+      "owner": "postgres",
+      "acl": null
+    },
+    {
+      "relname": "devices_connection_status_idx",
+      "relkind": "i",
+      "owner": "postgres",
+      "acl": null
+    },
+    {
+      "relname": "devices_created_at_idx",
+      "relkind": "i",
+      "owner": "postgres",
+      "acl": null
+    },
+    {
+      "relname": "devices_device_code_key",
+      "relkind": "i",
+      "owner": "postgres",
+      "acl": null
+    },
+    {
+      "relname": "devices_pkey",
+      "relkind": "i",
+      "owner": "postgres",
+      "acl": null
+    },
+    {
+      "relname": "devices_status_idx",
+      "relkind": "i",
+      "owner": "postgres",
+      "acl": null
+    },
+    {
+      "relname": "devices_zone_id_idx",
+      "relkind": "i",
+      "owner": "postgres",
+      "acl": null
+    },
+    {
+      "relname": "farm_staff_assignments",
+      "relkind": "r",
+      "owner": "postgres",
+      "acl": null
+    },
+    {
+      "relname": "farm_staff_assignments_farm_id_idx",
+      "relkind": "i",
+      "owner": "postgres",
+      "acl": null
+    },
+    {
+      "relname": "farm_staff_assignments_farm_id_staff_id_key",
+      "relkind": "i",
+      "owner": "postgres",
+      "acl": null
+    },
+    {
+      "relname": "farm_staff_assignments_pkey",
+      "relkind": "i",
+      "owner": "postgres",
+      "acl": null
+    },
+    {
+      "relname": "farm_staff_assignments_staff_id_idx",
+      "relkind": "i",
+      "owner": "postgres",
+      "acl": null
+    },
+    {
+      "relname": "farms",
+      "relkind": "r",
+      "owner": "postgres",
+      "acl": null
+    },
+    {
+      "relname": "farms_created_at_idx",
+      "relkind": "i",
+      "owner": "postgres",
+      "acl": null
+    },
+    {
+      "relname": "farms_owner_id_idx",
+      "relkind": "i",
+      "owner": "postgres",
+      "acl": null
+    },
+    {
+      "relname": "farms_pkey",
+      "relkind": "i",
+      "owner": "postgres",
+      "acl": null
+    },
+    {
+      "relname": "farms_status_idx",
+      "relkind": "i",
+      "owner": "postgres",
+      "acl": null
+    },
+    {
+      "relname": "sensor_readings",
+      "relkind": "r",
+      "owner": "postgres",
+      "acl": null
+    },
+    {
+      "relname": "sensor_readings_pkey",
+      "relkind": "i",
+      "owner": "postgres",
+      "acl": null
+    },
+    {
+      "relname": "sensor_readings_recorded_at_idx",
+      "relkind": "i",
+      "owner": "postgres",
+      "acl": null
+    },
+    {
+      "relname": "sensor_readings_sensor_id_recorded_at_idx",
+      "relkind": "i",
+      "owner": "postgres",
+      "acl": null
+    },
+    {
+      "relname": "sensor_readings_sensor_id_recorded_at_key",
+      "relkind": "i",
+      "owner": "postgres",
+      "acl": null
+    },
+    {
+      "relname": "sensors",
+      "relkind": "r",
+      "owner": "postgres",
+      "acl": null
+    },
+    {
+      "relname": "sensors_device_id_idx",
+      "relkind": "i",
+      "owner": "postgres",
+      "acl": null
+    },
+    {
+      "relname": "sensors_device_id_sensor_code_key",
+      "relkind": "i",
+      "owner": "postgres",
+      "acl": null
+    },
+    {
+      "relname": "sensors_pkey",
+      "relkind": "i",
+      "owner": "postgres",
+      "acl": null
+    },
+    {
+      "relname": "sensors_status_idx",
+      "relkind": "i",
+      "owner": "postgres",
+      "acl": null
+    },
+    {
+      "relname": "sensors_type_idx",
+      "relkind": "i",
+      "owner": "postgres",
+      "acl": null
+    },
+    {
+      "relname": "users",
+      "relkind": "r",
+      "owner": "postgres",
+      "acl": null
+    },
+    {
+      "relname": "users_created_at_idx",
+      "relkind": "i",
+      "owner": "postgres",
+      "acl": null
+    },
+    {
+      "relname": "users_email_key",
+      "relkind": "i",
+      "owner": "postgres",
+      "acl": null
+    },
+    {
+      "relname": "users_pkey",
+      "relkind": "i",
+      "owner": "postgres",
+      "acl": null
+    },
+    {
+      "relname": "users_role_idx",
+      "relkind": "i",
+      "owner": "postgres",
+      "acl": null
+    },
+    {
+      "relname": "users_status_idx",
+      "relkind": "i",
+      "owner": "postgres",
+      "acl": null
+    },
+    {
+      "relname": "zones",
+      "relkind": "r",
+      "owner": "postgres",
+      "acl": null
+    },
+    {
+      "relname": "zones_created_at_idx",
+      "relkind": "i",
+      "owner": "postgres",
+      "acl": null
+    },
+    {
+      "relname": "zones_farm_id_idx",
+      "relkind": "i",
+      "owner": "postgres",
+      "acl": null
+    },
+    {
+      "relname": "zones_farm_id_name_key",
+      "relkind": "i",
+      "owner": "postgres",
+      "acl": null
+    },
+    {
+      "relname": "zones_pkey",
+      "relkind": "i",
+      "owner": "postgres",
+      "acl": null
+    },
+    {
+      "relname": "zones_status_idx",
+      "relkind": "i",
+      "owner": "postgres",
+      "acl": null
+    }
+  ],
+  "columns": [
+    {
+      "table_name": "actuators",
+      "column_name": "id",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "table_name": "actuators",
+      "column_name": "device_id",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "table_name": "actuators",
+      "column_name": "actuator_code",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "table_name": "actuators",
+      "column_name": "name",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "table_name": "actuators",
+      "column_name": "type",
+      "data_type": "USER-DEFINED",
+      "udt_name": "ActuatorType",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "table_name": "actuators",
+      "column_name": "status",
+      "data_type": "USER-DEFINED",
+      "udt_name": "ActuatorStatus",
+      "is_nullable": "NO",
+      "column_default": "'ACTIVE'::\"ActuatorStatus\""
+    },
+    {
+      "table_name": "actuators",
+      "column_name": "current_state",
+      "data_type": "USER-DEFINED",
+      "udt_name": "ActuatorState",
+      "is_nullable": "NO",
+      "column_default": "'UNKNOWN'::\"ActuatorState\""
+    },
+    {
+      "table_name": "actuators",
+      "column_name": "hardware_channel",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "YES",
+      "column_default": null
+    },
+    {
+      "table_name": "actuators",
+      "column_name": "description",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "YES",
+      "column_default": null
+    },
+    {
+      "table_name": "actuators",
+      "column_name": "last_command_at",
+      "data_type": "timestamp without time zone",
+      "udt_name": "timestamp",
+      "is_nullable": "YES",
+      "column_default": null
+    },
+    {
+      "table_name": "actuators",
+      "column_name": "last_state_changed_at",
+      "data_type": "timestamp without time zone",
+      "udt_name": "timestamp",
+      "is_nullable": "YES",
+      "column_default": null
+    },
+    {
+      "table_name": "actuators",
+      "column_name": "created_at",
+      "data_type": "timestamp without time zone",
+      "udt_name": "timestamp",
+      "is_nullable": "NO",
+      "column_default": "CURRENT_TIMESTAMP"
+    },
+    {
+      "table_name": "actuators",
+      "column_name": "updated_at",
+      "data_type": "timestamp without time zone",
+      "udt_name": "timestamp",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "table_name": "automation_rules",
+      "column_name": "id",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "table_name": "automation_rules",
+      "column_name": "name",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "table_name": "automation_rules",
+      "column_name": "sensor_id",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "table_name": "automation_rules",
+      "column_name": "actuator_id",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "table_name": "automation_rules",
+      "column_name": "start_threshold",
+      "data_type": "double precision",
+      "udt_name": "float8",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "table_name": "automation_rules",
+      "column_name": "stop_threshold",
+      "data_type": "double precision",
+      "udt_name": "float8",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "table_name": "automation_rules",
+      "column_name": "enabled",
+      "data_type": "boolean",
+      "udt_name": "bool",
+      "is_nullable": "NO",
+      "column_default": "true"
+    },
+    {
+      "table_name": "automation_rules",
+      "column_name": "last_evaluated_at",
+      "data_type": "timestamp without time zone",
+      "udt_name": "timestamp",
+      "is_nullable": "YES",
+      "column_default": null
+    },
+    {
+      "table_name": "automation_rules",
+      "column_name": "last_command_attempt_at",
+      "data_type": "timestamp without time zone",
+      "udt_name": "timestamp",
+      "is_nullable": "YES",
+      "column_default": null
+    },
+    {
+      "table_name": "automation_rules",
+      "column_name": "description",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "YES",
+      "column_default": null
+    },
+    {
+      "table_name": "automation_rules",
+      "column_name": "created_by_id",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "YES",
+      "column_default": null
+    },
+    {
+      "table_name": "automation_rules",
+      "column_name": "created_at",
+      "data_type": "timestamp without time zone",
+      "udt_name": "timestamp",
+      "is_nullable": "NO",
+      "column_default": "CURRENT_TIMESTAMP"
+    },
+    {
+      "table_name": "automation_rules",
+      "column_name": "updated_at",
+      "data_type": "timestamp without time zone",
+      "udt_name": "timestamp",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "table_name": "device_commands",
+      "column_name": "id",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "table_name": "device_commands",
+      "column_name": "actuator_id",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "table_name": "device_commands",
+      "column_name": "command",
+      "data_type": "USER-DEFINED",
+      "udt_name": "DeviceCommandType",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "table_name": "device_commands",
+      "column_name": "source",
+      "data_type": "USER-DEFINED",
+      "udt_name": "DeviceCommandSource",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "table_name": "device_commands",
+      "column_name": "status",
+      "data_type": "USER-DEFINED",
+      "udt_name": "DeviceCommandStatus",
+      "is_nullable": "NO",
+      "column_default": "'PENDING'::\"DeviceCommandStatus\""
+    },
+    {
+      "table_name": "device_commands",
+      "column_name": "requested_by_id",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "YES",
+      "column_default": null
+    },
+    {
+      "table_name": "device_commands",
+      "column_name": "requested_at",
+      "data_type": "timestamp without time zone",
+      "udt_name": "timestamp",
+      "is_nullable": "NO",
+      "column_default": "CURRENT_TIMESTAMP"
+    },
+    {
+      "table_name": "device_commands",
+      "column_name": "sent_at",
+      "data_type": "timestamp without time zone",
+      "udt_name": "timestamp",
+      "is_nullable": "YES",
+      "column_default": null
+    },
+    {
+      "table_name": "device_commands",
+      "column_name": "completed_at",
+      "data_type": "timestamp without time zone",
+      "udt_name": "timestamp",
+      "is_nullable": "YES",
+      "column_default": null
+    },
+    {
+      "table_name": "device_commands",
+      "column_name": "failure_reason",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "YES",
+      "column_default": null
+    },
+    {
+      "table_name": "device_commands",
+      "column_name": "correlation_id",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "table_name": "device_commands",
+      "column_name": "automation_rule_id",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "YES",
+      "column_default": null
+    },
+    {
+      "table_name": "device_commands",
+      "column_name": "transport",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": "'MOCK'::text"
+    },
+    {
+      "table_name": "device_commands",
+      "column_name": "expires_at",
+      "data_type": "timestamp without time zone",
+      "udt_name": "timestamp",
+      "is_nullable": "YES",
+      "column_default": null
+    },
+    {
+      "table_name": "device_commands",
+      "column_name": "max_run_seconds",
+      "data_type": "integer",
+      "udt_name": "int4",
+      "is_nullable": "YES",
+      "column_default": null
+    },
+    {
+      "table_name": "device_commands",
+      "column_name": "acknowledged_at",
+      "data_type": "timestamp without time zone",
+      "udt_name": "timestamp",
+      "is_nullable": "YES",
+      "column_default": null
+    },
+    {
+      "table_name": "devices",
+      "column_name": "id",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "table_name": "devices",
+      "column_name": "zone_id",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "table_name": "devices",
+      "column_name": "device_code",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "table_name": "devices",
+      "column_name": "name",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "table_name": "devices",
+      "column_name": "type",
+      "data_type": "USER-DEFINED",
+      "udt_name": "DeviceType",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "table_name": "devices",
+      "column_name": "hardware_model",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "YES",
+      "column_default": null
+    },
+    {
+      "table_name": "devices",
+      "column_name": "firmware_version",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "YES",
+      "column_default": null
+    },
+    {
+      "table_name": "devices",
+      "column_name": "status",
+      "data_type": "USER-DEFINED",
+      "udt_name": "DeviceStatus",
+      "is_nullable": "NO",
+      "column_default": "'ACTIVE'::\"DeviceStatus\""
+    },
+    {
+      "table_name": "devices",
+      "column_name": "connection_status",
+      "data_type": "USER-DEFINED",
+      "udt_name": "DeviceConnectionStatus",
+      "is_nullable": "NO",
+      "column_default": "'UNKNOWN'::\"DeviceConnectionStatus\""
+    },
+    {
+      "table_name": "devices",
+      "column_name": "last_seen_at",
+      "data_type": "timestamp without time zone",
+      "udt_name": "timestamp",
+      "is_nullable": "YES",
+      "column_default": null
+    },
+    {
+      "table_name": "devices",
+      "column_name": "installed_at",
+      "data_type": "timestamp without time zone",
+      "udt_name": "timestamp",
+      "is_nullable": "YES",
+      "column_default": null
+    },
+    {
+      "table_name": "devices",
+      "column_name": "description",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "YES",
+      "column_default": null
+    },
+    {
+      "table_name": "devices",
+      "column_name": "created_at",
+      "data_type": "timestamp without time zone",
+      "udt_name": "timestamp",
+      "is_nullable": "NO",
+      "column_default": "CURRENT_TIMESTAMP"
+    },
+    {
+      "table_name": "devices",
+      "column_name": "updated_at",
+      "data_type": "timestamp without time zone",
+      "udt_name": "timestamp",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "table_name": "sensor_readings",
+      "column_name": "id",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "table_name": "sensor_readings",
+      "column_name": "sensor_id",
+      "data_type": "text",
+      "udt_name": "text",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "table_name": "sensor_readings",
+      "column_name": "value",
+      "data_type": "double precision",
+      "udt_name": "float8",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "table_name": "sensor_readings",
+      "column_name": "source",
+      "data_type": "USER-DEFINED",
+      "udt_name": "SensorReadingSource",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "table_name": "sensor_readings",
+      "column_name": "recorded_at",
+      "data_type": "timestamp without time zone",
+      "udt_name": "timestamp",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "table_name": "sensor_readings",
+      "column_name": "received_at",
+      "data_type": "timestamp without time zone",
+      "udt_name": "timestamp",
+      "is_nullable": "NO",
+      "column_default": "CURRENT_TIMESTAMP"
+    }
+  ],
+  "constraints": [
+    {
+      "table_name": "_prisma_migrations",
+      "conname": "_prisma_migrations_pkey",
+      "contype": "p",
+      "convalidated": true,
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "activity_logs",
+      "conname": "activity_logs_farm_id_fkey",
+      "contype": "f",
+      "convalidated": true,
+      "definition": "FOREIGN KEY (farm_id) REFERENCES farms(id) ON UPDATE CASCADE ON DELETE SET NULL"
+    },
+    {
+      "table_name": "activity_logs",
+      "conname": "activity_logs_pkey",
+      "contype": "p",
+      "convalidated": true,
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "activity_logs",
+      "conname": "activity_logs_user_id_fkey",
+      "contype": "f",
+      "convalidated": true,
+      "definition": "FOREIGN KEY (user_id) REFERENCES users(id) ON UPDATE CASCADE ON DELETE SET NULL"
+    },
+    {
+      "table_name": "actuators",
+      "conname": "actuators_device_id_fkey",
+      "contype": "f",
+      "convalidated": true,
+      "definition": "FOREIGN KEY (device_id) REFERENCES devices(id) ON UPDATE CASCADE ON DELETE CASCADE"
+    },
+    {
+      "table_name": "actuators",
+      "conname": "actuators_pkey",
+      "contype": "p",
+      "convalidated": true,
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "alert_rules",
+      "conname": "alert_rules_created_by_id_fkey",
+      "contype": "f",
+      "convalidated": true,
+      "definition": "FOREIGN KEY (created_by_id) REFERENCES users(id) ON UPDATE CASCADE ON DELETE SET NULL"
+    },
+    {
+      "table_name": "alert_rules",
+      "conname": "alert_rules_pkey",
+      "contype": "p",
+      "convalidated": true,
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "alert_rules",
+      "conname": "alert_rules_sensor_id_fkey",
+      "contype": "f",
+      "convalidated": true,
+      "definition": "FOREIGN KEY (sensor_id) REFERENCES sensors(id) ON UPDATE CASCADE ON DELETE CASCADE"
+    },
+    {
+      "table_name": "alerts",
+      "conname": "alerts_acknowledged_by_id_fkey",
+      "contype": "f",
+      "convalidated": true,
+      "definition": "FOREIGN KEY (acknowledged_by_id) REFERENCES users(id) ON UPDATE CASCADE ON DELETE SET NULL"
+    },
+    {
+      "table_name": "alerts",
+      "conname": "alerts_alert_rule_id_fkey",
+      "contype": "f",
+      "convalidated": true,
+      "definition": "FOREIGN KEY (alert_rule_id) REFERENCES alert_rules(id) ON UPDATE CASCADE ON DELETE CASCADE"
+    },
+    {
+      "table_name": "alerts",
+      "conname": "alerts_pkey",
+      "contype": "p",
+      "convalidated": true,
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "alerts",
+      "conname": "alerts_resolved_by_id_fkey",
+      "contype": "f",
+      "convalidated": true,
+      "definition": "FOREIGN KEY (resolved_by_id) REFERENCES users(id) ON UPDATE CASCADE ON DELETE SET NULL"
+    },
+    {
+      "table_name": "alerts",
+      "conname": "alerts_sensor_id_fkey",
+      "contype": "f",
+      "convalidated": true,
+      "definition": "FOREIGN KEY (sensor_id) REFERENCES sensors(id) ON UPDATE CASCADE ON DELETE CASCADE"
+    },
+    {
+      "table_name": "automation_rules",
+      "conname": "automation_rules_actuator_id_fkey",
+      "contype": "f",
+      "convalidated": true,
+      "definition": "FOREIGN KEY (actuator_id) REFERENCES actuators(id) ON UPDATE CASCADE ON DELETE CASCADE"
+    },
+    {
+      "table_name": "automation_rules",
+      "conname": "automation_rules_created_by_id_fkey",
+      "contype": "f",
+      "convalidated": true,
+      "definition": "FOREIGN KEY (created_by_id) REFERENCES users(id) ON UPDATE CASCADE ON DELETE SET NULL"
+    },
+    {
+      "table_name": "automation_rules",
+      "conname": "automation_rules_pkey",
+      "contype": "p",
+      "convalidated": true,
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "automation_rules",
+      "conname": "automation_rules_sensor_id_fkey",
+      "contype": "f",
+      "convalidated": true,
+      "definition": "FOREIGN KEY (sensor_id) REFERENCES sensors(id) ON UPDATE CASCADE ON DELETE CASCADE"
+    },
+    {
+      "table_name": "crops",
+      "conname": "crops_pkey",
+      "contype": "p",
+      "convalidated": true,
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "crops",
+      "conname": "crops_zone_id_fkey",
+      "contype": "f",
+      "convalidated": true,
+      "definition": "FOREIGN KEY (zone_id) REFERENCES zones(id) ON UPDATE CASCADE ON DELETE CASCADE"
+    },
+    {
+      "table_name": "device_commands",
+      "conname": "device_commands_actuator_id_fkey",
+      "contype": "f",
+      "convalidated": true,
+      "definition": "FOREIGN KEY (actuator_id) REFERENCES actuators(id) ON UPDATE CASCADE ON DELETE CASCADE"
+    },
+    {
+      "table_name": "device_commands",
+      "conname": "device_commands_automation_rule_id_fkey",
+      "contype": "f",
+      "convalidated": true,
+      "definition": "FOREIGN KEY (automation_rule_id) REFERENCES automation_rules(id) ON UPDATE CASCADE ON DELETE SET NULL"
+    },
+    {
+      "table_name": "device_commands",
+      "conname": "device_commands_pkey",
+      "contype": "p",
+      "convalidated": true,
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "device_commands",
+      "conname": "device_commands_requested_by_id_fkey",
+      "contype": "f",
+      "convalidated": true,
+      "definition": "FOREIGN KEY (requested_by_id) REFERENCES users(id) ON UPDATE CASCADE ON DELETE SET NULL"
+    },
+    {
+      "table_name": "devices",
+      "conname": "devices_pkey",
+      "contype": "p",
+      "convalidated": true,
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "devices",
+      "conname": "devices_zone_id_fkey",
+      "contype": "f",
+      "convalidated": true,
+      "definition": "FOREIGN KEY (zone_id) REFERENCES zones(id) ON UPDATE CASCADE ON DELETE CASCADE"
+    },
+    {
+      "table_name": "farm_staff_assignments",
+      "conname": "farm_staff_assignments_farm_id_fkey",
+      "contype": "f",
+      "convalidated": true,
+      "definition": "FOREIGN KEY (farm_id) REFERENCES farms(id) ON UPDATE CASCADE ON DELETE CASCADE"
+    },
+    {
+      "table_name": "farm_staff_assignments",
+      "conname": "farm_staff_assignments_pkey",
+      "contype": "p",
+      "convalidated": true,
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "farm_staff_assignments",
+      "conname": "farm_staff_assignments_staff_id_fkey",
+      "contype": "f",
+      "convalidated": true,
+      "definition": "FOREIGN KEY (staff_id) REFERENCES users(id) ON UPDATE CASCADE ON DELETE CASCADE"
+    },
+    {
+      "table_name": "farms",
+      "conname": "farms_owner_id_fkey",
+      "contype": "f",
+      "convalidated": true,
+      "definition": "FOREIGN KEY (owner_id) REFERENCES users(id) ON UPDATE CASCADE ON DELETE RESTRICT"
+    },
+    {
+      "table_name": "farms",
+      "conname": "farms_pkey",
+      "contype": "p",
+      "convalidated": true,
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "sensor_readings",
+      "conname": "sensor_readings_pkey",
+      "contype": "p",
+      "convalidated": true,
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "sensor_readings",
+      "conname": "sensor_readings_sensor_id_fkey",
+      "contype": "f",
+      "convalidated": true,
+      "definition": "FOREIGN KEY (sensor_id) REFERENCES sensors(id) ON UPDATE CASCADE ON DELETE CASCADE"
+    },
+    {
+      "table_name": "sensors",
+      "conname": "sensors_device_id_fkey",
+      "contype": "f",
+      "convalidated": true,
+      "definition": "FOREIGN KEY (device_id) REFERENCES devices(id) ON UPDATE CASCADE ON DELETE CASCADE"
+    },
+    {
+      "table_name": "sensors",
+      "conname": "sensors_pkey",
+      "contype": "p",
+      "convalidated": true,
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "users",
+      "conname": "users_pkey",
+      "contype": "p",
+      "convalidated": true,
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "zones",
+      "conname": "zones_farm_id_fkey",
+      "contype": "f",
+      "convalidated": true,
+      "definition": "FOREIGN KEY (farm_id) REFERENCES farms(id) ON UPDATE CASCADE ON DELETE CASCADE"
+    },
+    {
+      "table_name": "zones",
+      "conname": "zones_pkey",
+      "contype": "p",
+      "convalidated": true,
+      "definition": "PRIMARY KEY (id)"
+    }
+  ],
+  "indexes": [
+    {
+      "table_name": "_prisma_migrations",
+      "name": "_prisma_migrations_pkey",
+      "indisunique": true,
+      "indisvalid": true,
+      "definition": "CREATE UNIQUE INDEX _prisma_migrations_pkey ON public._prisma_migrations USING btree (id)"
+    },
+    {
+      "table_name": "activity_logs",
+      "name": "activity_logs_action_idx",
+      "indisunique": false,
+      "indisvalid": true,
+      "definition": "CREATE INDEX activity_logs_action_idx ON public.activity_logs USING btree (action)"
+    },
+    {
+      "table_name": "activity_logs",
+      "name": "activity_logs_created_at_idx",
+      "indisunique": false,
+      "indisvalid": true,
+      "definition": "CREATE INDEX activity_logs_created_at_idx ON public.activity_logs USING btree (created_at)"
+    },
+    {
+      "table_name": "activity_logs",
+      "name": "activity_logs_farm_id_created_at_idx",
+      "indisunique": false,
+      "indisvalid": true,
+      "definition": "CREATE INDEX activity_logs_farm_id_created_at_idx ON public.activity_logs USING btree (farm_id, created_at)"
+    },
+    {
+      "table_name": "activity_logs",
+      "name": "activity_logs_pkey",
+      "indisunique": true,
+      "indisvalid": true,
+      "definition": "CREATE UNIQUE INDEX activity_logs_pkey ON public.activity_logs USING btree (id)"
+    },
+    {
+      "table_name": "activity_logs",
+      "name": "activity_logs_user_id_created_at_idx",
+      "indisunique": false,
+      "indisvalid": true,
+      "definition": "CREATE INDEX activity_logs_user_id_created_at_idx ON public.activity_logs USING btree (user_id, created_at)"
+    },
+    {
+      "table_name": "actuators",
+      "name": "actuators_current_state_idx",
+      "indisunique": false,
+      "indisvalid": true,
+      "definition": "CREATE INDEX actuators_current_state_idx ON public.actuators USING btree (current_state)"
+    },
+    {
+      "table_name": "actuators",
+      "name": "actuators_device_id_actuator_code_key",
+      "indisunique": true,
+      "indisvalid": true,
+      "definition": "CREATE UNIQUE INDEX actuators_device_id_actuator_code_key ON public.actuators USING btree (device_id, actuator_code)"
+    },
+    {
+      "table_name": "actuators",
+      "name": "actuators_device_id_idx",
+      "indisunique": false,
+      "indisvalid": true,
+      "definition": "CREATE INDEX actuators_device_id_idx ON public.actuators USING btree (device_id)"
+    },
+    {
+      "table_name": "actuators",
+      "name": "actuators_pkey",
+      "indisunique": true,
+      "indisvalid": true,
+      "definition": "CREATE UNIQUE INDEX actuators_pkey ON public.actuators USING btree (id)"
+    },
+    {
+      "table_name": "actuators",
+      "name": "actuators_status_idx",
+      "indisunique": false,
+      "indisvalid": true,
+      "definition": "CREATE INDEX actuators_status_idx ON public.actuators USING btree (status)"
+    },
+    {
+      "table_name": "actuators",
+      "name": "actuators_type_idx",
+      "indisunique": false,
+      "indisvalid": true,
+      "definition": "CREATE INDEX actuators_type_idx ON public.actuators USING btree (type)"
+    },
+    {
+      "table_name": "alert_rules",
+      "name": "alert_rules_enabled_idx",
+      "indisunique": false,
+      "indisvalid": true,
+      "definition": "CREATE INDEX alert_rules_enabled_idx ON public.alert_rules USING btree (enabled)"
+    },
+    {
+      "table_name": "alert_rules",
+      "name": "alert_rules_pkey",
+      "indisunique": true,
+      "indisvalid": true,
+      "definition": "CREATE UNIQUE INDEX alert_rules_pkey ON public.alert_rules USING btree (id)"
+    },
+    {
+      "table_name": "alert_rules",
+      "name": "alert_rules_sensor_id_idx",
+      "indisunique": false,
+      "indisvalid": true,
+      "definition": "CREATE INDEX alert_rules_sensor_id_idx ON public.alert_rules USING btree (sensor_id)"
+    },
+    {
+      "table_name": "alert_rules",
+      "name": "alert_rules_severity_idx",
+      "indisunique": false,
+      "indisvalid": true,
+      "definition": "CREATE INDEX alert_rules_severity_idx ON public.alert_rules USING btree (severity)"
+    },
+    {
+      "table_name": "alerts",
+      "name": "alerts_alert_rule_id_status_idx",
+      "indisunique": false,
+      "indisvalid": true,
+      "definition": "CREATE INDEX alerts_alert_rule_id_status_idx ON public.alerts USING btree (alert_rule_id, status)"
+    },
+    {
+      "table_name": "alerts",
+      "name": "alerts_one_active_per_rule_idx",
+      "indisunique": true,
+      "indisvalid": true,
+      "definition": "CREATE UNIQUE INDEX alerts_one_active_per_rule_idx ON public.alerts USING btree (alert_rule_id) WHERE (status = ANY (ARRAY['OPEN'::\"AlertStatus\", 'ACKNOWLEDGED'::\"AlertStatus\"]))"
+    },
+    {
+      "table_name": "alerts",
+      "name": "alerts_opened_at_idx",
+      "indisunique": false,
+      "indisvalid": true,
+      "definition": "CREATE INDEX alerts_opened_at_idx ON public.alerts USING btree (opened_at)"
+    },
+    {
+      "table_name": "alerts",
+      "name": "alerts_pkey",
+      "indisunique": true,
+      "indisvalid": true,
+      "definition": "CREATE UNIQUE INDEX alerts_pkey ON public.alerts USING btree (id)"
+    },
+    {
+      "table_name": "alerts",
+      "name": "alerts_sensor_id_idx",
+      "indisunique": false,
+      "indisvalid": true,
+      "definition": "CREATE INDEX alerts_sensor_id_idx ON public.alerts USING btree (sensor_id)"
+    },
+    {
+      "table_name": "alerts",
+      "name": "alerts_severity_snapshot_idx",
+      "indisunique": false,
+      "indisvalid": true,
+      "definition": "CREATE INDEX alerts_severity_snapshot_idx ON public.alerts USING btree (severity_snapshot)"
+    },
+    {
+      "table_name": "alerts",
+      "name": "alerts_status_idx",
+      "indisunique": false,
+      "indisvalid": true,
+      "definition": "CREATE INDEX alerts_status_idx ON public.alerts USING btree (status)"
+    },
+    {
+      "table_name": "automation_rules",
+      "name": "automation_rules_actuator_id_idx",
+      "indisunique": false,
+      "indisvalid": true,
+      "definition": "CREATE INDEX automation_rules_actuator_id_idx ON public.automation_rules USING btree (actuator_id)"
+    },
+    {
+      "table_name": "automation_rules",
+      "name": "automation_rules_created_at_idx",
+      "indisunique": false,
+      "indisvalid": true,
+      "definition": "CREATE INDEX automation_rules_created_at_idx ON public.automation_rules USING btree (created_at)"
+    },
+    {
+      "table_name": "automation_rules",
+      "name": "automation_rules_enabled_idx",
+      "indisunique": false,
+      "indisvalid": true,
+      "definition": "CREATE INDEX automation_rules_enabled_idx ON public.automation_rules USING btree (enabled)"
+    },
+    {
+      "table_name": "automation_rules",
+      "name": "automation_rules_one_enabled_per_actuator_idx",
+      "indisunique": true,
+      "indisvalid": true,
+      "definition": "CREATE UNIQUE INDEX automation_rules_one_enabled_per_actuator_idx ON public.automation_rules USING btree (actuator_id) WHERE (enabled = true)"
+    },
+    {
+      "table_name": "automation_rules",
+      "name": "automation_rules_pkey",
+      "indisunique": true,
+      "indisvalid": true,
+      "definition": "CREATE UNIQUE INDEX automation_rules_pkey ON public.automation_rules USING btree (id)"
+    },
+    {
+      "table_name": "automation_rules",
+      "name": "automation_rules_sensor_id_idx",
+      "indisunique": false,
+      "indisvalid": true,
+      "definition": "CREATE INDEX automation_rules_sensor_id_idx ON public.automation_rules USING btree (sensor_id)"
+    },
+    {
+      "table_name": "crops",
+      "name": "crops_created_at_idx",
+      "indisunique": false,
+      "indisvalid": true,
+      "definition": "CREATE INDEX crops_created_at_idx ON public.crops USING btree (created_at)"
+    },
+    {
+      "table_name": "crops",
+      "name": "crops_pkey",
+      "indisunique": true,
+      "indisvalid": true,
+      "definition": "CREATE UNIQUE INDEX crops_pkey ON public.crops USING btree (id)"
+    },
+    {
+      "table_name": "crops",
+      "name": "crops_planting_date_idx",
+      "indisunique": false,
+      "indisvalid": true,
+      "definition": "CREATE INDEX crops_planting_date_idx ON public.crops USING btree (planting_date)"
+    },
+    {
+      "table_name": "crops",
+      "name": "crops_status_idx",
+      "indisunique": false,
+      "indisvalid": true,
+      "definition": "CREATE INDEX crops_status_idx ON public.crops USING btree (status)"
+    },
+    {
+      "table_name": "crops",
+      "name": "crops_zone_id_idx",
+      "indisunique": false,
+      "indisvalid": true,
+      "definition": "CREATE INDEX crops_zone_id_idx ON public.crops USING btree (zone_id)"
+    },
+    {
+      "table_name": "device_commands",
+      "name": "device_commands_actuator_id_idx",
+      "indisunique": false,
+      "indisvalid": true,
+      "definition": "CREATE INDEX device_commands_actuator_id_idx ON public.device_commands USING btree (actuator_id)"
+    },
+    {
+      "table_name": "device_commands",
+      "name": "device_commands_automation_rule_id_idx",
+      "indisunique": false,
+      "indisvalid": true,
+      "definition": "CREATE INDEX device_commands_automation_rule_id_idx ON public.device_commands USING btree (automation_rule_id)"
+    },
+    {
+      "table_name": "device_commands",
+      "name": "device_commands_correlation_id_key",
+      "indisunique": true,
+      "indisvalid": true,
+      "definition": "CREATE UNIQUE INDEX device_commands_correlation_id_key ON public.device_commands USING btree (correlation_id)"
+    },
+    {
+      "table_name": "device_commands",
+      "name": "device_commands_one_pending_per_actuator_idx",
+      "indisunique": true,
+      "indisvalid": true,
+      "definition": "CREATE UNIQUE INDEX device_commands_one_pending_per_actuator_idx ON public.device_commands USING btree (actuator_id) WHERE (status = 'PENDING'::\"DeviceCommandStatus\")"
+    },
+    {
+      "table_name": "device_commands",
+      "name": "device_commands_pkey",
+      "indisunique": true,
+      "indisvalid": true,
+      "definition": "CREATE UNIQUE INDEX device_commands_pkey ON public.device_commands USING btree (id)"
+    },
+    {
+      "table_name": "device_commands",
+      "name": "device_commands_requested_at_idx",
+      "indisunique": false,
+      "indisvalid": true,
+      "definition": "CREATE INDEX device_commands_requested_at_idx ON public.device_commands USING btree (requested_at)"
+    },
+    {
+      "table_name": "device_commands",
+      "name": "device_commands_requested_by_id_idx",
+      "indisunique": false,
+      "indisvalid": true,
+      "definition": "CREATE INDEX device_commands_requested_by_id_idx ON public.device_commands USING btree (requested_by_id)"
+    },
+    {
+      "table_name": "device_commands",
+      "name": "device_commands_status_idx",
+      "indisunique": false,
+      "indisvalid": true,
+      "definition": "CREATE INDEX device_commands_status_idx ON public.device_commands USING btree (status)"
+    },
+    {
+      "table_name": "devices",
+      "name": "devices_connection_status_idx",
+      "indisunique": false,
+      "indisvalid": true,
+      "definition": "CREATE INDEX devices_connection_status_idx ON public.devices USING btree (connection_status)"
+    },
+    {
+      "table_name": "devices",
+      "name": "devices_created_at_idx",
+      "indisunique": false,
+      "indisvalid": true,
+      "definition": "CREATE INDEX devices_created_at_idx ON public.devices USING btree (created_at)"
+    },
+    {
+      "table_name": "devices",
+      "name": "devices_device_code_key",
+      "indisunique": true,
+      "indisvalid": true,
+      "definition": "CREATE UNIQUE INDEX devices_device_code_key ON public.devices USING btree (device_code)"
+    },
+    {
+      "table_name": "devices",
+      "name": "devices_pkey",
+      "indisunique": true,
+      "indisvalid": true,
+      "definition": "CREATE UNIQUE INDEX devices_pkey ON public.devices USING btree (id)"
+    },
+    {
+      "table_name": "devices",
+      "name": "devices_status_idx",
+      "indisunique": false,
+      "indisvalid": true,
+      "definition": "CREATE INDEX devices_status_idx ON public.devices USING btree (status)"
+    },
+    {
+      "table_name": "devices",
+      "name": "devices_zone_id_idx",
+      "indisunique": false,
+      "indisvalid": true,
+      "definition": "CREATE INDEX devices_zone_id_idx ON public.devices USING btree (zone_id)"
+    },
+    {
+      "table_name": "farm_staff_assignments",
+      "name": "farm_staff_assignments_farm_id_idx",
+      "indisunique": false,
+      "indisvalid": true,
+      "definition": "CREATE INDEX farm_staff_assignments_farm_id_idx ON public.farm_staff_assignments USING btree (farm_id)"
+    },
+    {
+      "table_name": "farm_staff_assignments",
+      "name": "farm_staff_assignments_farm_id_staff_id_key",
+      "indisunique": true,
+      "indisvalid": true,
+      "definition": "CREATE UNIQUE INDEX farm_staff_assignments_farm_id_staff_id_key ON public.farm_staff_assignments USING btree (farm_id, staff_id)"
+    },
+    {
+      "table_name": "farm_staff_assignments",
+      "name": "farm_staff_assignments_pkey",
+      "indisunique": true,
+      "indisvalid": true,
+      "definition": "CREATE UNIQUE INDEX farm_staff_assignments_pkey ON public.farm_staff_assignments USING btree (id)"
+    },
+    {
+      "table_name": "farm_staff_assignments",
+      "name": "farm_staff_assignments_staff_id_idx",
+      "indisunique": false,
+      "indisvalid": true,
+      "definition": "CREATE INDEX farm_staff_assignments_staff_id_idx ON public.farm_staff_assignments USING btree (staff_id)"
+    },
+    {
+      "table_name": "farms",
+      "name": "farms_created_at_idx",
+      "indisunique": false,
+      "indisvalid": true,
+      "definition": "CREATE INDEX farms_created_at_idx ON public.farms USING btree (created_at)"
+    },
+    {
+      "table_name": "farms",
+      "name": "farms_owner_id_idx",
+      "indisunique": false,
+      "indisvalid": true,
+      "definition": "CREATE INDEX farms_owner_id_idx ON public.farms USING btree (owner_id)"
+    },
+    {
+      "table_name": "farms",
+      "name": "farms_pkey",
+      "indisunique": true,
+      "indisvalid": true,
+      "definition": "CREATE UNIQUE INDEX farms_pkey ON public.farms USING btree (id)"
+    },
+    {
+      "table_name": "farms",
+      "name": "farms_status_idx",
+      "indisunique": false,
+      "indisvalid": true,
+      "definition": "CREATE INDEX farms_status_idx ON public.farms USING btree (status)"
+    },
+    {
+      "table_name": "sensor_readings",
+      "name": "sensor_readings_pkey",
+      "indisunique": true,
+      "indisvalid": true,
+      "definition": "CREATE UNIQUE INDEX sensor_readings_pkey ON public.sensor_readings USING btree (id)"
+    },
+    {
+      "table_name": "sensor_readings",
+      "name": "sensor_readings_recorded_at_idx",
+      "indisunique": false,
+      "indisvalid": true,
+      "definition": "CREATE INDEX sensor_readings_recorded_at_idx ON public.sensor_readings USING btree (recorded_at)"
+    },
+    {
+      "table_name": "sensor_readings",
+      "name": "sensor_readings_sensor_id_recorded_at_idx",
+      "indisunique": false,
+      "indisvalid": true,
+      "definition": "CREATE INDEX sensor_readings_sensor_id_recorded_at_idx ON public.sensor_readings USING btree (sensor_id, recorded_at DESC)"
+    },
+    {
+      "table_name": "sensor_readings",
+      "name": "sensor_readings_sensor_id_recorded_at_key",
+      "indisunique": true,
+      "indisvalid": true,
+      "definition": "CREATE UNIQUE INDEX sensor_readings_sensor_id_recorded_at_key ON public.sensor_readings USING btree (sensor_id, recorded_at)"
+    },
+    {
+      "table_name": "sensors",
+      "name": "sensors_device_id_idx",
+      "indisunique": false,
+      "indisvalid": true,
+      "definition": "CREATE INDEX sensors_device_id_idx ON public.sensors USING btree (device_id)"
+    },
+    {
+      "table_name": "sensors",
+      "name": "sensors_device_id_sensor_code_key",
+      "indisunique": true,
+      "indisvalid": true,
+      "definition": "CREATE UNIQUE INDEX sensors_device_id_sensor_code_key ON public.sensors USING btree (device_id, sensor_code)"
+    },
+    {
+      "table_name": "sensors",
+      "name": "sensors_pkey",
+      "indisunique": true,
+      "indisvalid": true,
+      "definition": "CREATE UNIQUE INDEX sensors_pkey ON public.sensors USING btree (id)"
+    },
+    {
+      "table_name": "sensors",
+      "name": "sensors_status_idx",
+      "indisunique": false,
+      "indisvalid": true,
+      "definition": "CREATE INDEX sensors_status_idx ON public.sensors USING btree (status)"
+    },
+    {
+      "table_name": "sensors",
+      "name": "sensors_type_idx",
+      "indisunique": false,
+      "indisvalid": true,
+      "definition": "CREATE INDEX sensors_type_idx ON public.sensors USING btree (type)"
+    },
+    {
+      "table_name": "users",
+      "name": "users_created_at_idx",
+      "indisunique": false,
+      "indisvalid": true,
+      "definition": "CREATE INDEX users_created_at_idx ON public.users USING btree (created_at)"
+    },
+    {
+      "table_name": "users",
+      "name": "users_email_key",
+      "indisunique": true,
+      "indisvalid": true,
+      "definition": "CREATE UNIQUE INDEX users_email_key ON public.users USING btree (email)"
+    },
+    {
+      "table_name": "users",
+      "name": "users_pkey",
+      "indisunique": true,
+      "indisvalid": true,
+      "definition": "CREATE UNIQUE INDEX users_pkey ON public.users USING btree (id)"
+    },
+    {
+      "table_name": "users",
+      "name": "users_role_idx",
+      "indisunique": false,
+      "indisvalid": true,
+      "definition": "CREATE INDEX users_role_idx ON public.users USING btree (role)"
+    },
+    {
+      "table_name": "users",
+      "name": "users_status_idx",
+      "indisunique": false,
+      "indisvalid": true,
+      "definition": "CREATE INDEX users_status_idx ON public.users USING btree (status)"
+    },
+    {
+      "table_name": "zones",
+      "name": "zones_created_at_idx",
+      "indisunique": false,
+      "indisvalid": true,
+      "definition": "CREATE INDEX zones_created_at_idx ON public.zones USING btree (created_at)"
+    },
+    {
+      "table_name": "zones",
+      "name": "zones_farm_id_idx",
+      "indisunique": false,
+      "indisvalid": true,
+      "definition": "CREATE INDEX zones_farm_id_idx ON public.zones USING btree (farm_id)"
+    },
+    {
+      "table_name": "zones",
+      "name": "zones_farm_id_name_key",
+      "indisunique": true,
+      "indisvalid": true,
+      "definition": "CREATE UNIQUE INDEX zones_farm_id_name_key ON public.zones USING btree (farm_id, name)"
+    },
+    {
+      "table_name": "zones",
+      "name": "zones_pkey",
+      "indisunique": true,
+      "indisvalid": true,
+      "definition": "CREATE UNIQUE INDEX zones_pkey ON public.zones USING btree (id)"
+    },
+    {
+      "table_name": "zones",
+      "name": "zones_status_idx",
+      "indisunique": false,
+      "indisvalid": true,
+      "definition": "CREATE INDEX zones_status_idx ON public.zones USING btree (status)"
+    }
+  ],
+  "enums": [
+    {
+      "typname": "ActivityAction",
+      "labels": "{LOGIN_SUCCESS,LOGOUT,CREATE_USER,UPDATE_USER,DEACTIVATE_USER,ACTIVATE_USER,CREATE_FARM,UPDATE_FARM,CHANGE_FARM_STATUS,ASSIGN_STAFF,REMOVE_STAFF,CREATE_ZONE,UPDATE_ZONE,CHANGE_ZONE_STATUS,CREATE_CROP,UPDATE_CROP,CHANGE_CROP_STATUS,CREATE_DEVICE,UPDATE_DEVICE,CHANGE_DEVICE_STATUS,CREATE_SENSOR,UPDATE_SENSOR,CHANGE_SENSOR_STATUS,CREATE_ALERT_RULE,UPDATE_ALERT_RULE,ENABLE_ALERT_RULE,DISABLE_ALERT_RULE,ACKNOWLEDGE_ALERT,MANUAL_RESOLVE_ALERT,CREATE_ACTUATOR,UPDATE_ACTUATOR,CHANGE_ACTUATOR_STATUS,ISSUE_DEVICE_COMMAND,UPDATE_STAFF_IRRIGATION_PERMISSION,CREATE_AUTOMATION_RULE,UPDATE_AUTOMATION_RULE,ENABLE_AUTOMATION_RULE,DISABLE_AUTOMATION_RULE}"
+    },
+    {
+      "typname": "ActuatorState",
+      "labels": "{ON,OFF,UNKNOWN}"
+    },
+    {
+      "typname": "ActuatorStatus",
+      "labels": "{ACTIVE,INACTIVE,MAINTENANCE}"
+    },
+    {
+      "typname": "ActuatorType",
+      "labels": "{PUMP,VALVE,RELAY,OTHER}"
+    },
+    {
+      "typname": "AlertOperator",
+      "labels": "{LT,LTE,GT,GTE}"
+    },
+    {
+      "typname": "AlertResolutionReason",
+      "labels": "{AUTO_RECOVERED,MANUAL,RULE_DISABLED,RULE_UPDATED}"
+    },
+    {
+      "typname": "AlertSeverity",
+      "labels": "{INFO,WARNING,CRITICAL}"
+    },
+    {
+      "typname": "AlertStatus",
+      "labels": "{OPEN,ACKNOWLEDGED,RESOLVED}"
+    },
+    {
+      "typname": "CropStatus",
+      "labels": "{PLANNED,GROWING,HARVESTED,CANCELLED}"
+    },
+    {
+      "typname": "DeviceCommandSource",
+      "labels": "{MANUAL,AUTOMATION}"
+    },
+    {
+      "typname": "DeviceCommandStatus",
+      "labels": "{PENDING,SUCCESS,FAILED}"
+    },
+    {
+      "typname": "DeviceCommandType",
+      "labels": "{TURN_ON,TURN_OFF}"
+    },
+    {
+      "typname": "DeviceConnectionStatus",
+      "labels": "{ONLINE,OFFLINE,UNKNOWN}"
+    },
+    {
+      "typname": "DeviceStatus",
+      "labels": "{ACTIVE,INACTIVE,MAINTENANCE}"
+    },
+    {
+      "typname": "DeviceType",
+      "labels": "{CONTROLLER,GATEWAY,OTHER}"
+    },
+    {
+      "typname": "FarmStatus",
+      "labels": "{ACTIVE,INACTIVE}"
+    },
+    {
+      "typname": "SensorReadingSource",
+      "labels": "{SIMULATOR,MQTT}"
+    },
+    {
+      "typname": "SensorStatus",
+      "labels": "{ACTIVE,INACTIVE}"
+    },
+    {
+      "typname": "SensorType",
+      "labels": "{TEMP,AIR_HUMIDITY,SOIL_MOISTURE,LIGHT}"
+    },
+    {
+      "typname": "UserRole",
+      "labels": "{ADMIN,FARM_OWNER,STAFF}"
+    },
+    {
+      "typname": "UserStatus",
+      "labels": "{ACTIVE,INACTIVE}"
+    },
+    {
+      "typname": "ZoneStatus",
+      "labels": "{ACTIVE,INACTIVE}"
+    }
+  ],
+  "functions": [],
+  "roles": [
+    {
+      "rolname": "pg_checkpoint",
+      "rolsuper": false,
+      "rolinherit": true,
+      "rolcreaterole": false,
+      "rolcreatedb": false,
+      "rolcanlogin": false,
+      "rolreplication": false,
+      "rolbypassrls": false
+    },
+    {
+      "rolname": "pg_create_subscription",
+      "rolsuper": false,
+      "rolinherit": true,
+      "rolcreaterole": false,
+      "rolcreatedb": false,
+      "rolcanlogin": false,
+      "rolreplication": false,
+      "rolbypassrls": false
+    },
+    {
+      "rolname": "pg_database_owner",
+      "rolsuper": false,
+      "rolinherit": true,
+      "rolcreaterole": false,
+      "rolcreatedb": false,
+      "rolcanlogin": false,
+      "rolreplication": false,
+      "rolbypassrls": false
+    },
+    {
+      "rolname": "pg_execute_server_program",
+      "rolsuper": false,
+      "rolinherit": true,
+      "rolcreaterole": false,
+      "rolcreatedb": false,
+      "rolcanlogin": false,
+      "rolreplication": false,
+      "rolbypassrls": false
+    },
+    {
+      "rolname": "pg_maintain",
+      "rolsuper": false,
+      "rolinherit": true,
+      "rolcreaterole": false,
+      "rolcreatedb": false,
+      "rolcanlogin": false,
+      "rolreplication": false,
+      "rolbypassrls": false
+    },
+    {
+      "rolname": "pg_monitor",
+      "rolsuper": false,
+      "rolinherit": true,
+      "rolcreaterole": false,
+      "rolcreatedb": false,
+      "rolcanlogin": false,
+      "rolreplication": false,
+      "rolbypassrls": false
+    },
+    {
+      "rolname": "pg_read_all_data",
+      "rolsuper": false,
+      "rolinherit": true,
+      "rolcreaterole": false,
+      "rolcreatedb": false,
+      "rolcanlogin": false,
+      "rolreplication": false,
+      "rolbypassrls": false
+    },
+    {
+      "rolname": "pg_read_all_settings",
+      "rolsuper": false,
+      "rolinherit": true,
+      "rolcreaterole": false,
+      "rolcreatedb": false,
+      "rolcanlogin": false,
+      "rolreplication": false,
+      "rolbypassrls": false
+    },
+    {
+      "rolname": "pg_read_all_stats",
+      "rolsuper": false,
+      "rolinherit": true,
+      "rolcreaterole": false,
+      "rolcreatedb": false,
+      "rolcanlogin": false,
+      "rolreplication": false,
+      "rolbypassrls": false
+    },
+    {
+      "rolname": "pg_read_server_files",
+      "rolsuper": false,
+      "rolinherit": true,
+      "rolcreaterole": false,
+      "rolcreatedb": false,
+      "rolcanlogin": false,
+      "rolreplication": false,
+      "rolbypassrls": false
+    },
+    {
+      "rolname": "pg_signal_backend",
+      "rolsuper": false,
+      "rolinherit": true,
+      "rolcreaterole": false,
+      "rolcreatedb": false,
+      "rolcanlogin": false,
+      "rolreplication": false,
+      "rolbypassrls": false
+    },
+    {
+      "rolname": "pg_stat_scan_tables",
+      "rolsuper": false,
+      "rolinherit": true,
+      "rolcreaterole": false,
+      "rolcreatedb": false,
+      "rolcanlogin": false,
+      "rolreplication": false,
+      "rolbypassrls": false
+    },
+    {
+      "rolname": "pg_use_reserved_connections",
+      "rolsuper": false,
+      "rolinherit": true,
+      "rolcreaterole": false,
+      "rolcreatedb": false,
+      "rolcanlogin": false,
+      "rolreplication": false,
+      "rolbypassrls": false
+    },
+    {
+      "rolname": "pg_write_all_data",
+      "rolsuper": false,
+      "rolinherit": true,
+      "rolcreaterole": false,
+      "rolcreatedb": false,
+      "rolcanlogin": false,
+      "rolreplication": false,
+      "rolbypassrls": false
+    },
+    {
+      "rolname": "pg_write_server_files",
+      "rolsuper": false,
+      "rolinherit": true,
+      "rolcreaterole": false,
+      "rolcreatedb": false,
+      "rolcanlogin": false,
+      "rolreplication": false,
+      "rolbypassrls": false
+    },
+    {
+      "rolname": "postgres",
+      "rolsuper": true,
+      "rolinherit": true,
+      "rolcreaterole": true,
+      "rolcreatedb": true,
+      "rolcanlogin": true,
+      "rolreplication": true,
+      "rolbypassrls": true
+    }
+  ],
+  "memberships": [
+    {
+      "role": "pg_read_all_settings",
+      "member": "pg_monitor",
+      "admin_option": false
+    },
+    {
+      "role": "pg_read_all_stats",
+      "member": "pg_monitor",
+      "admin_option": false
+    },
+    {
+      "role": "pg_stat_scan_tables",
+      "member": "pg_monitor",
+      "admin_option": false
+    }
+  ],
+  "schemaPrivileges": [
+    {
+      "nspname": "public",
+      "owner": "pg_database_owner",
+      "acl": "{pg_database_owner=UC/pg_database_owner,=U/pg_database_owner}",
+      "current_can_create": true
+    }
+  ],
+  "fingerprint": "390c65cfe11f3b8695a6bc5ff21d94d4",
+  "constraintFingerprint": "2e5981464ef4017e1ad5a6854ba17cc2",
+  "counts": {
+    "pending": 0,
+    "commands": 43,
+    "automationRules": 1
+  },
+  "capacity": {
+    "database": {
+      "bytes": "20925587",
+      "pretty": "20 MB",
+      "in_recovery": false
+    },
+    "largestTables": [
+      {
+        "relname": "sensor_readings",
+        "bytes": "10149888",
+        "estimated_rows": "30055"
+      },
+      {
+        "relname": "activity_logs",
+        "bytes": "507904",
+        "estimated_rows": "807"
+      },
+      {
+        "relname": "device_commands",
+        "bytes": "196608",
+        "estimated_rows": "12"
+      },
+      {
+        "relname": "alerts",
+        "bytes": "163840",
+        "estimated_rows": "13"
+      },
+      {
+        "relname": "devices",
+        "bytes": "147456",
+        "estimated_rows": "2"
+      },
+      {
+        "relname": "actuators",
+        "bytes": "147456",
+        "estimated_rows": "1"
+      },
+      {
+        "relname": "automation_rules",
+        "bytes": "147456",
+        "estimated_rows": "1"
+      },
+      {
+        "relname": "crops",
+        "bytes": "131072",
+        "estimated_rows": "0"
+      },
+      {
+        "relname": "users",
+        "bytes": "131072",
+        "estimated_rows": "0"
+      },
+      {
+        "relname": "sensors",
+        "bytes": "131072",
+        "estimated_rows": "0"
+      }
+    ],
+    "recoverySettings": [
+      {
+        "name": "archive_mode",
+        "setting": "off"
+      },
+      {
+        "name": "full_page_writes",
+        "setting": "on"
+      },
+      {
+        "name": "max_wal_senders",
+        "setting": "10"
+      },
+      {
+        "name": "wal_level",
+        "setting": "replica"
+      }
+    ]
+  },
+  "device": {
+    "connectionStatus": "ONLINE",
+    "lastSeenAt": "2026-10-22T07:45:04.955Z",
+    "actuators": [
+      {
+        "currentState": "OFF",
+        "lastStateChangedAt": "2026-10-22T07:44:56.039Z"
+      }
+    ],
+    "sensors": [
+      {
+        "sensorCode": "TEMP_01",
+        "readings": [
+          {
+            "value": 24.8,
+            "recordedAt": "2026-10-22T07:45:04.591Z",
+            "receivedAt": "2026-10-22T07:45:04.958Z"
+          }
+        ]
+      },
+      {
+        "sensorCode": "HUM_01",
+        "readings": [
+          {
+            "value": 46.7,
+            "recordedAt": "2026-10-22T07:45:04.591Z",
+            "receivedAt": "2026-10-22T07:45:04.958Z"
+          }
+        ]
+      },
+      {
+        "sensorCode": "SOIL_01",
+        "readings": [
+          {
+            "value": 5.42,
+            "recordedAt": "2026-10-22T07:45:04.591Z",
+            "receivedAt": "2026-10-22T07:45:04.958Z"
+          }
+        ]
+      },
+      {
+        "sensorCode": "LIGHT_01",
+        "readings": [
+          {
+            "value": 0,
+            "recordedAt": "2026-10-22T07:45:04.591Z",
+            "receivedAt": "2026-10-22T07:45:04.958Z"
+          }
+        ]
+      }
+    ]
+  },
+  "ledgersPresent": [],
+  "legacyTables": [
+    "devices",
+    "actuators",
+    "sensor_readings",
+    "device_commands",
+    "automation_rules"
+  ],
+  "health": {
+    "success": true,
+    "message": "Smart Agriculture API is running",
+    "data": {
+      "database": "connected",
+      "mqtt": "connected",
+      "timestamp": "2026-10-22T07:45:10.156Z"
+    }
+  },
+  "startupAttestation": {
+    "pid": 22400,
+    "startedAt": "2026-10-22T05:45:11.435Z",
+    "testMode": true,
+    "effectiveMaxRunSeconds": 1,
+    "commandsEnabled": false,
+    "automationEnabled": false
+  },
+  "ddlExecuted": false,
+  "authenticationWrites": false,
+  "flagsCaveat": "Startup log only; PID must match current listener. No protected API login performed."
+}

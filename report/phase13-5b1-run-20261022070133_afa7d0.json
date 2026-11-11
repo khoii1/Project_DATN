@@ -1,0 +1,210 @@
+{
+  "runId": "20261022070133_afa7d0",
+  "startedAt": "2026-10-22T07:01:33.329Z",
+  "startedCluster": true,
+  "stoppedCluster": true,
+  "cases": [
+    {
+      "name": "isolated identity, source hashes and preserved existing phase database",
+      "status": "PASS",
+      "elapsedMs": 0,
+      "details": {
+        "systemId": "7698826681383327460",
+        "port": 55433,
+        "oldAuditRows": 232
+      }
+    }
+  ],
+  "environments": [
+    {
+      "label": "main",
+      "name": "smart_agriculture_rehearsal_070133afa7d0_main",
+      "migrator": "p135b1_070133afa7d0_main_m",
+      "app": "p135b1_070133afa7d0_main_a",
+      "created": true
+    }
+  ],
+  "commandsIssued": 0,
+  "productionMutation": false,
+  "sourceManifest": {
+    "version": "20261022_irrigation_v1_v2",
+    "generatedAt": "2026-10-22T06:16:02.279Z",
+    "reviewOnly": true,
+    "sqlExecuted": false,
+    "datamodelValidation": "PASS",
+    "productionSchemaSha256": "a45a2b799ecd666328a911424a75d12986ef4248f15fc716455197cd62957b4d",
+    "inventorySha256": "236605b71e4d306fe039bc77d5e6cd58267536c0a3bd38bd5597cc19937ac29e",
+    "v2Sha256": "33eb31404ccdac7ab5dd2cf778330cb3b6796128733938739c5170ecfd088e5d",
+    "files": [
+      {
+        "kind": "bootstrap",
+        "sha256": "e31470e49bb9e3a3572119c18f51e8d340ce27e19fbf4f03842c4da2ef71181e"
+      },
+      {
+        "kind": "migration",
+        "sha256": "436e76003ea363eb012171c54fb50b6fb7c99f67f41f51695fec4ee173ca4ace"
+      },
+      {
+        "kind": "finalize",
+        "sha256": "20de4109c7d16925ef0d12b7fb1d26491507242124f21dfa26107765e513e499"
+      }
+    ],
+    "tables": [
+      "irrigation_cycles",
+      "irrigation_decision_logs",
+      "irrigation_daily_budgets",
+      "irrigation_budget_reservations",
+      "irrigation_command_intents",
+      "irrigation_safety_states"
+    ],
+    "requiresSeparateApproval": true,
+    "sqlExecutionOnIsolatedTarget": "NOT_VERIFIED_FOR_THIS_ARTIFACT"
+  },
+  "controlBefore": {
+    "systemId": "7698826681383327460",
+    "state": "shut down"
+  },
+  "identity": {
+    "db": "postgres",
+    "role": "phase13_test_admin",
+    "session_role": "phase13_test_admin",
+    "host": "127.0.0.1/32",
+    "port": 55433,
+    "started": "2026-10-22 14:01:33.604637+07",
+    "pgdata": "C:/DATN/test-instances/phase13-3b/data",
+    "system_id": "7698826681383327460"
+  },
+  "existingRoles": [
+    {
+      "rolname": "phase13_test_admin",
+      "rolsuper": true,
+      "rolcreatedb": true,
+      "rolcreaterole": true,
+      "rolcanlogin": true
+    },
+    {
+      "rolname": "phase13_test_app",
+      "rolsuper": false,
+      "rolcreatedb": false,
+      "rolcreaterole": false,
+      "rolcanlogin": true
+    },
+    {
+      "rolname": "phase13_test_migrator",
+      "rolsuper": false,
+      "rolcreatedb": false,
+      "rolcreaterole": false,
+      "rolcanlogin": true
+    }
+  ],
+  "oldPhaseBefore": {
+    "rows": [
+      {
+        "relname": "activity_logs",
+        "owner": "phase13_test_migrator"
+      },
+      {
+        "relname": "actuators",
+        "owner": "phase13_test_migrator"
+      },
+      {
+        "relname": "alert_rules",
+        "owner": "phase13_test_migrator"
+      },
+      {
+        "relname": "alerts",
+        "owner": "phase13_test_migrator"
+      },
+      {
+        "relname": "automation_rules",
+        "owner": "phase13_test_migrator"
+      },
+      {
+        "relname": "crops",
+        "owner": "phase13_test_migrator"
+      },
+      {
+        "relname": "device_commands",
+        "owner": "phase13_test_migrator"
+      },
+      {
+        "relname": "devices",
+        "owner": "phase13_test_migrator"
+      },
+      {
+        "relname": "farm_staff_assignments",
+        "owner": "phase13_test_migrator"
+      },
+      {
+        "relname": "farms",
+        "owner": "phase13_test_migrator"
+      },
+      {
+        "relname": "irrigation_budget_reservations",
+        "owner": "phase13_test_migrator"
+      },
+      {
+        "relname": "irrigation_command_intents",
+        "owner": "phase13_test_migrator"
+      },
+      {
+        "relname": "irrigation_cycles",
+        "owner": "phase13_test_migrator"
+      },
+      {
+        "relname": "irrigation_daily_budgets",
+        "owner": "phase13_test_migrator"
+      },
+      {
+        "relname": "irrigation_decision_logs",
+        "owner": "phase13_test_migrator"
+      },
+      {
+        "relname": "irrigation_safety_states",
+        "owner": "phase13_test_migrator"
+      },
+      {
+        "relname": "sensor_readings",
+        "owner": "phase13_test_migrator"
+      },
+      {
+        "relname": "sensors",
+        "owner": "phase13_test_migrator"
+      },
+      {
+        "relname": "users",
+        "owner": "phase13_test_migrator"
+      },
+      {
+        "relname": "zones",
+        "owner": "phase13_test_migrator"
+      }
+    ],
+    "counts": {
+      "irrigation_cycles": 291,
+      "irrigation_decision_logs": 232,
+      "irrigation_daily_budgets": 235,
+      "irrigation_budget_reservations": 148,
+      "irrigation_command_intents": 148,
+      "irrigation_safety_states": 1
+    },
+    "audit": "f4dc02962bdfd5c5a96262403eb2c537"
+  },
+  "operations": [
+    {
+      "database": "smart_agriculture_rehearsal_070133afa7d0_main",
+      "step": "baseline",
+      "role": "phase13_test_admin",
+      "exitCode": 2,
+      "sqlstate": null,
+      "sha256": "d2d280f17c4616965cab88667ce6a935d0be08ce16daa342decfa234e011b719",
+      "log": "rehearsal-13-5b1-20261022070133_afa7d0\\main-baseline.log"
+    }
+  ],
+  "finishedAt": "2026-10-22T07:01:36.908Z",
+  "failure": {
+    "name": "AssertionError",
+    "code": "ERR_ASSERTION",
+    "reason": "REHEARSAL_ASSERTION_OR_SQL_FAILURE_SEE_PRIVATE_LOG"
+  }
+}

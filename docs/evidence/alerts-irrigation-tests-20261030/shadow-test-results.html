@@ -1,0 +1,19 @@
+<!doctype html><html lang="vi"><meta charset="utf-8"><title>Kết quả kiểm thử logic tưới tự động</title><style>body{margin:0;background:#ecf3ef;color:#173d30;font-family:Segoe UI,sans-serif;padding:48px}main{max-width:1320px;margin:auto}.label{font-size:14px;letter-spacing:2px}h1{font-size:36px;margin:14px 0}p{font-size:18px;line-height:1.6}.summary{background:white;border-radius:16px;padding:22px 28px;margin:24px 0;display:flex;justify-content:space-between;align-items:center}.pass{font-size:38px;font-weight:700;color:#147844}.terminal{background:#10251e;color:#d8f7e7;padding:28px;border-radius:16px;font:16px/1.65 Consolas,monospace;white-space:pre-wrap}.note{border-left:5px solid #c18b27;background:#fff8e8;padding:16px 22px;margin-top:24px;color:#77510c}footer{font-size:14px;margin-top:22px;color:#5a7569}</style><main><div class="label">SMART AGRICULTURE · SOFTWARE TEST EVIDENCE</div><h1>Kết quả kiểm thử logic tưới tự động</h1><p>Chạy thực tế bộ kiểm thử offline của SHADOW engine · Không kết nối MQTT hoặc database.</p><div class="summary"><span class="pass">92 / 92 PASS</span><span>Native exit code: 0<br>Thời điểm: 20:47:19 30/10/2026 (UTC+7)</span></div><div class="terminal">$ node --require ./scripts/acceptance-offline-guard.cjs --test<br>  --test-reporter=spec backend/scripts/shadow-irrigation.test.cjs<br><br>✔ soil boundary 18 (14.6567ms)
+✔ fail closed: stale recordedAt (0.4939ms)
+✔ fail closed: offline (1.4833ms)
+✔ fail closed: clock unhealthy (2.5922ms)
+✔ fail closed: daily runs (1.4024ms)
+✔ fail closed: emergency stop (0.8288ms)
+✔ hysteresis uses trusted cycle state, no ON within band (0.9007ms)
+✔ pulse -&gt; wait fresh OFF -&gt; soak; no immediate repeat (6.1012ms)
+✔ ACK_TIMEOUT latches fault without refund or retry (1.7959ms)
+✔ ACK_REJECTED latches fault without refund or retry (0.961ms)
+✔ persistent dry soil stops after finite daily run reservations (5.1547ms)
+✔ per-cycle cap applies independently of daily quota (2.1282ms)
+✔ UTC+7 budget day, no automatic midnight budget reset (0.8081ms)
+✔ production source never imports or invokes isolated shadow modules (241.7197ms)<br><br>ℹ tests 92
+ℹ pass 92
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ duration_ms 1347.1544</div><div class="note"><b>Phạm vi bằng chứng:</b> kiểm thử logic phần mềm bằng fixture/mô phỏng. Không phải nghiệm thu tưới tự động trên phần cứng; không gửi ON/OFF, không kích hoạt bơm.</div><footer>Trích từ stdout thực tế · Log đầy đủ: shadow-tests-output.txt · Chỉ hiển thị một số test tiêu biểu, tổng số lấy từ test runner.</footer></main></html>

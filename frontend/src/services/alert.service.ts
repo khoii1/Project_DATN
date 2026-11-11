@@ -8,14 +8,14 @@ export interface AlertFilters { farmId?: string; zoneId?: string; deviceId?: str
 export interface RuleFilters { search?: string; farmId?: string; zoneId?: string; deviceId?: string; sensorId?: string; sensorType?: SensorType | ""; severity?: AlertSeverity | ""; enabled?: boolean; page?: number; limit?: number }
 
 export const alertService = {
-  async list(filters: AlertFilters = {}) { const response = await api.get<Envelope<Page<Alert>>>("/alerts", { params: params(filters) }); return response.data.data; },
-  async summary() { const response = await api.get<Envelope<AlertSummary>>("/alerts/summary"); return response.data.data; },
-  async get(id: string) { const response = await api.get<Envelope<{ alert: Alert }>>(`/alerts/${id}`); return response.data.data.alert; },
+  async list(filters: AlertFilters = {}, signal?: AbortSignal) { const response = await api.get<Envelope<Page<Alert>>>("/alerts", { params: params(filters), signal }); return response.data.data; },
+  async summary(signal?: AbortSignal) { const response = await api.get<Envelope<AlertSummary>>("/alerts/summary", { signal }); return response.data.data; },
+  async get(id: string, signal?: AbortSignal) { const response = await api.get<Envelope<{ alert: Alert }>>(`/alerts/${id}`, { signal }); return response.data.data.alert; },
   async acknowledge(id: string) { const response = await api.post<Envelope<{ alert: Alert }>>(`/alerts/${id}/acknowledge`); return response.data.data.alert; },
   async resolve(id: string) { const response = await api.post<Envelope<{ alert: Alert }>>(`/alerts/${id}/resolve`); return response.data.data.alert; },
 };
 export const alertRuleService = {
-  async list(filters: RuleFilters = {}) { const response = await api.get<Envelope<Page<AlertRule>>>("/alert-rules", { params: params(filters) }); return response.data.data; },
+  async list(filters: RuleFilters = {}, signal?: AbortSignal) { const response = await api.get<Envelope<Page<AlertRule>>>("/alert-rules", { params: params(filters), signal }); return response.data.data; },
   async get(id: string) { const response = await api.get<Envelope<{ rule: AlertRule }>>(`/alert-rules/${id}`); return response.data.data.rule; },
   async create(input: AlertRuleInput) { const response = await api.post<Envelope<{ rule: AlertRule }>>("/alert-rules", input); return response.data.data.rule; },
   async update(id: string, input: Partial<AlertRuleInput>) { const { sensorId: _sensorId, ...changes } = input; void _sensorId; const response = await api.patch<Envelope<{ rule: AlertRule }>>(`/alert-rules/${id}`, changes); return response.data.data.rule; },

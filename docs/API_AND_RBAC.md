@@ -7,7 +7,7 @@ Base URL mặc định: `http://localhost:5000/api`. Tất cả endpoint trừ h
 | Prefix | Chức năng chính |
 |---|---|
 | `/health` | Trạng thái HTTP/database/MQTT |
-| `/auth` | login, me, logout |
+| `/auth` | login, me (`GET`/`PATCH`), change-password (`PATCH`), logout |
 | `/users` | list/detail/create/update user |
 | `/farms` | CRUD Farm, staff list/candidates/assign/permission/remove |
 | `/zones`, `/crops` | CRUD theo farm scope; latest readings của Zone |

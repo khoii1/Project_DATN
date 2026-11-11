@@ -31,8 +31,21 @@ Thumbs.db
 # Test, build and runtime artifacts
 coverage/
 *.log
+*.tmp
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 .postgres-data/
 .mqtt-qa/
+
+# Mosquitto local password/ACL files (never commit non-example broker configs)
+infrastructure/mosquitto/passwords*
+infrastructure/mosquitto/acl
+infrastructure/mosquitto/mosquitto.conf
+!infrastructure/mosquitto/*.example
+
+# ESP32 local credentials and compiled binaries (never commit real Wi-Fi/broker passwords or ELF/BIN)
+firmware/**/config*.local.h
+firmware/**/*.bin
+firmware/**/*.elf
+firmware/**/*.hex

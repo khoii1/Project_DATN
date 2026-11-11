@@ -1,0 +1,29 @@
+{
+  "purpose": "OFFLINE_HARDENING_PINS_NOT_EXECUTION_APPROVAL",
+  "approvalFile": "C:\\Users\\Acer Swift3\\.codex\\attachments\\f3cad0e5-c086-4e40-b872-de66947ae466\\Pasted text.txt",
+  "approvalSha256": "d4ff17ff9f6d470e740163407fb7b3924fbad598a66a4d89f118426aeef9bd64",
+  "replacements": {
+    "scripts/frontend-acceptance/source-contract.cjs": {
+      "old": "52341c6627fc82552173335cda31af08679697522ea8498b16a38b3274c2d8ad",
+      "new": "26c5fd2b6661e7afcc8c9ee3497487b04d7d56ce156a21f9a0fa0a1ca4966392"
+    },
+    "scripts/frontend-acceptance/bridge.test.cjs": {
+      "old": "45230c9f3e991e6d71b8b98cb06ee0f5f4f52d753a66f57e7e47ce246f83faf2",
+      "new": "cb0eb1c00f97cbdf301737f9bcca6d677463146014b3598fe9fc033bfb7db273"
+    }
+  },
+  "additions": {
+    "scripts/frontend-acceptance/strict-lineage.cjs": "2e9458917803299c554606b663bd8cbccc4cce2a6c50437bf7f2e9233a044ba1",
+    "scripts/frontend-acceptance/lineage-fs.cjs": "7648683938e3c4ddcc59073b6fd9e6adaf502d597305c93affc1658c9dc6f605"
+  },
+  "readyPolicyUpdate": {
+    "path": "scripts/frontend-acceptance/bridge.cjs",
+    "old": "2c667c0b5a46389f9fee3494a0b1c07ad4e275d8538362c80c2b1c694c7cabbb",
+    "new": "f09b5c89f8278e3c27d49067b7ffe25fdb759e808eb6a231ebb1d228b26d49d1",
+    "preparationApprovalFile": "C:\\Users\\Acer Swift3\\.codex\\attachments\\765e707f-c586-4aa6-a96e-9dbb47b1d92a\\Pasted text.txt",
+    "preparationApprovalSha256": "364cb7448bf5fbdbb1a063c04b3f4bd0d7e7cda359b61c7fba83596de0cb4fa1",
+    "parentFile": "docs/FINAL_FRONTEND_STRICT_HARDENING_PINS.json",
+    "parentSha256": "4f336378455fc5bc7a9bb570d324e18cab6b43fe1c932842ba85e530728f3c07",
+    "purpose": "STAGED_READY_POLICY_SOURCE_REVIEW_NOT_LIVE_APPROVAL"
+  }
+}

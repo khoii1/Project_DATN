@@ -1,0 +1,24 @@
+{
+  "checkedAt": "2026-10-21T11:04:35.139Z",
+  "types": [
+    {
+      "column_name": "received_at",
+      "data_type": "timestamp without time zone"
+    },
+    {
+      "column_name": "recorded_at",
+      "data_type": "timestamp without time zone"
+    }
+  ],
+  "cadence": [
+    {
+      "batches": 61,
+      "first": "2026-10-21T10:49:24.588Z",
+      "latest": "2026-10-21T11:04:24.588Z",
+      "min_readings_per_batch": 4,
+      "max_readings_per_batch": 4,
+      "max_gap_seconds": 15.001
+    }
+  ],
+  "initialDiagnosticCorrection": "Prior timestamptz comparison used session timezone against UTC-naive Prisma timestamp; use same timestamp type. Prior zero was not evidence of absent readings."
+}

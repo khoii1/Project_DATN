@@ -1,4 +1,7 @@
 import { ActuatorState, ActuatorStatus, ActuatorType, DeviceConnectionStatus, DeviceStatus, FarmStatus, Prisma, ZoneStatus } from "@prisma/client";
+import { env } from "../config/env";
+import { mqttCommandChannel } from "../mqtt/mqtt-command-channel";
+import { mqttStateObserver } from "../mqtt/mqtt-state-observer";
 import { prisma } from "../config/database";
 import { farmScope, type FarmActor } from "./farm.repository";
 
@@ -13,5 +16,9 @@ export const actuatorRepository = {
   findByDeviceAndCode(deviceId: string, actuatorCode: string) { return prisma.actuator.findUnique({ where: { deviceId_actuatorCode: { deviceId, actuatorCode } }, include: actuatorInclude }); },
   create(data: Prisma.ActuatorUncheckedCreateInput) { return prisma.actuator.create({ data, include: actuatorInclude }); },
   update(id: string, data: Prisma.ActuatorUpdateInput) { return prisma.actuator.update({ where: { id }, data, include: actuatorInclude }); },
-  async summary(actor: FarmActor, filters: Pick<ActuatorListOptions, "farmId" | "zoneId" | "deviceId" | "type">) { const filter = where(actor, filters); const unavailable: Prisma.ActuatorWhereInput = { OR: [{ status: { not: ActuatorStatus.ACTIVE } }, { device: { OR: [{ status: { not: DeviceStatus.ACTIVE } }, { connectionStatus: { not: DeviceConnectionStatus.ONLINE } }, { zone: { OR: [{ status: { not: ZoneStatus.ACTIVE } }, { farm: { status: { not: FarmStatus.ACTIVE } } }] } }] } }] }; const [total, active, on, off, unknown, unavailableCount] = await prisma.$transaction([prisma.actuator.count({ where: filter }), prisma.actuator.count({ where: { AND: [filter, { status: ActuatorStatus.ACTIVE }] } }), prisma.actuator.count({ where: { AND: [filter, { currentState: ActuatorState.ON }] } }), prisma.actuator.count({ where: { AND: [filter, { currentState: ActuatorState.OFF }] } }), prisma.actuator.count({ where: { AND: [filter, { currentState: ActuatorState.UNKNOWN }] } }), prisma.actuator.count({ where: { AND: [filter, unavailable] } })]); return { total, active, on, off, unknown, unavailable: unavailableCount }; },
+  async summary(actor: FarmActor, filters: Pick<ActuatorListOptions, "farmId" | "zoneId" | "deviceId" | "type">) { const filter = where(actor, filters); const unavailable: Prisma.ActuatorWhereInput = { OR: [{ status: { not: ActuatorStatus.ACTIVE } }, { device: { OR: [{ status: { not: DeviceStatus.ACTIVE } }, { connectionStatus: { not: DeviceConnectionStatus.ONLINE } }, { zone: { OR: [{ status: { not: ZoneStatus.ACTIVE } }, { farm: { status: { not: FarmStatus.ACTIVE } } }] } }] } }] }; const observed = !!mqttCommandChannel.transport?.connected();
+    const validOn: Prisma.ActuatorWhereInput = observed ? { currentState: ActuatorState.ON, device: { connectionStatus: DeviceConnectionStatus.ONLINE }, lastStateChangedAt: { gte: new Date(Date.now() - (env.mqttPumpMaxRunSeconds + 2) * 1000) } } : { id: "__no_confirmed_state__" };
+    const offReports = mqttStateObserver.offFilters();
+    const validOff: Prisma.ActuatorWhereInput = offReports.length ? { currentState: ActuatorState.OFF, device: { connectionStatus: DeviceConnectionStatus.ONLINE }, OR: offReports } : { id: "__no_confirmed_state__" };
+    const [total, active, on, off, unknown, unavailableCount] = await prisma.$transaction([prisma.actuator.count({ where: filter }), prisma.actuator.count({ where: { AND: [filter, { status: ActuatorStatus.ACTIVE }] } }), prisma.actuator.count({ where: { AND: [filter, validOn] } }), prisma.actuator.count({ where: { AND: [filter, validOff] } }), prisma.actuator.count({ where: { AND: [filter, { NOT: { OR: [validOn, validOff] } }] } }), prisma.actuator.count({ where: { AND: [filter, unavailable] } })]); return { total, active, on, off, unknown, unavailable: unavailableCount }; },
 };

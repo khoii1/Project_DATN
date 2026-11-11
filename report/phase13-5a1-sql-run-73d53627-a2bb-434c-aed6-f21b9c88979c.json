@@ -1,0 +1,64 @@
+{
+  "runId": "73d53627-a2bb-434c-aed6-f21b9c88979c",
+  "startedAt": "2026-10-21T17:59:42.225Z",
+  "startedByAgent": true,
+  "migrationCommitted": true,
+  "testsPassed": true,
+  "testClusterStopped": true,
+  "production": {
+    "db": "smart_agriculture",
+    "schema": "public",
+    "port": 5432,
+    "started": "2026-10-16 12:13:43.656514+07",
+    "data": "C:/Program Files/PostgreSQL/17/data",
+    "system_id": "7472695863566132416"
+  },
+  "control": {
+    "systemId": "7698826681383327460",
+    "state": "shut down"
+  },
+  "identity": {
+    "db": "smart_agriculture_test_phase13_3b",
+    "role": "phase13_test_migrator",
+    "host": "127.0.0.1/32",
+    "port": 55433,
+    "schema": "phase13_test_phase13_3b",
+    "started": "2026-10-22 00:59:42.466625+07"
+  },
+  "appRole": {
+    "rolsuper": false,
+    "rolcreatedb": false,
+    "rolcreaterole": false,
+    "audit_owner": "phase13_test_migrator"
+  },
+  "v1ConstraintCount": 68,
+  "reusedCommittedV2": {
+    "runId": "a81120ae-6f63-4636-ab02-65b74b3c1b85",
+    "sha256": "33eb31404ccdac7ab5dd2cf778330cb3b6796128733938739c5170ecfd088e5d",
+    "constraints": [
+      {
+        "conname": "irrigation_v2_settlement",
+        "convalidated": true,
+        "definition": "CHECK ((((status <> ALL (ARRAY['RELEASED'::\"IrrigationReservationStatus\", 'CHARGED'::\"IrrigationReservationStatus\"])) OR (settled_at IS NOT NULL)) AND ((settled_at IS NULL) OR (settled_at >= created_at))))"
+      },
+      {
+        "conname": "irrigation_v2_dispatch_order",
+        "convalidated": true,
+        "definition": "CHECK ((((published_at IS NULL) OR ((dispatch_claimed_at IS NOT NULL) AND (published_at >= dispatch_claimed_at))) AND ((dispatch_claimed_at IS NULL) OR (dispatch_claimed_at >= issued_at)) AND ((acknowledged_at IS NULL) OR ((published_at IS NOT NULL) AND (acknowledged_at >= published_at)))))"
+      }
+    ],
+    "triggers": [
+      {
+        "tgname": "irrigation_v2_append_only",
+        "tgenabled": "O",
+        "definition": "CREATE TRIGGER irrigation_v2_append_only BEFORE DELETE OR UPDATE ON phase13_test_phase13_3b.irrigation_decision_logs FOR EACH ROW EXECUTE FUNCTION irrigation_v2_deny_audit_mutation()"
+      },
+      {
+        "tgname": "irrigation_v2_no_truncate",
+        "tgenabled": "O",
+        "definition": "CREATE TRIGGER irrigation_v2_no_truncate BEFORE TRUNCATE ON phase13_test_phase13_3b.irrigation_decision_logs FOR EACH STATEMENT EXECUTE FUNCTION irrigation_v2_deny_audit_mutation()"
+      }
+    ]
+  },
+  "finishedAt": "2026-10-21T17:59:55.431Z"
+}

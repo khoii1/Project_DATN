@@ -1,0 +1,203 @@
+// Proposal fragment ONLY. tools script composes inverse relations with current schema.
+// Never use this fragment as the production Prisma schema or run migrate deploy here.
+enum IrrigationPersistenceMode {
+  DISABLED
+  SHADOW
+  ACTIVE
+}
+enum IrrigationCyclePhase {
+  IDLE
+  ELIGIBLE
+  PENDING_ACK
+  PULSE_ACTIVE
+  WAIT_FRESH_OFF
+  SOAK
+  REEVALUATE
+  FAULT_LOCKED
+}
+enum IrrigationIntentStatus {
+  RESERVED
+  DISPATCH_CLAIMED
+  PUBLISHED
+  ACKED
+  COMPLETED
+  REJECTED
+  UNCERTAIN
+  CANCELLED
+}
+enum IrrigationReservationStatus {
+  RESERVED
+  CHARGED
+  UNCERTAIN
+  RELEASED
+}
+enum IrrigationDecisionSource {
+  FIXTURE
+  MOCK
+  VERIFIED_LIVE
+}
+enum IrrigationDecisionOutcome {
+  WOULD_ON
+  WOULD_SKIP
+  BLOCKED
+}
+
+model IrrigationCycle {
+  id                String @id @default(cuid())
+  actuatorId        String @map("actuator_id")
+  deviceId          String @map("device_id")
+  automationRuleId  String? @map("automation_rule_id")
+  policyKey         String @map("policy_key")
+  policyVersion     Int @map("policy_version")
+  policySnapshot    Json @map("policy_snapshot")
+  mode              IrrigationPersistenceMode @default(DISABLED)
+  phase             IrrigationCyclePhase @default(FAULT_LOCKED)
+  version           Int @default(0)
+  sessionGeneration String @map("session_generation")
+  sessionStartedAt  DateTime @db.Timestamptz(3) @map("session_started_at")
+  lastReadingId     String? @map("last_reading_id")
+  lastReadingAt     DateTime? @db.Timestamptz(3) @map("last_reading_at")
+  lastEvaluatedAt   DateTime? @db.Timestamptz(3) @map("last_evaluated_at")
+  lastPulseAt       DateTime? @db.Timestamptz(3) @map("last_pulse_at")
+  lastOffAt         DateTime? @db.Timestamptz(3) @map("last_off_at")
+  lastOffEvidence   Json? @map("last_off_evidence")
+  soakUntil         DateTime? @db.Timestamptz(3) @map("soak_until")
+  pulses            Int @default(0)
+  consumedKeys      Json @default("[]") @map("consumed_keys")
+  closedAt          DateTime? @db.Timestamptz(3) @map("closed_at")
+  createdAt         DateTime @default(now()) @db.Timestamptz(3) @map("created_at")
+  updatedAt         DateTime @updatedAt @db.Timestamptz(3) @map("updated_at")
+  actuator          Actuator @relation(fields: [actuatorId, deviceId], references: [id, deviceId], onDelete: Restrict, onUpdate: Restrict)
+  device            Device @relation(fields: [deviceId], references: [id], onDelete: Restrict, onUpdate: Restrict)
+  automationRule    AutomationRule? @relation(fields: [automationRuleId, actuatorId], references: [id, actuatorId], onDelete: Restrict, onUpdate: Restrict)
+  decisions         IrrigationDecisionLog[]
+  intents           CommandIntent[]
+  reservations      IrrigationBudgetReservation[]
+  @@unique([id, actuatorId, mode])
+  @@index([actuatorId, phase])
+  @@index([deviceId])
+  @@index([automationRuleId])
+  @@map("irrigation_cycles")
+}
+
+model IrrigationDecisionLog {
+  id               String @id @default(cuid())
+  evaluationKey    String @unique @map("evaluation_key")
+  cycleId          String? @map("cycle_id")
+  actuatorId       String @map("actuator_id")
+  intentId         String? @map("intent_id")
+  sensorReadingId  String? @map("sensor_reading_id")
+  readingReference String @map("reading_reference")
+  policyKey        String @map("policy_key")
+  policyVersion    Int @map("policy_version")
+  mode             IrrigationPersistenceMode
+  source           IrrigationDecisionSource
+  outcome          IrrigationDecisionOutcome
+  reasonCode       String @map("reason_code")
+  evidence         Json
+  evaluatedAt      DateTime @db.Timestamptz(3) @map("evaluated_at")
+  createdAt        DateTime @default(now()) @db.Timestamptz(3) @map("created_at")
+  cycle            IrrigationCycle? @relation(fields: [cycleId, actuatorId, mode], references: [id, actuatorId, mode], onDelete: Restrict, onUpdate: Restrict)
+  actuator         Actuator @relation(fields: [actuatorId], references: [id], onDelete: Restrict, onUpdate: Restrict)
+  intent           CommandIntent? @relation(fields: [intentId, actuatorId, mode], references: [id, actuatorId, mode], onDelete: Restrict, onUpdate: Restrict)
+  sensorReading    SensorReading? @relation(fields: [sensorReadingId], references: [id], onDelete: Restrict, onUpdate: Restrict)
+  @@index([actuatorId, evaluatedAt])
+  @@index([cycleId])
+  @@index([intentId])
+  @@index([sensorReadingId])
+  @@map("irrigation_decision_logs")
+}
+
+model IrrigationDailyBudget {
+  id              String @id @default(cuid())
+  actuatorId      String @map("actuator_id")
+  mode            IrrigationPersistenceMode @default(DISABLED)
+  localDay        DateTime @db.Date @map("local_day")
+  reservedRuns    Int @default(0) @map("reserved_runs")
+  reservedSeconds Int @default(0) @map("reserved_seconds")
+  maxRuns         Int @map("max_runs")
+  maxSeconds      Int @map("max_seconds")
+  version         Int @default(0)
+  actuator        Actuator @relation(fields: [actuatorId], references: [id], onDelete: Restrict, onUpdate: Restrict)
+  reservations    IrrigationBudgetReservation[]
+  @@unique([actuatorId, mode, localDay])
+  @@unique([id, actuatorId, mode])
+  @@map("irrigation_daily_budgets")
+}
+
+model IrrigationBudgetReservation {
+  id         String @id @default(cuid())
+  budgetId   String @map("budget_id")
+  actuatorId String @map("actuator_id")
+  mode       IrrigationPersistenceMode @default(DISABLED)
+  cycleId    String @map("cycle_id")
+  intentId   String @unique @map("intent_id")
+  seconds    Int
+  status     IrrigationReservationStatus @default(RESERVED)
+  version    Int @default(0)
+  reason     String?
+  createdAt  DateTime @default(now()) @db.Timestamptz(3) @map("created_at")
+  settledAt  DateTime? @db.Timestamptz(3) @map("settled_at")
+  budget     IrrigationDailyBudget @relation(fields: [budgetId, actuatorId, mode], references: [id, actuatorId, mode], onDelete: Restrict, onUpdate: Restrict)
+  cycle      IrrigationCycle @relation(fields: [cycleId, actuatorId, mode], references: [id, actuatorId, mode], onDelete: Restrict, onUpdate: Restrict)
+  intent     CommandIntent @relation(fields: [intentId, cycleId, actuatorId, mode], references: [id, cycleId, actuatorId, mode], onDelete: Restrict, onUpdate: Restrict)
+  @@unique([intentId, cycleId, actuatorId, mode])
+  @@index([budgetId, status])
+  @@index([cycleId])
+  @@map("irrigation_budget_reservations")
+}
+
+model CommandIntent {
+  id                String @id @default(cuid())
+  idempotencyKey    String @map("idempotency_key")
+  fingerprint       String
+  actuatorId        String @map("actuator_id")
+  cycleId           String @map("cycle_id")
+  mode              IrrigationPersistenceMode @default(DISABLED)
+  pulseIndex        Int @map("pulse_index")
+  correlationId     String @unique @map("correlation_id")
+  deviceCommandId   String? @unique @map("device_command_id")
+  sessionGeneration String @map("session_generation")
+  status            IrrigationIntentStatus @default(RESERVED)
+  version           Int @default(0)
+  maxRunSeconds     Int @map("max_run_seconds")
+  issuedAt          DateTime @db.Timestamptz(3) @map("issued_at")
+  expiresAt         DateTime @db.Timestamptz(3) @map("expires_at")
+  dispatchClaimedAt DateTime? @db.Timestamptz(3) @map("dispatch_claimed_at")
+  publishedAt       DateTime? @db.Timestamptz(3) @map("published_at")
+  acknowledgedAt   DateTime? @db.Timestamptz(3) @map("acknowledged_at")
+  reason            String?
+  cycle             IrrigationCycle @relation(fields: [cycleId, actuatorId, mode], references: [id, actuatorId, mode], onDelete: Restrict, onUpdate: Restrict)
+  deviceCommand     DeviceCommand? @relation(fields: [deviceCommandId, actuatorId], references: [id, actuatorId], onDelete: Restrict, onUpdate: Restrict)
+  reservation       IrrigationBudgetReservation?
+  decisions         IrrigationDecisionLog[]
+  @@unique([cycleId, pulseIndex])
+  @@unique([mode, idempotencyKey])
+  @@unique([id, cycleId, actuatorId, mode])
+  @@unique([id, actuatorId, mode])
+  @@unique([deviceCommandId, actuatorId])
+  @@index([actuatorId, status])
+  @@map("irrigation_command_intents")
+}
+
+model IrrigationSafetyState {
+  actuatorId             String @map("actuator_id")
+  mode                   IrrigationPersistenceMode @default(DISABLED)
+  deviceId               String @map("device_id")
+  version                Int @default(0)
+  faultLatched           Boolean @default(true) @map("fault_latched")
+  emergencyStop          Boolean @default(true) @map("emergency_stop")
+  faultReason            String? @map("fault_reason")
+  reportedState          ActuatorState @default(UNKNOWN) @map("reported_state")
+  sessionGeneration      String? @map("session_generation")
+  lastConfirmedOffAt     DateTime? @db.Timestamptz(3) @map("last_confirmed_off_at")
+  lastOffEvidence        Json? @map("last_off_evidence")
+  cooldownUntil          DateTime? @db.Timestamptz(3) @map("cooldown_until")
+  manualOverrideUntil    DateTime? @db.Timestamptz(3) @map("manual_override_until")
+  lastAcceptedServerTime DateTime? @db.Timestamptz(3) @map("last_accepted_server_time")
+  budgetDayHighWater     DateTime? @db.Date @map("budget_day_high_water")
+  updatedAt              DateTime @updatedAt @db.Timestamptz(3) @map("updated_at")
+  actuator               Actuator @relation(fields: [actuatorId, deviceId], references: [id, deviceId], onDelete: Restrict, onUpdate: Restrict)
+  @@id([actuatorId, mode])
+  @@map("irrigation_safety_states")
+}

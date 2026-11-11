@@ -1,0 +1,21 @@
+{
+  "version": 1,
+  "purpose": "AJ_SOURCE_PINS_ONLY_NOT_EXECUTION_APPROVAL",
+  "manifestFile": "docs/PHASE_AE_UI_ONLY_SOURCE_MANIFEST.json",
+  "manifestSha256": "b0c8974c6c4244652951963cae28f4eb9d56f07a562de9e32df6c5e16a015d56",
+  "sources": {
+    "scripts/mvp-hash-diagnostic-policy.cjs": "605d18784b43eaa602e2af6043c4f4a1d537e81d20650d81d99b419bf5aa9200",
+    "scripts/mvp-hash-only-target.cjs": "b2f96e2c775825fa77b9810f4319f75182e365124a56fa863d92bb402bbf2aca",
+    "scripts/mvp-hash-diagnostic-observer.cjs": "b7c796ccec7395563ae4a5817de2d8b2d0a73a50ba6a657a5584f7f23895ee35",
+    "scripts/mvp-hash-diagnostic-outer.ps1": "e973e0190d53521c6126984a5c81a8e8e496b135e8ca92a79f64360f8285b88e",
+    "scripts/mvp-hash-diagnostic-once.ps1": "b0d9037dfaad57d60f640d276ce61172f25b0134f697f89b17a042304e7d4121",
+    "scripts/mvp-ui-native-boundary.cjs": "b2f6206df966fe0de10c8616e76ae17be6335244888356c9bbdb52cd9acfffd5"
+  },
+  "executionBinaries": {
+    "C:\\Program Files\\nodejs\\node.exe": "fdddbf4581e046b8102815d56208d6a248950bb554570b81519a8a5dacfee95d",
+    "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe": "60c9b29843624dd8af6b6a7b26147753be6aeef65098b9a503cc50850afe410f"
+  },
+  "offlineTestHashes": {
+    "scripts/mvp-hash-diagnostic.test.cjs": "28c1f30933478ca99406ad94f292333d146d9bd6651cf34e5d36e5174d28b0f5"
+  }
+}

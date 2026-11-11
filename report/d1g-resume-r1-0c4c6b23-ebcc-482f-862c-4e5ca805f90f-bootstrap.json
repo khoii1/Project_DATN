@@ -1,0 +1,31 @@
+{
+  "phase": "13.5D.1G-R1",
+  "runReference": "d1g-resume-r1-0c4c6b23-ebcc-482f-862c-4e5ca805f90f",
+  "startedAt": "2026-10-25T18:13:50.742Z",
+  "endedAt": "2026-10-25T18:13:52.499Z",
+  "nativeExitCode": 0,
+  "nativeErrorCode": null,
+  "nativeSignal": null,
+  "stderrPresent": false,
+  "helperSha256": "EA18F33C8FD072A6F524AD831278A3124B0E4256FE7C15667458D7267AA704C1",
+  "result": {
+    "status": "ROOT_NTFS_VERIFIED",
+    "runReference": "d1g-resume-r1",
+    "checkpoint": "VERIFY_ACTUAL_DACL",
+    "startedAt": "2026-10-25T18:13:51.0502634+00:00",
+    "endedAt": "2026-10-25T18:13:52.4188182+00:00",
+    "ownerSid": "S-1-5-21-1432835263-483988321-3159128977-1001",
+    "protectedDacl": true,
+    "aceSids": [
+      "S-1-5-21-1432835263-483988321-3159128977-1001",
+      "S-1-5-18"
+    ],
+    "empty": true,
+    "unexpectedReparse": false,
+    "parentAclUnchanged": true,
+    "targetProcessMatches": 0,
+    "unrelatedProcessMetadataUnavailable": 7,
+    "unknownOutcome": false
+  },
+  "unknownOutcome": false
+}

@@ -1,0 +1,39 @@
+{
+  "phase": "13.5D.1C",
+  "dateLocal": "2026-10-25",
+  "timezone": "Asia/Bangkok",
+  "executionMode": "OFFLINE_SYNTHETIC_ONLY",
+  "finalSuitePrefix": "test-1792944465845-d728be",
+  "testCommand": "node --test scripts/phase13-5d1c-launcher.test.cjs",
+  "finalTests": { "tests": 21, "pass": 21, "fail": 0, "skipped": 0, "cancelled": 0, "nativeExitCode": 0, "durationMs": 21850.0113 },
+  "history": [
+    { "scope": "initial implementation", "tests": 20, "pass": 20, "fail": 0 },
+    { "scope": "hardening regression before atomic JSON publication fix", "tests": 20, "pass": 18, "fail": 2, "reason": "Partial JSON evidence read race", "evidenceRetained": true },
+    { "scope": "final corrected source", "tests": 21, "pass": 21, "fail": 0 }
+  ],
+  "syntheticRunsInFinalSuite": 9,
+  "gracefulSignal": "Windows CTRL_C_EVENT -> Node SIGINT",
+  "gracefulCase": { "runSuffix": "-3", "childPid": 12572, "hostPid": 15416, "signalReceived": true, "resourceClosed": true, "childExitCode": 0, "hostExitCode": 0, "forceKillUsed": false },
+  "negativeCases": {
+    "wrongStopIdentity": { "runSuffix": "-10", "signalSent": false, "childSelfExpiryExitCode": 23 },
+    "ignoredSignal": { "runSuffix": "-11", "timeoutRecorded": true, "childSelfExpiryExitCode": 23, "classifiedAsGracefulSuccess": false },
+    "lostWrapperHeartbeat": { "runSuffix": "-9", "result": "MONITOR_LOST", "childGracefullyStopped": true, "restartAttempts": 0 }
+  },
+  "ownedFinalSuiteProcessesRemaining": 0,
+  "syntax": { "nodeCheck": "PASS_ALL_THREE_CJS_FILES", "powershellAst": "PASS" },
+  "sourceHashes": {
+    "scripts/phase13-5d1c-launcher.cjs": "051EE903D7B7988E6FF151459EE6DB0451768A19BDF826B78187906CF628C75A",
+    "scripts/phase13-5d1c-console-host.ps1": "C9810B5D56A34C9AC46CA65E51CE2ED12F5333950A1DD3D877C2685575617EA3",
+    "scripts/phase13-5d1c-synthetic-child.cjs": "DB97A4BB4FCA87E9231DDC1B5D39AB75A662FCE240E544C192669DDC1BA904CF",
+    "scripts/phase13-5d1c-launcher.test.cjs": "990BCC218E2DF5987C033C432B974065D3845F4E5A0A7BBEAADDA31B63AC9E10"
+  },
+  "productionExecutionImplemented": false,
+  "productionSafetyGates": "PURE_MOCK_CONTRACT_ONLY_NOT_LIVE_ATTESTATION",
+  "productionListenerOwnership": "NOT_VERIFIED_OFFLINE_ONLY",
+  "backendRecoveryPerformed": false,
+  "databaseConnections": 0,
+  "mqttConnections": 0,
+  "productionRuntimeChanged": false,
+  "physicalPumpTriggered": false,
+  "verdict": "PHASE13_5D1C_OFFLINE_LAUNCHER_READY"
+}

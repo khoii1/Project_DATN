@@ -1,0 +1,94 @@
+{
+  "at": "2026-10-21T11:17:07.056Z",
+  "offlineOnly": true,
+  "affected": {
+    "wifi": true,
+    "mqttDevice": true,
+    "backendDirectDisclosureProven": false,
+    "backendReusesExposedDevicePassword": false,
+    "backendReusesExposedWifiPassword": false
+  },
+  "trackedScan": {
+    "checked": 269,
+    "candidatePaths": []
+  },
+  "shareableScan": {
+    "checked": 72,
+    "candidatePaths": []
+  },
+  "buildTextScan": {
+    "checked": 140,
+    "candidatePaths": [
+      "build/esp32-phase12b1/sketch/config.local.h",
+      "build/esp32-phase12d2/sketch/config.local.h",
+      "build/esp32-phase12d2b-local/sketch/config.local.h",
+      "build/esp32-phase12d3a-enabled/sketch/config.local.h",
+      "build/esp32-phase13-4d-local/sketch/config.local.h",
+      "build/esp32-phase13-4e-disabled/sketch/config.local.h",
+      "build/esp32-phase13-4e-rollback-src/SmartAgricultureESP32/config.local.h",
+      "build/esp32-phase13-4f1-hotfix/sketch/config.local.h"
+    ]
+  },
+  "ignoreChecks": [
+    {
+      "path": "backend/.env",
+      "ignored": true,
+      "tracked": false
+    },
+    {
+      "path": "firmware/SmartAgricultureESP32/config.local.h",
+      "ignored": true,
+      "tracked": false
+    },
+    {
+      "path": "build/esp32-phase13-4f1-hotfix/SmartAgricultureESP32.ino.bin",
+      "ignored": true,
+      "tracked": false
+    },
+    {
+      "path": "report/phase13_4g/readonly-review.json",
+      "ignored": false,
+      "tracked": false
+    },
+    {
+      "path": "infrastructure/mosquitto/passwords",
+      "ignored": false,
+      "tracked": false
+    },
+    {
+      "path": "infrastructure/mosquitto/passwords.new",
+      "ignored": false,
+      "tracked": false
+    },
+    {
+      "path": "firmware/SmartAgricultureESP32/config.rotation.local.h",
+      "ignored": false,
+      "tracked": false
+    }
+  ],
+  "sensitivePathCommitCount": 0,
+  "historyScope": "Only current known paths, not a full history or remote scan",
+  "appContainsCurrentWifiLiteral": true,
+  "appContainsCurrentDeviceMqttLiteral": true,
+  "baselineApplicationHash": "D3297B343D9B6B2ED2BAF4B8B03FBC3292A51354D51018746A8863771723A82A",
+  "knownCredentialContainers": [
+    "firmware/SmartAgricultureESP32/config.local.h",
+    "backend/.env",
+    "C:/mosquitto/config/passwords",
+    "build/*/sketch/config.local.h",
+    "build/*/*.bin",
+    "build/*/*.elf",
+    "build/esp32-phase13-4e-rollback-src/SmartAgricultureESP32/config.local.h",
+    "C:/DATN/backups/phase*/config.local.h (where present)"
+  ],
+  "aclPathsInspected": [
+    "C:/DATN/Project_datn/build",
+    "C:/DATN/Project_datn/backend/.env",
+    "C:/DATN/Project_datn/firmware/SmartAgricultureESP32/config.local.h",
+    "C:/DATN/backups",
+    "C:/mosquitto/config/passwords"
+  ],
+  "newCredentialsProvided": false,
+  "newBuildPerformed": false,
+  "credentialsChanged": false
+}

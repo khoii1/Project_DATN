@@ -1,0 +1,44 @@
+{
+  "version": "20261022_irrigation_v1_v2",
+  "generatedAt": "2026-10-22T07:02:43.673Z",
+  "reviewOnly": true,
+  "sqlExecuted": false,
+  "datamodelValidation": "PASS",
+  "productionSchemaSha256": "a45a2b799ecd666328a911424a75d12986ef4248f15fc716455197cd62957b4d",
+  "inventorySha256": "236605b71e4d306fe039bc77d5e6cd58267536c0a3bd38bd5597cc19937ac29e",
+  "v2Sha256": "33eb31404ccdac7ab5dd2cf778330cb3b6796128733938739c5170ecfd088e5d",
+  "files": [
+    {
+      "kind": "bootstrap",
+      "sha256": "c96a200e4996cfbf86a274840abd7d4d0a02a9aec766395cfbdd5522a50e5a32"
+    },
+    {
+      "kind": "migration",
+      "sha256": "dac6a431a4598bea18cd0ff3290fb2009c36c30809247d258aea161d637a8b8a"
+    },
+    {
+      "kind": "finalize",
+      "sha256": "20de4109c7d16925ef0d12b7fb1d26491507242124f21dfa26107765e513e499"
+    }
+  ],
+  "tables": [
+    "irrigation_cycles",
+    "irrigation_decision_logs",
+    "irrigation_daily_budgets",
+    "irrigation_budget_reservations",
+    "irrigation_command_intents",
+    "irrigation_safety_states"
+  ],
+  "requiresSeparateApproval": true,
+  "sqlExecutionOnIsolatedTarget": "MAPPED_EQUIVALENT_PASS_ORIGINAL_PRODUCTION_TARGET_NOT_EXECUTED",
+  "isolatedRehearsal": {
+    "runId": "20261022070417_4deb58",
+    "passed": 35,
+    "failed": 0,
+    "port": 55433,
+    "systemIdentifier": "7698826681383327460",
+    "targetMapped": true,
+    "productionExecuted": false,
+    "report": "report/phase13-5b1-run-20261022070417_4deb58.json"
+  }
+}

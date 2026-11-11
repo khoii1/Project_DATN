@@ -1,0 +1,19 @@
+{
+  "purpose": "OFFLINE_HARDENING_PINS_NOT_EXECUTION_APPROVAL",
+  "approvalFile": "C:\\Users\\Acer Swift3\\.codex\\attachments\\f3cad0e5-c086-4e40-b872-de66947ae466\\Pasted text.txt",
+  "approvalSha256": "d4ff17ff9f6d470e740163407fb7b3924fbad598a66a4d89f118426aeef9bd64",
+  "replacements": {
+    "scripts/frontend-acceptance/source-contract.cjs": {
+      "old": "52341c6627fc82552173335cda31af08679697522ea8498b16a38b3274c2d8ad",
+      "new": "26c5fd2b6661e7afcc8c9ee3497487b04d7d56ce156a21f9a0fa0a1ca4966392"
+    },
+    "scripts/frontend-acceptance/bridge.test.cjs": {
+      "old": "45230c9f3e991e6d71b8b98cb06ee0f5f4f52d753a66f57e7e47ce246f83faf2",
+      "new": "cb0eb1c00f97cbdf301737f9bcca6d677463146014b3598fe9fc033bfb7db273"
+    }
+  },
+  "additions": {
+    "scripts/frontend-acceptance/strict-lineage.cjs": "f7e81e63806b20fafe5fb608e63ba2a733a7bc034eb9fc3de89112f0b16cedba",
+    "scripts/frontend-acceptance/lineage-fs.cjs": "e0e58acceeb6e8fc850f23173dbb217dd2c4df45e6a8813efde372b9449fee15"
+  }
+}

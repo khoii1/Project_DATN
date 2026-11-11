@@ -1,0 +1,48 @@
+{
+  "phase": "13.5D.1G-R2.1",
+  "scope": "OFFLINE_SYNTHETIC_ONLY",
+  "verdict": "PHASE13_5D1G_R2_1_CONSOLE_LIFECYCLE_READY",
+  "finalRunPrefix": "r21-tests-1793110715363-df49d0",
+  "tests": {
+    "new": { "total": 23, "passed": 23, "failed": 0, "skipped": 0, "runnerExitCode": 0 },
+    "existingRegression": { "total": 211, "passed": 211, "failed": 0, "runnerExitCode": 0 },
+    "distinctFinalTotal": 234,
+    "actualWindowsLifecycleCases": 16,
+    "cooperativeAbnormalCleanupCases": 5,
+    "actualForceKillCases": 0,
+    "sourceSyntaxAndAst": "PASS"
+  },
+  "cleanup": {
+    "exactPidStartPairsCheckedAcrossRuns": 129,
+    "matchingRemaining": 0,
+    "unknownChecks": 0
+  },
+  "actualFindings": {
+    "controlledCancellation": "READER_COMPLETE_HANDLES_RELEASED_MODE_RESTORED_NATIVE_EXIT_0",
+    "lossBeforeRead": "CONSOLE_LOST_RECOVERED_NATIVE_EXIT_23_STILL_BLOCKED",
+    "lossDuringRead": "CONSOLE_LOST_RECOVERED_NATIVE_EXIT_23_STILL_BLOCKED",
+    "ignoredCancellation": "GRACEFUL_STOP_TIMEOUT_THEN_ABNORMAL_TEST_CLEANUP",
+    "wrongIdentityOrExtraMember": "NO_CTRL_C_SENT",
+    "supervisorDisappears": "INDEPENDENT_OBSERVER_VERIFIED_NATIVE_EXIT_23"
+  },
+  "sourceSha256": {
+    "phase13-5d1g-r21-child.cs": "082B2C98E26FCC31D6ECB92A21C7D9DE75A49E4CDF974690A32C18EC922B88C0",
+    "phase13-5d1g-r21-supervisor.ps1": "6EC8012DFEA04DD8B05073D7A741E2EBF2BE1BE50E99F30A6889E82C0C33F015",
+    "phase13-5d1g-r21-observer.ps1": "C9597E657AE4F6688546BD0D39CC54F5607B208068F6FF22EAC19341E5975C7E",
+    "phase13-5d1g-r21-lifecycle.cjs": "7DCDCFE126B90A8309F48A70EA7C5EAB41CBBFC9551DF18D7D3380692C90B0D2",
+    "phase13-5d1g-r21-lifecycle.test.cjs": "F4C178762FDFF4EAF1CD07DA8B71326B9A6DBDBC8791BFDA66249049C89B5B68"
+  },
+  "oldR2FailurePreserved": true,
+  "oldR2FailureResultSha256": "AD796A274DF1D11E684EFB41B37152BBF7476B6ED2946DD4AFEA29D606EDF15B",
+  "legacySourcesModified": false,
+  "automaticRetry": false,
+  "secondInitdbAuthorized": false,
+  "restrictions": [
+    "REAL_INITDB_PASSWORD_INPUT_NOT_VERIFIED",
+    "SECOND_INITDB_ATTEMPT_NOT_PERFORMED",
+    "SQL_R1_NOT_EXECUTED",
+    "PRODUCTION_STARTUP_NOT_AUTHORIZED",
+    "PRODUCTION_MIGRATION_NOT_PERFORMED",
+    "PHYSICAL_PUMP_NOT_TRIGGERED"
+  ]
+}

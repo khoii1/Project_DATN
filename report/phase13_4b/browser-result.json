@@ -1,0 +1,30 @@
+{
+  "status": "PASS",
+  "browser": "Actual headless Microsoft Edge",
+  "mockOnly": true,
+  "checks": [
+    "live zero%, OFF, DB provenance, missing trust, fixture isolated",
+    "clock UNKNOWN",
+    "offline never confirms relay",
+    "MQTT loss/reconnect waits for evidence",
+    "old observer OFF rejected",
+    "fresh evidence recovers",
+    "hidden cancels polling, local TTL ages, foreground reloads",
+    "expired evidence STALE",
+    "API 403 no fallback",
+    "API 404 no fallback",
+    "API 500 no fallback",
+    "serial refresh no overlap",
+    "device race ignored",
+    "10s live GET polling only",
+    "mode switch/unmount stops live polling",
+    "refresh defaults to fixture, no live mixing",
+    "401 preserves global logout/session contract"
+  ],
+  "liveRequests": 23,
+  "fixtureRequests": 4,
+  "mutationRequests": [],
+  "pageErrors": [],
+  "hardwareCommands": 0,
+  "productionDbWrites": 0
+}

@@ -8,7 +8,7 @@ export interface FarmFilters { search?: string; status?: FarmStatus | ""; ownerI
 const queryParams = (filters: FarmFilters) => Object.fromEntries(Object.entries(filters).filter(([, value]) => value !== "" && value !== undefined));
 
 export const farmService = {
-  async list(filters: FarmFilters = {}) { const response = await api.get<Envelope<{ items: Farm[]; pagination: Pagination }>>("/farms", { params: queryParams(filters) }); return response.data.data; },
+  async list(filters: FarmFilters = {}, signal?: AbortSignal) { const response = await api.get<Envelope<{ items: Farm[]; pagination: Pagination }>>("/farms", { params: queryParams(filters), signal }); return response.data.data; },
   async get(id: string) { const response = await api.get<Envelope<{ farm: Farm }>>(`/farms/${id}`); return response.data.data.farm; },
   async create(input: FarmInput) { const response = await api.post<Envelope<{ farm: Farm }>>("/farms", input); return response.data.data.farm; },
   async update(id: string, input: Partial<Omit<FarmInput, "ownerId">> & { status?: FarmStatus }) { const response = await api.patch<Envelope<{ farm: Farm }>>(`/farms/${id}`, input); return response.data.data.farm; },

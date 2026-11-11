@@ -1,0 +1,7 @@
+{
+  "scope": "OFFLINE_NODE_ONLY_NO_SERVER_IMPORT_NO_DATABASE_NO_MQTT",
+  "nativeExitTest": { "pid": 5504, "stdout": "SMOKE_STDOUT", "stderr": "SMOKE_STDERR", "actualExitCode": 7 },
+  "gracefulSignalTest": { "pid": 14428, "signal": "CTRL_C_VIA_PTY", "handlerEvidence": "SMOKE_SIGINT_HANDLED", "actualExitCode": 0 },
+  "backendStartupAttemptsUsed": 0,
+  "note": "PowerShell wrapper exit after Ctrl+C is not the child Node exit code; child exit JSON is authoritative."
+}

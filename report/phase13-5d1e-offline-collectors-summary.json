@@ -1,0 +1,42 @@
+{
+  "phase": "13.5D.1E",
+  "scope": "OFFLINE_ONLY",
+  "verdict": "PHASE13_5D1E_OFFLINE_COLLECTORS_READY",
+  "productionAuthorized": false,
+  "liveEvidenceCollected": false,
+  "tests": {
+    "total": 126,
+    "passed": 126,
+    "failed": 0,
+    "skipped": 0,
+    "runnerExitCode": 0,
+    "syntaxChecks": "PASS",
+    "oldRegressionsRerun": false,
+    "inheritedSourceChanged": false,
+    "inheritedHashAssertions": 7,
+    "nativeFailureScenarios": "MOCK_ONLY_NOT_ACTUAL_PSQL_EXECUTION",
+    "productionConnectionsMade": false
+  },
+  "sourceSha256": {
+    "phase13-5d1e-readonly-sql.cjs": "50BDF2AA3A1FD19F621F98AEB77217A5730912A5180280628041FCAC3187599C",
+    "phase13-5d1e-validators.cjs": "5FD56795063766B34B696FEC39816301678CD1DB09B129131ABE06AB9FAAAE87",
+    "phase13-5d1e-evidence-collectors.cjs": "9B1A70C6DA816D39C37EE3583770AD62D689ADC3D75CB3D47EAAEAEDB67C3B1F",
+    "phase13-5d1e-evidence-collectors.test.cjs": "F32BFC9253470B77BC3DA031079712EE0A09DDE0E55CBAD5452169A17FA34D18"
+  },
+  "notVerified": [
+    "SQL_SYNTAX_RUNTIME_AND_PRIVILEGES_ON_POSTGRESQL",
+    "CURRENT_PRODUCTION_FLAGS_PENDING_AND_DEVICE_STATE",
+    "LIVE_NATIVE_ACQUISITION_AND_COLLECTOR_ATTESTATION",
+    "CROSS_STAGE_CATALOG_RACE_PROTECTION",
+    "ACTUAL_PROCESS_LISTENER_AND_EFFECTIVE_BROKER_IDENTITY",
+    "ACTUAL_PRIVATE_LOG_STORAGE_ACCEPTANCE",
+    "POST_START_TELEMETRY_FRESH_OFF_AND_GRACEFUL_SHUTDOWN"
+  ],
+  "restrictions": [
+    "LIVE_PRODUCTION_PREFLIGHT_NOT_PERFORMED",
+    "BACKEND_RECOVERY_NOT_PERFORMED",
+    "PRODUCTION_MIGRATION_NOT_PERFORMED",
+    "PRODUCTION_STARTUP_NOT_AUTHORIZED",
+    "PHYSICAL_PUMP_NOT_TRIGGERED"
+  ]
+}

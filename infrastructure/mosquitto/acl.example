@@ -1,12 +1,14 @@
-# Backend consumes telemetry/status. Command permissions are reserved for Phase 13.
+# Backend telemetry/status + Phase 12 pump command/ACK.
 user smartagri_backend
 topic read smart-agriculture/v1/devices/+/telemetry
 topic read smart-agriculture/v1/devices/+/status
 topic write smart-agriculture/v1/devices/+/commands/+
 topic read smart-agriculture/v1/devices/+/command-acks/+
+topic read smart-agriculture/v1/devices/+/actuator/state
 
 # Device username must equal its deviceCode. %u restricts it to its own namespace.
 pattern write smart-agriculture/v1/devices/%u/telemetry
 pattern write smart-agriculture/v1/devices/%u/status
 pattern read smart-agriculture/v1/devices/%u/commands/+
 pattern write smart-agriculture/v1/devices/%u/command-acks/+
+pattern write smart-agriculture/v1/devices/%u/actuator/state

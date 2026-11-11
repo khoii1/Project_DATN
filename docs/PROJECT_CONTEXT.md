@@ -1,5 +1,7 @@
 # Bối cảnh dự án
 
+> Trạng thái nghiệm thu mới nhất: [PROJECT_COMPLETION_STATUS](archive/PROJECT_COMPLETION_STATUS.md) và [FINAL_ACCEPTANCE_MATRIX](archive/FINAL_ACCEPTANCE_MATRIX.md), ngày28/10/2026. Các mô tả Phase11 về chưa có firmware/gateway chỉ còn là baseline lịch sử.
+
 ## Mục tiêu và phạm vi
 
 Smart Agriculture là đồ án website tích hợp IoT để quản lý trang trại và biến dữ liệu môi trường thành thông tin vận hành: theo dõi cảm biến, cảnh báo ngưỡng, điều khiển tưới và báo cáo.
@@ -8,7 +10,7 @@ Phạm vi hiện có gồm ba lớp:
 
 - Quản trị: user, quyền, farm, staff assignment, zone, crop, device, sensor và actuator.
 - Quan sát/vận hành: telemetry, lịch sử, biểu đồ, cảnh báo, command, automation, dashboard, report, CSV và activity log.
-- IoT: broker Mosquitto, backend MQTT client và simulator. Firmware/điều khiển vật lý chưa nằm trong repository.
+- IoT: Mosquitto, backend MQTT telemetry/presence/command/ACK, ESP32 firmware13.4F.1 và simulator riêng; vật lý/production phải nghiệm thu tách biệt.
 
 ## Quyết định kiến trúc quan trọng
 
@@ -17,7 +19,7 @@ Phạm vi hiện có gồm ba lớp:
 - Prisma là lớp truy cập PostgreSQL. Thay đổi schema phải có migration, không sửa dữ liệu cấu trúc thủ công.
 - `TelemetryIngestionService` là đường ingest trung tâm cho mọi nguồn. `SensorReading.source` phân biệt `SIMULATOR` và `MQTT`.
 - Alert và Automation được đánh giá độc lập sau khi reading mới được tạo. Reading trùng vẫn idempotent và không lặp side effect.
-- Automation chỉ tạo yêu cầu qua `DeviceCommandService`; gateway hiện tại là `MockDeviceGateway`.
+- Automation legacy đi qua `DeviceCommandService`; gateway runtime là MQTT có cờ khóa. Mock chỉ dùng test có dependency injection. SHADOW/persistence mới không nối vào luồng command production.
 - Data scope được áp dụng ở backend. UI ẩn chức năng không thay thế kiểm tra quyền phía server.
 - Tài nguyên ngoài phạm vi farm thường được trả `404` để giảm rò rỉ ID; hành động sai role trả `403`.
 - MQTT không phải điều kiện để HTTP API khởi động. Health phản ánh MQTT là `connected`, `disconnected` hoặc `disabled`.
@@ -33,7 +35,7 @@ Phạm vi hiện có gồm ba lớp:
 ## Nguồn bằng chứng
 
 - Trạng thái phần mềm trong tài liệu được xác minh từ source, migration, package scripts và test code.
-- Trạng thái phần cứng được chủ dự án cung cấp từ thử nghiệm thực tế nhưng repository chưa chứa firmware, log hoặc test artifact. Vì vậy tài liệu ghi rõ “xác nhận ngoài repository”, không coi là có thể tái lập từ source.
+- Phần cứng có source firmware và báo cáo nghiệm thu Phase12/13; đối chiếu evidence theo ngày/phạm vi. Quan sát người dùng, MQTT ACK, GPIO và nước chảy là những loại bằng chứng khác nhau.
 
 ## Hướng dẫn cho Agent mới
 

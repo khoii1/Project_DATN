@@ -40,5 +40,5 @@ export interface Page<T> { items: T[]; pagination: Pagination }
 
 export const severityLabels: Record<AlertSeverity, string> = { INFO: "Thông tin", WARNING: "Cảnh báo", CRITICAL: "Nghiêm trọng" };
 export const statusLabels: Record<AlertStatus, string> = { OPEN: "Đang mở", ACKNOWLEDGED: "Đã xác nhận", RESOLVED: "Đã xử lý" };
-export const resolutionLabels: Record<AlertResolutionReason, string> = { AUTO_RECOVERED: "Tự phục hồi", MANUAL: "Đóng thủ công", RULE_DISABLED: "Rule bị tắt", RULE_UPDATED: "Rule được cập nhật" };
+export const resolutionLabels: Record<AlertResolutionReason, string> = { AUTO_RECOVERED: "Tự phục hồi", MANUAL: "Đóng thủ công", RULE_DISABLED: "Quy tắc bị tắt", RULE_UPDATED: "Quy tắc được cập nhật" };
 export const operatorSymbols: Record<AlertOperator, string> = { LT: "<", LTE: "≤", GT: ">", GTE: "≥" };

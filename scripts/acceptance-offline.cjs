@@ -11,7 +11,7 @@ const groups = [
     'device-presence', 'mqtt-pump', 'shadow-irrigation', 'shadow-preview',
     'irrigation-persistence', 'durable-irrigation', 'live-provenance', 'live-readiness', 'soil-metadata-proposal',
   ].map(n => `backend/scripts/${n}.test.cjs`)],
-  ['frontend', ['irrigation', 'shadow-preview', 'live-observation'].map(n => `frontend/scripts/${n}.test.cjs`)],
+  ['frontend', ['irrigation', 'shadow-preview', 'live-observation', 'ui-completion'].map(n => `frontend/scripts/${n}.test.cjs`)],
 ];
 function main(args) {
   if (args.length) throw new Error('No targets, live modes or override arguments accepted');

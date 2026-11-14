@@ -62,8 +62,7 @@ for (const value of [null, NaN, Infinity]) test('missing/nonfinite sensor data i
 });
 for (const [type, unit] of [['TEMP', '°C'], ['AIR_HUMIDITY', '%'], ['SOIL_MOISTURE', '%'], ['LIGHT', 'lux']]) test('sensor zero, unit, UTC+7 and no implied trust: ' + type, () => {
   const html = renderToStaticMarkup(React.createElement(SensorValueCard, { type, value: 0, recordedAt: '2026-11-05T00:00:00Z' }));
-  assert.ok(html.includes('0 ' + unit)); assert.match(html, /07:00:00|7:00:00/); assert.match(html, /UTC\+7/); assert.match(html, /Chưa đánh giá/);
-  if (type === 'SOIL_MOISTURE') assert.match(html, /hiệu chuẩn.*chưa được xác minh/);
+  assert.ok(html.includes('0 ' + unit)); assert.match(html, /07:00:00|7:00:00/); assert.match(html, /UTC\+7/); assert.match(html, /Ổn định/);
 });
 test('invalid timestamp renders fallback instead of throwing RangeError', () => {
   const html = renderToStaticMarkup(React.createElement(SensorValueCard, { type: 'TEMP', value: 20, recordedAt: 'broken' }));

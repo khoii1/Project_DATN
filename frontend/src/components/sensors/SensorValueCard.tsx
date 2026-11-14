@@ -17,9 +17,8 @@ export function SensorValueCard({ type, value, recordedAt, name, alertSeverity }
         <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-brand-50 text-brand-700"><Icon className="h-5 w-5" aria-hidden="true" /></span>
         <div className="min-w-0"><p className="break-words text-xs font-bold uppercase tracking-wide text-slate-400">{name || meta.label}</p><p className="mt-1 text-xl font-bold">{hasValue ? `${value} ${meta.unit}` : "Chưa nhận dữ liệu"}</p></div>
       </div>
-      <span className={`rounded-full px-2 py-1 text-[10px] font-bold ${hasValue && alertSeverity ? tones[alertSeverity] : "bg-slate-100 text-slate-600"}`}>{!hasValue ? "Chưa có dữ liệu" : alertSeverity ? severityLabels[alertSeverity] : "Chưa đánh giá"}</span>
+      <span className={`rounded-full px-2 py-1 text-[10px] font-bold ${!hasValue ? "bg-slate-100 text-slate-600" : alertSeverity ? tones[alertSeverity] : "bg-emerald-50 text-emerald-700"}`}>{!hasValue ? "Chưa có dữ liệu" : alertSeverity ? severityLabels[alertSeverity] : "Ổn định"}</span>
     </div>
-    <p className="mt-3 text-xs text-slate-500">{validTime ? `Đo lúc ${new Intl.DateTimeFormat("vi-VN", { timeZone: "Asia/Ho_Chi_Minh", dateStyle: "short", timeStyle: "medium" }).format(measured)} (UTC+7)` : recordedAt ? "Thời gian đo không hợp lệ" : "Chưa có thời gian đo"}</p>
-    {type === "SOIL_MOISTURE" && <p className="mt-2 text-xs text-amber-700">Chất lượng và hiệu chuẩn độ ẩm đất chưa được xác minh; không dùng dữ liệu này để cho phép tưới tự động.</p>}
+    <p className="mt-3 text-xs text-slate-500">{validTime ? `Cập nhật lúc ${new Intl.DateTimeFormat("vi-VN", { timeZone: "Asia/Ho_Chi_Minh", dateStyle: "short", timeStyle: "medium" }).format(measured)} (UTC+7)` : recordedAt ? "Thời gian đo không hợp lệ" : "Chưa có thời gian đo"}</p>
   </article>;
 }

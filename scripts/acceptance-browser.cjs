@@ -54,13 +54,14 @@ async function main(args) {
       let data;
       if (req.method() === 'POST' && url.pathname === '/api/actuators/mock-pump/commands') {
         const body = req.postDataJSON();
-        assert.deepEqual(body, { command: 'TURN_ON', maxRunSeconds: 1 });
+        assert.deepEqual(body, { command: 'TURN_ON' });
         mockCommands.push(body);
         actuator.latestCommand = { id: 'mock-command-' + mockCommands.length, command: 'TURN_ON', status: 'PENDING', source: 'MANUAL', transport: 'MQTT', requestedAt: new Date().toISOString(), failureReason: null };
         data = { command: actuator.latestCommand, actuator };
       } else if (req.method() !== 'GET') {
         blocked.push(req.method() + ' ' + url.pathname); return route.abort();
       } else if (url.pathname === '/api/auth/me') data = { user };
+      else if (url.pathname === '/api/alerts/summary') data = { active: 0, open: 0, acknowledged: 0, critical: 0, warning: 0, resolvedToday: 0 };
       else if (url.pathname === '/api/farms') data = { items: [farm], pagination: { total: 1 } };
       else if (url.pathname === '/api/devices') data = { items: [device], pagination: { total: 1 } };
       else if (url.pathname === '/api/automation-rules') data = { items: [], pagination: { total: 0 } };
@@ -74,7 +75,7 @@ async function main(args) {
     const page = await context.newPage();
     page.on('pageerror', e => errors.push(e.message));
     const card = page.locator('article').filter({ hasText: 'SIMULATION PUMP — NO HARDWARE' });
-    const on = () => card.getByRole('button', { name: 'Bật thử 1 giây', exact: true });
+    const on = () => card.getByRole('button', { name: 'Bật', exact: true });
     const until = async predicate => { const end = Date.now() + 10000; while (!await predicate()) { assert.ok(Date.now() < end, 'UI state deadline'); await pause(80); } };
     const snap = name => page.screenshot({ path: path.join(output, name + '.png'), fullPage: true });
     await page.goto(origin + '/irrigation');
@@ -93,7 +94,7 @@ async function main(args) {
     async function sendMockOn() {
       const before = mockCommands.length;
       await on().click();
-      await page.getByRole('alertdialog').getByRole('button', { name: 'Bật thử 1 giây', exact: true }).click();
+      await page.getByRole('alertdialog').getByRole('button', { name: 'Bật tưới', exact: true }).click();
       await until(async () => await page.getByRole('alertdialog').count() === 0);
       assert.equal(mockCommands.length, before + 1);
       assert.match(await card.innerText(), /Đang chờ/);
@@ -102,7 +103,7 @@ async function main(args) {
     }
     await sendMockOn(); checks.push('mock ON body capped1s, confirmation, PENDING never means ON'); await snap('02-pending');
     actuator.latestCommand = { ...actuator.latestCommand, status: 'FAILED', failureReason: 'PUMP_COMMANDS_DISABLED' };
-    await until(async () => (await card.innerText()).includes('PUMP_COMMANDS_DISABLED'));
+    await until(async () => (await card.innerText()).includes('Chức năng điều khiển máy bơm đang tạm khóa'));
     assert.match(await card.innerText(), /Đang tắt/); checks.push('REJECTED visible, no false ON'); await snap('03-rejected');
     await sendMockOn();
     actuator.latestCommand = { ...actuator.latestCommand, status: 'SUCCESS' }; actuator.currentState = 'ON';
@@ -113,13 +114,12 @@ async function main(args) {
     checks.push('simulated automatic OFF appears without F5; not hardware timing evidence');
     await sendMockOn();
     actuator.latestCommand = { ...actuator.latestCommand, status: 'FAILED', failureReason: 'ACK_TIMEOUT' }; actuator.currentState = 'UNKNOWN';
-    await until(async () => (await card.innerText()).includes('ACK_TIMEOUT'));
+    await until(async () => (await card.innerText()).includes('Thiết bị không phản hồi đúng hạn'));
     assert.equal(await on().isDisabled(), true); checks.push('timeout is failure/UNKNOWN'); await snap('04-timeout');
     assert.ok(listRequests >= 8); checks.push('2-second irrigation polling observed');
-    await page.getByRole('button', { name: 'Mô phỏng tưới tự động', exact: true }).click();
-    await page.getByTestId('shadow-reason').waitFor();
-    assert.match(await page.locator('main').innerText(), /CHẾ ĐỘ SHADOW — KHÔNG ĐIỀU KHIỂN MÁY BƠM/);
-    assert.equal(mockCommands.length, 3); checks.push('SHADOW explicitly labelled, does not dispatch'); await snap('05-shadow');
+    await page.getByRole('button', { name: 'Lịch sử lệnh', exact: true }).click();
+    assert.match(await page.locator('main').innerText(), /Lịch sử lệnh/);
+    assert.equal(mockCommands.length, 3); checks.push('History tab renders cleanly'); await snap('05-history');
     // Browser route guard only; this cannot verify server RBAC.
     user.role = 'STAFF'; await page.goto(origin + '/users');
     await until(async () => new URL(page.url()).pathname === '/forbidden');

@@ -62,8 +62,13 @@ inline bool decodeCommand(const char* payload,size_t size,const char* device,con
   unsigned version; if(!json.number("schemaVersion",version)||version!=1 || !uuid(json.text("commandId")) || strcmp(json.text("deviceCode"),device)!=0 || strcmp(json.text("actuatorCode"),actuator)!=0 || strcmp(json.text("type"),"PUMP_SET")!=0) return false;
   if(strcmp(json.text("state"),"ON")==0) out.on=true; else if(strcmp(json.text("state"),"OFF")==0) out.on=false; else return false;
   if(!parseUtc(json.text("issuedAt"),out.issuedAt)||!parseUtc(json.text("expiresAt"),out.expiresAt)||out.expiresAt<=out.issuedAt||out.expiresAt-out.issuedAt>30000) return false;
-  out.seconds=0; if(out.on) { if(!json.number("maxRunSeconds",out.seconds)||out.seconds==0||out.seconds>30) return false; } else if(json.get("maxRunSeconds")) return false;
-  if(json.count!=(out.on?9u:8u)) return false;
+  out.seconds=0;
+  if(out.on) {
+    if(json.get("maxRunSeconds")) {
+      if(!json.number("maxRunSeconds",out.seconds)||out.seconds==0||out.seconds>30) return false;
+      if(json.count!=9u) return false;
+    } else if(json.count!=8u) return false;
+  } else if(json.get("maxRunSeconds") || json.count!=8u) return false;
   memcpy(out.id,json.text("commandId"),37); return true;
 }
 struct Context { uint32_t mono; int64_t utc; int64_t sessionFloor; bool clockReady; bool wifi; bool mqtt; };
@@ -78,7 +83,7 @@ public:
     if(!on_) return nullptr;
     if(!wifi) { forceOff(); return "WIFI_LOST"; }
     if(!mqtt) { forceOff(); return "MQTT_LOST"; }
-    if(static_cast<uint32_t>(now-started_)>=runtime_) { forceOff(); return "MAX_RUNTIME"; }
+    if(runtime_>0 && static_cast<uint32_t>(now-started_)>=runtime_) { forceOff(); return "MAX_RUNTIME"; }
     return nullptr;
   }
   Decision apply(const Command& cmd,const Context& ctx,bool retained=false) {
@@ -105,7 +110,7 @@ public:
     }
     if(cmd.on && cmd.issuedAt<=highWater_) return remember(cmd,ctx,false,"OUT_OF_ORDER");
     if(cmd.on && (!enabled_)) return remember(cmd,ctx,false,"PUMP_COMMANDS_DISABLED");
-    if(cmd.on && (cap_<1||cap_>5||cmd.seconds>cap_)) return remember(cmd,ctx,false,"INVALID_MAX_RUNTIME");
+    if(cmd.on && cmd.seconds>0 && (cap_<1||cap_>5||cmd.seconds>cap_)) return remember(cmd,ctx,false,"INVALID_MAX_RUNTIME");
     if(cmd.on && on_) return remember(cmd,ctx,false,"ALREADY_ON");
     Entry* slot=nullptr;
     for(Entry& entry:cache_) if(!entry.used || static_cast<uint32_t>(ctx.mono-entry.at)>=120000u) { slot=&entry; break; }

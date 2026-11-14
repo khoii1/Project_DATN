@@ -1,4 +1,4 @@
-import { pumpPresentation } from "../../utils/irrigation-control";
+import { formatFailureReason, manualCommandFeedback, pumpPresentation, visibleCommandNotice } from "../../utils/irrigation-control";
 import { usePolling } from "../../hooks/usePolling";
 import { Activity, BellRing, Cpu, Droplets, Map, Power, Tractor } from "lucide-react";
 import { useCallback, useEffect, useRef, useState } from "react";
@@ -92,7 +92,7 @@ export function DashboardPage() {
     sensorService.zoneLatest(monitoredZoneId, signal),
     alertService.list({ zoneId: monitoredZoneId, active: true, limit: 100 }, signal),
     actuatorService.list({ zoneId: monitoredZoneId, type: "PUMP", limit: 20 }, signal),
-    automationService.list({ zoneId: monitoredZoneId, enabled: true, limit: 100 }, signal),
+    automationService.list({ zoneId: monitoredZoneId, limit: 100 }, signal),
   ]); return { values, generation }; }, [monitoredZoneId]);
   const { loading: sensorLoading, error: monitoringError } = usePolling(fetchMonitoring, {
     enabled: !!monitoredZoneId,
@@ -107,10 +107,11 @@ export function DashboardPage() {
     commandGeneration.current++; setPumpLoading(true); setPumpError("");
     try {
       const result = await actuatorService.command(pumpConfirm.actuator.id, pumpConfirm.command);
-      if (result.command.status === "FAILED") { setPumpError(result.command.failureReason || "Gateway không thể thực hiện lệnh"); return; }
+      if (result.command.status === "FAILED") { setPumpError(formatFailureReason(result.command.failureReason) || "Thiết bị không thể thực hiện lệnh"); return; }
       setPumps((items) => items.map((item) => item.id === result.actuator.id ? { ...item, ...result.actuator, latestCommand: result.command } : item));
-      setPumpFeedback(result.command.status === "PENDING" ? "Đang chờ ACK ESP32; chưa xác nhận relay hoặc nước chảy." : "Đã nhận xác nhận relay.");
+      setPumpFeedback(manualCommandFeedback(result.command));
       setPumpConfirm(null);
+      if (monitoredZoneId) void automationService.list({ zoneId: monitoredZoneId, limit: 100 }).then(data => setAutomationRules(data.items)).catch(() => {});
     } catch (requestError) { setPumpError(getApiErrorMessage(requestError)); }
     finally { commandGeneration.current++; setPumpLoading(false); }
   };
@@ -122,14 +123,14 @@ export function DashboardPage() {
         <PageHeader title="Tổng quan nông nghiệp" description="Theo dõi tình trạng trang trại và môi trường theo dữ liệu đã ghi nhận." eyebrow={new Intl.DateTimeFormat(undefined, { weekday: 'long', day: 'numeric', month: 'long' }).format(new Date())} />
         <div className="flex items-center gap-2 self-start rounded-full border border-slate-200 bg-white px-3 py-2 text-xs font-semibold text-slate-500 sm:self-auto">
           <span className={`h-2 w-2 rounded-full ${apiStatus === "connected" ? "bg-emerald-500" : apiStatus === "checking" ? "animate-pulse bg-amber-400" : "bg-slate-300"}`} />
-          {summaryError || monitoringError ? "Không thể cập nhật API" : apiStatus === "connected" ? "API đã kết nối" : apiStatus === "checking" ? "Đang kiểm tra API" : "API chưa kết nối"}
+          {summaryError || monitoringError ? "Đang đồng bộ dữ liệu" : apiStatus === "connected" ? "Hệ thống trực tuyến" : apiStatus === "checking" ? "Đang kết nối hệ thống" : "Mất kết nối máy chủ"}
         </div>
       </div>
 
       <section className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4" aria-label="Thống kê tổng quan">
         <StatCard label="Trang trại" value={String(overview?.farmCount ?? farms.length)} note="Trong phạm vi được cấp quyền" icon={Tractor} tone="green" />
         <StatCard label="Khu vực" value={String(overview?.zoneCount ?? 0)} note={`${overview?.cropCount ?? 0} cây trồng`} icon={Map} tone="violet" />
-        <StatCard label="Thiết bị" value={String(deviceSummary?.total ?? overview?.deviceCount ?? 0)} note={`${deviceSummary?.online ?? overview?.deviceOnline ?? 0} online · ${deviceSummary?.offline ?? overview?.deviceOffline ?? 0} offline`} icon={Cpu} tone="blue" />
+        <StatCard label="Thiết bị" value={String(deviceSummary?.total ?? overview?.deviceCount ?? 0)} note={`${deviceSummary?.online ?? overview?.deviceOnline ?? 0} trực tuyến · ${deviceSummary?.offline ?? overview?.deviceOffline ?? 0} ngoại tuyến`} icon={Cpu} tone="blue" />
         <StatCard label="Cảnh báo đang hoạt động" value={String(alertSummary.active)} note={`${alertSummary.critical} nghiêm trọng · ${alertSummary.open} chưa xác nhận`} icon={BellRing} tone="amber" />
       </section>
 
@@ -150,8 +151,9 @@ export function DashboardPage() {
           {pumpFeedback && <p role="status" className="mt-4 rounded-xl bg-emerald-50 p-3 text-xs font-semibold text-emerald-700">{pumpFeedback}</p>}
           {!monitoredZoneId || sensorLoading || pumps.length === 0 ? <p className="py-12 text-center text-sm text-slate-400">Khu vực chưa có máy bơm.</p> : <div className="mt-5 space-y-4">{(monitoredZoneId ? pumps : []).map((pump) => {
             const { available, state, canOn, canOff } = pumpPresentation(pump);
-            const automation = automationRules.find(rule => rule.actuatorId === pump.id);
-            return <article key={pump.id} className="rounded-2xl border p-4"><div className="flex items-start justify-between gap-3"><div><h3 className="font-bold text-slate-800">{pump.name}</h3><p className="mt-1 text-xs text-slate-400">{pump.device.deviceCode} · {pump.hardwareChannel || "Chưa gán kênh"}</p></div><StatusBadge label={state} tone={state === "ON" ? "success" : "neutral"} /></div><p className="mt-3 text-xs text-slate-500">{actuatorStateLabels[state]}{!available ? " · Không khả dụng" : !pump.canControl ? " · Chỉ có quyền xem" : " · MQTT Gateway"}</p>{automation && <div className="mt-3 rounded-xl bg-blue-50 p-3 text-xs text-blue-700"><p className="font-bold">Tự động: Bật</p><p className="mt-1">Bật dưới {automation.startThreshold}% · Tắt khi đạt {automation.stopThreshold}%</p>{automation.manualOverrideActive && <p className="mt-1 font-semibold text-amber-700">AUTO tạm dừng đến {new Intl.DateTimeFormat("vi-VN", { timeStyle: "short" }).format(new Date(automation.manualOverrideUntil!))}</p>}</div>}<p role="status" className="mt-2 text-xs text-amber-700">{pump.latestCommand?.status === "PENDING" ? "Đang chờ ACK" : pump.latestCommand?.status === "FAILED" ? pump.latestCommand.failureReason : ""}</p><div className="mt-4 grid grid-cols-2 gap-2"><button disabled={!canOn || pumpLoading} onClick={() => { setPumpError(""); setPumpConfirm({ actuator: pump, command: "TURN_ON" }); }} className="flex h-10 items-center justify-center gap-2 rounded-xl bg-brand-600 text-xs font-bold text-white disabled:cursor-not-allowed disabled:opacity-40"><Power className="h-4 w-4" />Bật</button><button disabled={!canOff || pumpLoading} onClick={() => { setPumpError(""); setPumpConfirm({ actuator: pump, command: "TURN_OFF" }); }} className="flex h-10 items-center justify-center gap-2 rounded-xl border text-xs font-bold text-slate-700 disabled:cursor-not-allowed disabled:opacity-40"><Power className="h-4 w-4" />Tắt</button></div></article>;
+            const automation = automationRules.find(rule => rule.actuatorId === pump.id && rule.enabled) ?? automationRules.find(rule => rule.actuatorId === pump.id);
+            const notice = visibleCommandNotice(pump);
+            return <article key={pump.id} className="rounded-2xl border p-4"><div className="flex items-start justify-between gap-3"><div><h3 className="font-bold text-slate-800">{pump.name}</h3><p className="mt-1 text-xs text-slate-400">{pump.device.deviceCode} · {pump.hardwareChannel || "Chưa gán kênh"}</p></div><StatusBadge label={actuatorStateLabels[state]} tone={state === "ON" ? "success" : "neutral"} /></div><p className="mt-3 text-xs text-slate-500">{actuatorStateLabels[state]}{!available ? " · Không khả dụng" : !pump.canControl ? " · Chỉ có quyền xem" : " · Sẵn sàng điều khiển"}</p>{automation && <div className={`mt-3 rounded-xl p-3 text-xs ${automation.enabled ? "bg-blue-50 text-blue-700" : "bg-slate-50 text-slate-600"}`}><div className="flex items-center justify-between gap-2"><p className="font-bold">Tự động: {automation.enabled ? "Đang bật" : "Đang tắt"}</p><button type="button" onClick={async () => { await automationService.update(automation.id, { enabled: !automation.enabled }); const data = await automationService.list({ zoneId: monitoredZoneId, limit: 100 }); setAutomationRules(data.items); }} className="rounded-lg border bg-white px-2.5 py-1 font-bold text-slate-700 hover:bg-slate-50">{automation.enabled ? "Tắt tự động" : "Bật tự động"}</button></div><p className="mt-1">Bật dưới {automation.startThreshold}% · Tắt khi đạt {automation.stopThreshold}%</p>{automation.enabled && automation.manualOverrideActive && <div className="mt-2 flex flex-wrap items-center justify-between gap-2 border-t border-blue-100 pt-2 font-semibold text-amber-800"><span>Tạm dừng tự động đến {new Intl.DateTimeFormat("vi-VN", { timeStyle: "short" }).format(new Date(automation.manualOverrideUntil!))}</span><button type="button" onClick={async () => { await automationService.update(automation.id, { enabled: true }); const data = await automationService.list({ zoneId: monitoredZoneId, limit: 100 }); setAutomationRules(data.items); }} className="rounded-lg bg-blue-600 px-2.5 py-1 text-white">Tiếp tục tự động ngay</button></div>}</div>}{notice && <p role="status" className="mt-2 text-xs text-amber-700">{notice}</p>}<div className="mt-4 grid grid-cols-2 gap-2"><button disabled={!canOn || pumpLoading} onClick={() => { setPumpError(""); setPumpConfirm({ actuator: pump, command: "TURN_ON" }); }} className="flex h-10 items-center justify-center gap-2 rounded-xl bg-brand-600 text-xs font-bold text-white disabled:cursor-not-allowed disabled:opacity-40"><Power className="h-4 w-4" />Bật</button><button disabled={!canOff || pumpLoading} onClick={() => { setPumpError(""); setPumpConfirm({ actuator: pump, command: "TURN_OFF" }); }} className="flex h-10 items-center justify-center gap-2 rounded-xl border text-xs font-bold text-slate-700 disabled:cursor-not-allowed disabled:opacity-40"><Power className="h-4 w-4" />Tắt</button></div></article>;
           })}</div>}
           <Link to="/irrigation" className="mt-4 block text-center text-xs font-bold text-brand-700">Mở trung tâm điều khiển tưới</Link>
         </section>
@@ -159,7 +161,7 @@ export function DashboardPage() {
 
       <div className="grid gap-6 xl:grid-cols-[minmax(0,1.4fr)_minmax(340px,.8fr)]">
         <section className="surface-card min-w-0 p-5 sm:p-6">
-          <div className="flex items-center justify-between gap-3"><div><p className="text-sm font-medium text-slate-500">Audit người dùng</p><h2 className="mt-1 text-lg font-bold text-slate-900">Hoạt động gần đây</h2></div><Activity className="h-5 w-5 text-brand-600" /></div>
+          <div className="flex items-center justify-between gap-3"><div><p className="text-sm font-medium text-slate-500">Nhật ký hệ thống</p><h2 className="mt-1 text-lg font-bold text-slate-900">Hoạt động gần đây</h2></div><Activity className="h-5 w-5 text-brand-600" /></div>
           <div className="mt-5 space-y-3">{recentActivity.length === 0 ? <p className="py-8 text-center text-sm text-slate-400">Chưa có hoạt động phù hợp.</p> : recentActivity.map((log) => <article key={log.id} className="flex min-w-0 items-start justify-between gap-4 rounded-xl border p-4"><div className="min-w-0"><p className="truncate text-sm font-bold text-slate-800">{log.description}</p><p className="mt-1 text-xs text-slate-400">{log.user?.fullName ?? 'Hệ thống'} · {log.farm?.name ?? 'Toàn hệ thống'}</p></div><time className="shrink-0 text-xs text-slate-400">{new Intl.DateTimeFormat(undefined, { dateStyle: 'short', timeStyle: 'short' }).format(new Date(log.createdAt))}</time></article>)}</div>
           <Link to="/activity-logs" className="mt-4 block text-center text-xs font-bold text-brand-700">Xem nhật ký hoạt động</Link>
         </section>
@@ -176,7 +178,7 @@ export function DashboardPage() {
           <Link to="/alerts" className="mt-4 block w-full rounded-xl border border-slate-200 py-2.5 text-center text-sm font-semibold text-slate-600 transition hover:bg-slate-50">Xem tất cả cảnh báo</Link>
         </section>
       </div>
-      {pumpConfirm && <ConfirmDialog title={`${pumpConfirm.command === "TURN_ON" ? "Bật" : "Tắt"} máy bơm?`} description={`Yêu cầu sẽ được gửi qua backend và chờ ACK relay từ ${pumpConfirm.actuator.name}.`} confirmLabel={pumpConfirm.command === "TURN_ON" ? "Xác nhận bật" : "Xác nhận tắt"} loading={pumpLoading} error={pumpError} onCancel={() => { setPumpConfirm(null); setPumpError(""); }} onConfirm={issuePumpCommand} />}
+      {pumpConfirm && <ConfirmDialog title={`${pumpConfirm.command === "TURN_ON" ? "Bật" : "Tắt"} máy bơm?`} description={`Hệ thống sẽ gửi lệnh ${pumpConfirm.command === "TURN_ON" ? "bật" : "tắt"} đến ${pumpConfirm.actuator.name}.`} confirmLabel={pumpConfirm.command === "TURN_ON" ? "Xác nhận bật" : "Xác nhận tắt"} loading={pumpLoading} error={pumpError} onCancel={() => { setPumpConfirm(null); setPumpError(""); }} onConfirm={issuePumpCommand} />}
     </div>
   );
 }

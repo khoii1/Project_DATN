@@ -18,7 +18,8 @@ async function evaluateRule(ruleId: string, reading: AutomationReading, options:
   const desired = reading.value < rule.startThreshold ? ActuatorState.ON : reading.value >= rule.stopThreshold ? ActuatorState.OFF : null;
   if (!desired) return "NEUTRAL";
   if (rule.actuator.currentState === desired) return "SAME_STATE";
-  const latestManual = await prisma.deviceCommand.findFirst({ where: { actuatorId: rule.actuatorId, source: DeviceCommandSource.MANUAL, status: DeviceCommandStatus.SUCCESS, completedAt: { not: null, gte: rule.createdAt } }, orderBy: { completedAt: "desc" } });
+  const floor = rule.updatedAt && rule.updatedAt > rule.createdAt ? rule.updatedAt : rule.createdAt;
+  const latestManual = await prisma.deviceCommand.findFirst({ where: { actuatorId: rule.actuatorId, source: DeviceCommandSource.MANUAL, status: DeviceCommandStatus.SUCCESS, completedAt: { not: null, gte: floor } }, orderBy: { completedAt: "desc" } });
   if (latestManual?.completedAt && latestManual.completedAt.getTime() + env.automationManualOverrideMinutes * 60_000 > now.getTime()) return "MANUAL_OVERRIDE";
   const cooldownBefore = new Date(now.getTime() - env.automationCommandCooldownSeconds * 1000);
   const attempt = await prisma.automationRule.updateMany({ where: { id: rule.id, enabled: true, OR: [{ lastCommandAttemptAt: null }, { lastCommandAttemptAt: { lte: cooldownBefore } }] }, data: { lastCommandAttemptAt: now } });

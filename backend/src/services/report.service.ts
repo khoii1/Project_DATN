@@ -18,9 +18,54 @@ async function scope(query: ReportQuery, actor: Actor): Promise<ReportScope> {
   return { farmIds, farmId: query.farmId, zoneId: query.zoneId, from: query.from, to: query.to };
 }
 
+const sensorTypeLabels: Record<string, string> = {
+  TEMP: 'Nhiệt độ',
+  AIR_HUMIDITY: 'Độ ẩm không khí',
+  SOIL_MOISTURE: 'Độ ẩm đất',
+  LIGHT: 'Ánh sáng',
+};
+
+const sourceLabels: Record<string, string> = {
+  MQTT: 'Thiết bị thực (MQTT)',
+  SIMULATOR: 'Mô phỏng (SIMULATOR)',
+  MANUAL: 'Thủ công',
+  AUTOMATION: 'Tự động',
+};
+
+const statusLabels: Record<string, string> = {
+  SUCCESS: 'Thành công',
+  FAILED: 'Thất bại',
+  PENDING: 'Đang xử lý',
+  OPEN: 'Đang mở',
+  ACKNOWLEDGED: 'Đã xác nhận',
+  RESOLVED: 'Đã xử lý',
+};
+
+const severityLabels: Record<string, string> = {
+  INFO: 'Thông tin',
+  WARNING: 'Cảnh báo',
+  CRITICAL: 'Nghiêm trọng',
+};
+
+function formatVnDate(value: Date | string | null | undefined): string {
+  if (!value) return '';
+  const date = value instanceof Date ? value : new Date(value);
+  if (Number.isNaN(date.getTime())) return String(value);
+  return new Intl.DateTimeFormat('vi-VN', {
+    timeZone: 'Asia/Ho_Chi_Minh',
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit',
+    hour12: false,
+  }).format(date);
+}
+
 function csvCell(value: unknown): string {
   if (value === null || value === undefined) return '';
-  let text = value instanceof Date ? value.toISOString() : String(value);
+  let text = value instanceof Date ? formatVnDate(value) : String(value);
   if (/^[=+\-@]/.test(text)) text = `'${text}`;
   return `"${text.replace(/"/g, '""')}"`;
 }
@@ -43,16 +88,28 @@ export const reportService = {
     const reportScope = await scope(query, actor); let content: string;
     if (query.type === 'sensor-readings') {
       const rows = await reportRepository.exportSensorReadings(reportScope, MAX_EXPORT_ROWS + 1); ensureLimit(rows);
-      content = csv(['Recorded At', 'Farm', 'Zone', 'Device', 'Sensor Code', 'Sensor Name', 'Sensor Type', 'Value', 'Unit', 'Source', 'Received At'], rows.map((r) => [r.recordedAt, r.sensor.device.zone.farm.name, r.sensor.device.zone.name, r.sensor.device.name, r.sensor.sensorCode, r.sensor.name, r.sensor.type, r.value, ({ TEMP: '°C', AIR_HUMIDITY: '%', SOIL_MOISTURE: '%', LIGHT: 'lux' } as const)[r.sensor.type], r.source, r.receivedAt]));
+      content = csv(
+        ['Thời gian đo (GMT+7)', 'Trang trại', 'Khu vực', 'Thiết bị', 'Mã cảm biến', 'Tên cảm biến', 'Loại cảm biến', 'Giá trị', 'Đơn vị', 'Nguồn dữ liệu', 'Thời gian lưu'],
+        rows.map((r) => [r.recordedAt, r.sensor.device.zone.farm.name, r.sensor.device.zone.name, r.sensor.device.name, r.sensor.sensorCode, r.sensor.name, sensorTypeLabels[r.sensor.type] ?? r.sensor.type, r.value, ({ TEMP: '°C', AIR_HUMIDITY: '%', SOIL_MOISTURE: '%', LIGHT: 'lux' } as const)[r.sensor.type], sourceLabels[r.source] ?? r.source, r.receivedAt]),
+      );
     } else if (query.type === 'alerts') {
       const rows = await reportRepository.exportAlerts(reportScope, MAX_EXPORT_ROWS + 1); ensureLimit(rows);
-      content = csv(['Opened At', 'Resolved At', 'Farm', 'Zone', 'Device', 'Sensor', 'Rule', 'Severity', 'Status', 'Trigger Value', 'Last Value', 'Threshold', 'Recovery Threshold', 'Resolution Reason', 'Acknowledged By', 'Resolved By'], rows.map((r) => [r.openedAt, r.resolvedAt, r.sensor.device.zone.farm.name, r.sensor.device.zone.name, r.sensor.device.name, r.sensor.sensorCode, r.alertRule.name, r.severitySnapshot, r.status, r.triggerValue, r.lastValue, r.thresholdSnapshot, r.recoverySnapshot, r.resolutionReason, r.acknowledgedBy?.fullName, r.resolvedBy?.fullName]));
+      content = csv(
+        ['Thời gian phát hiện', 'Thời gian xử lý', 'Trang trại', 'Khu vực', 'Thiết bị', 'Mã cảm biến', 'Quy tắc cảnh báo', 'Mức độ', 'Trạng thái', 'Giá trị kích hoạt', 'Giá trị cuối', 'Ngưỡng cảnh báo', 'Ngưỡng phục hồi', 'Ghi chú xử lý', 'Người xác nhận', 'Người xử lý'],
+        rows.map((r) => [r.openedAt, r.resolvedAt, r.sensor.device.zone.farm.name, r.sensor.device.zone.name, r.sensor.device.name, r.sensor.sensorCode, r.alertRule.name, severityLabels[r.severitySnapshot] ?? r.severitySnapshot, statusLabels[r.status] ?? r.status, r.triggerValue, r.lastValue, r.thresholdSnapshot, r.recoverySnapshot, r.resolutionReason, r.acknowledgedBy?.fullName, r.resolvedBy?.fullName]),
+      );
     } else if (query.type === 'device-commands') {
       const rows = await reportRepository.exportCommands(reportScope, MAX_EXPORT_ROWS + 1); ensureLimit(rows);
-      content = csv(['Requested At', 'Completed At', 'Farm', 'Zone', 'Device', 'Actuator', 'Command', 'Source', 'Status', 'Requested By', 'Automation Rule', 'Failure Reason', 'Correlation ID'], rows.map((r) => [r.requestedAt, r.completedAt, r.actuator.device.zone.farm.name, r.actuator.device.zone.name, r.actuator.device.name, r.actuator.actuatorCode, r.command, r.source, r.status, r.requestedBy?.fullName, r.automationRule?.name, r.failureReason, r.correlationId]));
+      content = csv(
+        ['Thời gian gửi lệnh', 'Thời gian hoàn tất', 'Trang trại', 'Khu vực', 'Thiết bị', 'Mã máy bơm', 'Lệnh điều khiển', 'Nguồn lệnh', 'Trạng thái', 'Người thao tác', 'Quy tắc tự động', 'Chi tiết lỗi', 'Mã đối chiếu'],
+        rows.map((r) => [r.requestedAt, r.completedAt, r.actuator.device.zone.farm.name, r.actuator.device.zone.name, r.actuator.device.name, r.actuator.actuatorCode, r.command === 'TURN_ON' ? 'Bật máy bơm' : 'Tắt máy bơm', sourceLabels[r.source] ?? r.source, statusLabels[r.status] ?? r.status, r.requestedBy?.fullName, r.automationRule?.name, r.failureReason, r.correlationId]),
+      );
     } else {
       const rows = await activityLogService.exportRows({ farmId: query.farmId, from: query.from, to: query.to }, actor); ensureLimit(rows);
-      content = csv(['Time', 'User', 'Role', 'Action', 'Entity Type', 'Entity ID', 'Farm', 'Description', 'IP Address'], rows.map((r) => [r.createdAt, r.user?.fullName, r.user?.role, r.action, r.entityType, r.entityId, r.farm?.name, r.description, r.ipAddress]));
+      content = csv(
+        ['Thời gian', 'Người dùng', 'Vai trò', 'Hành động', 'Loại đối tượng', 'Mã đối tượng', 'Trang trại', 'Mô tả chi tiết', 'Địa chỉ IP'],
+        rows.map((r) => [r.createdAt, r.user?.fullName, r.user?.role, r.action, r.entityType, r.entityId, r.farm?.name, r.description, r.ipAddress]),
+      );
     }
     return { content, filename: `smart-agriculture-${query.type}-${new Date().toISOString().slice(0, 10)}.csv` };
   },

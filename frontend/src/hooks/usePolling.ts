@@ -10,7 +10,7 @@ interface Options<T> {
 }
 
 /** Memoize request with useCallback: its dependencies define the polling scope. */
-export function usePolling<T>(request: (signal: AbortSignal) => Promise<T>, { onSuccess, onReset, enabled = true, intervalMs = 10_000 }: Options<T>) {
+export function usePolling<T>(request: (signal: AbortSignal) => Promise<T>, { onSuccess, onReset, enabled = true, intervalMs = 5_000 }: Options<T>) {
   const successRef = useRef(onSuccess);
   const resetRef = useRef(onReset);
   useEffect(() => { successRef.current = onSuccess; }, [onSuccess]);

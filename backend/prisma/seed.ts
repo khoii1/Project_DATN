@@ -1,4 +1,4 @@
-﻿import { DeviceConnectionStatus, DeviceStatus, DeviceType, PrismaClient, SensorReadingSource, SensorStatus, SensorType, UserRole, UserStatus } from "@prisma/client";
+import { DeviceConnectionStatus, DeviceStatus, DeviceType, PrismaClient, SensorReadingSource, SensorStatus, SensorType, UserRole, UserStatus } from "@prisma/client";
 import bcrypt from "bcryptjs";
 import { ActuatorState, ActuatorStatus, ActuatorType, AlertOperator, AlertSeverity } from "@prisma/client";
 
@@ -34,7 +34,7 @@ async function seed(): Promise<void> {
   const farm = await prisma.farm.upsert({
     where: { id: "demo_green_farm" },
     update: { ownerId: owner.id, name: "Green Farm", address: "Đà Lạt, Lâm Đồng", areaHectares: 3.5, status: "ACTIVE" },
-    create: { id: "demo_green_farm", ownerId: owner.id, name: "Green Farm", address: "Đà Lạt, Lâm Đồng", description: "Trang trại mẫu phục vụ trình diễn hệ thống", areaHectares: 3.5 },
+    create: { id: "demo_green_farm", ownerId: owner.id, name: "Green Farm", address: "Đà Lạt, Lâm Đồng", description: "Trang trại nông nghiệp thông minh ứng dụng IoT", areaHectares: 3.5 },
   });
   const zoneA = await prisma.zone.upsert({
     where: { id: "demo_zone_a" },
@@ -64,7 +64,7 @@ async function seed(): Promise<void> {
   const deviceA = await prisma.device.upsert({
     where: { deviceCode: "ESP32-GF-A-01" },
     update: { zoneId: zoneA.id, name: "ESP32 khu vực A", type: DeviceType.CONTROLLER, hardwareModel: "ESP32 DevKit V1", firmwareVersion: "1.0.0", status: DeviceStatus.ACTIVE, connectionStatus: DeviceConnectionStatus.ONLINE, lastSeenAt: new Date() },
-    create: { id: "demo_device_esp32_a", zoneId: zoneA.id, deviceCode: "ESP32-GF-A-01", name: "ESP32 khu vực A", type: DeviceType.CONTROLLER, hardwareModel: "ESP32 DevKit V1", firmwareVersion: "1.0.0", installedAt: new Date("2026-08-10"), connectionStatus: DeviceConnectionStatus.ONLINE, lastSeenAt: new Date(), description: "Bộ điều khiển IoT mẫu của Khu A" },
+    create: { id: "demo_device_esp32_a", zoneId: zoneA.id, deviceCode: "ESP32-GF-A-01", name: "ESP32 khu vực A", type: DeviceType.CONTROLLER, hardwareModel: "ESP32 DevKit V1", firmwareVersion: "1.0.0", installedAt: new Date("2026-08-10"), connectionStatus: DeviceConnectionStatus.ONLINE, lastSeenAt: new Date(), description: "Bộ điều khiển trung tâm khu vực A" },
   });
   await prisma.device.upsert({
     where: { deviceCode: "ESP32-GF-B-01" },
@@ -89,7 +89,7 @@ async function seed(): Promise<void> {
   ];
   for (const rule of demoRules) await prisma.alertRule.upsert({ where: { id: rule.id }, update: { ...rule, enabled: true, createdById: owner.id }, create: { ...rule, createdById: owner.id } });
 
-  const pump = await prisma.actuator.upsert({ where: { id: "demo_actuator_pump_a" }, update: { deviceId: deviceA.id, actuatorCode: "PUMP_01", name: "Máy bơm tưới Khu A", type: ActuatorType.PUMP, status: ActuatorStatus.ACTIVE, hardwareChannel: "RELAY_1" }, create: { id: "demo_actuator_pump_a", deviceId: deviceA.id, actuatorCode: "PUMP_01", name: "Máy bơm tưới Khu A", type: ActuatorType.PUMP, status: ActuatorStatus.ACTIVE, currentState: ActuatorState.OFF, hardwareChannel: "RELAY_1", description: "Kênh máy bơm logic dùng MockDeviceGateway" } });
+  const pump = await prisma.actuator.upsert({ where: { id: "demo_actuator_pump_a" }, update: { deviceId: deviceA.id, actuatorCode: "PUMP_01", name: "Máy bơm tưới Khu A", type: ActuatorType.PUMP, status: ActuatorStatus.ACTIVE, hardwareChannel: "RELAY_1", description: "Máy bơm tưới tiêu chính khu vực A" }, create: { id: "demo_actuator_pump_a", deviceId: deviceA.id, actuatorCode: "PUMP_01", name: "Máy bơm tưới Khu A", type: ActuatorType.PUMP, status: ActuatorStatus.ACTIVE, currentState: ActuatorState.OFF, hardwareChannel: "RELAY_1", description: "Máy bơm tưới tiêu chính khu vực A" } });
   await prisma.automationRule.upsert({ where: { id: "demo_automation_soil_pump_a" }, update: { sensorId: "demo_sensor_soil", actuatorId: pump.id, name: "Tưới tự động Khu A", startThreshold: 30, stopThreshold: 45, enabled: true, createdById: owner.id }, create: { id: "demo_automation_soil_pump_a", sensorId: "demo_sensor_soil", actuatorId: pump.id, name: "Tưới tự động Khu A", startThreshold: 30, stopThreshold: 45, enabled: true, description: "Tự động tưới theo độ ẩm đất Khu A", createdById: owner.id } });
 
   console.log(`Seeded ${demoUsers.length} accounts, farm data, 2 devices, 4 sensors, 1 pump actuator, 1 automation rule, baseline readings and ${demoRules.length} alert rules`);

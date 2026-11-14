@@ -15,7 +15,8 @@ function validateThresholds(start: number, stop: number) { const metadata = SENS
 async function ensureEnabledAvailable(actuatorId: string, excludeId?: string) { const existing = await prisma.automationRule.findFirst({ where: { actuatorId, enabled: true, id: excludeId ? { not: excludeId } : undefined } }); if (existing) throw new AppError(409, "Máy bơm đã có một quy tắc tự động đang bật"); }
 function present(rule: any) {
   const { commands, sensor, actuator, ...base } = rule; const { readings, ...sensorData } = sensor; const { commands: manualCommands, ...actuatorData } = actuator;
-  const latestManual = manualCommands[0] ?? null; const manualOverrideUntil = latestManual?.completedAt && latestManual.completedAt >= rule.createdAt ? new Date(latestManual.completedAt.getTime() + env.automationManualOverrideMinutes * 60_000) : null;
+  const floor = rule.updatedAt && rule.updatedAt > rule.createdAt ? rule.updatedAt : rule.createdAt;
+  const latestManual = manualCommands[0] ?? null; const manualOverrideUntil = latestManual?.completedAt && latestManual.completedAt >= floor ? new Date(latestManual.completedAt.getTime() + env.automationManualOverrideMinutes * 60_000) : null;
   return { ...base, sensor: { ...sensorData, latestReading: readings[0] ?? null }, actuator: actuatorData, latestAutomationCommand: commands[0] ?? null, manualOverrideActive: !!manualOverrideUntil && manualOverrideUntil > new Date(), manualOverrideUntil };
 }
 
@@ -32,7 +33,8 @@ export const automationRuleService = {
   async update(id: string, input: UpdateAutomationRuleInput, actor: Actor, ipAddress?: string) {
     const current = await automationRuleRepository.findAccessibleById(id, actor); if (!current) throw new AppError(404, "Không tìm thấy quy tắc tưới tự động"); await farmAccessService.assertSensorManageable(current.sensorId, actor);
     const start = input.startThreshold ?? current.startThreshold; const stop = input.stopThreshold ?? current.stopThreshold; validateThresholds(start, stop); const enabling = !current.enabled && input.enabled === true; const disabling = current.enabled && input.enabled === false; if (enabling) await ensureEnabledAvailable(current.actuatorId, id);
-    try { await prisma.automationRule.update({ where: { id }, data: input }); } catch (error) { if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === "P2002") throw new AppError(409, "Máy bơm đã có một quy tắc tự động đang bật"); throw error; }
+    const data = input.enabled === true ? { ...input, lastEvaluatedAt: null, lastCommandAttemptAt: null, updatedAt: new Date() } : input;
+    try { await prisma.automationRule.update({ where: { id }, data }); } catch (error) { if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === "P2002") throw new AppError(409, "Máy bơm đã có một quy tắc tự động đang bật"); throw error; }
     const updated = await automationRuleRepository.findAccessibleById(id, actor); const action = enabling ? ActivityAction.ENABLE_AUTOMATION_RULE : disabling ? ActivityAction.DISABLE_AUTOMATION_RULE : ActivityAction.UPDATE_AUTOMATION_RULE;
     await recordActivity({ userId: actor.id, farmId: current.sensor.device.zone.farmId, action, entityType: "AUTOMATION_RULE", entityId: id, description: `${actor.fullName} cập nhật quy tắc tưới tự động "${current.name}"`, ipAddress }); return present(updated!);
   },

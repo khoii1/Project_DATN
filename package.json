@@ -3,6 +3,8 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
+    "demo:start": "node scripts/start-demo.cjs",
+    "demo:stop": "node scripts/stop-demo.cjs",
     "qa:offline": "node scripts/acceptance-offline.cjs",
     "qa:acceptance-browser": "node scripts/acceptance-browser.cjs",
     "demo:simulation": "node scripts/acceptance-browser.cjs --headed",

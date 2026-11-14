@@ -24,7 +24,7 @@ async function withRuntime<T extends { id: string; actuatorCode: string; current
     const allowed = env.mqttCommandsEnabled && item.device.deviceCode === env.mqttCommandDeviceCode && item.actuatorCode === env.mqttCommandActuatorCode;
     const connected = !!mqttCommandChannel.transport?.connected();
     const observedOff = item.currentState === "OFF" && mqttStateObserver.isConfirmedOff(item.device.deviceCode, item.actuatorCode, item.lastStateChangedAt);
-    const staleOn = item.currentState === "ON" && (!item.lastStateChangedAt || Date.now() - item.lastStateChangedAt.getTime() > ((command?.maxRunSeconds ?? env.mqttPumpMaxRunSeconds) + 2) * 1000);
+    const staleOn = item.currentState === "ON" && (!item.lastStateChangedAt || (command?.maxRunSeconds != null && Date.now() - item.lastStateChangedAt.getTime() > (command.maxRunSeconds + 2) * 1000));
     return { ...item, currentState: (item.device.connectionStatus !== "ONLINE" || (item.currentState === "OFF" ? !observedOff : !connected) || staleOn ? "UNKNOWN" : item.currentState) as T["currentState"], controlEnabled: allowed && connected, gatewayMode: env.mqttCommandsEnabled ? "MQTT" : "DISABLED", latestCommand: command ?? null };
   });
 }

@@ -45,8 +45,8 @@ async function execute(initial: CommandActuator, command: DeviceCommandType, sou
     if (real && source === "AUTOMATION" && !env.mqttAutomationCommandsEnabled) throw new AppError(409, "Tưới tự động MQTT chưa được bật");
     if (real && !mqttCommandChannel.transport?.connected()) throw new AppError(503, "MQTT Broker chưa sẵn sàng");
     const runtimeLimit = pumpRuntimeLimit(env.mqttPumpMaxRunSeconds, env.mqttPumpTestMode);
-    const maxRunSeconds = options.maxRunSeconds ?? runtimeLimit;
-    if (command === "TURN_ON" && (!Number.isInteger(maxRunSeconds) || maxRunSeconds < 1 || maxRunSeconds > runtimeLimit)) throw new AppError(400, `maxRunSeconds phải từ 1 đến ${runtimeLimit}`);
+    const maxRunSeconds = options.maxRunSeconds ?? (env.mqttPumpTestMode ? runtimeLimit : undefined);
+    if (command === "TURN_ON" && maxRunSeconds !== undefined && (!Number.isInteger(maxRunSeconds) || maxRunSeconds < 1 || maxRunSeconds > runtimeLimit)) throw new AppError(400, `maxRunSeconds phải từ 1 đến ${runtimeLimit}`);
     if (command === "TURN_OFF" && options.maxRunSeconds !== undefined) throw new AppError(400, "OFF không nhận maxRunSeconds");
     if (command === "TURN_ON" && actuator.currentState === "ON") throw new AppError(409, "Máy bơm đã được xác nhận ON");
     const previous = await deviceCommandRepository.findPending(actuator.id);
@@ -55,7 +55,10 @@ async function execute(initial: CommandActuator, command: DeviceCommandType, sou
       const recent = await prisma.deviceCommand.findFirst({ where: { actuatorId: actuator.id, requestedAt: { gte: new Date(Date.now() - 2000) } } });
       if (recent) throw new AppError(429, "Chờ ít nhất 2 giây giữa các lệnh ON");
       if (source === "AUTOMATION") {
-        const manual = await prisma.deviceCommand.findFirst({ where: { actuatorId: actuator.id, source: "MANUAL", requestedAt: { gte: new Date(Date.now() - env.automationManualOverrideMinutes * 60_000) } } });
+        const ruleRow = automationRuleId && "automationRule" in prisma ? await prisma.automationRule.findUnique({ where: { id: automationRuleId } }) : null;
+        const overrideWindowStart = new Date(Date.now() - env.automationManualOverrideMinutes * 60_000);
+        const overrideFloor = ruleRow?.updatedAt && ruleRow.updatedAt > overrideWindowStart ? ruleRow.updatedAt : overrideWindowStart;
+        const manual = await prisma.deviceCommand.findFirst({ where: { actuatorId: actuator.id, source: "MANUAL", requestedAt: { gte: overrideFloor } } });
         if (manual) throw new AppError(409, "Thao tác thủ công đang được ưu tiên");
       }
     }

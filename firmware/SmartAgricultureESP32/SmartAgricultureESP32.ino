@@ -347,7 +347,12 @@ void loop() {
   if(resetTransport.exchange(false)) { mqttReady.store(false); localOff(WiFi.status()==WL_CONNECTED?"MQTT_LOST":"WIFI_LOST"); network.stop(); ackCount=0; ackHead=0; }
   if(WiFi.status()!=WL_CONNECTED) {
     mqttReady.store(false); localOff("WIFI_LOST");
-    if(static_cast<uint32_t>(millis()-lastWifiAttempt)>=10000u) { lastWifiAttempt=millis(); WiFi.reconnect(); }
+    if(static_cast<uint32_t>(millis()-lastWifiAttempt)>=10000u) {
+      lastWifiAttempt=millis();
+      Serial.printf("WiFi: reconnecting to '%s' (status=%d)...\n",WIFI_SSID,static_cast<int>(WiFi.status()));
+      WiFi.disconnect(false,false);
+      WiFi.begin(WIFI_SSID,WIFI_PASSWORD);
+    }
     vTaskDelay(pdMS_TO_TICKS(5)); return;
   }
   if(!mqtt.connected()) {
@@ -374,7 +379,7 @@ void loop() {
   if(resetTransport.load()) return;
   sendOffState();
   // Probe broker round-trip while ON, not just TCP socket state (silent network partitions).
-  const uint32_t statusInterval=pumpIsOn()?200u:STATUS_INTERVAL_MS;
+  const uint32_t statusInterval=pumpIsOn()?2000u:STATUS_INTERVAL_MS;
   if(static_cast<uint32_t>(millis()-lastStatus)>=statusInterval) { lastStatus=millis(); publishJson(statusTopic,ONLINE); }
   if(resetTransport.load()) return;
   Sample sample; portENTER_CRITICAL(&sensorMux); sample=sensorSample; portEXIT_CRITICAL(&sensorMux);

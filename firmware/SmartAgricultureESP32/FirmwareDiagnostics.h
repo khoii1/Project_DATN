@@ -3,7 +3,7 @@
 #include <stdarg.h>
 
 namespace agriculture {
-static constexpr uint32_t NETWORK_LEASE_MS=250;
+static constexpr uint32_t NETWORK_LEASE_MS=5000;
 static constexpr uint32_t TELEMETRY_RETRY_MS=5000;
 static constexpr int64_t MAX_SAMPLE_AGE_MS=30000;
 inline bool networkLeaseHealthy(uint32_t now,uint32_t progress,bool ready) { return ready && static_cast<uint32_t>(now-progress)<=NETWORK_LEASE_MS; }

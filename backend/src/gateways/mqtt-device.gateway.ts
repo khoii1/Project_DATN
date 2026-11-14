@@ -21,13 +21,13 @@ export class MqttDeviceGateway implements DeviceGateway {
     const now = this.clock();
     if (!this.transport.connected()) return { success: false, error: "BROKER_UNAVAILABLE" };
     if (!input.onResult || !input.issuedAt || !input.expiresAt || input.expiresAt <= now) return { success: false, error: "EXPIRED_OR_INVALID_COMMAND" };
-    if (input.command === "TURN_ON" && (!Number.isInteger(input.maxRunSeconds) || input.maxRunSeconds! < 1 || input.maxRunSeconds! > 30)) return { success: false, error: "INVALID_MAX_RUNTIME" };
+    if (input.command === "TURN_ON" && input.maxRunSeconds !== undefined && (!Number.isInteger(input.maxRunSeconds) || input.maxRunSeconds < 1 || input.maxRunSeconds > 30)) return { success: false, error: "INVALID_MAX_RUNTIME" };
     const conflicting = [...this.waiting.values()].filter(item => item.input.deviceCode === input.deviceCode && item.input.actuatorCode === input.actuatorCode);
     if (input.command === "TURN_ON" && conflicting.length) return { success: false, error: "COMMAND_PENDING" };
     for (const item of conflicting) await this.cancel(item.input.correlationId, "SUPERSEDED_BY_OFF");
     const timer = setTimeout(() => { void this.settle(input.correlationId, { success: false, error: "ACK_TIMEOUT" }).catch(() => console.error("MQTT command timeout persistence failed")); }, input.expiresAt.getTime() - now.getTime());
     this.waiting.set(input.correlationId, { input, timer });
-    const payload = { schemaVersion: 1, commandId: input.correlationId, deviceCode: input.deviceCode, actuatorCode: input.actuatorCode, type: "PUMP_SET", state: input.command === "TURN_ON" ? "ON" : "OFF", ...(input.command === "TURN_ON" ? { maxRunSeconds: input.maxRunSeconds } : {}), issuedAt: input.issuedAt.toISOString(), expiresAt: input.expiresAt.toISOString() };
+    const payload = { schemaVersion: 1, commandId: input.correlationId, deviceCode: input.deviceCode, actuatorCode: input.actuatorCode, type: "PUMP_SET", state: input.command === "TURN_ON" ? "ON" : "OFF", ...(input.command === "TURN_ON" && input.maxRunSeconds !== undefined ? { maxRunSeconds: input.maxRunSeconds } : {}), issuedAt: input.issuedAt.toISOString(), expiresAt: input.expiresAt.toISOString() };
     try {
       this.transport.publish(`${this.prefix}/devices/${input.deviceCode}/commands/${input.actuatorCode}`, JSON.stringify(payload), error => {
         if (error) void this.settle(input.correlationId, { success: false, error: "PUBLISH_FAILED" }).catch(() => console.error("MQTT publish failure persistence failed"));

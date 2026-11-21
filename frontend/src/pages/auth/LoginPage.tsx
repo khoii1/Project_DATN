@@ -73,10 +73,14 @@ export function LoginPage() {
               <div className="relative mt-2"><LockKeyhole className="absolute left-3.5 top-1/2 h-4.5 w-4.5 -translate-y-1/2 text-slate-400" /><input id="password" type={showPassword ? "text" : "password"} autoComplete="current-password" value={password} onChange={(event) => setPassword(event.target.value)} placeholder="Nhập mật khẩu" className={`h-12 w-full rounded-xl border bg-white pl-11 pr-12 text-sm text-slate-800 shadow-sm transition placeholder:text-slate-300 ${errors.password ? "border-red-400" : "border-slate-200 focus:border-brand-500"}`} aria-invalid={Boolean(errors.password)} /><button type="button" onClick={() => setShowPassword((value) => !value)} className="absolute right-3 top-1/2 -translate-y-1/2 rounded-lg p-1.5 text-slate-400 hover:text-slate-700" aria-label={showPassword ? "Ẩn mật khẩu" : "Hiện mật khẩu"}>{showPassword ? <EyeOff className="h-4.5 w-4.5" /> : <Eye className="h-4.5 w-4.5" />}</button></div>
               {errors.password && <p className="mt-1.5 text-xs font-medium text-red-600">{errors.password}</p>}
             </div>
-            <label className="flex w-fit items-center gap-2.5 text-sm text-slate-600"><input type="checkbox" checked={remember} onChange={(event) => setRemember(event.target.checked)} className="h-4 w-4 rounded border-slate-300 accent-brand-600" /><span>Ghi nhớ đăng nhập</span></label>
+            <div className="flex items-center justify-between gap-2">
+              <label className="flex w-fit items-center gap-2.5 text-sm text-slate-600"><input type="checkbox" checked={remember} onChange={(event) => setRemember(event.target.checked)} className="h-4 w-4 rounded border-slate-300 accent-brand-600" /><span>Ghi nhớ đăng nhập</span></label>
+              <button type="button" onClick={() => navigate("/forgot-password")} className="text-sm font-semibold text-brand-700 hover:underline">Quên mật khẩu?</button>
+            </div>
             {serverError && <div role="alert" className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm font-medium text-red-700">{serverError}</div>}
             <button type="submit" disabled={isSubmitting} className="flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-brand-600 text-sm font-bold text-white shadow-lg shadow-brand-600/15 transition hover:bg-brand-700 disabled:cursor-not-allowed disabled:opacity-70">{isSubmitting && <Loader2 className="h-4 w-4 animate-spin" />}{isSubmitting ? "Đang đăng nhập..." : "Đăng nhập"}</button>
           </form>
+          <p className="mt-6 text-center text-sm text-slate-600">Chưa có tài khoản? <button type="button" onClick={() => navigate("/register")} className="font-bold text-brand-700 hover:underline">Đăng ký tài khoản mới</button></p>
           <div className="mt-7 rounded-xl border border-brand-100 bg-brand-50/70 p-3.5 text-center text-xs leading-5 text-brand-800">Đăng nhập bằng tài khoản được cấp cho môi trường đang sử dụng. Liên hệ quản trị viên nếu cần hỗ trợ.</div>
         </div>
       </section>

@@ -182,17 +182,49 @@ for (const role of ['ADMIN', 'STAFF']) test('settings renders profile & password
   assert.equal(passwordCalls[0].currentPassword, 'OldPass123');
   assert.equal(passwordCalls[0].newPassword, 'NewPass456');
 });
-function reportHarness() {
+function reportHarness(printVisualReport = () => {}) {
   const h = harness(), requests = [];
   const service = {};
   for (const name of ['overview', 'sensors', 'alerts', 'irrigation', 'automation']) service[name] = (_, signal) => new Promise(resolve => requests.push({ name, signal, resolve }));
   const { ReportsPage } = load('pages/reports/ReportsPage.tsx', {
     react: h.hooks, recharts: {}, '../../components/common/PageHeader': {},
+    '../../utils/visual-report': { printVisualReport },
     '../../services/api': { getApiErrorMessage: () => 'Synthetic failure' }, '../../services/report.service': { reportService: service },
     '../../services/farm.service': { farmService: {} }, '../../services/zone.service': { zoneService: { list: async () => { throw Error('synthetic'); } } },
   });
   return { ...h, requests, render: () => h.render(ReportsPage) };
 }
+const printButton = tree => find(tree, element => element.type === 'button' && element.props.onClick?.name === 'exportVisualReport');
+async function readyReportHarness(print) {
+  const h = reportHarness(print); h.render(); h.effects[2]();
+  const values = {
+    overview: { sensorReadingCount: 12, newAlertCount: 0, manualCommandCount: 2, automationCommandCount: 0 },
+    sensors: [], alerts: {}, irrigation: {}, automation: {},
+  };
+  for (const request of h.requests) request.resolve(values[request.name]);
+  await new Promise(resolve => setImmediate(resolve));
+  return h;
+}
+test('visual export is disabled before the complete report has loaded', () => {
+  const h = reportHarness(); assert.equal(printButton(h.render()).props.disabled, true);
+});
+test('visual export uses the loaded query and scope, not unapplied form edits', async () => {
+  let printed;
+  const h = await readyReportHarness(data => { printed = data; });
+  const before = h.render(); assert.equal(printButton(before).props.disabled, false);
+  find(before, e => e.props?.['aria-label'] === 'Từ ngày').props.onChange({ target: { value: '2020-01-01' } });
+  find(before, e => e.props?.['aria-label'] === 'Trang trại báo cáo').props.onChange({ target: { value: 'draft-farm' } });
+  printButton(h.render()).props.onClick();
+  assert.ok(printed); assert.notEqual(printed.query.from.slice(0, 10), '2020-01-01');
+  assert.equal(printed.query.farmId, undefined); assert.equal(printed.farmName, 'Tất cả trang trại');
+});
+test('applying a new query immediately disables stale visual export', async () => {
+  let prints = 0;
+  const h = await readyReportHarness(() => { prints++; }); const tree = h.render();
+  find(tree, e => e.type === 'button' && e.props.onClick?.name === 'apply').props.onClick();
+  const button = printButton(h.render()); assert.equal(button.props.disabled, true);
+  button.props.onClick(); assert.equal(prints, 0);
+});
 for (const emptyLabel of ['Từ ngày', 'Đến ngày']) test('reports rejects missing date without throwing or changing last valid query: ' + emptyLabel, () => {
   const h = reportHarness(), before = h.render();
   find(before, e => e.props?.['aria-label'] === emptyLabel).props.onChange({ target: { value: '' } });
@@ -221,6 +253,7 @@ test('activity logs reject cleared dates before filter serialization', () => {
   const { ActivityLogsPage } = load('pages/activity-logs/ActivityLogsPage.tsx', {
     react: h.hooks, '../../components/common/PageHeader': {}, '../../services/activity-log.service': {},
     '../../services/api': {}, '../../services/farm.service': {}, '../../services/report.service': {},
+    '../../utils/activity-summary': load('utils/activity-summary.ts'),
   });
   let tree = h.render(ActivityLogsPage);
   find(tree, e => e.props?.['aria-label'] === 'Nhật ký từ ngày').props.onChange({ target: { value: '' } });

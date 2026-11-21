@@ -5,6 +5,8 @@
   "scripts": {
     "demo:start": "node scripts/start-demo.cjs",
     "demo:stop": "node scripts/stop-demo.cjs",
+    "mobile:start": "npm --prefix mobile run start",
+    "mobile:web": "npm --prefix mobile run web",
     "qa:offline": "node scripts/acceptance-offline.cjs",
     "qa:acceptance-browser": "node scripts/acceptance-browser.cjs",
     "demo:simulation": "node scripts/acceptance-browser.cjs --headed",

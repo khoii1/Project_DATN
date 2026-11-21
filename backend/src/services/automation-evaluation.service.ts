@@ -1,4 +1,4 @@
-import { ActuatorState, DeviceCommandSource, DeviceCommandStatus, DeviceCommandType } from "@prisma/client";
+import { ActuatorState, DeviceCommandSource, DeviceCommandStatus, DeviceCommandType } from "../types/domain-enums";
 import { prisma } from "../config/database";
 import { env } from "../config/env";
 import type { DeviceGateway } from "../gateways/device.gateway";

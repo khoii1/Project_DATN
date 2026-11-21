@@ -1,4 +1,4 @@
-import { ActivityAction, ActuatorType, Prisma, SensorType } from "@prisma/client";
+import { Prisma } from "@prisma/client"; import { ActivityAction, ActuatorType, SensorType } from "../types/domain-enums";
 import { env } from "../config/env";
 import { prisma } from "../config/database";
 import { actuatorRepository } from "../repositories/actuator.repository";
@@ -37,5 +37,10 @@ export const automationRuleService = {
     try { await prisma.automationRule.update({ where: { id }, data }); } catch (error) { if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === "P2002") throw new AppError(409, "Máy bơm đã có một quy tắc tự động đang bật"); throw error; }
     const updated = await automationRuleRepository.findAccessibleById(id, actor); const action = enabling ? ActivityAction.ENABLE_AUTOMATION_RULE : disabling ? ActivityAction.DISABLE_AUTOMATION_RULE : ActivityAction.UPDATE_AUTOMATION_RULE;
     await recordActivity({ userId: actor.id, farmId: current.sensor.device.zone.farmId, action, entityType: "AUTOMATION_RULE", entityId: id, description: `${actor.fullName} cập nhật quy tắc tưới tự động "${current.name}"`, ipAddress }); return present(updated!);
+  },
+  async remove(id: string, actor: Actor, ipAddress?: string) {
+    const current = await automationRuleRepository.findAccessibleById(id, actor); if (!current) throw new AppError(404, "Không tìm thấy quy tắc tưới tự động"); await farmAccessService.assertSensorManageable(current.sensorId, actor);
+    await automationRuleRepository.remove(id);
+    await recordActivity({ userId: actor.id, farmId: current.sensor.device.zone.farmId, action: ActivityAction.DELETE_AUTOMATION_RULE, entityType: "AUTOMATION_RULE", entityId: id, description: `${actor.fullName} xóa quy tắc tưới tự động "${current.name}"`, ipAddress });
   },
 };

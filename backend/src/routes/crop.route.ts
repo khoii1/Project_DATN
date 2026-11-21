@@ -1,6 +1,6 @@
-import { UserRole } from "@prisma/client";
+import { UserRole } from "../types/domain-enums";
 import { Router } from "express";
-import { createCrop, getCrop, listCrops, updateCrop } from "../controllers/crop.controller";
+import { createCrop, deleteCrop, getCrop, listCrops, updateCrop } from "../controllers/crop.controller";
 import { authenticate } from "../middlewares/auth.middleware";
 import { authorize } from "../middlewares/authorize.middleware";
 import { validate } from "../middlewares/validate.middleware";
@@ -12,4 +12,5 @@ cropRouter.get("/", validate(cropListQuerySchema, "query"), listCrops);
 cropRouter.get("/:id", validate(cropIdParamsSchema, "params"), getCrop);
 cropRouter.post("/", authorize(UserRole.ADMIN, UserRole.FARM_OWNER), validate(createCropSchema), createCrop);
 cropRouter.patch("/:id", authorize(UserRole.ADMIN, UserRole.FARM_OWNER), validate(cropIdParamsSchema, "params"), validate(updateCropSchema), updateCrop);
+cropRouter.delete("/:id", authorize(UserRole.ADMIN, UserRole.FARM_OWNER), validate(cropIdParamsSchema, "params"), deleteCrop);
 

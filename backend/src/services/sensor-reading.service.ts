@@ -9,7 +9,7 @@ const bucketSeconds = { "5m": 300, "15m": 900, "30m": 1800, "1h": 3600, "2h": 72
 type BucketResolution = keyof typeof bucketSeconds;
 type ResolvedResolution = BucketResolution | "raw";
 function autoResolution(from: Date, to: Date): ResolvedResolution { const hours = (to.getTime() - from.getTime()) / 3_600_000; if (hours <= 24) return "5m"; if (hours <= 24 * 7) return "30m"; if (hours <= 24 * 30) return "2h"; return "6h"; }
-async function context(sensorId: string, actor: ResourceActor) { const sensor = await farmAccessService.assertSensorReadable(sensorId, actor); return { sensor, metadata: SENSOR_TYPE_METADATA[sensor.type] }; }
+async function context(sensorId: string, actor: ResourceActor) { const sensor = await farmAccessService.assertSensorReadable(sensorId, actor); return { sensor, metadata: SENSOR_TYPE_METADATA[sensor.type as keyof typeof SENSOR_TYPE_METADATA] }; }
 
 export const sensorReadingService = {
   async list(sensorId: string, query: ReadingsQuery, actor: ResourceActor) {

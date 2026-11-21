@@ -1,8 +1,8 @@
-import { UserRole } from "@prisma/client";
+import { UserRole } from "../types/domain-enums";
 import { Router } from "express";
 import { getZoneLatestReadings } from "../controllers/sensor.controller";
 import { zoneLatestParamsSchema } from "../validators/sensor.schema";
-import { createZone, getZone, listZones, updateZone } from "../controllers/zone.controller";
+import { createZone, deleteZone, getZone, listZones, updateZone } from "../controllers/zone.controller";
 import { authenticate } from "../middlewares/auth.middleware";
 import { authorize } from "../middlewares/authorize.middleware";
 import { validate } from "../middlewares/validate.middleware";
@@ -15,3 +15,4 @@ zoneRouter.get("/", validate(zoneListQuerySchema, "query"), listZones);
 zoneRouter.get("/:id", validate(zoneIdParamsSchema, "params"), getZone);
 zoneRouter.post("/", authorize(UserRole.ADMIN, UserRole.FARM_OWNER), validate(createZoneSchema), createZone);
 zoneRouter.patch("/:id", authorize(UserRole.ADMIN, UserRole.FARM_OWNER), validate(zoneIdParamsSchema, "params"), validate(updateZoneSchema), updateZone);
+zoneRouter.delete("/:id", authorize(UserRole.ADMIN, UserRole.FARM_OWNER), validate(zoneIdParamsSchema, "params"), deleteZone);

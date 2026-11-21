@@ -1,4 +1,4 @@
-import { UserStatus } from "@prisma/client";
+import { UserStatus, type UserRole } from "../types/domain-enums";
 import type { NextFunction, Request, Response } from "express";
 import { userRepository } from "../repositories/user.repository";
 import { AppError } from "../utils/app-error";
@@ -18,7 +18,7 @@ export async function authenticate(request: Request, _response: Response, next: 
     if (!user) throw new AppError(401, "Tài khoản không còn tồn tại");
     if (user.status !== UserStatus.ACTIVE) throw new AppError(401, "Tài khoản hiện không hoạt động");
 
-    request.user = user;
+    request.user = { ...user, role: user.role as UserRole, status: user.status as UserStatus };
     next();
   } catch (error) {
     next(error);

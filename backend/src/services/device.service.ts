@@ -1,4 +1,4 @@
-import { ActivityAction, DeviceStatus, FarmStatus, ZoneStatus } from "@prisma/client";
+import { ActivityAction, DeviceStatus, FarmStatus, ZoneStatus } from "../types/domain-enums";
 import { deviceRepository } from "../repositories/device.repository";
 import type { CreateDeviceInput, DeviceListQuery, DeviceSummaryQuery, UpdateDeviceInput } from "../validators/device.schema";
 import { AppError } from "../utils/app-error";
@@ -24,5 +24,20 @@ export const deviceService = {
     const action = input.status && input.status !== current.status ? ActivityAction.CHANGE_DEVICE_STATUS : ActivityAction.UPDATE_DEVICE;
     const description = action === ActivityAction.CHANGE_DEVICE_STATUS ? `${actor.fullName} chuyển thiết bị "${device.deviceCode}" sang ${input.status === DeviceStatus.MAINTENANCE ? "bảo trì" : input.status === DeviceStatus.INACTIVE ? "ngừng hoạt động" : "hoạt động"}` : `${actor.fullName} cập nhật thiết bị "${device.deviceCode}"`;
     await recordActivity({ userId: actor.id, farmId: current.zone.farmId, action, entityType: "DEVICE", entityId: device.id, description, ipAddress }); return device;
+  },
+  async remove(id: string, actor: Actor, ipAddress?: string) {
+    await farmAccessService.assertDeviceManageable(id, actor);
+    const current = await deviceRepository.findAccessibleById(id, actor);
+    if (!current) throw new AppError(404, "Không tìm thấy thiết bị");
+    await deviceRepository.remove(id);
+    await recordActivity({
+      userId: actor.id,
+      farmId: current.zone.farmId,
+      action: ActivityAction.DELETE_DEVICE,
+      entityType: "DEVICE",
+      entityId: current.id,
+      description: `${actor.fullName} xóa thiết bị "${current.name}" (${current.deviceCode})`,
+      ipAddress,
+    });
   },
 };

@@ -4,7 +4,7 @@ const fs = require("fs");
 const net = require("net");
 const os = require("os");
 const path = require("path");
-const { spawn } = require("child_process");
+const { spawn, execSync } = require("child_process");
 
 const PROJECT_ROOT = path.resolve(__dirname, "..");
 
@@ -122,7 +122,30 @@ async function main() {
     }
   }
 
-  // 3. Khởi động Backend Server (Port 5000)
+  // 3. Kiểm tra SQL Server (SQL01) & Khởi động Backend Server (Port 5000)
+  const envPath = path.join(PROJECT_ROOT, "backend", ".env");
+  if (fs.existsSync(envPath)) {
+    const envRaw = fs.readFileSync(envPath, "utf8");
+    const portMatch = envRaw.match(/sqlserver:\/\/127\.0\.0\.1:(\d+);/);
+    if (portMatch) {
+      const sqlPort = Number.parseInt(portMatch[1], 10);
+      if (!(await checkPortListening(sqlPort))) {
+        try {
+          const out = execSync('sqlcmd -S "localhost\\SQL01" -E -C -W -Q "EXEC xp_readerrorlog 0, 1, N\'Server is listening on\'"', {
+            encoding: "utf8",
+            stdio: ["ignore", "pipe", "ignore"],
+          });
+          const m = out.match(/Server\s+Server is listening on \[\s*127\.0\.0\.1\s+<ipv4>\s+(\d+)\]/i);
+          if (m && m[1]) {
+            const newPort = m[1];
+            const updatedEnv = envRaw.replace(`sqlserver://127.0.0.1:${sqlPort};`, `sqlserver://127.0.0.1:${newPort};`);
+            fs.writeFileSync(envPath, updatedEnv, "utf8");
+            console.log(`${C.cyan}      -> Đã tự động cập nhật cổng TCP SQL Server (SQL01): ${newPort}${C.reset}`);
+          }
+        } catch {}
+      }
+    }
+  }
   console.log(`${C.yellow}[3/4] Kiểm tra Backend Server (cổng 5000)...${C.reset}`);
   if (await checkPortListening(5000)) {
     console.log(`${C.green}      -> OK: Backend Server đang hoạt động trên cổng 5000.${C.reset}\n`);
@@ -155,7 +178,7 @@ async function main() {
   console.log(`${C.green}==========================================================${C.reset}`);
   console.log(` - Địa chỉ Website : http://localhost:5173/irrigation`);
   console.log(` - Tài khoản Admin : admin@smartagri.local`);
-  console.log(` - Mật khẩu        : Admin@123`);
+  console.log(` - Mật khẩu        : Admin123`);
   console.log(`${C.gray} - Để tắt toàn bộ  : Chạy lệnh 'npm run demo:stop' hoặc file stop-demo.bat${C.reset}`);
   console.log(`${C.green}==========================================================${C.reset}\n`);
 

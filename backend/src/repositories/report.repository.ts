@@ -1,4 +1,4 @@
-import { AlertStatus, DeviceCommandSource, DeviceCommandStatus, DeviceCommandType, Prisma, SensorType } from '@prisma/client';
+import { Prisma } from "@prisma/client"; import { AlertStatus, DeviceCommandSource, DeviceCommandStatus, DeviceCommandType, SensorType } from "../types/domain-enums";
 import { prisma } from '../config/database';
 import { SENSOR_TYPE_METADATA } from '../constants/sensor-metadata';
 
@@ -41,7 +41,7 @@ export const reportRepository = {
     const sensorFilter = { ...sensorWhere(scope), ...(sensorType ? { type: sensorType } : {}) };
     const sensors = await prisma.sensor.findMany({ where: sensorFilter, select: { id: true, type: true } });
     const idsByType = new Map<SensorType, string[]>();
-    for (const sensor of sensors) idsByType.set(sensor.type, [...(idsByType.get(sensor.type) ?? []), sensor.id]);
+    for (const sensor of sensors) { const t = sensor.type as SensorType; idsByType.set(t, [...(idsByType.get(t) ?? []), sensor.id]); }
     return Promise.all([...idsByType.entries()].map(async ([type, sensorIds]) => {
       const where = { sensorId: { in: sensorIds }, recordedAt: { gte: scope.from, lte: scope.to } };
       const [aggregate, latest] = await prisma.$transaction([

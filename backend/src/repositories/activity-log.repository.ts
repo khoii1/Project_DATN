@@ -1,4 +1,4 @@
-import { ActivityAction, Prisma, type UserRole } from "@prisma/client";
+import { Prisma } from "@prisma/client"; import { ActivityAction, type UserRole } from "../types/domain-enums";
 import { prisma } from "../config/database";
 import type { ActivityLogListQuery } from '../validators/activity-log.schema';
 
@@ -35,9 +35,9 @@ export function activityLogWhere(actor: ActivityActor, query: Partial<ActivityLo
       ? { OR: [{ farmId: { in: accessibleFarmIds } }, { userId: actor.id }] }
       : { userId: actor.id };
   const searchFilter: Prisma.ActivityLogWhereInput = query.search ? { OR: [
-    { description: { contains: query.search, mode: 'insensitive' } },
-    { user: { fullName: { contains: query.search, mode: 'insensitive' } } },
-    { user: { email: { contains: query.search, mode: 'insensitive' } } },
+    { description: { contains: query.search } },
+    { user: { fullName: { contains: query.search } } },
+    { user: { email: { contains: query.search } } },
     ...(Object.values(ActivityAction).includes(query.search as ActivityAction) ? [{ action: query.search as ActivityAction }] : []),
   ] } : {};
   return {
@@ -45,7 +45,7 @@ export function activityLogWhere(actor: ActivityActor, query: Partial<ActivityLo
       roleScope,
       searchFilter,
       query.userId ? { userId: query.userId } : {}, query.action ? { action: query.action } : {},
-      query.entityType ? { entityType: { equals: query.entityType, mode: 'insensitive' } } : {}, query.farmId ? { farmId: query.farmId } : {},
+      query.entityType ? { entityType: { equals: query.entityType } } : {}, query.farmId ? { farmId: query.farmId } : {},
       query.from || query.to ? { createdAt: { gte: query.from, lte: query.to } } : {},
     ],
   };
@@ -58,7 +58,19 @@ export async function listActivityLogs(actor: ActivityActor, query: ActivityLogL
     prisma.activityLog.findMany({ where, include, orderBy: { createdAt: 'desc' }, skip: (query.page - 1) * query.limit, take: query.limit }),
     prisma.activityLog.count({ where }),
   ]);
-  return { items, total };
+  // Enrich this already-scoped page without changing historical audit descriptions.
+  // The zone name is current display context, not a historical location snapshot.
+  const commandIds = items.filter(item => item.action === ActivityAction.ISSUE_DEVICE_COMMAND && item.entityType === 'DEVICE_COMMAND' && item.entityId).map(item => item.entityId!);
+  const commands = commandIds.length ? await prisma.deviceCommand.findMany({
+    where: { id: { in: commandIds }, ...(actor.role !== 'ADMIN' ? { actuator: { device: { zone: { farmId: { in: accessibleFarmIds } } } } } : {}) },
+    select: { id: true, command: true, actuator: { select: { device: { select: { zone: { select: { name: true, farmId: true } } } } } } },
+  }) : [];
+  const byId = new Map(commands.map(command => [command.id, command]));
+  return { items: items.map(item => {
+    const command = item.action === ActivityAction.ISSUE_DEVICE_COMMAND && item.entityType === 'DEVICE_COMMAND' && item.entityId ? byId.get(item.entityId) : undefined;
+    const zone = command?.actuator.device.zone;
+    return { ...item, commandContext: command && zone && item.farmId === zone.farmId ? { command: command.command, zoneName: zone.name } : null };
+  }), total };
 }
 
 export function exportActivityLogs(actor: ActivityActor, query: Partial<ActivityLogListQuery>, accessibleFarmIds: string[], take: number) {

@@ -13,6 +13,7 @@ export const sensorService = {
   async get(id: string, signal?: AbortSignal) { const response = await api.get<Envelope<{ sensor: Sensor }>>(`/sensors/${id}`, { signal }); return response.data.data.sensor; },
   async create(input: SensorInput) { const response = await api.post<Envelope<{ sensor: Sensor }>>("/sensors", input); return response.data.data.sensor; },
   async update(id: string, input: Partial<SensorInput>) { const { deviceId: _deviceId, sensorCode: _sensorCode, type: _type, ...changes } = input; void _deviceId; void _sensorCode; void _type; const response = await api.patch<Envelope<{ sensor: Sensor }>>(`/sensors/${id}`, changes); return response.data.data.sensor; },
+  async remove(id: string) { await api.delete<Envelope<null>>(`/sensors/${id}`); },
   async readings(id: string, query: Partial<SensorHistoryQuery> = {}, signal?: AbortSignal) { const response = await api.get<Envelope<SensorReadingPage>>(`/sensors/${id}/readings`, { params: params(query), signal }); return response.data.data; },
   async chart(id: string, query: Pick<SensorHistoryQuery, "from" | "to"> & { resolution?: SensorChartResolution }, signal?: AbortSignal) { const response = await api.get<Envelope<SensorChartResponse>>(`/sensors/${id}/chart`, { params: query, signal }); return response.data.data; },
   async statistics(id: string, query: Pick<SensorHistoryQuery, "from" | "to">, signal?: AbortSignal) { const response = await api.get<Envelope<SensorStatistics>>(`/sensors/${id}/statistics`, { params: query, signal }); return response.data.data; },

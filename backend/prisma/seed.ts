@@ -1,6 +1,6 @@
-import { DeviceConnectionStatus, DeviceStatus, DeviceType, PrismaClient, SensorReadingSource, SensorStatus, SensorType, UserRole, UserStatus } from "@prisma/client";
+import { PrismaClient } from "@prisma/client"; import { DeviceConnectionStatus, DeviceStatus, DeviceType, SensorReadingSource, SensorStatus, SensorType, UserRole, UserStatus } from "../src/types/domain-enums";
 import bcrypt from "bcryptjs";
-import { ActuatorState, ActuatorStatus, ActuatorType, AlertOperator, AlertSeverity } from "@prisma/client";
+import { ActuatorState, ActuatorStatus, ActuatorType, AlertOperator, AlertSeverity } from "../src/types/domain-enums";
 
 const prisma = new PrismaClient();
 

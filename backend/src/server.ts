@@ -12,12 +12,12 @@ async function bootstrap(): Promise<void> {
   if (databaseConnected) {
     console.log("Database: connected");
   } else {
-    console.warn("Database: unavailable - check DATABASE_URL and PostgreSQL");
+    console.warn("Database: unavailable - check DATABASE_URL and SQL Server");
   }
 
   if (env.mqttCommandsEnabled && !databaseConnected) throw new Error("MQTT command recovery requires database");
   if (databaseConnected) await recoverMqttCommands();
-  const server = app.listen(env.port, () => {
+  const server = app.listen(env.port, "0.0.0.0", () => {
     console.log(`Smart Agriculture API running on port ${env.port}`);
     console.log(`Environment: ${env.nodeEnv}`);
     // Attest the serving process's safety policy, never credentials or raw env.

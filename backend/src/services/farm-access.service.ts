@@ -1,4 +1,4 @@
-import type { UserRole } from "@prisma/client";
+import { type UserRole } from "../types/domain-enums";
 import { farmRepository } from "../repositories/farm.repository";
 import { zoneRepository } from "../repositories/zone.repository";
 import { cropRepository } from "../repositories/crop.repository";

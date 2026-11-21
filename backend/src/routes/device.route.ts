@@ -1,6 +1,6 @@
-import { UserRole } from "@prisma/client";
+import { UserRole } from "../types/domain-enums";
 import { Router } from "express";
-import { createDevice, getDevice, getDeviceSummary, listDevices, updateDevice } from "../controllers/device.controller";
+import { createDevice, deleteDevice, getDevice, getDeviceSummary, listDevices, updateDevice } from "../controllers/device.controller";
 import { getDeviceLatestReadings } from "../controllers/sensor.controller";
 import { authenticate } from "../middlewares/auth.middleware";
 import { authorize } from "../middlewares/authorize.middleware";
@@ -14,3 +14,4 @@ deviceRouter.get("/:deviceId/latest-readings", validate(deviceLatestParamsSchema
 deviceRouter.post("/", authorize(UserRole.ADMIN, UserRole.FARM_OWNER), validate(createDeviceSchema), createDevice);
 deviceRouter.get("/:id", validate(deviceIdParamsSchema, "params"), getDevice);
 deviceRouter.patch("/:id", authorize(UserRole.ADMIN, UserRole.FARM_OWNER), validate(deviceIdParamsSchema, "params"), validate(updateDeviceSchema), updateDevice);
+deviceRouter.delete("/:id", authorize(UserRole.ADMIN, UserRole.FARM_OWNER), validate(deviceIdParamsSchema, "params"), deleteDevice);

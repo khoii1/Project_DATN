@@ -1,4 +1,4 @@
-import { DeviceCommandSource, DeviceCommandStatus, DeviceCommandType } from "@prisma/client";
+import { DeviceCommandSource, DeviceCommandStatus, DeviceCommandType } from "../types/domain-enums";
 import { z } from "zod";
 const isoDate = z.string().datetime({ offset: true }).transform(value => new Date(value));
 export const issueCommandSchema = z.object({ command: z.nativeEnum(DeviceCommandType), maxRunSeconds: z.number().int().min(1).max(30).optional() }).strict("Nguồn, người yêu cầu và trạng thái do hệ thống quản lý").refine(value => value.command === "TURN_ON" || value.maxRunSeconds === undefined, { message: "Lệnh OFF không nhận maxRunSeconds" });

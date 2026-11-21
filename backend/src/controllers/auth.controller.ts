@@ -1,6 +1,16 @@
 import type { NextFunction, Request, Response } from "express";
 import { authService } from "../services/auth.service";
-import type { ChangePasswordInput, LoginInput, UpdateProfileInput } from "../validators/auth.schema";
+import type { ChangePasswordInput, ForgotPasswordInput, LoginInput, RegisterInput, ResetPasswordInput, UpdateProfileInput } from "../validators/auth.schema";
+
+export async function register(request: Request, response: Response, next: NextFunction): Promise<void> {
+  try {
+    const input = request.body as RegisterInput;
+    const result = await authService.register(input, request.ip);
+    response.status(201).json({ success: true, message: "Đăng ký tài khoản thành công", data: result });
+  } catch (error) {
+    next(error);
+  }
+}
 
 export async function login(request: Request, response: Response, next: NextFunction): Promise<void> {
   try {
@@ -40,6 +50,30 @@ export async function logout(request: Request, response: Response, next: NextFun
   try {
     if (request.user) await authService.logout(request.user, request.ip);
     response.status(200).json({ success: true, message: "Đăng xuất thành công" });
+  } catch (error) {
+    next(error);
+  }
+}
+
+export async function forgotPassword(request: Request, response: Response, next: NextFunction): Promise<void> {
+  try {
+    const input = request.body as ForgotPasswordInput;
+    const data = await authService.requestPasswordReset(input);
+    response.status(200).json({
+      success: true,
+      message: "Đã tạo mã xác thực khôi phục mật khẩu (hiệu lực 5 phút)",
+      data,
+    });
+  } catch (error) {
+    next(error);
+  }
+}
+
+export async function resetPassword(request: Request, response: Response, next: NextFunction): Promise<void> {
+  try {
+    const input = request.body as ResetPasswordInput;
+    await authService.resetPassword(input, request.ip);
+    response.status(200).json({ success: true, message: "Đặt lại mật khẩu mới thành công" });
   } catch (error) {
     next(error);
   }

@@ -1,9 +1,10 @@
-import { Prisma, type SensorReadingSource } from "@prisma/client";
+import { Prisma } from "@prisma/client";
 import { prisma } from "../config/database";
+import type { SensorReadingSource } from "../types/domain-enums";
 
 export type ReadingSort = "asc" | "desc";
 interface HistoryOptions { from?: Date; to?: Date; page: number; limit: number; sort: ReadingSort }
-export interface BucketPoint { epoch: bigint; value: number; min: number; max: number; count: bigint }
+export interface BucketPoint { epoch: bigint | number; value: number; min: number; max: number; count: bigint | number }
 
 export const sensorReadingRepository = {
   async list(sensorId: string, options: HistoryOptions) {
@@ -29,17 +30,46 @@ export const sensorReadingRepository = {
   },
   bucketPoints(sensorId: string, from: Date, to: Date, bucketSeconds: number) {
     return prisma.$queryRaw<BucketPoint[]>(Prisma.sql`
-      SELECT (floor(extract(epoch FROM "recorded_at") / ${bucketSeconds}) * ${bucketSeconds})::bigint AS "epoch",
-             avg("value")::double precision AS "value", min("value")::double precision AS "min",
-             max("value")::double precision AS "max", count(*)::bigint AS "count"
-      FROM "sensor_readings"
-      WHERE "sensor_id" = ${sensorId}
-        AND "recorded_at" >= (${from} AT TIME ZONE 'UTC')
-        AND "recorded_at" <= (${to} AT TIME ZONE 'UTC')
-      GROUP BY 1 ORDER BY 1 ASC
+      SELECT b.epoch AS epoch,
+             CAST(AVG(b.value) AS FLOAT) AS value,
+             CAST(MIN(b.value) AS FLOAT) AS min,
+             CAST(MAX(b.value) AS FLOAT) AS max,
+             COUNT_BIG(*) AS count
+      FROM (
+        SELECT (DATEDIFF_BIG(SECOND, '1970-01-01T00:00:00', recorded_at) / CAST(${bucketSeconds} AS BIGINT)) * CAST(${bucketSeconds} AS BIGINT) AS epoch,
+               value
+        FROM sensor_readings
+        WHERE sensor_id = ${sensorId}
+          AND recorded_at >= ${from}
+          AND recorded_at <= ${to}
+      ) AS b
+      GROUP BY b.epoch
+      ORDER BY b.epoch ASC
     `);
   },
-  createMany(data: Array<{ sensorId: string; value: number; source: SensorReadingSource; recordedAt: Date }>) { return prisma.sensorReading.createManyAndReturn({ data, skipDuplicates: true, select: { id: true, sensorId: true, value: true, recordedAt: true, receivedAt: true } }); },
+  async createMany(data: Array<{ sensorId: string; value: number; source: SensorReadingSource; recordedAt: Date }>) {
+    if (data.length === 0) return [];
+    const existing = await prisma.sensorReading.findMany({
+      where: { OR: data.map((d) => ({ sensorId: d.sensorId, recordedAt: d.recordedAt })) },
+      select: { sensorId: true, recordedAt: true },
+    });
+    const existingKeys = new Set(existing.map((e) => `${e.sensorId}|${e.recordedAt.getTime()}`));
+    const fresh = data.filter((d) => !existingKeys.has(`${d.sensorId}|${d.recordedAt.getTime()}`));
+    if (fresh.length === 0) return [];
+    const created: Array<{ id: string; sensorId: string; value: number; recordedAt: Date; receivedAt: Date }> = [];
+    for (const item of fresh) {
+      try {
+        const row = await prisma.sensorReading.create({
+          data: item,
+          select: { id: true, sensorId: true, value: true, recordedAt: true, receivedAt: true },
+        });
+        created.push(row);
+      } catch (err) {
+        if (!(err instanceof Prisma.PrismaClientKnownRequestError && err.code === "P2002")) throw err;
+      }
+    }
+    return created;
+  },
   latest(sensorId: string) { return prisma.sensorReading.findFirst({ where: { sensorId }, orderBy: { recordedAt: "desc" } }); },
   countAt(sensorIds: string[], recordedAt: Date) { return prisma.sensorReading.count({ where: { sensorId: { in: sensorIds }, recordedAt } }); },
 };

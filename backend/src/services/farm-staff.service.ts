@@ -1,4 +1,4 @@
-import { ActivityAction, UserRole, UserStatus } from "@prisma/client";
+import { ActivityAction, UserRole, UserStatus } from "../types/domain-enums";
 import { farmStaffRepository } from "../repositories/farm-staff.repository"; import { farmRepository } from "../repositories/farm.repository"; import { userRepository } from "../repositories/user.repository"; import { AppError } from "../utils/app-error"; import { recordActivity } from "./activity-log.service"; import { farmAccessService, type ResourceActor } from "./farm-access.service";
 interface Actor extends ResourceActor { fullName: string }
 export const farmStaffService = {

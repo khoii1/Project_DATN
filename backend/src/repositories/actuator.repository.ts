@@ -1,4 +1,4 @@
-import { ActuatorState, ActuatorStatus, ActuatorType, DeviceConnectionStatus, DeviceStatus, FarmStatus, Prisma, ZoneStatus } from "@prisma/client";
+import { Prisma } from "@prisma/client"; import { ActuatorState, ActuatorStatus, ActuatorType, DeviceConnectionStatus, DeviceStatus, FarmStatus, ZoneStatus } from "../types/domain-enums";
 import { env } from "../config/env";
 import { mqttCommandChannel } from "../mqtt/mqtt-command-channel";
 import { mqttStateObserver } from "../mqtt/mqtt-state-observer";
@@ -8,7 +8,7 @@ import { farmScope, type FarmActor } from "./farm.repository";
 export interface ActuatorListOptions { search?: string; farmId?: string; zoneId?: string; deviceId?: string; type?: ActuatorType; status?: ActuatorStatus; state?: ActuatorState; page: number; limit: number }
 export const actuatorInclude = { device: { include: { zone: { include: { farm: { select: { id: true, name: true, ownerId: true, status: true } } } } } } } satisfies Prisma.ActuatorInclude;
 const scope = (actor: FarmActor): Prisma.ActuatorWhereInput => ({ device: { zone: { farm: farmScope(actor) } } });
-function where(actor: FarmActor, options: Partial<ActuatorListOptions>): Prisma.ActuatorWhereInput { return { AND: [scope(actor), options.farmId ? { device: { zone: { farmId: options.farmId } } } : {}, options.zoneId ? { device: { zoneId: options.zoneId } } : {}, options.deviceId ? { deviceId: options.deviceId } : {}, options.type ? { type: options.type } : {}, options.status ? { status: options.status } : {}, options.state ? { currentState: options.state } : {}, options.search ? { OR: [{ actuatorCode: { contains: options.search.toUpperCase(), mode: "insensitive" } }, { name: { contains: options.search, mode: "insensitive" } }, { hardwareChannel: { contains: options.search.toUpperCase(), mode: "insensitive" } }] } : {}] }; }
+function where(actor: FarmActor, options: Partial<ActuatorListOptions>): Prisma.ActuatorWhereInput { return { AND: [scope(actor), options.farmId ? { device: { zone: { farmId: options.farmId } } } : {}, options.zoneId ? { device: { zoneId: options.zoneId } } : {}, options.deviceId ? { deviceId: options.deviceId } : {}, options.type ? { type: options.type } : {}, options.status ? { status: options.status } : {}, options.state ? { currentState: options.state } : {}, options.search ? { OR: [{ actuatorCode: { contains: options.search.toUpperCase() } }, { name: { contains: options.search } }, { hardwareChannel: { contains: options.search.toUpperCase() } }] } : {}] }; }
 
 export const actuatorRepository = {
   async list(actor: FarmActor, options: ActuatorListOptions) { const filter = where(actor, options); const [items, total] = await prisma.$transaction([prisma.actuator.findMany({ where: filter, include: actuatorInclude, orderBy: { createdAt: "desc" }, skip: (options.page - 1) * options.limit, take: options.limit }), prisma.actuator.count({ where: filter })]); return { items, total }; },
@@ -16,6 +16,17 @@ export const actuatorRepository = {
   findByDeviceAndCode(deviceId: string, actuatorCode: string) { return prisma.actuator.findUnique({ where: { deviceId_actuatorCode: { deviceId, actuatorCode } }, include: actuatorInclude }); },
   create(data: Prisma.ActuatorUncheckedCreateInput) { return prisma.actuator.create({ data, include: actuatorInclude }); },
   update(id: string, data: Prisma.ActuatorUpdateInput) { return prisma.actuator.update({ where: { id }, data, include: actuatorInclude }); },
+  async remove(id: string) {
+    return prisma.$transaction(async (tx) => {
+      const rules = await tx.automationRule.findMany({ where: { actuatorId: id }, select: { id: true } });
+      const ruleIds = rules.map((r) => r.id);
+      const cmdWhere: Prisma.DeviceCommandWhereInput[] = [{ actuatorId: id }];
+      if (ruleIds.length > 0) cmdWhere.push({ automationRuleId: { in: ruleIds } });
+      await tx.deviceCommand.deleteMany({ where: { OR: cmdWhere } });
+      if (ruleIds.length > 0) await tx.automationRule.deleteMany({ where: { id: { in: ruleIds } } });
+      return tx.actuator.delete({ where: { id } });
+    });
+  },
   async summary(actor: FarmActor, filters: Pick<ActuatorListOptions, "farmId" | "zoneId" | "deviceId" | "type">) { const filter = where(actor, filters); const unavailable: Prisma.ActuatorWhereInput = { OR: [{ status: { not: ActuatorStatus.ACTIVE } }, { device: { OR: [{ status: { not: DeviceStatus.ACTIVE } }, { connectionStatus: { not: DeviceConnectionStatus.ONLINE } }, { zone: { OR: [{ status: { not: ZoneStatus.ACTIVE } }, { farm: { status: { not: FarmStatus.ACTIVE } } }] } }] } }] }; const observed = !!mqttCommandChannel.transport?.connected();
     const validOn: Prisma.ActuatorWhereInput = observed ? { currentState: ActuatorState.ON, device: { connectionStatus: DeviceConnectionStatus.ONLINE }, lastStateChangedAt: { gte: new Date(Date.now() - (env.mqttPumpMaxRunSeconds + 2) * 1000) } } : { id: "__no_confirmed_state__" };
     const offReports = mqttStateObserver.offFilters();

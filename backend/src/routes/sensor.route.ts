@@ -1,6 +1,6 @@
-import { UserRole } from "@prisma/client";
+import { UserRole } from "../types/domain-enums";
 import { Router } from "express";
-import { createSensor, getSensor, getSensorChart, getSensorReadings, getSensorStatistics, getSensorSummary, listSensors, updateSensor } from "../controllers/sensor.controller";
+import { createSensor, deleteSensor, getSensor, getSensorChart, getSensorReadings, getSensorStatistics, getSensorSummary, listSensors, updateSensor } from "../controllers/sensor.controller";
 import { authenticate } from "../middlewares/auth.middleware";
 import { authorize } from "../middlewares/authorize.middleware";
 import { validate } from "../middlewares/validate.middleware";
@@ -16,3 +16,4 @@ sensorRouter.get("/:id/chart", validate(sensorIdParamsSchema, "params"), validat
 sensorRouter.get("/:id/statistics", validate(sensorIdParamsSchema, "params"), validate(statisticsQuerySchema, "query"), getSensorStatistics);
 sensorRouter.get("/:id", validate(sensorIdParamsSchema, "params"), getSensor);
 sensorRouter.patch("/:id", authorize(UserRole.ADMIN, UserRole.FARM_OWNER), validate(sensorIdParamsSchema, "params"), validate(updateSensorSchema), updateSensor);
+sensorRouter.delete("/:id", authorize(UserRole.ADMIN, UserRole.FARM_OWNER), validate(sensorIdParamsSchema, "params"), deleteSensor);

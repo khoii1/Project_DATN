@@ -1,4 +1,4 @@
-import { DeviceConnectionStatus, DeviceStatus, DeviceType } from "@prisma/client";
+import { DeviceConnectionStatus, DeviceStatus, DeviceType } from "../types/domain-enums";
 import { z } from "zod";
 const optionalText = (max: number) => z.string().trim().max(max).optional().nullable().transform((value) => value === "" ? null : value);
 const optionalDate = z.string().date("Ngày lắp đặt không hợp lệ").transform((value) => new Date(`${value}T00:00:00.000Z`)).optional().nullable();

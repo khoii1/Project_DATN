@@ -1,4 +1,4 @@
-import type { UserRole } from '@prisma/client';
+import { type UserRole } from "../types/domain-enums";
 import { reportRepository, type ReportScope } from '../repositories/report.repository';
 import type { AlertReportQuery, ReportExportQuery, ReportQuery, SensorReportQuery } from '../validators/report.schema';
 import { AppError } from '../utils/app-error';

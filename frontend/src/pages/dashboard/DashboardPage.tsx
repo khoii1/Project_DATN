@@ -29,6 +29,7 @@ import { reportService } from '../../services/report.service';
 import type { ReportOverview } from '../../types/report';
 import { activityLogService } from '../../services/activity-log.service';
 import type { ActivityLog } from '../../types/activity-log';
+import { activitySummary } from '../../utils/activity-summary';
 
 type ApiStatus = "checking" | "connected" | "disconnected";
 
@@ -162,7 +163,7 @@ export function DashboardPage() {
       <div className="grid gap-6 xl:grid-cols-[minmax(0,1.4fr)_minmax(340px,.8fr)]">
         <section className="surface-card min-w-0 p-5 sm:p-6">
           <div className="flex items-center justify-between gap-3"><div><p className="text-sm font-medium text-slate-500">Nhật ký hệ thống</p><h2 className="mt-1 text-lg font-bold text-slate-900">Hoạt động gần đây</h2></div><Activity className="h-5 w-5 text-brand-600" /></div>
-          <div className="mt-5 space-y-3">{recentActivity.length === 0 ? <p className="py-8 text-center text-sm text-slate-400">Chưa có hoạt động phù hợp.</p> : recentActivity.map((log) => <article key={log.id} className="flex min-w-0 items-start justify-between gap-4 rounded-xl border p-4"><div className="min-w-0"><p className="truncate text-sm font-bold text-slate-800">{log.description}</p><p className="mt-1 text-xs text-slate-400">{log.user?.fullName ?? 'Hệ thống'} · {log.farm?.name ?? 'Toàn hệ thống'}</p></div><time className="shrink-0 text-xs text-slate-400">{new Intl.DateTimeFormat(undefined, { dateStyle: 'short', timeStyle: 'short' }).format(new Date(log.createdAt))}</time></article>)}</div>
+          <div className="mt-5 space-y-3">{recentActivity.length === 0 ? <p className="py-8 text-center text-sm text-slate-400">Chưa có hoạt động phù hợp.</p> : recentActivity.map((log) => <article key={log.id} className="flex min-w-0 items-start justify-between gap-4 rounded-xl border p-4"><div className="min-w-0"><p className="truncate text-sm font-bold text-slate-800">{activitySummary(log)}</p><p className="mt-1 text-xs text-slate-400">{log.user?.fullName ?? 'Hệ thống'} · {log.farm?.name ?? 'Toàn hệ thống'}</p></div><time className="shrink-0 text-xs text-slate-400">{new Intl.DateTimeFormat(undefined, { dateStyle: 'short', timeStyle: 'short' }).format(new Date(log.createdAt))}</time></article>)}</div>
           <Link to="/activity-logs" className="mt-4 block text-center text-xs font-bold text-brand-700">Xem nhật ký hoạt động</Link>
         </section>
 

@@ -1,4 +1,4 @@
-import { ActivityAction, Prisma, type UserRole, type UserStatus } from "@prisma/client";
+import { Prisma } from "@prisma/client"; import { ActivityAction, type UserRole, type UserStatus } from "../types/domain-enums";
 import { userRepository, type PublicUser } from "../repositories/user.repository";
 import type { CreateUserInput, UpdateUserInput, UserListQuery } from "../validators/user.schema";
 import { AppError } from "../utils/app-error";
@@ -102,5 +102,25 @@ export const userService = {
       ipAddress,
     });
     return user;
+  },
+
+  async remove(id: string, actor: Actor, ipAddress?: string): Promise<void> {
+    if (id === actor.id) {
+      throw new AppError(400, "Bạn không thể tự xóa tài khoản đang đăng nhập");
+    }
+    const existing = await this.getById(id);
+    const ownedCount = await userRepository.countOwnedFarms(id);
+    if (ownedCount > 0) {
+      throw new AppError(400, `Tài khoản này đang sở hữu ${ownedCount} trang trại. Vui lòng xóa trang trại trước khi xóa tài khoản.`);
+    }
+    await userRepository.remove(id);
+    await recordActivity({
+      userId: actor.id,
+      action: ActivityAction.DELETE_USER,
+      entityType: "USER",
+      entityId: id,
+      description: `${actor.fullName} xóa tài khoản ${existing.email}`,
+      ipAddress,
+    });
   },
 };

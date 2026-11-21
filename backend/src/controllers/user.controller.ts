@@ -29,3 +29,10 @@ export async function updateUser(request: Request, response: Response, next: Nex
     response.status(200).json({ success: true, message: "Cập nhật người dùng thành công", data: { user } });
   } catch (error) { next(error); }
 }
+
+export async function deleteUser(request: Request, response: Response, next: NextFunction): Promise<void> {
+  try {
+    await userService.remove(request.params.id as string, request.user!, request.ip);
+    response.status(200).json({ success: true, message: "Xóa người dùng thành công", data: null });
+  } catch (error) { next(error); }
+}

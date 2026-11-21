@@ -1,6 +1,6 @@
-import { UserRole } from "@prisma/client";
+import { UserRole } from "../types/domain-enums";
 import { Router } from "express";
-import { createUser, getUser, listUsers, updateUser } from "../controllers/user.controller";
+import { createUser, deleteUser, getUser, listUsers, updateUser } from "../controllers/user.controller";
 import { authenticate } from "../middlewares/auth.middleware";
 import { authorize } from "../middlewares/authorize.middleware";
 import { validate } from "../middlewares/validate.middleware";
@@ -13,4 +13,5 @@ userRouter.get("/", validate(userListQuerySchema, "query"), listUsers);
 userRouter.get("/:id", validate(userIdParamsSchema, "params"), getUser);
 userRouter.post("/", validate(createUserSchema), createUser);
 userRouter.patch("/:id", validate(userIdParamsSchema, "params"), validate(updateUserSchema), updateUser);
+userRouter.delete("/:id", validate(userIdParamsSchema, "params"), deleteUser);
 

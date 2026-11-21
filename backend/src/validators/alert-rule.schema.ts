@@ -1,4 +1,4 @@
-import { AlertOperator, AlertSeverity, SensorType } from "@prisma/client";
+import { AlertOperator, AlertSeverity, SensorType } from "../types/domain-enums";
 import { z } from "zod";
 
 const conditionFields = { name: z.string().trim().min(2).max(150), operator: z.nativeEnum(AlertOperator), threshold: z.number().finite(), recoveryThreshold: z.number().finite().nullable().optional(), severity: z.nativeEnum(AlertSeverity), message: z.string().trim().max(1000).nullable().optional(), enabled: z.boolean().optional() };

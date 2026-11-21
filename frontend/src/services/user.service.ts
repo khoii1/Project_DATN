@@ -55,5 +55,8 @@ export const userService = {
     const response = await api.patch<ApiEnvelope<{ user: UserRecord }>>(`/users/${id}`, input);
     return response.data.data.user;
   },
+  async removeUser(id: string): Promise<void> {
+    await api.delete(`/users/${id}`);
+  },
 };
 

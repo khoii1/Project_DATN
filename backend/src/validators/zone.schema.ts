@@ -1,4 +1,4 @@
-import { ZoneStatus } from "@prisma/client";
+import { ZoneStatus } from "../types/domain-enums";
 import { z } from "zod";
 
 const optionalText = z.string().trim().max(1000).optional().nullable().transform((value) => value === "" ? null : value);

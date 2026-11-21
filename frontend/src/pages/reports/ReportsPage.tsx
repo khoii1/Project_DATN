@@ -6,6 +6,7 @@ import { getApiErrorMessage } from '../../services/api';
 import { farmService } from '../../services/farm.service';
 import { reportService } from '../../services/report.service';
 import { zoneService } from '../../services/zone.service';
+import { printVisualReport } from '../../utils/visual-report';
 import type { Farm, Zone } from '../../types/farm';
 import type { AlertReport, AutomationReport, IrrigationReport, ReportExportType, ReportOverview, ReportQuery, SensorReportItem } from '../../types/report';
 
@@ -33,6 +34,8 @@ export function ReportsPage() {
   const [overview, setOverview] = useState<ReportOverview | null>(null); const [sensors, setSensors] = useState<SensorReportItem[]>([]); const [alerts, setAlerts] = useState<AlertReport | null>(null); const [irrigation, setIrrigation] = useState<IrrigationReport | null>(null); const [automation, setAutomation] = useState<AutomationReport | null>(null);
   const [lookupError, setLookupError] = useState('');
   const [loading, setLoading] = useState(true); const [error, setError] = useState(''); const [exporting, setExporting] = useState<ReportExportType | ''>('');
+  const [loadedQuery, setLoadedQuery] = useState<ReportQuery | null>(null);
+  const [appliedScope, setAppliedScope] = useState({ farmName: 'Tất cả trang trại', zoneName: 'Tất cả khu vực' });
 
   useEffect(() => { void farmService.list({ limit: 100 }).then((data) => setFarms(data.items)).catch(() => setError('Không thể tải danh sách trang trại')); }, []);
   useEffect(() => {
@@ -45,88 +48,28 @@ export function ReportsPage() {
     }).catch((requestError) => { if (!controller.signal.aborted) setLookupError(getApiErrorMessage(requestError, 'Không thể tải danh sách khu vực')); });
     return () => controller.abort();
   }, [farmId]);
-  const load = useCallback((signal?: AbortSignal) => { setLoading(true); setError(''); return Promise.all([reportService.overview(query, signal), reportService.sensors(query, signal), reportService.alerts(query, signal), reportService.irrigation(query, signal), reportService.automation(query, signal)]).then(([o, s, a, i, automationData]) => { if (signal?.aborted) return; setOverview(o); setSensors(s); setAlerts(a); setIrrigation(i); setAutomation(automationData); }).catch((requestError) => { if (!signal?.aborted && (requestError as { code?: string }).code !== 'ERR_CANCELED') setError(getApiErrorMessage(requestError, 'Không thể tải báo cáo')); }).finally(() => { if (!signal?.aborted) setLoading(false); }); }, [query]);
+  const load = useCallback((signal?: AbortSignal) => { setLoading(true); setError(''); return Promise.all([reportService.overview(query, signal), reportService.sensors(query, signal), reportService.alerts(query, signal), reportService.irrigation(query, signal), reportService.automation(query, signal)]).then(([o, s, a, i, automationData]) => { if (signal?.aborted) return; setOverview(o); setSensors(s); setAlerts(a); setIrrigation(i); setAutomation(automationData); setLoadedQuery(query); }).catch((requestError) => { if (!signal?.aborted && (requestError as { code?: string }).code !== 'ERR_CANCELED') setError(getApiErrorMessage(requestError, 'Không thể tải báo cáo')); }).finally(() => { if (!signal?.aborted) setLoading(false); }); }, [query]);
   useEffect(() => { const controller = new AbortController(); void load(controller.signal); return () => controller.abort(); }, [load]);
 
   const selectPreset = (value: Preset) => { setPreset(value); if (value !== 'custom') { const range = rangeFor(value); setFromDate(dateInput(range.from)); setToDate(dateInput(range.to)); } };
-  const apply = () => { const from = new Date(`${fromDate}T00:00:00`); const to = new Date(`${toDate}T23:59:59.999`); if (!Number.isFinite(from.getTime()) || !Number.isFinite(to.getTime())) { setError('Vui lòng chọn đầy đủ ngày bắt đầu và kết thúc hợp lệ'); return; } if (from > to) { setError('Ngày kết thúc phải sau ngày bắt đầu'); return; } setQuery({ from: from.toISOString(), to: to.toISOString(), farmId: farmId || undefined, zoneId: zoneId || undefined }); };
+  const apply = () => { const from = new Date(`${fromDate}T00:00:00`); const to = new Date(`${toDate}T23:59:59.999`); if (!Number.isFinite(from.getTime()) || !Number.isFinite(to.getTime())) { setError('Vui lòng chọn đầy đủ ngày bắt đầu và kết thúc hợp lệ'); return; } if (from > to) { setError('Ngày kết thúc phải sau ngày bắt đầu'); return; } setAppliedScope({ farmName: farms.find(farm => farm.id === farmId)?.name ?? (farmId ? 'Trang trại đã chọn' : 'Tất cả trang trại'), zoneName: zones.find(zone => zone.id === zoneId)?.name ?? (zoneId ? 'Khu vực đã chọn' : 'Tất cả khu vực') }); setQuery({ from: from.toISOString(), to: to.toISOString(), farmId: farmId || undefined, zoneId: zoneId || undefined }); };
   const download = async (type: ReportExportType) => { setExporting(type); setError(''); try { await reportService.download(type, query); } catch (requestError) { setError(getApiErrorMessage(requestError, 'Không thể xuất CSV')); } finally { setExporting(''); } };
-  const downloadSummaryExcelCsv = () => {
-    if (!overview || !alerts || !irrigation || !automation) return;
-    const cell = (val: unknown) => {
-      if (val === null || val === undefined) return '""';
-      let text = String(val);
-      if (/^[=+\-@]/.test(text)) text = `'${text}`;
-      return `"${text.replace(/"/g, '""')}"`;
-    };
-    const selectedFarm = farms.find((f) => f.id === farmId)?.name ?? 'Tất cả trang trại';
-    const selectedZone = zones.find((z) => z.id === zoneId)?.name ?? 'Tất cả khu vực';
-    const rows: unknown[][] = [
-      ['BÁO CÁO TỔNG HỢP HỆ THỐNG NÔNG NGHIỆP THÔNG MINH'],
-      ['Từ ngày', fromDate, 'Đến ngày', toDate],
-      ['Trang trại', selectedFarm, 'Khu vực', selectedZone],
-      ['Thời điểm xuất báo cáo', formatDateTime(new Date().toISOString())],
-      [],
-      ['1. CHỈ SỐ TỔNG QUAN HỆ THỐNG'],
-      ['Chỉ tiêu', 'Giá trị', 'Ghi chú'],
-      ['Trang trại', overview.farmCount, 'Đang hoạt động'],
-      ['Khu vực', overview.zoneCount, `${overview.cropCount} cây trồng`],
-      ['Thiết bị', overview.deviceCount, `${overview.deviceOnline} trực tuyến / ${overview.deviceOffline} ngoại tuyến`],
-      ['Cảm biến', overview.sensorCount, `${overview.sensorReadingCount} phép đo trong kỳ`],
-      ['Cảnh báo mới', overview.newAlertCount, `${overview.activeAlertCount} đang hoạt động`],
-      ['Tổng lệnh tưới', overview.manualCommandCount + overview.automationCommandCount, `${overview.manualCommandCount} thủ công / ${overview.automationCommandCount} tự động`],
-      ['Quy tắc tự động', overview.automationRuleCount, `${overview.enabledAutomationRuleCount} đang bật`],
-      [],
-      ['2. THỐNG KÊ CHI TIẾT CẢM BIẾN'],
-      ['Loại cảm biến', 'Số cảm biến', 'Số phép đo', 'Thấp nhất', 'Trung bình', 'Cao nhất', 'Giá trị mới nhất', 'Thời gian đo mới nhất', 'Đơn vị'],
-      ...sensors.map((s) => [
-        sensorLabels[s.sensorType] ?? s.sensorType,
-        s.sensorCount,
-        s.readingCount,
-        s.minimum ?? '',
-        s.average !== null ? Number(s.average.toFixed(2)) : '',
-        s.maximum ?? '',
-        s.latest?.value ?? '',
-        formatDateTime(s.latest?.recordedAt ?? null),
-        s.unit,
-      ]),
-      [],
-      ['3. THỐNG KÊ CẢNH BÁO'],
-      ['Tổng sự cố phát sinh', 'Nghiêm trọng', 'Cảnh báo', 'Thông tin', 'Đã xử lý', 'Thời gian xử lý trung bình (phút)'],
-      [alerts.totalOpened, alerts.critical, alerts.warning, alerts.info, alerts.totalResolved, alerts.averageResolutionMinutes !== null ? Number(alerts.averageResolutionMinutes.toFixed(1)) : ''],
-      [],
-      ['4. THỐNG KÊ HỆ THỐNG TƯỚI & TỰ ĐỘNG HÓA'],
-      ['Tổng số lệnh', 'Lệnh thủ công', 'Lệnh tự động', 'Lệnh thành công', 'Lệnh thất bại', 'Tỉ lệ thành công (%)'],
-      [irrigation.totalCommands, irrigation.manualCommands, irrigation.automationCommands, irrigation.successfulCommands, irrigation.failedCommands, irrigation.successRate !== null ? Number((irrigation.successRate * 100).toFixed(1)) : ''],
-      [],
-      ['Quy tắc tự động', 'Khu vực', 'Mã máy bơm', 'Tổng số lệnh', 'Thành công', 'Thất bại', 'Lệnh gần nhất'],
-      ...automation.breakdown.map((b) => [
-        b.ruleName,
-        b.zone,
-        b.pump,
-        b.commandCount,
-        b.successfulCommands,
-        b.failedCommands,
-        formatDateTime(b.lastCommand?.requestedAt ?? null),
-      ]),
-    ];
-    const csvContent = `\uFEFF${rows.map((r) => r.map(cell).join(',')).join('\r\n')}`;
-    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = `bao-cao-tong-hop-${fromDate}-den-${toDate}.csv`;
-    document.body.appendChild(link);
-    link.click();
-    link.remove();
-    URL.revokeObjectURL(url);
+  const canPrint = !loading && !error && loadedQuery === query && !!overview && !!alerts && !!irrigation && !!automation;
+  const exportVisualReport = () => {
+    if (!canPrint || !overview || !alerts || !irrigation || !automation) return;
+    try {
+      printVisualReport({ query, ...appliedScope, overview, sensors, alerts, irrigation, automation });
+    } catch (printError) {
+      setError(printError instanceof Error ? printError.message : 'Không thể mở bản báo cáo. Vui lòng thử lại.');
+    }
   };
   const noRangeData = overview && overview.sensorReadingCount === 0 && overview.newAlertCount === 0 && overview.manualCommandCount + overview.automationCommandCount === 0;
   const alertChart = alerts ? [{ name: 'Thông tin', value: alerts.info, fill: '#3b82f6' }, { name: 'Cảnh báo', value: alerts.warning, fill: '#f59e0b' }, { name: 'Nghiêm trọng', value: alerts.critical, fill: '#ef4444' }] : [];
   const commandChart = irrigation ? [{ name: 'Nguồn lệnh', 'Thủ công': irrigation.manualCommands, 'Tự động': irrigation.automationCommands }] : [];
 
   return <div className="space-y-6">
-    <div className="flex flex-col justify-between gap-4 lg:flex-row lg:items-end"><PageHeader title="Báo cáo & phân tích" description="Tổng hợp dữ liệu vận hành, môi trường, cảnh báo và hệ thống tưới theo khoảng thời gian." eyebrow="Tổng hợp & thống kê" /><div className="flex flex-wrap gap-2"><button disabled={loading || !overview} onClick={downloadSummaryExcelCsv} className="flex h-10 items-center gap-2 rounded-xl bg-brand-600 px-3.5 text-xs font-bold text-white shadow-sm transition hover:bg-brand-700 disabled:opacity-50"><Download className="h-4 w-4" />Xuất báo cáo Excel/CSV</button><ExportButton label="Cảm biến" loading={exporting === 'sensor-readings'} onClick={() => void download('sensor-readings')} /><ExportButton label="Cảnh báo" loading={exporting === 'alerts'} onClick={() => void download('alerts')} /><ExportButton label="Lệnh tưới" loading={exporting === 'device-commands'} onClick={() => void download('device-commands')} /></div></div>
+    <div className="flex flex-col justify-between gap-4 lg:flex-row lg:items-end"><PageHeader title="Báo cáo & phân tích" description="Tổng hợp dữ liệu vận hành, môi trường, cảnh báo và hệ thống tưới theo khoảng thời gian." eyebrow="Tổng hợp & thống kê" /><div className="flex flex-wrap gap-2"><button disabled={!canPrint} onClick={exportVisualReport} className="flex h-10 items-center gap-2 rounded-xl bg-brand-600 px-3.5 text-xs font-bold text-white shadow-sm transition hover:bg-brand-700 disabled:opacity-50"><Download className="h-4 w-4" />Xuất báo cáo PDF</button><ExportButton label="Cảm biến" loading={exporting === 'sensor-readings'} onClick={() => void download('sensor-readings')} /><ExportButton label="Cảnh báo" loading={exporting === 'alerts'} onClick={() => void download('alerts')} /><ExportButton label="Lệnh tưới" loading={exporting === 'device-commands'} onClick={() => void download('device-commands')} /></div></div>
+    <p className="text-sm text-slate-500">Báo cáo PDF gồm biểu đồ và chỉ số tổng hợp. Chọn “Lưu dưới dạng PDF” trong hộp thoại in; CSV dùng cho dữ liệu chi tiết.</p>
     <section className="surface-card p-4 sm:p-5"><div className="grid gap-3 md:grid-cols-2 xl:grid-cols-6"><select aria-label="Khoảng thời gian báo cáo" value={preset} onChange={(event) => selectPreset(event.target.value as Preset)} className="h-11 rounded-xl border px-3 text-sm"><option value="today">Hôm nay</option><option value="7days">7 ngày</option><option value="30days">30 ngày</option><option value="month">Tháng này</option><option value="custom">Tùy chỉnh</option></select><input aria-label="Từ ngày" type="date" value={fromDate} onChange={(event) => { setPreset('custom'); setFromDate(event.target.value); }} className="h-11 rounded-xl border px-3 text-sm" /><input aria-label="Đến ngày" type="date" value={toDate} onChange={(event) => { setPreset('custom'); setToDate(event.target.value); }} className="h-11 rounded-xl border px-3 text-sm" /><select aria-label="Trang trại báo cáo" value={farmId} onChange={(event) => { setFarmId(event.target.value); setZoneId(''); }} className="h-11 min-w-0 rounded-xl border px-3 text-sm"><option value="">Tất cả trang trại</option>{farms.map((farm) => <option key={farm.id} value={farm.id}>{farm.name}</option>)}</select><select aria-label="Khu vực báo cáo" value={zoneId} disabled={!farmId} onChange={(event) => setZoneId(event.target.value)} className="h-11 min-w-0 rounded-xl border px-3 text-sm disabled:bg-slate-50"><option value="">Tất cả khu vực</option>{zones.map((zone) => <option key={zone.id} value={zone.id}>{zone.name}</option>)}</select><button onClick={apply} className="flex h-11 items-center justify-center gap-2 rounded-xl bg-brand-600 px-4 text-sm font-bold text-white"><RefreshCw className="h-4 w-4" />Áp dụng</button></div></section>
     {lookupError && <div role="alert" className="rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-700">{lookupError}</div>}
     {error && <div role="alert" className="rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-700">{error}<button onClick={() => void load()} className="ml-3 font-bold underline">Thử lại</button></div>}

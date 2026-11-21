@@ -8,4 +8,5 @@ export const automationService = {
   async get(id: string) { const response = await api.get<Envelope<{ rule: AutomationRule }>>(`/automation-rules/${id}`); return response.data.data.rule; },
   async create(input: AutomationRuleInput) { const response = await api.post<Envelope<{ rule: AutomationRule }>>("/automation-rules", input); return response.data.data.rule; },
   async update(id: string, input: Partial<AutomationRuleInput>) { const { sensorId: _sensorId, actuatorId: _actuatorId, ...changes } = input; void _sensorId; void _actuatorId; const response = await api.patch<Envelope<{ rule: AutomationRule }>>(`/automation-rules/${id}`, changes); return response.data.data.rule; },
+  async remove(id: string) { await api.delete<Envelope<null>>(`/automation-rules/${id}`); },
 };

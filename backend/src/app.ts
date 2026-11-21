@@ -11,12 +11,16 @@ export const app = express();
 
 app.disable("x-powered-by");
 app.use(helmet());
-const developmentOrigins = [env.clientUrl];
-if (env.nodeEnv === "development") {
-  developmentOrigins.push("http://127.0.0.1:5173");
-}
+const allowedOrigin = (origin: string | undefined, callback: (err: Error | null, allow?: boolean) => void) => {
+  if (!origin) return callback(null, true);
+  if (origin === env.clientUrl) return callback(null, true);
+  if (env.nodeEnv === "development" && /^https?:\/\/(localhost|127\.0\.0\.1|192\.168\.\d+\.\d+|172\.\d+\.\d+\.\d+|10\.\d+\.\d+\.\d+)(:\d+)?$/.test(origin)) {
+    return callback(null, true);
+  }
+  return callback(null, false);
+};
 
-app.use(cors({ origin: developmentOrigins, credentials: true, exposedHeaders: ['Content-Disposition'] }));
+app.use(cors({ origin: allowedOrigin, credentials: true, exposedHeaders: ['Content-Disposition'] }));
 app.use(express.json({ limit: "1mb" }));
 
 if (env.nodeEnv === "development") {

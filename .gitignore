@@ -49,3 +49,5 @@ firmware/**/config*.local.h
 firmware/**/*.bin
 firmware/**/*.elf
 firmware/**/*.hex
+.android-sdk-link/
+.expo/

@@ -1,4 +1,4 @@
-import { ActivityAction, DeviceStatus } from '@prisma/client';
+import { ActivityAction, DeviceStatus } from "../types/domain-enums";
 import { SENSOR_TYPE_METADATA } from '../constants/sensor-metadata';
 import { sensorRepository } from '../repositories/sensor.repository';
 import type { CreateSensorInput, SensorListQuery, UpdateSensorInput } from '../validators/sensor.schema';
@@ -27,6 +27,13 @@ export const sensorService = {
     const sensor = await sensorRepository.update(id, input); const action = input.status && input.status !== current.status ? ActivityAction.CHANGE_SENSOR_STATUS : ActivityAction.UPDATE_SENSOR;
     await recordActivity({ userId: actor.id, farmId: current.device.zone.farmId, action, entityType: 'SENSOR', entityId: id, description: `${actor.fullName} cập nhật cảm biến "${sensor.sensorCode}"`, ipAddress });
     return present(sensor);
+  },
+  async remove(id: string, actor: Actor, ipAddress?: string) {
+    await farmAccessService.assertSensorManageable(id, actor);
+    const current = await sensorRepository.findAccessibleById(id, actor);
+    if (!current) throw new AppError(404, 'Không tìm thấy cảm biến');
+    await sensorRepository.remove(id);
+    await recordActivity({ userId: actor.id, farmId: current.device.zone.farmId, action: ActivityAction.DELETE_SENSOR, entityType: 'SENSOR', entityId: id, description: `${actor.fullName} xóa cảm biến "${current.name}" (${current.sensorCode})`, ipAddress });
   },
   async latestForZone(zoneId: string, actor: Actor) { const zone = await farmAccessService.assertZoneReadable(zoneId, actor); const sensors = (await sensorRepository.latestForZone(zoneId, actor)).map(present); return { zone: { id: zone.id, name: (zone as any).name ?? 'Khu vực' }, sensors: sensors.map((sensor) => ({ sensorId: sensor.id, sensorCode: sensor.sensorCode, name: sensor.name, type: sensor.type, unit: sensor.unit, value: sensor.latestReading?.value ?? null, recordedAt: sensor.latestReading?.recordedAt ?? null })) }; },
   async latestForDevice(deviceId: string, actor: Actor) { await farmAccessService.assertDeviceReadable(deviceId, actor); return (await sensorRepository.latestForDevice(deviceId, actor)).map(present); },

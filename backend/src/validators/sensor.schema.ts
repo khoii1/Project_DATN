@@ -1,4 +1,4 @@
-import { SensorStatus, SensorType } from "@prisma/client";
+import { SensorStatus, SensorType } from "../types/domain-enums";
 import { z } from "zod";
 
 const MAX_RANGE_MS = 90 * 24 * 60 * 60 * 1000;

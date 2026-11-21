@@ -1,4 +1,4 @@
-import type { AlertOperator } from "@prisma/client";
+import { type AlertOperator } from "../types/domain-enums";
 
 export function violates(operator: AlertOperator, value: number, threshold: number) {
   if (operator === "LT") return value < threshold;

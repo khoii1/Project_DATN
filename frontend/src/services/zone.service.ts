@@ -11,4 +11,5 @@ export const zoneService = {
   async get(id: string) { const response = await api.get<Envelope<{ zone: Zone }>>(`/zones/${id}`); return response.data.data.zone; },
   async create(input: ZoneInput) { const response = await api.post<Envelope<{ zone: Zone }>>("/zones", input); return response.data.data.zone; },
   async update(id: string, input: (Partial<ZoneInput> & { status?: ZoneStatus })) { const { farmId: _farmId, ...changes } = input; void _farmId; const response = await api.patch<Envelope<{ zone: Zone }>>(`/zones/${id}`, changes); return response.data.data.zone; },
+  async remove(id: string) { await api.delete<Envelope<null>>(`/zones/${id}`); },
 };

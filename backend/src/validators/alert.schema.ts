@@ -1,4 +1,4 @@
-import { AlertSeverity, AlertStatus, SensorType } from "@prisma/client";
+import { AlertSeverity, AlertStatus, SensorType } from "../types/domain-enums";
 import { z } from "zod";
 const booleanQuery = z.preprocess((value) => value === "true" ? true : value === "false" ? false : value, z.boolean());
 const isoDate = z.string().datetime({ offset: true }).transform((value) => new Date(value));

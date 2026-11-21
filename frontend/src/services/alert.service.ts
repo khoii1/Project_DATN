@@ -19,4 +19,5 @@ export const alertRuleService = {
   async get(id: string) { const response = await api.get<Envelope<{ rule: AlertRule }>>(`/alert-rules/${id}`); return response.data.data.rule; },
   async create(input: AlertRuleInput) { const response = await api.post<Envelope<{ rule: AlertRule }>>("/alert-rules", input); return response.data.data.rule; },
   async update(id: string, input: Partial<AlertRuleInput>) { const { sensorId: _sensorId, ...changes } = input; void _sensorId; const response = await api.patch<Envelope<{ rule: AlertRule }>>(`/alert-rules/${id}`, changes); return response.data.data.rule; },
+  async remove(id: string) { await api.delete<Envelope<null>>(`/alert-rules/${id}`); },
 };

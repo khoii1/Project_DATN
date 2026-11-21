@@ -1,4 +1,4 @@
-import { DeviceCommandSource, DeviceCommandStatus, DeviceCommandType, Prisma } from "@prisma/client";
+import { Prisma } from "@prisma/client"; import { DeviceCommandSource, DeviceCommandStatus, DeviceCommandType } from "../types/domain-enums";
 import { prisma } from "../config/database";
 import { farmScope, type FarmActor } from "./farm.repository";
 

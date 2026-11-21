@@ -1,4 +1,4 @@
-import { AlertResolutionReason, AlertStatus, Prisma } from "@prisma/client";
+import { Prisma } from "@prisma/client"; import { AlertResolutionReason, AlertStatus, type AlertOperator, type SensorType } from "../types/domain-enums";
 import { prisma } from "../config/database";
 import { alertRuleRepository } from "../repositories/alert-rule.repository";
 import { SENSOR_TYPE_METADATA } from "../constants/sensor-metadata";
@@ -15,14 +15,15 @@ async function evaluateRule(ruleId: string, reading: EvaluatedReading) {
         const rule = await transaction.alertRule.findUniqueOrThrow({ where: { id: ruleId }, include: { sensor: { include: { device: { include: { zone: true } } } } } });
         const active = await transaction.alert.findFirst({ where: { alertRuleId: rule.id, status: { in: [AlertStatus.OPEN, AlertStatus.ACKNOWLEDGED] } } });
         if (!active) {
-          if (!violates(rule.operator, reading.value, rule.threshold)) return;
-          const metadata = SENSOR_TYPE_METADATA[rule.sensor.type];
-          const generated = `${rule.sensor.name} tại ${rule.sensor.device.zone.name} là ${reading.value} ${metadata.unit}, vi phạm điều kiện ${operatorSymbol[rule.operator]} ${rule.threshold} ${metadata.unit}.`;
+          const op = rule.operator as AlertOperator;
+          if (!violates(op, reading.value, rule.threshold)) return;
+          const metadata = SENSOR_TYPE_METADATA[rule.sensor.type as SensorType];
+          const generated = `${rule.sensor.name} tại ${rule.sensor.device.zone.name} là ${reading.value} ${metadata.unit}, vi phạm điều kiện ${operatorSymbol[op]} ${rule.threshold} ${metadata.unit}.`;
           await transaction.alert.create({ data: { alertRuleId: rule.id, sensorId: rule.sensorId, status: AlertStatus.OPEN, title: rule.name, message: rule.message || generated, triggerValue: reading.value, lastValue: reading.value, thresholdSnapshot: rule.threshold, recoverySnapshot: rule.recoveryThreshold, operatorSnapshot: rule.operator, severitySnapshot: rule.severity, unitSnapshot: metadata.unit, openedAt: reading.recordedAt, lastReadingAt: reading.recordedAt } });
           return;
         }
         if (reading.recordedAt <= active.lastReadingAt) return;
-        if (recovers(active.operatorSnapshot, reading.value, active.thresholdSnapshot, active.recoverySnapshot)) {
+        if (recovers(active.operatorSnapshot as AlertOperator, reading.value, active.thresholdSnapshot, active.recoverySnapshot)) {
           await transaction.alert.update({ where: { id: active.id }, data: { status: AlertStatus.RESOLVED, lastValue: reading.value, lastReadingAt: reading.recordedAt, resolvedAt: reading.recordedAt, resolutionReason: AlertResolutionReason.AUTO_RECOVERED } });
         } else {
           await transaction.alert.update({ where: { id: active.id }, data: { lastValue: reading.value, lastReadingAt: reading.recordedAt } });

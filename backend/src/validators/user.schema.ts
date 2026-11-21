@@ -1,4 +1,4 @@
-import { UserRole, UserStatus } from "@prisma/client";
+import { UserRole, UserStatus } from "../types/domain-enums";
 import { z } from "zod";
 
 const phoneSchema = z.string().trim().max(20, "Số điện thoại tối đa 20 ký tự").regex(/^[0-9+().\s-]*$/, "Số điện thoại không hợp lệ");

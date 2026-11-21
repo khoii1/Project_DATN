@@ -1,4 +1,4 @@
-import { Pencil, Power, WifiOff } from "lucide-react";
+import { Pencil, Power, Trash2, WifiOff } from "lucide-react";
 import type { Actuator, DeviceCommandType } from "../../types/actuator";
 import { actuatorStateLabels, actuatorStatusLabels } from "../../types/actuator";
 import type { AutomationRule } from "../../types/automation";
@@ -6,9 +6,9 @@ import { pumpPresentation, visibleCommandNotice } from "../../utils/irrigation-c
 
 const time = (value: string | null) => value ? new Intl.DateTimeFormat("vi-VN", { dateStyle: "short", timeStyle: "short" }).format(new Date(value)) : "—";
 
-export function PumpCard({ actuator, rule, canManage, onEdit, onCommand, onToggleRule, onResumeAuto }: {
+export function PumpCard({ actuator, rule, canManage, onEdit, onDelete, onCommand, onToggleRule, onResumeAuto }: {
   actuator: Actuator; rule?: AutomationRule; canManage: boolean;
-  onEdit: () => void; onCommand: (command: DeviceCommandType) => void;
+  onEdit: () => void; onDelete?: () => void; onCommand: (command: DeviceCommandType) => void;
   onToggleRule?: (rule: AutomationRule) => void; onResumeAuto?: (rule: AutomationRule) => void;
 }) {
   const { state, available, canOn, canOff } = pumpPresentation(actuator);
@@ -18,7 +18,7 @@ export function PumpCard({ actuator, rule, canManage, onEdit, onCommand, onToggl
       <div className="flex items-center gap-2"><p className="text-xs font-bold uppercase text-brand-600">{actuator.actuatorCode}</p>{rule && <span className={`rounded-full px-2 py-1 text-[10px] font-bold ${rule.enabled ? "bg-blue-50 text-blue-700" : "bg-slate-100 text-slate-500"}`}>{rule.enabled ? "Tự động: Bật" : "Tự động: Tắt"}</span>}</div>
       <h2 className="mt-1 text-lg font-bold">{actuator.name}</h2>
       <p className="mt-1 text-xs text-slate-400">{actuator.device.deviceCode} · {actuator.device.zone.name}</p>
-    </div>{canManage && <button aria-label={`Chỉnh sửa ${actuator.actuatorCode}`} onClick={onEdit} className="h-9 rounded-lg p-2 text-slate-500"><Pencil className="h-4 w-4" /></button>}</div>
+    </div>{canManage && <div className="flex gap-1"><button aria-label={`Chỉnh sửa ${actuator.actuatorCode}`} onClick={onEdit} className="h-9 rounded-lg p-2 text-slate-500 hover:bg-slate-100"><Pencil className="h-4 w-4" /></button>{onDelete && <button aria-label={`Xóa ${actuator.actuatorCode}`} onClick={onDelete} className="h-9 rounded-lg p-2 text-red-600 hover:bg-red-50"><Trash2 className="h-4 w-4" /></button>}</div>}</div>
     <div className={`mx-auto my-6 grid h-28 w-28 place-items-center rounded-full border-[9px] ${state === "ON" ? "border-brand-100 bg-brand-50 text-brand-700" : "border-slate-100 text-slate-400"}`}><Power className="h-10 w-10" /></div>
     <div className="flex items-center justify-between text-sm"><span>{actuatorStatusLabels[actuator.status]}</span><b>{actuatorStateLabels[state]}</b></div>
     <p className="mt-2 text-xs text-slate-400">Cập nhật trạng thái: {time(actuator.lastStateChangedAt)}</p>

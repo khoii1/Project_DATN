@@ -3,7 +3,9 @@ import { lazy, Suspense } from "react";
 import { DashboardLayout } from "../layouts/DashboardLayout";
 import { NotFoundPage } from "../pages/NotFoundPage";
 import { AlertsPage } from "../pages/alerts/AlertsPage";
+import { ForgotPasswordPage } from "../pages/auth/ForgotPasswordPage";
 import { LoginPage } from "../pages/auth/LoginPage";
+import { RegisterPage } from "../pages/auth/RegisterPage";
 import { CropsPage } from "../pages/crops/CropsPage";
 import { DashboardPage } from "../pages/dashboard/DashboardPage";
 import { DevicesPage } from "../pages/devices/DevicesPage";
@@ -30,6 +32,8 @@ export function AppRoutes() {
     <Routes>
       <Route path="/" element={<Navigate to="/dashboard" replace />} />
       <Route path="/login" element={<PublicOnlyRoute><LoginPage /></PublicOnlyRoute>} />
+      <Route path="/register" element={<PublicOnlyRoute><RegisterPage /></PublicOnlyRoute>} />
+      <Route path="/forgot-password" element={<PublicOnlyRoute><ForgotPasswordPage /></PublicOnlyRoute>} />
       <Route element={<ProtectedRoute><DashboardLayout /></ProtectedRoute>}>
         <Route path="/dashboard" element={<DashboardPage />} />
         <Route path="/farms" element={<FarmsPage />} />

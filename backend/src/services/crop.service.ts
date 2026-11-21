@@ -1,4 +1,4 @@
-import { ActivityAction, CropStatus, FarmStatus, ZoneStatus } from "@prisma/client";
+import { ActivityAction, CropStatus, FarmStatus, ZoneStatus } from "../types/domain-enums";
 import { cropRepository } from "../repositories/crop.repository";
 import type { CreateCropInput, CropListQuery, UpdateCropInput } from "../validators/crop.schema";
 import { AppError } from "../utils/app-error";
@@ -12,7 +12,7 @@ function validateDates(planting?: Date | null, expected?: Date | null, actual?: 
   if (planting && actual && actual < planting) throw new AppError(400, "Ngày thu hoạch thực tế không được trước ngày trồng");
 }
 
-function assertGrowingAllowed(status: CropStatus | undefined, zoneStatus: ZoneStatus, farmStatus: FarmStatus) {
+function assertGrowingAllowed(status: CropStatus | string | undefined, zoneStatus: ZoneStatus | string, farmStatus: FarmStatus | string) {
   if (status === CropStatus.GROWING && (zoneStatus === ZoneStatus.INACTIVE || farmStatus === FarmStatus.INACTIVE)) throw new AppError(400, "Không thể tạo hoặc chuyển cây trồng sang Đang trồng khi khu vực hoặc trang trại ngừng hoạt động");
 }
 
@@ -47,5 +47,12 @@ export const cropService = {
     const action = input.status && input.status !== current.status ? ActivityAction.CHANGE_CROP_STATUS : ActivityAction.UPDATE_CROP;
     await recordActivity({ userId: actor.id, farmId: context.zone.farmId, action, entityType: "CROP", entityId: crop.id, description: `${actor.fullName} cập nhật cây trồng "${crop.name}"`, ipAddress });
     return crop;
+  },
+  async remove(id: string, actor: Actor, ipAddress?: string) {
+    const context = await farmAccessService.assertCropManageable(id, actor);
+    const current = await cropRepository.findAccessibleById(id, actor);
+    if (!current) throw new AppError(404, "Không tìm thấy cây trồng");
+    await cropRepository.remove(id);
+    await recordActivity({ userId: actor.id, farmId: context.zone.farmId, action: ActivityAction.DELETE_CROP, entityType: "CROP", entityId: id, description: `${actor.fullName} xóa cây trồng "${current.name}"`, ipAddress });
   },
 };

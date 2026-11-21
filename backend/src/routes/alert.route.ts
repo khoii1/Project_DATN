@@ -1,4 +1,4 @@
-import { UserRole } from "@prisma/client";
+import { UserRole } from "../types/domain-enums";
 import { Router } from "express";
 import { acknowledgeAlert, getAlert, getAlertSummary, listAlerts, resolveAlert } from "../controllers/alert.controller";
 import { authenticate } from "../middlewares/auth.middleware";

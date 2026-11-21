@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useState, type ReactNode } from "react";
 import { authService } from "../services/auth.service";
-import type { AuthUser, LoginCredentials } from "../types/auth";
+import type { AuthUser, LoginCredentials, RegisterInput } from "../types/auth";
 import { tokenStorage } from "../utils/token-storage";
 import { AuthContext, type AuthContextValue } from "./auth-context";
 
@@ -46,6 +46,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setUser(result.user);
   }, []);
 
+  const register = useCallback(async (input: RegisterInput, remember = true) => {
+    const result = await authService.register(input);
+    tokenStorage.set(result.accessToken, remember);
+    setToken(result.accessToken);
+    setUser(result.user);
+  }, []);
+
   const logout = useCallback(async () => {
     try {
       await authService.logout();
@@ -62,9 +69,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     isAuthenticated: Boolean(user && token),
     isLoading,
     login,
+    register,
     logout,
     updateUser: setUser,
-  }), [user, token, isLoading, login, logout]);
+  }), [user, token, isLoading, login, register, logout]);
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }

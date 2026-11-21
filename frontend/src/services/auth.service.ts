@@ -1,4 +1,4 @@
-import type { AuthUser, ChangePasswordInput, UpdateProfileInput } from "../types/auth";
+import type { AuthUser, ChangePasswordInput, RegisterInput, UpdateProfileInput } from "../types/auth";
 import { api } from "./api";
 
 interface LoginResponse {
@@ -14,6 +14,10 @@ interface MeResponse {
 }
 
 export const authService = {
+  async register(input: RegisterInput): Promise<LoginResponse["data"]> {
+    const response = await api.post<LoginResponse>("/auth/register", input);
+    return response.data.data;
+  },
   async login(email: string, password: string): Promise<LoginResponse["data"]> {
     const response = await api.post<LoginResponse>("/auth/login", { email, password });
     return response.data.data;
@@ -31,6 +35,16 @@ export const authService = {
   },
   async logout(): Promise<void> {
     await api.post("/auth/logout");
+  },
+  async forgotPassword(email: string): Promise<{ expiresInSeconds: number; verificationCode?: string }> {
+    const response = await api.post<{ success: true; message: string; data: { expiresInSeconds: number; verificationCode?: string } }>(
+      "/auth/forgot-password",
+      { email },
+    );
+    return response.data.data;
+  },
+  async resetPassword(input: { email: string; otpCode: string; newPassword: string }): Promise<void> {
+    await api.post("/auth/reset-password", input);
   },
 };
 

@@ -1,4 +1,4 @@
-import { ActuatorState, ActuatorStatus, ActuatorType } from "@prisma/client";
+import { ActuatorState, ActuatorStatus, ActuatorType } from "../types/domain-enums";
 import { z } from "zod";
 const optionalText = (max: number) => z.string().trim().max(max).optional().nullable().transform(value => value === "" ? null : value);
 const code = z.string().trim().toUpperCase().min(2).max(32).regex(/^[A-Z0-9_-]+$/, "Mã actuator chỉ được chứa A-Z, 0-9, _ và -");

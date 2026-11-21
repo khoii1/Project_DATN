@@ -1,4 +1,4 @@
-import type { UserRole } from "@prisma/client";
+import { type UserRole } from "../types/domain-enums";
 import jwt, { type JwtPayload, type SignOptions } from "jsonwebtoken";
 import { env } from "../config/env";
 import { AppError } from "./app-error";

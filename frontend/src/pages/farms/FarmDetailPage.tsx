@@ -1,6 +1,6 @@
 import { ArrowLeft, CalendarDays, Leaf, MapPin, Pencil, Plus, RefreshCw, Ruler, Trash2, UserRound, Users } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { ConfirmDialog } from "../../components/common/ConfirmDialog";
 import { FarmFormModal } from "../../components/farms/FarmFormModal";
 import { StaffAssignmentModal } from "../../components/farms/StaffAssignmentModal";
@@ -17,6 +17,7 @@ const dateFormatter = new Intl.DateTimeFormat("vi-VN", { day: "2-digit", month: 
 
 export function FarmDetailPage() {
   const { farmId = "" } = useParams();
+  const navigate = useNavigate();
   const { user } = useAuth();
   const canManage = user?.role !== "STAFF";
   const [farm, setFarm] = useState<Farm | null>(null);
@@ -85,12 +86,18 @@ export function FarmDetailPage() {
     } catch (requestError) { setModalError(getApiErrorMessage(requestError)); }
     finally { setSubmitting(false); }
   };
+  const handleDeleteFarm = async () => {
+    if (!farm) return;
+    if (!window.confirm(`Bạn có chắc chắn muốn xóa trang trại "${farm.name}"?\nToàn bộ khu vực, cây trồng và thiết bị thuộc trang trại này cũng sẽ bị xóa.`)) return;
+    try { await farmService.remove(farm.id); navigate("/farms"); }
+    catch (requestError) { setError(getApiErrorMessage(requestError)); }
+  };
 
   if (loading) return <div className="space-y-4"><div className="h-32 animate-pulse rounded-2xl bg-slate-100" /><div className="h-80 animate-pulse rounded-2xl bg-slate-100" /></div>;
   if (error || !farm) return <div className="surface-card grid min-h-80 place-items-center p-8 text-center"><div><RefreshCw className="mx-auto h-9 w-9 text-red-400" /><h1 className="mt-4 text-lg font-bold">Không thể mở trang trại</h1><p className="mt-2 text-sm text-red-600">{error}</p><Link to="/farms" className="mt-5 inline-block rounded-xl border px-4 py-2 text-sm font-semibold">Quay lại danh sách</Link></div></div>;
 
   return <div className="space-y-6">
-    <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-start"><div><Link to="/farms" className="mb-4 inline-flex items-center gap-2 text-sm font-semibold text-slate-500 hover:text-brand-700"><ArrowLeft className="h-4 w-4" />Danh sách trang trại</Link><div className="flex flex-wrap items-center gap-3"><h1 className="text-3xl font-bold text-slate-950">{farm.name}</h1><span className={`rounded-full px-3 py-1 text-xs font-bold ${farm.status === "ACTIVE" ? "bg-emerald-50 text-emerald-700" : "bg-slate-100 text-slate-500"}`}>{farmStatusLabels[farm.status]}</span></div><p className="mt-2 flex items-center gap-1.5 text-sm text-slate-500"><MapPin className="h-4 w-4" />{farm.address || "Chưa cập nhật địa chỉ"}</p></div>{canManage && <button onClick={() => { setModalError(""); setEditFarm(true); }} className="flex h-11 items-center gap-2 rounded-xl border bg-white px-4 text-sm font-bold"><Pencil className="h-4 w-4" />Chỉnh sửa</button>}</div>
+    <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-start"><div><Link to="/farms" className="mb-4 inline-flex items-center gap-2 text-sm font-semibold text-slate-500 hover:text-brand-700"><ArrowLeft className="h-4 w-4" />Danh sách trang trại</Link><div className="flex flex-wrap items-center gap-3"><h1 className="text-3xl font-bold text-slate-950">{farm.name}</h1><span className={`rounded-full px-3 py-1 text-xs font-bold ${farm.status === "ACTIVE" ? "bg-emerald-50 text-emerald-700" : "bg-slate-100 text-slate-500"}`}>{farmStatusLabels[farm.status]}</span></div><p className="mt-2 flex items-center gap-1.5 text-sm text-slate-500"><MapPin className="h-4 w-4" />{farm.address || "Chưa cập nhật địa chỉ"}</p></div>{canManage && <div className="flex items-center gap-2"><button onClick={() => { setModalError(""); setEditFarm(true); }} className="flex h-11 items-center gap-2 rounded-xl border bg-white px-4 text-sm font-bold"><Pencil className="h-4 w-4" />Chỉnh sửa</button><button onClick={() => void handleDeleteFarm()} className="flex h-11 items-center gap-2 rounded-xl border border-red-200 bg-red-50 px-4 text-sm font-bold text-red-600 hover:bg-red-100"><Trash2 className="h-4 w-4" />Xóa trang trại</button></div>}</div>
     {feedback && <div role="status" className="rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm font-semibold text-emerald-700">{feedback}</div>}
     <section className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">{[
       { icon: Ruler, label: "Diện tích", value: farm.areaHectares ? `${farm.areaHectares} ha` : "Chưa cập nhật" },

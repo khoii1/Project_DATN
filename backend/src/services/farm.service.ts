@@ -1,4 +1,4 @@
-import { ActivityAction, FarmStatus, UserRole, UserStatus } from "@prisma/client";
+import { ActivityAction, FarmStatus, UserRole, UserStatus } from "../types/domain-enums";
 import { farmRepository } from "../repositories/farm.repository";
 import { userRepository } from "../repositories/user.repository";
 import type { CreateFarmInput, FarmListQuery, UpdateFarmInput } from "../validators/farm.schema";
@@ -40,5 +40,12 @@ export const farmService = {
     const action = input.status && input.status !== current.status ? ActivityAction.CHANGE_FARM_STATUS : ActivityAction.UPDATE_FARM;
     await recordActivity({ userId: actor.id, farmId: farm.id, action, entityType: "FARM", entityId: farm.id, description: `${actor.fullName} cập nhật trang trại "${farm.name}"`, ipAddress });
     return farm;
+  },
+  async remove(id: string, actor: FarmActor, ipAddress?: string) {
+    await farmAccessService.assertFarmManageable(id, actor);
+    const current = await farmRepository.findAccessibleById(id, actor);
+    if (!current) throw new AppError(404, "Không tìm thấy trang trại");
+    await farmRepository.remove(id);
+    await recordActivity({ userId: actor.id, action: ActivityAction.DELETE_FARM, entityType: "FARM", entityId: id, description: `${actor.fullName} xóa trang trại "${current.name}"`, ipAddress });
   },
 };

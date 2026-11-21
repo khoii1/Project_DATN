@@ -1,8 +1,9 @@
-import { ChevronLeft, ChevronRight, Pencil, Plus, RefreshCw, Search, ShieldCheck, UserRoundX, Users } from "lucide-react";
+import { ChevronLeft, ChevronRight, Pencil, Plus, RefreshCw, Search, ShieldCheck, Trash2, UserRoundX, Users } from "lucide-react";
 import { useCallback, useEffect, useState, type FormEvent } from "react";
 import { PageHeader } from "../../components/common/PageHeader";
 import { UserFormModal, type UserFormValue } from "../../components/users/UserFormModal";
 import { UserStatusDialog } from "../../components/users/UserStatusDialog";
+import { useAuth } from "../../hooks/useAuth";
 import { getApiErrorMessage } from "../../services/api";
 import { userService, type UserListData, type UserRecord } from "../../services/user.service";
 import { roleLabels, type UserRole, type UserStatus } from "../../types/auth";
@@ -16,6 +17,7 @@ const dateFormatter = new Intl.DateTimeFormat("vi-VN", { day: "2-digit", month: 
 const initialData: UserListData = { items: [], pagination: { page: 1, limit: 10, total: 0, totalPages: 1 } };
 
 export function UsersPage() {
+  const { user: currentUser } = useAuth();
   const [data, setData] = useState<UserListData>(initialData);
   const [searchInput, setSearchInput] = useState("");
   const [search, setSearch] = useState("");
@@ -94,6 +96,17 @@ export function UsersPage() {
     }
   };
 
+  const handleDeleteUser = async (target: UserRecord) => {
+    if (!window.confirm(`Bạn có chắc chắn muốn xóa tài khoản "${target.fullName}" (${target.email})?`)) return;
+    try {
+      await userService.removeUser(target.id);
+      setFeedback(`Đã xóa tài khoản "${target.email}" thành công`);
+      await loadUsers();
+    } catch (error) {
+      setPageError(getApiErrorMessage(error));
+    }
+  };
+
   return (
     <div className="space-y-6">
       <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
@@ -131,7 +144,7 @@ export function UsersPage() {
                     <td className="px-5 py-4"><span className={`rounded-full px-2.5 py-1 text-xs font-bold ${roleBadge[user.role]}`}>{roleLabels[user.role]}</span></td>
                     <td className="px-5 py-4"><span className={`inline-flex items-center gap-1.5 text-xs font-bold ${user.status === "ACTIVE" ? "text-emerald-700" : "text-slate-400"}`}><span className={`h-2 w-2 rounded-full ${user.status === "ACTIVE" ? "bg-emerald-500" : "bg-slate-300"}`} />{user.status === "ACTIVE" ? "Hoạt động" : "Ngừng hoạt động"}</span></td>
                     <td className="px-5 py-4 text-sm text-slate-500">{dateFormatter.format(new Date(user.createdAt))}</td>
-                    <td className="px-5 py-4"><div className="flex justify-end gap-1"><button onClick={() => { setModalError(""); setFormUser(user); }} className="rounded-lg p-2 text-slate-500 hover:bg-slate-100" aria-label={`Chỉnh sửa ${user.fullName}`}><Pencil className="h-4 w-4" /></button><button onClick={() => { setModalError(""); setStatusUser(user); }} className={`rounded-lg p-2 ${user.status === "ACTIVE" ? "text-amber-600 hover:bg-amber-50" : "text-emerald-600 hover:bg-emerald-50"}`} aria-label={`${user.status === "ACTIVE" ? "Ngừng hoạt động" : "Kích hoạt"} ${user.fullName}`}>{user.status === "ACTIVE" ? <UserRoundX className="h-4 w-4" /> : <ShieldCheck className="h-4 w-4" />}</button></div></td>
+                    <td className="px-5 py-4"><div className="flex justify-end gap-1"><button onClick={() => { setModalError(""); setFormUser(user); }} className="rounded-lg p-2 text-slate-500 hover:bg-slate-100" aria-label={`Chỉnh sửa ${user.fullName}`}><Pencil className="h-4 w-4" /></button><button onClick={() => { setModalError(""); setStatusUser(user); }} className={`rounded-lg p-2 ${user.status === "ACTIVE" ? "text-amber-600 hover:bg-amber-50" : "text-emerald-600 hover:bg-emerald-50"}`} aria-label={`${user.status === "ACTIVE" ? "Ngừng hoạt động" : "Kích hoạt"} ${user.fullName}`}>{user.status === "ACTIVE" ? <UserRoundX className="h-4 w-4" /> : <ShieldCheck className="h-4 w-4" />}</button>{currentUser?.id !== user.id && <button onClick={() => void handleDeleteUser(user)} className="rounded-lg p-2 text-red-600 hover:bg-red-50" aria-label={`Xóa ${user.fullName}`}><Trash2 className="h-4 w-4" /></button>}</div></td>
                   </tr>
                 ))}
               </tbody>

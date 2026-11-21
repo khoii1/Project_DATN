@@ -1,4 +1,4 @@
-import { AlertSeverity, SensorType } from '@prisma/client';
+import { AlertSeverity, SensorType } from "../types/domain-enums";
 import { z } from 'zod';
 
 const isoDate = z.string().datetime({ offset: true }).transform((value) => new Date(value));

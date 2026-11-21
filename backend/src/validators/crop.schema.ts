@@ -1,4 +1,4 @@
-import { CropStatus } from "@prisma/client";
+import { CropStatus } from "../types/domain-enums";
 import { z } from "zod";
 
 const optionalText = (max: number) => z.string().trim().max(max).optional().nullable().transform((value) => value === "" ? null : value);

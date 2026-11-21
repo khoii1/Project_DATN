@@ -18,6 +18,14 @@ export interface LoginCredentials {
   remember: boolean;
 }
 
+export interface RegisterInput {
+  fullName: string;
+  email: string;
+  phone?: string | null;
+  password: string;
+  role?: "FARM_OWNER" | "STAFF";
+}
+
 export interface UpdateProfileInput {
   fullName: string;
   phone: string | null;

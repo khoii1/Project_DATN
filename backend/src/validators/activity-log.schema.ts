@@ -1,4 +1,4 @@
-import { ActivityAction } from '@prisma/client';
+import { ActivityAction } from "../types/domain-enums";
 import { z } from 'zod';
 
 const optionalDate = z.string().datetime({ offset: true }).transform((value) => new Date(value)).optional();

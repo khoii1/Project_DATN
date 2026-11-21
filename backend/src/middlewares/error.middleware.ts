@@ -11,10 +11,17 @@ export const errorMiddleware: ErrorRequestHandler = (error, _request, response, 
     return;
   }
 
-  const message = error instanceof Error ? error.message : "Something went wrong";
+  console.error("[Unhandled API Error]", error);
+  const raw = error instanceof Error ? error.message : "";
+  const isDbConnection =
+    raw.includes("Can't reach database server") ||
+    raw.includes("PrismaClientInitializationError") ||
+    raw.includes("pool timeout");
 
   response.status(500).json({
     success: false,
-    message: process.env.NODE_ENV === "production" ? "Something went wrong" : message,
+    message: isDbConnection
+      ? "Kết nối cơ sở dữ liệu đang bận, vui lòng thử lại sau giây lát."
+      : "Hệ thống đang xử lý hoặc tạm bận, vui lòng thử lại sau.",
   });
 };

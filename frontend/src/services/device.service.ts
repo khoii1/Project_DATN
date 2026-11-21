@@ -9,4 +9,5 @@ export const deviceService = {
   async get(id: string, signal?: AbortSignal) { const response = await api.get<Envelope<{ device: Device }>>(`/devices/${id}`, { signal }); return response.data.data.device; },
   async create(input: DeviceInput) { const response = await api.post<Envelope<{ device: Device }>>("/devices", input); return response.data.data.device; },
   async update(id: string, input: Partial<DeviceInput>) { const { zoneId: _zoneId, deviceCode: _deviceCode, ...changes } = input; void _zoneId; void _deviceCode; const response = await api.patch<Envelope<{ device: Device }>>(`/devices/${id}`, changes); return response.data.data.device; },
+  async remove(id: string) { await api.delete<Envelope<null>>(`/devices/${id}`); },
 };

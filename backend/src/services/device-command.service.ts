@@ -1,7 +1,7 @@
 import { randomUUID } from "node:crypto";
 import { pumpRuntimeLimit } from "./pump-command-policy";
 import { mqttStateObserver } from "../mqtt/mqtt-state-observer";
-import { ActivityAction, DeviceCommandSource, Prisma, UserRole, type DeviceCommandType } from "@prisma/client";
+import { Prisma } from "@prisma/client"; import { ActivityAction, DeviceCommandSource, UserRole, type DeviceCommandType } from "../types/domain-enums";
 import { prisma } from "../config/database";
 import { env } from "../config/env";
 import type { DeviceGateway, DeviceGatewayResult } from "../gateways/device.gateway";
@@ -66,7 +66,7 @@ async function execute(initial: CommandActuator, command: DeviceCommandType, sou
     let pending;
     try {
       pending = await prisma.$transaction(async tx => {
-        await tx.$queryRaw`SELECT id FROM actuators WHERE id = ${actuator.id} FOR UPDATE`;
+        await tx.$queryRaw`SELECT id FROM actuators WITH (UPDLOCK, ROWLOCK) WHERE id = ${actuator.id}`;
         if (command === "TURN_OFF") await tx.deviceCommand.updateMany({ where: { actuatorId: actuator.id, status: "PENDING", command: "TURN_ON" }, data: { status: "FAILED", completedAt: issuedAt, failureReason: "SUPERSEDED_BY_OFF" } });
         return tx.deviceCommand.create({ data: { actuatorId: actuator.id, command, source, requestedById, automationRuleId, correlationId: randomUUID(), transport: real ? "MQTT" : "MOCK", requestedAt: issuedAt, expiresAt: real ? expiresAt : null, maxRunSeconds: command === "TURN_ON" ? maxRunSeconds : null } });
       });

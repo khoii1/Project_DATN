@@ -1,4 +1,4 @@
-import { ActivityAction, FarmStatus, ZoneStatus } from "@prisma/client";
+import { ActivityAction, FarmStatus, ZoneStatus } from "../types/domain-enums";
 import { zoneRepository } from "../repositories/zone.repository";
 import type { CreateZoneInput, UpdateZoneInput, ZoneListQuery } from "../validators/zone.schema";
 import { AppError } from "../utils/app-error";
@@ -43,5 +43,12 @@ export const zoneService = {
     const action = input.status && input.status !== current.status ? ActivityAction.CHANGE_ZONE_STATUS : ActivityAction.UPDATE_ZONE;
     await recordActivity({ userId: actor.id, farmId: context.farmId, action, entityType: "ZONE", entityId: zone.id, description: `${actor.fullName} cập nhật khu vực "${zone.name}"`, ipAddress });
     return zone;
+  },
+  async remove(id: string, actor: Actor, ipAddress?: string) {
+    const context = await farmAccessService.assertZoneManageable(id, actor);
+    const current = await zoneRepository.findAccessibleById(id, actor);
+    if (!current) throw new AppError(404, "Không tìm thấy khu vực");
+    await zoneRepository.remove(id);
+    await recordActivity({ userId: actor.id, farmId: context.farmId, action: ActivityAction.DELETE_ZONE, entityType: "ZONE", entityId: id, description: `${actor.fullName} xóa khu vực "${current.name}"`, ipAddress });
   },
 };

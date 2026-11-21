@@ -1,4 +1,4 @@
-import { AlertSeverity, AlertStatus, Prisma } from "@prisma/client";
+import { Prisma } from "@prisma/client"; import { AlertSeverity, AlertStatus } from "../types/domain-enums";
 import { prisma } from "../config/database";
 import { farmScope, type FarmActor } from "./farm.repository";
 

@@ -1,4 +1,4 @@
-import { Prisma, type UserRole, type UserStatus } from "@prisma/client";
+import { Prisma } from "@prisma/client"; import { type UserRole, type UserStatus } from "../types/domain-enums";
 import { prisma } from "../config/database";
 
 export const publicUserSelect = {
@@ -42,9 +42,9 @@ export const userRepository = {
       ...(options.search
         ? {
             OR: [
-              { fullName: { contains: options.search, mode: "insensitive" } },
-              { email: { contains: options.search, mode: "insensitive" } },
-              { phone: { contains: options.search, mode: "insensitive" } },
+              { fullName: { contains: options.search } },
+              { email: { contains: options.search } },
+              { phone: { contains: options.search } },
             ],
           }
         : {}),
@@ -69,6 +69,21 @@ export const userRepository = {
 
   update(id: string, data: Prisma.UserUpdateInput) {
     return prisma.user.update({ where: { id }, data, select: publicUserSelect });
+  },
+  countOwnedFarms(id: string) {
+    return prisma.farm.count({ where: { ownerId: id } });
+  },
+  async remove(id: string) {
+    return prisma.$transaction(async (tx) => {
+      await tx.farmStaffAssignment.deleteMany({ where: { staffId: id } });
+      await tx.alertRule.updateMany({ where: { createdById: id }, data: { createdById: null } });
+      await tx.automationRule.updateMany({ where: { createdById: id }, data: { createdById: null } });
+      await tx.deviceCommand.updateMany({ where: { requestedById: id }, data: { requestedById: null } });
+      await tx.alert.updateMany({ where: { acknowledgedById: id }, data: { acknowledgedById: null } });
+      await tx.alert.updateMany({ where: { resolvedById: id }, data: { resolvedById: null } });
+      await tx.activityLog.updateMany({ where: { userId: id }, data: { userId: null } });
+      return tx.user.delete({ where: { id } });
+    });
   },
   listActiveStaffCandidates(farmId: string) {
     return prisma.user.findMany({

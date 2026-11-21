@@ -11,4 +11,5 @@ export const cropService = {
   async get(id: string) { const response = await api.get<Envelope<{ crop: Crop }>>(`/crops/${id}`); return response.data.data.crop; },
   async create(input: CropInput) { const response = await api.post<Envelope<{ crop: Crop }>>("/crops", input); return response.data.data.crop; },
   async update(id: string, input: Partial<CropInput>) { const { zoneId: _zoneId, ...changes } = input; void _zoneId; const response = await api.patch<Envelope<{ crop: Crop }>>(`/crops/${id}`, changes); return response.data.data.crop; },
+  async remove(id: string) { await api.delete<Envelope<null>>(`/crops/${id}`); },
 };

@@ -1,4 +1,4 @@
-import type { UserRole, UserStatus } from "@prisma/client";
+import { type UserRole, type UserStatus } from "./domain-enums";
 
 declare global {
   namespace Express {

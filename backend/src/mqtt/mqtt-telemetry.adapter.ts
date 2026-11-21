@@ -1,4 +1,4 @@
-import { SensorReadingSource } from "@prisma/client";
+import { SensorReadingSource } from "../types/domain-enums";
 import { env } from "../config/env";
 import { telemetryIngestionService } from "../services/telemetry-ingestion.service";
 import { mqttTelemetrySchema } from "./mqtt-message.schema";

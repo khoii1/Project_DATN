@@ -1,4 +1,4 @@
-import type { ActivityAction } from "@prisma/client";
+import { type ActivityAction } from "../types/domain-enums";
 import { createActivityLog } from "../repositories/activity-log.repository";
 import { exportActivityLogs, listActivityLogs, type ActivityActor } from '../repositories/activity-log.repository';
 import { reportRepository } from '../repositories/report.repository';

@@ -72,14 +72,28 @@ async function seed(): Promise<void> {
     create: { id: "demo_device_esp32_b", zoneId: zoneB.id, deviceCode: "ESP32-GF-B-01", name: "ESP32 khu vực B", type: DeviceType.CONTROLLER, hardwareModel: "ESP32-WROOM-32", firmwareVersion: "1.0.0", status: DeviceStatus.MAINTENANCE, connectionStatus: DeviceConnectionStatus.OFFLINE, lastSeenAt: new Date("2026-08-25T08:00:00Z"), installedAt: new Date("2026-08-12") },
   });
   const sensorSeed = [
-    { id: "demo_sensor_temp", sensorCode: "TEMP_01", name: "Nhiệt độ không khí", type: SensorType.TEMP, value: 28.5 },
-    { id: "demo_sensor_hum", sensorCode: "HUM_01", name: "Độ ẩm không khí", type: SensorType.AIR_HUMIDITY, value: 72 },
-    { id: "demo_sensor_soil", sensorCode: "SOIL_01", name: "Độ ẩm đất", type: SensorType.SOIL_MOISTURE, value: 35 },
-    { id: "demo_sensor_light", sensorCode: "LIGHT_01", name: "Cường độ ánh sáng", type: SensorType.LIGHT, value: 650 },
+    { id: "demo_sensor_temp", sensorCode: "TEMP_01", name: "Nhiệt độ không khí", type: SensorType.TEMP, value: 28.5, step: 0.6 },
+    { id: "demo_sensor_hum", sensorCode: "HUM_01", name: "Độ ẩm không khí", type: SensorType.AIR_HUMIDITY, value: 72, step: 2.2 },
+    { id: "demo_sensor_soil", sensorCode: "SOIL_01", name: "Độ ẩm đất", type: SensorType.SOIL_MOISTURE, value: 38, step: 1.8 },
+    { id: "demo_sensor_light", sensorCode: "LIGHT_01", name: "Cường độ ánh sáng", type: SensorType.LIGHT, value: 650, step: 80 },
   ];
+  const nowMs = Date.now();
   for (const item of sensorSeed) {
     const sensor = await prisma.sensor.upsert({ where: { id: item.id }, update: { deviceId: deviceA.id, sensorCode: item.sensorCode, name: item.name, type: item.type, status: SensorStatus.ACTIVE }, create: { id: item.id, deviceId: deviceA.id, sensorCode: item.sensorCode, name: item.name, type: item.type } });
-    await prisma.sensorReading.upsert({ where: { sensorId_recordedAt: { sensorId: sensor.id, recordedAt: new Date("2026-08-26T06:00:00.000Z") } }, update: { value: item.value, source: SensorReadingSource.SIMULATOR }, create: { id: `demo_reading_${item.sensorCode.toLowerCase()}`, sensorId: sensor.id, value: item.value, source: SensorReadingSource.SIMULATOR, recordedAt: new Date("2026-08-26T06:00:00.000Z") } });
+    const existingReadings = await prisma.sensorReading.count({ where: { sensorId: sensor.id } });
+    if (existingReadings === 0) {
+      const samplePoints = Array.from({ length: 12 }, (_, idx) => {
+        const offsetHours = (11 - idx) * 2;
+        const wave = Math.sin(idx * 0.8) * item.step;
+        return {
+          sensorId: sensor.id,
+          value: Number(Math.max(0, item.value + wave).toFixed(2)),
+          source: SensorReadingSource.SIMULATOR,
+          recordedAt: new Date(nowMs - offsetHours * 3_600_000),
+        };
+      });
+      await prisma.sensorReading.createMany({ data: samplePoints, skipDuplicates: true });
+    }
   }
 
   const demoRules = [

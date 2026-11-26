@@ -66,7 +66,7 @@ async function execute(initial: CommandActuator, command: DeviceCommandType, sou
     let pending;
     try {
       pending = await prisma.$transaction(async tx => {
-        await tx.$queryRaw`SELECT id FROM actuators WITH (UPDLOCK, ROWLOCK) WHERE id = ${actuator.id}`;
+        await tx.$queryRaw`SELECT id FROM actuators WHERE id = ${actuator.id} FOR UPDATE`;
         if (command === "TURN_OFF") await tx.deviceCommand.updateMany({ where: { actuatorId: actuator.id, status: "PENDING", command: "TURN_ON" }, data: { status: "FAILED", completedAt: issuedAt, failureReason: "SUPERSEDED_BY_OFF" } });
         return tx.deviceCommand.create({ data: { actuatorId: actuator.id, command, source, requestedById, automationRuleId, correlationId: randomUUID(), transport: real ? "MQTT" : "MOCK", requestedAt: issuedAt, expiresAt: real ? expiresAt : null, maxRunSeconds: command === "TURN_ON" ? maxRunSeconds : null } });
       });

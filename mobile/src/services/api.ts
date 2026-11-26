@@ -26,6 +26,10 @@ import type {
 import { AppFormatters } from '../utils/formatters';
 
 export function detectDefaultServerUrl(): string {
+  const envUrl = process.env.EXPO_PUBLIC_API_URL?.trim();
+  if (envUrl) {
+    return envUrl.replace(/\/+$/, '').replace(/\/api$/, '');
+  }
   if (Platform.OS === 'web') {
     if (typeof window !== 'undefined' && window.location?.hostname) {
       return `http://${window.location.hostname}:5000`;
@@ -105,7 +109,7 @@ class ApiClient {
     options?: { query?: Record<string, unknown>; body?: unknown; rawText?: boolean },
   ): Promise<T> {
     const controller = new AbortController();
-    const timer = setTimeout(() => controller.abort(), 14000);
+    const timer = setTimeout(() => controller.abort(), 25000);
     try {
       const response = await fetch(this.buildUrl(path, options?.query), {
         method,

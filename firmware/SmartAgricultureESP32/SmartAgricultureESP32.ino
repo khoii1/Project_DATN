@@ -1,4 +1,5 @@
 #include <WiFi.h>
+#include <WiFiClientSecure.h>
 #include <ArduinoMqttClient.h>
 #include <DHT.h>
 #include <BH1750.h>
@@ -21,10 +22,13 @@ static constexpr bool LOCAL_CONFIG_PRESENT = false;
 #endif
 
 using namespace agriculture;
-static constexpr char SMART_AGRI_FIRMWARE_VERSION[]="13.4F.1";
+static constexpr char SMART_AGRI_FIRMWARE_VERSION[]="13.5-CLOUD";
 static const char* const NTP_HOSTS[]={"pool.ntp.org","time.google.com"};
-WiFiClient network;
-MqttClient mqtt(network);
+static constexpr bool USE_TLS_TRANSPORT = (MQTT_PORT == 8883);
+WiFiClient plainNetwork;
+WiFiClientSecure secureNetwork;
+Client& activeNetwork = USE_TLS_TRANSPORT ? static_cast<Client&>(secureNetwork) : static_cast<Client&>(plainNetwork);
+MqttClient mqtt(activeNetwork);
 DHT dht(DHT_PIN, DHT22);
 BH1750 light;
 PumpController* pump = nullptr;
@@ -186,14 +190,14 @@ void onCommand(int size) {
   const bool topicMatches=mqtt.messageTopic()==commandTopic;
   if(size<=0 || static_cast<size_t>(size)>MAX_COMMAND_BYTES || !topicMatches || retained || mqtt.messageQoS()!=1) {
     Serial.println("COMMAND: wrong topic/QoS, retained or oversize; closing transport safely");
-    localOff("MQTT_LOST"); mqttReady.store(false); resetTransport.store(true); network.stop(); return;
+    localOff("MQTT_LOST"); mqttReady.store(false); resetTransport.store(true); activeNetwork.stop(); return;
   }
   char payload[MAX_COMMAND_BYTES+1]; unsigned count=0; uint32_t start=millis();
   // Callback is never allowed to wait indefinitely for a fragmented packet.
   while(count<static_cast<unsigned>(size) && static_cast<uint32_t>(millis()-start)<100u) {
     int value=mqtt.read(); if(value>=0) payload[count++]=static_cast<char>(value); else vTaskDelay(pdMS_TO_TICKS(1));
   }
-  if(count!=static_cast<unsigned>(size)) { localOff("MQTT_LOST"); mqttReady.store(false); resetTransport.store(true); network.stop(); return; }
+  if(count!=static_cast<unsigned>(size)) { localOff("MQTT_LOST"); mqttReady.store(false); resetTransport.store(true); activeNetwork.stop(); return; }
   payload[count]='\0';
   Command command;
   if(!decodeCommand(payload,count,DEVICE_CODE,ACTUATOR_CODE,command)) { Serial.println("COMMAND: invalid strict v1 payload; no action/ACK"); return; }
@@ -322,9 +326,16 @@ void setup() {
     Serial.printf("FATAL: safetyTask=%s sensorTask=%s topics=%s GPIO_LOW=%s; HIGH inhibited, check device locally\n",safety==pdPASS?"READY":"FAILED",sensors==pdPASS?"READY":"FAILED",topicsReady?"READY":"INVALID",pumpConfirmedOff()?"CONFIRMED":"UNCONFIRMED");
     return;
   }
-  network.setConnectionTimeout(1000);
+  if(USE_TLS_TRANSPORT) {
+    secureNetwork.setInsecure(); // HiveMQ Cloud Serverless TLS (port 8883)
+    secureNetwork.setTimeout(6);
+  } else {
+    plainNetwork.setConnectionTimeout(1500);
+  }
   mqtt.setId(MQTT_CLIENT_ID); mqtt.setUsernamePassword(MQTT_USERNAME,MQTT_PASSWORD);
-  mqtt.setCleanSession(true); mqtt.setKeepAliveInterval(5000); mqtt.setConnectionTimeout(1000);
+  mqtt.setCleanSession(true);
+  mqtt.setKeepAliveInterval(USE_TLS_TRANSPORT ? 15000 : 5000);
+  mqtt.setConnectionTimeout(USE_TLS_TRANSPORT ? 6000 : 1500);
   mqtt.onMessage(onCommand);
   mqtt.beginWill(statusTopic,false,1); mqtt.print(OFFLINE); mqtt.endWill();
   esp_sntp_set_time_sync_notification_cb(timeSynced);
@@ -344,7 +355,7 @@ void loop() {
   static uint32_t lastWifiAttempt=0,lastMqttAttempt=0,lastStatus=0;
   pollDiagnostics();
   if(!tasksReady || !topicsReady || !LOCAL_CONFIG_PRESENT) { if(pump) localOff("BOOT"); vTaskDelay(pdMS_TO_TICKS(50)); return; }
-  if(resetTransport.exchange(false)) { mqttReady.store(false); localOff(WiFi.status()==WL_CONNECTED?"MQTT_LOST":"WIFI_LOST"); network.stop(); ackCount=0; ackHead=0; }
+  if(resetTransport.exchange(false)) { mqttReady.store(false); localOff(WiFi.status()==WL_CONNECTED?"MQTT_LOST":"WIFI_LOST"); activeNetwork.stop(); ackCount=0; ackHead=0; }
   if(WiFi.status()!=WL_CONNECTED) {
     mqttReady.store(false); localOff("WIFI_LOST");
     if(static_cast<uint32_t>(millis()-lastWifiAttempt)>=10000u) {

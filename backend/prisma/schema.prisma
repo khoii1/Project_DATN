@@ -3,18 +3,18 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlserver"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
 model User {
-  id                     String                @id @default(cuid()) @db.NVarChar(100)
-  fullName               String                @map("full_name") @db.NVarChar(200)
-  email                  String                @unique @db.NVarChar(255)
-  passwordHash           String                @map("password_hash") @db.NVarChar(255)
-  phone                  String?               @db.NVarChar(50)
-  role                   String                @db.NVarChar(64)
-  status                 String                @default("ACTIVE") @db.NVarChar(64)
+  id                     String                @id @default(cuid())
+  fullName               String                @map("full_name")
+  email                  String                @unique
+  passwordHash           String                @map("password_hash")
+  phone                  String?
+  role                   String
+  status                 String                @default("ACTIVE")
   createdAt              DateTime              @default(now()) @map("created_at")
   updatedAt              DateTime              @updatedAt @map("updated_at")
   activityLogs           ActivityLog[]
@@ -33,16 +33,16 @@ model User {
 }
 
 model Farm {
-  id               String                @id @default(cuid()) @db.NVarChar(100)
-  ownerId          String                @map("owner_id") @db.NVarChar(100)
-  name             String                @db.NVarChar(200)
-  address          String?               @db.NVarChar(500)
-  description      String?               @db.NVarChar(2000)
+  id               String                @id @default(cuid())
+  ownerId          String                @map("owner_id")
+  name             String
+  address          String?
+  description      String?
   areaHectares     Decimal?              @map("area_hectares") @db.Decimal(10, 2)
-  status           String                @default("ACTIVE") @db.NVarChar(64)
+  status           String                @default("ACTIVE")
   createdAt        DateTime              @default(now()) @map("created_at")
   updatedAt        DateTime              @updatedAt @map("updated_at")
-  owner            User                  @relation("FarmOwner", fields: [ownerId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  owner            User                  @relation("FarmOwner", fields: [ownerId], references: [id], onDelete: Restrict)
   zones            Zone[]
   staffAssignments FarmStaffAssignment[]
   activityLogs     ActivityLog[]
@@ -54,13 +54,13 @@ model Farm {
 }
 
 model FarmStaffAssignment {
-  id                   String   @id @default(cuid()) @db.NVarChar(100)
-  farmId               String   @map("farm_id") @db.NVarChar(100)
-  staffId              String   @map("staff_id") @db.NVarChar(100)
+  id                   String   @id @default(cuid())
+  farmId               String   @map("farm_id")
+  staffId              String   @map("staff_id")
   createdAt            DateTime @default(now()) @map("created_at")
   canControlIrrigation Boolean  @default(false) @map("can_control_irrigation")
   farm                 Farm     @relation(fields: [farmId], references: [id], onDelete: Cascade)
-  staff                User     @relation("FarmStaff", fields: [staffId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  staff                User     @relation("FarmStaff", fields: [staffId], references: [id], onDelete: Cascade)
 
   @@unique([farmId, staffId])
   @@index([staffId])
@@ -69,12 +69,12 @@ model FarmStaffAssignment {
 }
 
 model Zone {
-  id           String   @id @default(cuid()) @db.NVarChar(100)
-  farmId       String   @map("farm_id") @db.NVarChar(100)
-  name         String   @db.NVarChar(150)
-  description  String?  @db.NVarChar(2000)
+  id           String   @id @default(cuid())
+  farmId       String   @map("farm_id")
+  name         String
+  description  String?
   areaHectares Decimal? @map("area_hectares") @db.Decimal(10, 2)
-  status       String   @default("ACTIVE") @db.NVarChar(64)
+  status       String   @default("ACTIVE")
   createdAt    DateTime @default(now()) @map("created_at")
   updatedAt    DateTime @updatedAt @map("updated_at")
   farm         Farm     @relation(fields: [farmId], references: [id], onDelete: Cascade)
@@ -89,18 +89,18 @@ model Zone {
 }
 
 model Device {
-  id               String     @id @default(cuid()) @db.NVarChar(100)
-  zoneId           String     @map("zone_id") @db.NVarChar(100)
-  deviceCode       String     @unique @map("device_code") @db.NVarChar(64)
-  name             String     @db.NVarChar(200)
-  type             String     @db.NVarChar(64)
-  hardwareModel    String?    @map("hardware_model") @db.NVarChar(150)
-  firmwareVersion  String?    @map("firmware_version") @db.NVarChar(64)
-  status           String     @default("ACTIVE") @db.NVarChar(64)
-  connectionStatus String     @default("UNKNOWN") @map("connection_status") @db.NVarChar(64)
+  id               String     @id @default(cuid())
+  zoneId           String     @map("zone_id")
+  deviceCode       String     @unique @map("device_code")
+  name             String
+  type             String
+  hardwareModel    String?    @map("hardware_model")
+  firmwareVersion  String?    @map("firmware_version")
+  status           String     @default("ACTIVE")
+  connectionStatus String     @default("UNKNOWN") @map("connection_status")
   lastSeenAt       DateTime?  @map("last_seen_at")
   installedAt      DateTime?  @map("installed_at")
-  description      String?    @db.NVarChar(2000)
+  description      String?
   createdAt        DateTime   @default(now()) @map("created_at")
   updatedAt        DateTime   @updatedAt @map("updated_at")
   zone             Zone       @relation(fields: [zoneId], references: [id], onDelete: Cascade)
@@ -115,15 +115,15 @@ model Device {
 }
 
 model Actuator {
-  id                 String           @id @default(cuid()) @db.NVarChar(100)
-  deviceId           String           @map("device_id") @db.NVarChar(100)
-  actuatorCode       String           @map("actuator_code") @db.NVarChar(64)
-  name               String           @db.NVarChar(200)
-  type               String           @db.NVarChar(64)
-  status             String           @default("ACTIVE") @db.NVarChar(64)
-  currentState       String           @default("UNKNOWN") @map("current_state") @db.NVarChar(64)
-  hardwareChannel    String?          @map("hardware_channel") @db.NVarChar(100)
-  description        String?          @db.NVarChar(2000)
+  id                 String           @id @default(cuid())
+  deviceId           String           @map("device_id")
+  actuatorCode       String           @map("actuator_code")
+  name               String
+  type               String
+  status             String           @default("ACTIVE")
+  currentState       String           @default("UNKNOWN") @map("current_state")
+  hardwareChannel    String?          @map("hardware_channel")
+  description        String?
   lastCommandAt      DateTime?        @map("last_command_at")
   lastStateChangedAt DateTime?        @map("last_state_changed_at")
   createdAt          DateTime         @default(now()) @map("created_at")
@@ -141,25 +141,25 @@ model Actuator {
 }
 
 model DeviceCommand {
-  id               String          @id @default(cuid()) @db.NVarChar(100)
-  actuatorId       String          @map("actuator_id") @db.NVarChar(100)
-  command          String          @db.NVarChar(64)
-  source           String          @db.NVarChar(64)
-  status           String          @default("PENDING") @db.NVarChar(64)
-  requestedById    String?         @map("requested_by_id") @db.NVarChar(100)
-  automationRuleId String?         @map("automation_rule_id") @db.NVarChar(100)
+  id               String          @id @default(cuid())
+  actuatorId       String          @map("actuator_id")
+  command          String
+  source           String
+  status           String          @default("PENDING")
+  requestedById    String?         @map("requested_by_id")
+  automationRuleId String?         @map("automation_rule_id")
   requestedAt      DateTime        @default(now()) @map("requested_at")
   sentAt           DateTime?       @map("sent_at")
   completedAt      DateTime?       @map("completed_at")
-  failureReason    String?         @map("failure_reason") @db.NVarChar(500)
-  correlationId    String          @unique @map("correlation_id") @db.NVarChar(100)
-  transport        String          @default("MOCK") @db.NVarChar(64)
+  failureReason    String?         @map("failure_reason")
+  correlationId    String          @unique @map("correlation_id")
+  transport        String          @default("MOCK")
   expiresAt        DateTime?       @map("expires_at")
   maxRunSeconds    Int?            @map("max_run_seconds")
   acknowledgedAt   DateTime?       @map("acknowledged_at")
   actuator         Actuator        @relation(fields: [actuatorId], references: [id], onDelete: Cascade)
-  requestedBy      User?           @relation("DeviceCommandRequester", fields: [requestedById], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  automationRule   AutomationRule? @relation(fields: [automationRuleId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  requestedBy      User?           @relation("DeviceCommandRequester", fields: [requestedById], references: [id], onDelete: SetNull)
+  automationRule   AutomationRule? @relation(fields: [automationRuleId], references: [id], onDelete: SetNull)
 
   @@index([actuatorId])
   @@index([status])
@@ -170,13 +170,13 @@ model DeviceCommand {
 }
 
 model Sensor {
-  id              String           @id @default(cuid()) @db.NVarChar(100)
-  deviceId        String           @map("device_id") @db.NVarChar(100)
-  sensorCode      String           @map("sensor_code") @db.NVarChar(64)
-  name            String           @db.NVarChar(200)
-  type            String           @db.NVarChar(64)
-  status          String           @default("ACTIVE") @db.NVarChar(64)
-  description     String?          @db.NVarChar(2000)
+  id              String           @id @default(cuid())
+  deviceId        String           @map("device_id")
+  sensorCode      String           @map("sensor_code")
+  name            String
+  type            String
+  status          String           @default("ACTIVE")
+  description     String?
   createdAt       DateTime         @default(now()) @map("created_at")
   updatedAt       DateTime         @updatedAt @map("updated_at")
   device          Device           @relation(fields: [deviceId], references: [id], onDelete: Cascade)
@@ -193,22 +193,22 @@ model Sensor {
 }
 
 model AutomationRule {
-  id                   String          @id @default(cuid()) @db.NVarChar(100)
-  name                 String          @db.NVarChar(200)
-  sensorId             String          @map("sensor_id") @db.NVarChar(100)
-  actuatorId           String          @map("actuator_id") @db.NVarChar(100)
+  id                   String          @id @default(cuid())
+  name                 String
+  sensorId             String          @map("sensor_id")
+  actuatorId           String          @map("actuator_id")
   startThreshold       Float           @map("start_threshold")
   stopThreshold        Float           @map("stop_threshold")
   enabled              Boolean         @default(true)
   lastEvaluatedAt      DateTime?       @map("last_evaluated_at")
   lastCommandAttemptAt DateTime?       @map("last_command_attempt_at")
-  description          String?         @db.NVarChar(2000)
-  createdById          String?         @map("created_by_id") @db.NVarChar(100)
+  description          String?
+  createdById          String?         @map("created_by_id")
   createdAt            DateTime        @default(now()) @map("created_at")
   updatedAt            DateTime        @updatedAt @map("updated_at")
   sensor               Sensor          @relation(fields: [sensorId], references: [id], onDelete: Cascade)
-  actuator             Actuator        @relation(fields: [actuatorId], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  createdBy            User?           @relation("AutomationRuleCreator", fields: [createdById], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  actuator             Actuator        @relation(fields: [actuatorId], references: [id], onDelete: Cascade)
+  createdBy            User?           @relation("AutomationRuleCreator", fields: [createdById], references: [id], onDelete: SetNull)
   commands             DeviceCommand[]
 
   @@index([sensorId])
@@ -219,21 +219,21 @@ model AutomationRule {
 }
 
 model AlertRule {
-  id                String    @id @default(cuid()) @db.NVarChar(100)
-  sensorId          String    @map("sensor_id") @db.NVarChar(100)
-  name              String    @db.NVarChar(200)
-  operator          String    @db.NVarChar(64)
+  id                String    @id @default(cuid())
+  sensorId          String    @map("sensor_id")
+  name              String
+  operator          String
   threshold         Float
   recoveryThreshold Float?    @map("recovery_threshold")
-  severity          String    @db.NVarChar(64)
+  severity          String
   enabled           Boolean   @default(true)
-  message           String?   @db.NVarChar(1000)
-  createdById       String?   @map("created_by_id") @db.NVarChar(100)
+  message           String?
+  createdById       String?   @map("created_by_id")
   lastEvaluatedAt   DateTime? @map("last_evaluated_at")
   createdAt         DateTime  @default(now()) @map("created_at")
   updatedAt         DateTime  @updatedAt @map("updated_at")
   sensor            Sensor    @relation(fields: [sensorId], references: [id], onDelete: Cascade)
-  createdBy         User?     @relation("AlertRuleCreator", fields: [createdById], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  createdBy         User?     @relation("AlertRuleCreator", fields: [createdById], references: [id], onDelete: SetNull)
   alerts            Alert[]
 
   @@index([sensorId])
@@ -243,32 +243,32 @@ model AlertRule {
 }
 
 model Alert {
-  id                String    @id @default(cuid()) @db.NVarChar(100)
-  alertRuleId       String    @map("alert_rule_id") @db.NVarChar(100)
-  sensorId          String    @map("sensor_id") @db.NVarChar(100)
-  status            String    @default("OPEN") @db.NVarChar(64)
-  title             String    @db.NVarChar(300)
-  message           String    @db.NVarChar(2000)
+  id                String    @id @default(cuid())
+  alertRuleId       String    @map("alert_rule_id")
+  sensorId          String    @map("sensor_id")
+  status            String    @default("OPEN")
+  title             String
+  message           String
   triggerValue      Float     @map("trigger_value")
   lastValue         Float     @map("last_value")
   thresholdSnapshot Float     @map("threshold_snapshot")
   recoverySnapshot  Float?    @map("recovery_snapshot")
-  operatorSnapshot  String    @map("operator_snapshot") @db.NVarChar(64)
-  severitySnapshot  String    @map("severity_snapshot") @db.NVarChar(64)
-  unitSnapshot      String    @map("unit_snapshot") @db.NVarChar(32)
+  operatorSnapshot  String    @map("operator_snapshot")
+  severitySnapshot  String    @map("severity_snapshot")
+  unitSnapshot      String    @map("unit_snapshot")
   openedAt          DateTime  @map("opened_at")
   lastReadingAt     DateTime  @map("last_reading_at")
   acknowledgedAt    DateTime? @map("acknowledged_at")
-  acknowledgedById  String?   @map("acknowledged_by_id") @db.NVarChar(100)
+  acknowledgedById  String?   @map("acknowledged_by_id")
   resolvedAt        DateTime? @map("resolved_at")
-  resolvedById      String?   @map("resolved_by_id") @db.NVarChar(100)
-  resolutionReason  String?   @map("resolution_reason") @db.NVarChar(64)
+  resolvedById      String?   @map("resolved_by_id")
+  resolutionReason  String?   @map("resolution_reason")
   createdAt         DateTime  @default(now()) @map("created_at")
   updatedAt         DateTime  @updatedAt @map("updated_at")
   alertRule         AlertRule @relation(fields: [alertRuleId], references: [id], onDelete: Cascade)
-  sensor            Sensor    @relation(fields: [sensorId], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  acknowledgedBy    User?     @relation("AlertAcknowledgedBy", fields: [acknowledgedById], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  resolvedBy        User?     @relation("AlertResolvedBy", fields: [resolvedById], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  sensor            Sensor    @relation(fields: [sensorId], references: [id], onDelete: Cascade)
+  acknowledgedBy    User?     @relation("AlertAcknowledgedBy", fields: [acknowledgedById], references: [id], onDelete: SetNull)
+  resolvedBy        User?     @relation("AlertResolvedBy", fields: [resolvedById], references: [id], onDelete: SetNull)
 
   @@index([alertRuleId, status])
   @@index([sensorId])
@@ -279,10 +279,10 @@ model Alert {
 }
 
 model SensorReading {
-  id         String   @id @default(cuid()) @db.NVarChar(100)
-  sensorId   String   @map("sensor_id") @db.NVarChar(100)
+  id         String   @id @default(cuid())
+  sensorId   String   @map("sensor_id")
   value      Float
-  source     String   @db.NVarChar(64)
+  source     String
   recordedAt DateTime @map("recorded_at")
   receivedAt DateTime @default(now()) @map("received_at")
   sensor     Sensor   @relation(fields: [sensorId], references: [id], onDelete: Cascade)
@@ -294,15 +294,15 @@ model SensorReading {
 }
 
 model Crop {
-  id                  String    @id @default(cuid()) @db.NVarChar(100)
-  zoneId              String    @map("zone_id") @db.NVarChar(100)
-  name                String    @db.NVarChar(200)
-  variety             String?   @db.NVarChar(150)
+  id                  String    @id @default(cuid())
+  zoneId              String    @map("zone_id")
+  name                String
+  variety             String?
   plantingDate        DateTime? @map("planting_date")
   expectedHarvestDate DateTime? @map("expected_harvest_date")
   actualHarvestDate   DateTime? @map("actual_harvest_date")
-  status              String    @default("PLANNED") @db.NVarChar(64)
-  description         String?   @db.NVarChar(2000)
+  status              String    @default("PLANNED")
+  description         String?
   createdAt           DateTime  @default(now()) @map("created_at")
   updatedAt           DateTime  @updatedAt @map("updated_at")
   zone                Zone      @relation(fields: [zoneId], references: [id], onDelete: Cascade)
@@ -315,17 +315,17 @@ model Crop {
 }
 
 model ActivityLog {
-  id          String   @id @default(cuid()) @db.NVarChar(100)
-  userId      String?  @map("user_id") @db.NVarChar(100)
-  farmId      String?  @map("farm_id") @db.NVarChar(100)
-  action      String   @db.NVarChar(64)
-  entityType  String   @map("entity_type") @db.NVarChar(64)
-  entityId    String?  @map("entity_id") @db.NVarChar(100)
-  description String   @db.NVarChar(2000)
-  ipAddress   String?  @map("ip_address") @db.NVarChar(100)
+  id          String   @id @default(cuid())
+  userId      String?  @map("user_id")
+  farmId      String?  @map("farm_id")
+  action      String
+  entityType  String   @map("entity_type")
+  entityId    String?  @map("entity_id")
+  description String
+  ipAddress   String?  @map("ip_address")
   createdAt   DateTime @default(now()) @map("created_at")
-  user        User?    @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  farm        Farm?    @relation(fields: [farmId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  user        User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+  farm        Farm?    @relation(fields: [farmId], references: [id], onDelete: SetNull)
 
   @@index([userId, createdAt])
   @@index([farmId, createdAt])

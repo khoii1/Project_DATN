@@ -58,11 +58,22 @@ if (mqttEnabled && (!process.env.MQTT_USERNAME || !process.env.MQTT_PASSWORD)) {
   throw new Error("MQTT_USERNAME and MQTT_PASSWORD are required when MQTT_ENABLED=true");
 }
 
+function normalizeMqttBrokerUrl(rawUrl?: string): string {
+  const trimmed = (rawUrl ?? "").trim();
+  if (!trimmed) return "mqtt://127.0.0.1:1883";
+  if (/^(mqtts?|wss?):\/\//i.test(trimmed)) return trimmed;
+  if (trimmed.includes(":8883") || trimmed.toLowerCase().includes("hivemq.cloud") || trimmed.toLowerCase().includes("emqx")) {
+    return trimmed.includes(":") ? `mqtts://${trimmed}` : `mqtts://${trimmed}:8883`;
+  }
+  return trimmed.includes(":") ? `mqtt://${trimmed}` : `mqtt://${trimmed}:1883`;
+}
+
 export const env = {
   port,
   databaseUrl: process.env.DATABASE_URL,
   nodeEnv: process.env.NODE_ENV ?? "development",
-  clientUrl: process.env.CLIENT_URL ?? "http://localhost:5173",
+  clientUrl: (process.env.CLIENT_URL ?? "http://localhost:5173").replace(/\/+$/, ""),
+  allowVercelOrigins: (process.env.ALLOW_VERCEL_ORIGINS ?? "true").toLowerCase() !== "false",
   jwtSecret: process.env.JWT_SECRET,
   jwtExpiresIn: process.env.JWT_EXPIRES_IN ?? "1d",
   automationCommandCooldownSeconds,
@@ -77,7 +88,7 @@ export const env = {
   mqttPumpTestMode,
   mqttCommandDeviceCode: process.env.MQTT_COMMAND_DEVICE_CODE ?? "ESP32-GF-A-01",
   mqttCommandActuatorCode: process.env.MQTT_COMMAND_ACTUATOR_CODE ?? "PUMP_01",
-  mqttBrokerUrl: process.env.MQTT_BROKER_URL ?? "mqtt://127.0.0.1:1883",
+  mqttBrokerUrl: normalizeMqttBrokerUrl(process.env.MQTT_BROKER_URL),
   mqttBackendClientId: process.env.MQTT_BACKEND_CLIENT_ID ?? "smartagri-backend",
   mqttUsername: process.env.MQTT_USERNAME,
   mqttPassword: process.env.MQTT_PASSWORD,

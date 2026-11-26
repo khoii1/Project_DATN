@@ -9,12 +9,25 @@ import { apiRouter } from "./routes";
 
 export const app = express();
 
+app.set("trust proxy", 1);
 app.disable("x-powered-by");
 app.use(helmet());
+
+const configuredClientOrigins = env.clientUrl
+  .split(",")
+  .map((item) => item.trim().replace(/\/+$/, ""))
+  .filter(Boolean);
+
 const allowedOrigin = (origin: string | undefined, callback: (err: Error | null, allow?: boolean) => void) => {
   if (!origin) return callback(null, true);
-  if (origin === env.clientUrl) return callback(null, true);
-  if (env.nodeEnv === "development" && /^https?:\/\/(localhost|127\.0\.0\.1|192\.168\.\d+\.\d+|172\.\d+\.\d+\.\d+|10\.\d+\.\d+\.\d+)(:\d+)?$/.test(origin)) {
+  const normalized = origin.replace(/\/+$/, "");
+  if (configuredClientOrigins.includes(normalized) || configuredClientOrigins.includes("*")) {
+    return callback(null, true);
+  }
+  if (env.allowVercelOrigins && /^https:\/\/[a-z0-9-]+\.vercel\.app$/i.test(normalized)) {
+    return callback(null, true);
+  }
+  if (/^https?:\/\/(localhost|127\.0\.0\.1|192\.168\.\d+\.\d+|172\.\d+\.\d+\.\d+|10\.\d+\.\d+\.\d+)(:\d+)?$/.test(normalized)) {
     return callback(null, true);
   }
   return callback(null, false);

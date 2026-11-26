@@ -1,9 +1,15 @@
 import axios from "axios";
 import { tokenStorage } from "../utils/token-storage";
 
+function resolveApiBaseUrl(): string {
+  const raw = (import.meta.env.VITE_API_BASE_URL ?? "").trim().replace(/\/+$/, "");
+  if (!raw) return "http://localhost:5000/api";
+  return raw.endsWith("/api") ? raw : `${raw}/api`;
+}
+
 export const api = axios.create({
-  baseURL: import.meta.env.VITE_API_BASE_URL ?? "http://localhost:5000/api",
-  timeout: 5000,
+  baseURL: resolveApiBaseUrl(),
+  timeout: 25000,
   headers: { "Content-Type": "application/json" },
 });
 

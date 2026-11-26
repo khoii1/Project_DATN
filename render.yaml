@@ -1,0 +1,56 @@
+services:
+  - type: web
+    name: smart-agriculture-backend
+    runtime: node
+    plan: free
+    rootDir: backend
+    buildCommand: npm install --include=dev && npm run build
+    startCommand: npm run start:cloud
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      - key: DATABASE_URL
+        sync: false
+      - key: CLIENT_URL
+        value: https://your-project.vercel.app
+      - key: ALLOW_VERCEL_ORIGINS
+        value: "true"
+      - key: JWT_SECRET
+        generateValue: true
+      - key: JWT_EXPIRES_IN
+        value: 7d
+      - key: AUTOMATION_COMMAND_COOLDOWN_SECONDS
+        value: "15"
+      - key: AUTOMATION_MANUAL_OVERRIDE_MINUTES
+        value: "15"
+      - key: AUTOMATION_MAX_READING_AGE_SECONDS
+        value: "300"
+      - key: MQTT_ENABLED
+        value: "true"
+      - key: MQTT_BROKER_URL
+        sync: false
+      - key: MQTT_BACKEND_CLIENT_ID
+        value: smartagri-backend-cloud
+      - key: MQTT_USERNAME
+        sync: false
+      - key: MQTT_PASSWORD
+        sync: false
+      - key: MQTT_TOPIC_PREFIX
+        value: smart-agriculture/v1
+      - key: MQTT_COMMANDS_ENABLED
+        value: "true"
+      - key: MQTT_AUTOMATION_COMMANDS_ENABLED
+        value: "true"
+      - key: MQTT_COMMAND_DEVICE_CODE
+        value: ESP32-GF-A-01
+      - key: MQTT_COMMAND_ACTUATOR_CODE
+        value: PUMP_01
+      - key: MQTT_COMMAND_EXPIRY_SECONDS
+        value: "15"
+      - key: MQTT_PUMP_MAX_RUN_SECONDS
+        value: "5"
+      - key: MQTT_PUMP_TEST_MODE
+        value: "false"

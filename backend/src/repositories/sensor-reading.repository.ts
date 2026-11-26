@@ -30,21 +30,17 @@ export const sensorReadingRepository = {
   },
   bucketPoints(sensorId: string, from: Date, to: Date, bucketSeconds: number) {
     return prisma.$queryRaw<BucketPoint[]>(Prisma.sql`
-      SELECT b.epoch AS epoch,
-             CAST(AVG(b.value) AS FLOAT) AS value,
-             CAST(MIN(b.value) AS FLOAT) AS min,
-             CAST(MAX(b.value) AS FLOAT) AS max,
-             COUNT_BIG(*) AS count
-      FROM (
-        SELECT (DATEDIFF_BIG(SECOND, '1970-01-01T00:00:00', recorded_at) / CAST(${bucketSeconds} AS BIGINT)) * CAST(${bucketSeconds} AS BIGINT) AS epoch,
-               value
-        FROM sensor_readings
-        WHERE sensor_id = ${sensorId}
-          AND recorded_at >= ${from}
-          AND recorded_at <= ${to}
-      ) AS b
-      GROUP BY b.epoch
-      ORDER BY b.epoch ASC
+      SELECT (FLOOR(EXTRACT(EPOCH FROM recorded_at) / ${bucketSeconds})::BIGINT * ${bucketSeconds}::BIGINT) AS epoch,
+             AVG(value)::DOUBLE PRECISION AS value,
+             MIN(value)::DOUBLE PRECISION AS min,
+             MAX(value)::DOUBLE PRECISION AS max,
+             COUNT(*)::BIGINT AS count
+      FROM sensor_readings
+      WHERE sensor_id = ${sensorId}
+        AND recorded_at >= ${from}
+        AND recorded_at <= ${to}
+      GROUP BY 1
+      ORDER BY 1 ASC
     `);
   },
   async createMany(data: Array<{ sensorId: string; value: number; source: SensorReadingSource; recordedAt: Date }>) {

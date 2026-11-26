@@ -36,11 +36,12 @@ export const authService = {
   async logout(): Promise<void> {
     await api.post("/auth/logout");
   },
-  async forgotPassword(email: string): Promise<{ expiresInSeconds: number; verificationCode?: string }> {
-    const response = await api.post<{ success: true; message: string; data: { expiresInSeconds: number; verificationCode?: string } }>(
-      "/auth/forgot-password",
-      { email },
-    );
+  async forgotPassword(email: string): Promise<{ expiresInSeconds: number; emailSent?: boolean; verificationCode?: string }> {
+    const response = await api.post<{
+      success: true;
+      message: string;
+      data: { expiresInSeconds: number; emailSent?: boolean; verificationCode?: string };
+    }>("/auth/forgot-password", { email });
     return response.data.data;
   },
   async resetPassword(input: { email: string; otpCode: string; newPassword: string }): Promise<void> {

@@ -38,6 +38,7 @@ export function AuthFlowScreen() {
   const [otpStep, setOtpStep] = useState(false);
   const [otpCode, setOtpCode] = useState('');
   const [issuedCode, setIssuedCode] = useState('');
+  const [emailSent, setEmailSent] = useState(false);
   const [newPassword, setNewPassword] = useState('');
 
   const [submitting, setSubmitting] = useState(false);
@@ -54,6 +55,7 @@ export function AuthFlowScreen() {
     setError('');
     setOtpStep(false);
     setIssuedCode('');
+    setEmailSent(false);
     setMode(next);
   };
 
@@ -117,9 +119,16 @@ export function AuthFlowScreen() {
     setError('');
     try {
       const res = await smartAgriApi.requestPasswordReset(email.trim());
-      if (res.verificationCode) {
+      setEmailSent(Boolean(res.emailSent));
+      if (!res.emailSent && res.verificationCode) {
         setIssuedCode(res.verificationCode);
         setOtpCode(res.verificationCode);
+      } else {
+        setIssuedCode('');
+        setOtpCode('');
+      }
+      if (otpStep && res.emailSent) {
+        showSuccess('Đã gửi lại mã OTP 6 chữ số mới qua Email!');
       }
       setOtpStep(true);
     } catch (e) {
@@ -315,17 +324,30 @@ export function AuthFlowScreen() {
 
           {mode === 'forgot' && otpStep && (
             <>
-              {issuedCode ? (
+              {emailSent ? (
                 <View style={styles.otpBanner}>
                   <Text style={styles.otpBannerText}>
-                    Mã xác thực khôi phục (hiệu lực 5 phút): {issuedCode}
+                    Mã OTP 6 chữ số đã gửi tới hộp thư {email.trim()} (hiệu lực 5 phút). Vui lòng kiểm tra Hộp thư đến hoặc mục Spam.
+                  </Text>
+                </View>
+              ) : issuedCode ? (
+                <View style={styles.otpBanner}>
+                  <Text style={styles.otpBannerText}>
+                    Mã xác thực khôi phục (chế độ Local, hiệu lực 5 phút): {issuedCode}
                   </Text>
                 </View>
               ) : null}
-              <Text style={styles.label}>Mã xác thực 6 chữ số</Text>
+              <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+                <Text style={styles.label}>Mã xác thực 6 chữ số</Text>
+                <TouchableOpacity disabled={submitting} onPress={handleRequestOtp}>
+                  <Text style={[styles.linkText, { fontSize: 12, marginBottom: 6 }]}>
+                    Gửi lại mã OTP
+                  </Text>
+                </TouchableOpacity>
+              </View>
               <TextInput
                 style={styles.input}
-                placeholder="Nhập mã 6 số"
+                placeholder="Nhập mã 6 số từ Email"
                 keyboardType="number-pad"
                 maxLength={6}
                 value={otpCode}

@@ -10,32 +10,50 @@ export function ForgotPasswordPage() {
   const [email, setEmail] = useState("");
   const [otpCode, setOtpCode] = useState("");
   const [issuedCode, setIssuedCode] = useState("");
+  const [emailSent, setEmailSent] = useState(false);
+  const [resendNotice, setResendNotice] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isResending, setIsResending] = useState(false);
 
-  const handleRequestOtp = async (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+  const sendOtpRequest = async (isResend = false) => {
     setError("");
+    setResendNotice("");
     if (!email.trim() || !/^\S+@\S+\.\S+$/.test(email.trim())) {
       setError("Vui lòng nhập đúng định dạng Email đã đăng ký");
       return;
     }
     try {
-      setIsSubmitting(true);
+      if (isResend) setIsResending(true);
+      else setIsSubmitting(true);
+
       const res = await authService.forgotPassword(email.trim());
-      if (res.verificationCode) {
+      setEmailSent(Boolean(res.emailSent));
+      if (!res.emailSent && res.verificationCode) {
         setIssuedCode(res.verificationCode);
         setOtpCode(res.verificationCode);
+      } else {
+        setIssuedCode("");
+        if (isResend) setOtpCode("");
+      }
+      if (isResend) {
+        setResendNotice("Đã gửi lại mã OTP 6 chữ số mới tới hộp thư của bạn!");
       }
       setStep("reset");
     } catch (err) {
-      setError(getApiErrorMessage(err, "Không thể tạo mã xác thực, vui lòng thử lại"));
+      setError(getApiErrorMessage(err, "Không thể gửi mã xác thực qua Email, vui lòng thử lại"));
     } finally {
       setIsSubmitting(false);
+      setIsResending(false);
     }
+  };
+
+  const handleRequestOtp = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    await sendOtpRequest(false);
   };
 
   const handleResetPassword = async (event: FormEvent<HTMLFormElement>) => {
@@ -149,18 +167,38 @@ export function ForgotPasswordPage() {
                     className="flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-brand-600 text-sm font-bold text-white shadow-lg shadow-brand-600/15 hover:bg-brand-700 disabled:opacity-70"
                   >
                     {isSubmitting && <Loader2 className="h-4 w-4 animate-spin" />}
-                    {isSubmitting ? "Đang kiểm tra..." : "Nhận mã xác thực"}
+                    {isSubmitting ? "Đang gửi Email OTP..." : "Gửi mã xác thực qua Email"}
                   </button>
                 </form>
               ) : (
                 <form onSubmit={handleResetPassword} className="mt-6 space-y-4" noValidate>
-                  {issuedCode && (
+                  {emailSent && (
+                    <div className="rounded-xl border border-emerald-200 bg-emerald-50 p-3.5 text-sm leading-6 text-emerald-900">
+                      Mã OTP 6 chữ số đã được gửi tới hộp thư <b>{email.trim()}</b> (hiệu lực 5 phút). Vui lòng kiểm tra Hộp thư đến hoặc mục Thư rác (Spam).
+                    </div>
+                  )}
+                  {resendNotice && (
+                    <div className="rounded-xl border border-sky-200 bg-sky-50 px-3.5 py-2.5 text-xs font-semibold text-sky-800">
+                      {resendNotice}
+                    </div>
+                  )}
+                  {!emailSent && issuedCode && (
                     <div className="rounded-xl border border-emerald-200 bg-emerald-50 p-3.5 text-sm text-emerald-900">
-                      Mã xác thực khôi phục (hiệu lực 5 phút): <b className="tracking-widest">{issuedCode}</b>
+                      Mã xác thực khôi phục (chế độ Local, hiệu lực 5 phút): <b className="tracking-widest">{issuedCode}</b>
                     </div>
                   )}
                   <div>
-                    <label htmlFor="otp-code" className="text-sm font-semibold text-slate-700">Mã xác thực (6 chữ số)</label>
+                    <div className="flex items-center justify-between">
+                      <label htmlFor="otp-code" className="text-sm font-semibold text-slate-700">Mã xác thực (6 chữ số)</label>
+                      <button
+                        type="button"
+                        disabled={isResending || isSubmitting}
+                        onClick={() => void sendOtpRequest(true)}
+                        className="text-xs font-bold text-brand-700 hover:underline disabled:opacity-50"
+                      >
+                        {isResending ? "Đang gửi lại..." : "Gửi lại mã OTP"}
+                      </button>
+                    </div>
                     <div className="relative mt-1.5">
                       <KeyRound className="absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
                       <input

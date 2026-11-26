@@ -61,7 +61,9 @@ export async function forgotPassword(request: Request, response: Response, next:
     const data = await authService.requestPasswordReset(input);
     response.status(200).json({
       success: true,
-      message: "Đã tạo mã xác thực khôi phục mật khẩu (hiệu lực 5 phút)",
+      message: data.emailSent
+        ? "Mã xác thực OTP 6 chữ số đã được gửi tới Email của bạn (hiệu lực 5 phút)"
+        : "Đã tạo mã xác thực khôi phục mật khẩu (hiệu lực 5 phút)",
       data,
     });
   } catch (error) {

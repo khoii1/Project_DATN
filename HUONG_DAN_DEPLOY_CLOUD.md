@@ -93,6 +93,23 @@ static constexpr char MQTT_PASSWORD[] = "SmartAgriMqtt2026";         // Password
 
 ---
 
+## Bước 6: Bật gửi mã OTP 6 số thật về Gmail (Miễn phí 100%, không cần mua tên miền)
+Vì Render gói Free chặn cổng SMTP truyền thống (`465`/`587`), dự án sử dụng cầu nối **Google Apps Script qua HTTPS (cổng 443)** để gửi mail trực tiếp từ máy chủ Gmail chính thức của Google (vào thẳng Hộp thư chính, gửi tới mọi Email bất kỳ):
+
+1. Truy cập **https://script.google.com/** (đăng nhập bằng Gmail của bạn) $\rightarrow$ bấm **`+ Dự án mới`** (*New project*).
+2. Xóa code mặc định trong `Code.gs`, copy toàn bộ nội dung từ file `backend/scripts/google-apps-script-email.gs` dán vào $\rightarrow$ bấm **`Ctrl + S`** để lưu.
+3. Ở góc phải trên cùng, bấm **`Triển khai` (Deploy)** $\rightarrow$ **`Tùy chọn triển khai mới` (New deployment)**:
+   - Bấm biểu tượng bánh răng $\rightarrow$ chọn **`Ứng dụng web` (Web app)**.
+   - **Thực thi dưới dạng (Execute as):** `Tôi` (*Me*).
+   - **Ai có quyền truy cập (Who has access):** Bắt buộc chọn **`Bất kỳ ai` (Anyone)**.
+   - Bấm **`Triển khai`** $\rightarrow$ **`Ủy quyền truy cập`** $\rightarrow$ chọn tài khoản Gmail $\rightarrow$ bấm **`Advanced` (Nâng cao)** $\rightarrow$ **`Go to ... (unsafe)`** $\rightarrow$ **`Allow` (Cho phép)**.
+4. Copy đường link **URL ứng dụng web** (`https://script.google.com/macros/s/.../exec`).
+5. Mở dự án Backend trên **Render** $\rightarrow$ mục **Environment** $\rightarrow$ thêm biến:
+   - `EMAIL_WEBHOOK_URL` = *(dán link `https://script.google.com/macros/s/.../exec` vừa copy)*
+   - Bấm **Save Changes** là xong!
+
+---
+
 ## Mẹo nhỏ: Giữ Backend Render Free thức 24/7 không bị ngủ sau 15 phút
 Gói Free của Render sẽ tạm nghỉ nếu sau 15 phút không có ai mở web. Để giữ Backend chạy xuyên suốt 24/7 lắng nghe ESP32:
 1. Vào trang miễn phí **https://cron-job.org** $\rightarrow$ Đăng ký tài khoản $\rightarrow$ **Create Cronjob**.

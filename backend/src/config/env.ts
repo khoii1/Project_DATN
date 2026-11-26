@@ -98,4 +98,7 @@ export const env = {
   mqttMaxPayloadBytes,
   devicePresenceTimeoutSeconds,
   devicePresenceCheckIntervalSeconds,
+  emailWebhookUrl: (process.env.EMAIL_WEBHOOK_URL ?? "").trim(),
+  emailWebhookSecret: (process.env.EMAIL_WEBHOOK_SECRET ?? "").trim(),
+  emailSenderName: (process.env.EMAIL_SENDER_NAME ?? "Smart Agriculture IoT").trim(),
 } as const;

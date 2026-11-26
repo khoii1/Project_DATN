@@ -54,3 +54,7 @@ services:
         value: "5"
       - key: MQTT_PUMP_TEST_MODE
         value: "false"
+      - key: EMAIL_WEBHOOK_URL
+        sync: false
+      - key: EMAIL_SENDER_NAME
+        value: Smart Agriculture IoT

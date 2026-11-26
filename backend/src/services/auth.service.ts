@@ -7,6 +7,7 @@ import { signAccessToken } from "../utils/jwt";
 import { comparePassword, hashPassword } from "../utils/password";
 import type { ChangePasswordInput, ForgotPasswordInput, RegisterInput, ResetPasswordInput, UpdateProfileInput } from "../validators/auth.schema";
 import { recordActivity } from "./activity-log.service";
+import { emailService } from "./email.service";
 
 interface ResetTokenRecord {
   otpCode: string;
@@ -144,7 +145,9 @@ export const authService = {
     });
   },
 
-  async requestPasswordReset(input: ForgotPasswordInput): Promise<{ expiresInSeconds: number; verificationCode?: string }> {
+  async requestPasswordReset(
+    input: ForgotPasswordInput,
+  ): Promise<{ expiresInSeconds: number; emailSent: boolean; verificationCode?: string }> {
     const normalizedEmail = input.email.trim().toLowerCase();
     const user = await userRepository.findByEmail(normalizedEmail);
     if (!user) {
@@ -161,10 +164,39 @@ export const authService = {
       attempts: 0,
     });
 
-    console.log(`[Password Reset OTP] Email=${normalizedEmail} Code=${otpCode} (valid 5m)`);
+    if (emailService.isConfigured()) {
+      try {
+        await emailService.sendPasswordResetOtpEmail({
+          to: user.email,
+          fullName: user.fullName,
+          otpCode,
+          expiresInMinutes: 5,
+        });
+      } catch (error) {
+        passwordResetStore.delete(normalizedEmail);
+        throw error;
+      }
+
+      console.log(`[Password Reset OTP] Sent real OTP email to ${normalizedEmail} (valid 5m)`);
+      return {
+        expiresInSeconds: 300,
+        emailSent: true,
+      };
+    }
+
+    if (env.nodeEnv === "production") {
+      passwordResetStore.delete(normalizedEmail);
+      throw new AppError(
+        503,
+        "Máy chủ chưa cấu hình dịch vụ gửi Email (vui lòng thêm biến EMAIL_WEBHOOK_URL trên Render)",
+      );
+    }
+
+    console.log(`[Password Reset OTP - Local Dev] Email=${normalizedEmail} Code=${otpCode} (valid 5m)`);
     return {
       expiresInSeconds: 300,
-      ...(env.nodeEnv !== "production" ? { verificationCode: otpCode } : {}),
+      emailSent: false,
+      verificationCode: otpCode,
     };
   },
 

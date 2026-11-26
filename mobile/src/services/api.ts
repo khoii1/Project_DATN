@@ -182,7 +182,7 @@ export const smartAgriApi = {
     });
   },
   requestPasswordReset(email: string) {
-    return apiClient.request<{ expiresInSeconds: number; verificationCode?: string }>(
+    return apiClient.request<{ expiresInSeconds: number; emailSent?: boolean; verificationCode?: string }>(
       'POST',
       '/auth/forgot-password',
       { body: { email: email.trim() } },

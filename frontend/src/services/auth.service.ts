@@ -14,6 +14,14 @@ interface MeResponse {
 }
 
 export const authService = {
+  async requestRegisterOtp(email: string, fullName?: string): Promise<{ expiresInSeconds: number; emailSent?: boolean; verificationCode?: string }> {
+    const response = await api.post<{
+      success: true;
+      message: string;
+      data: { expiresInSeconds: number; emailSent?: boolean; verificationCode?: string };
+    }>("/auth/register/request-otp", { email, fullName });
+    return response.data.data;
+  },
   async register(input: RegisterInput): Promise<LoginResponse["data"]> {
     const response = await api.post<LoginResponse>("/auth/register", input);
     return response.data.data;

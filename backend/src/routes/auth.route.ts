@@ -1,10 +1,10 @@
 import { Router } from "express";
 import rateLimit from "express-rate-limit";
-import { changePassword, forgotPassword, login, logout, me, register, resetPassword, updateProfile } from "../controllers/auth.controller";
+import { changePassword, forgotPassword, login, logout, me, register, requestRegisterOtp, resetPassword, updateProfile } from "../controllers/auth.controller";
 import { env } from "../config/env";
 import { authenticate } from "../middlewares/auth.middleware";
 import { validate } from "../middlewares/validate.middleware";
-import { changePasswordSchema, forgotPasswordSchema, loginSchema, registerSchema, resetPasswordSchema, updateProfileSchema } from "../validators/auth.schema";
+import { changePasswordSchema, forgotPasswordSchema, loginSchema, registerOtpRequestSchema, registerSchema, resetPasswordSchema, updateProfileSchema } from "../validators/auth.schema";
 
 export const authRouter = Router();
 
@@ -16,6 +16,7 @@ const loginLimiter = rateLimit({
   message: { success: false, message: "Quá nhiều lần đăng nhập, vui lòng thử lại sau" },
 });
 
+authRouter.post("/register/request-otp", loginLimiter, validate(registerOtpRequestSchema), requestRegisterOtp);
 authRouter.post("/register", loginLimiter, validate(registerSchema), register);
 authRouter.post("/login", loginLimiter, validate(loginSchema), login);
 authRouter.post("/forgot-password", loginLimiter, validate(forgotPasswordSchema), forgotPassword);

@@ -39,6 +39,7 @@ export function AuthFlowScreen() {
   const [otpCode, setOtpCode] = useState('');
   const [issuedCode, setIssuedCode] = useState('');
   const [emailSent, setEmailSent] = useState(false);
+  const [regOtpStep, setRegOtpStep] = useState(false);
   const [newPassword, setNewPassword] = useState('');
 
   const [submitting, setSubmitting] = useState(false);
@@ -56,6 +57,8 @@ export function AuthFlowScreen() {
     setOtpStep(false);
     setIssuedCode('');
     setEmailSent(false);
+    setRegOtpStep(false);
+    setOtpCode('');
     setMode(next);
   };
 
@@ -95,14 +98,52 @@ export function AuthFlowScreen() {
     setSubmitting(true);
     setError('');
     try {
+      if (!regOtpStep) {
+        const otpRes = await smartAgriApi.requestRegisterOtp(email.trim(), fullName.trim());
+        setEmailSent(Boolean(otpRes.emailSent));
+        if (!otpRes.emailSent && otpRes.verificationCode) {
+          setIssuedCode(otpRes.verificationCode);
+          setOtpCode(otpRes.verificationCode);
+        } else {
+          setIssuedCode('');
+          setOtpCode('');
+        }
+        setRegOtpStep(true);
+        return;
+      }
+      if (!/^\d{6}$/.test(otpCode.trim())) {
+        setError('Mã xác thực gồm đúng 6 chữ số.');
+        return;
+      }
       await register({
         fullName: fullName.trim(),
         email: email.trim(),
         phone: phone.trim() || null,
         password,
         role,
+        otpCode: otpCode.trim(),
       });
       showSuccess('Đăng ký tài khoản thành công!');
+    } catch (e) {
+      setError(AppFormatters.friendlyError(e));
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  const resendRegisterOtp = async () => {
+    setSubmitting(true);
+    setError('');
+    try {
+      const otpRes = await smartAgriApi.requestRegisterOtp(email.trim(), fullName.trim());
+      setEmailSent(Boolean(otpRes.emailSent));
+      if (!otpRes.emailSent && otpRes.verificationCode) {
+        setIssuedCode(otpRes.verificationCode);
+        setOtpCode(otpRes.verificationCode);
+      } else {
+        setOtpCode('');
+        showSuccess('Đã gửi lại mã OTP 6 chữ số mới qua Email!');
+      }
     } catch (e) {
       setError(AppFormatters.friendlyError(e));
     } finally {
@@ -322,6 +363,32 @@ export function AuthFlowScreen() {
             </>
           )}
 
+          {mode === 'register' && regOtpStep && (
+            <>
+              <View style={[styles.otpBanner, { marginTop: 12 }]}>
+                <Text style={styles.otpBannerText}>
+                  {emailSent
+                    ? `Mã OTP 6 chữ số đã gửi tới hộp thư ${email.trim()} (hiệu lực 5 phút). Vui lòng kiểm tra Hộp thư đến hoặc mục Spam.`
+                    : `Mã xác thực đăng ký (chế độ Local, hiệu lực 5 phút): ${issuedCode}`}
+                </Text>
+              </View>
+              <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+                <Text style={styles.label}>Mã xác thực Email (6 chữ số)</Text>
+                <TouchableOpacity disabled={submitting} onPress={resendRegisterOtp}>
+                  <Text style={[styles.linkText, { fontSize: 12, marginBottom: 6 }]}>Gửi lại mã OTP</Text>
+                </TouchableOpacity>
+              </View>
+              <TextInput
+                style={styles.input}
+                placeholder="Nhập mã 6 số từ Email"
+                keyboardType="number-pad"
+                maxLength={6}
+                value={otpCode}
+                onChangeText={setOtpCode}
+              />
+            </>
+          )}
+
           {mode === 'forgot' && otpStep && (
             <>
               {emailSent ? (
@@ -401,7 +468,9 @@ export function AuthFlowScreen() {
                 {mode === 'login'
                   ? 'Đăng nhập'
                   : mode === 'register'
-                    ? 'Đăng ký tài khoản'
+                    ? regOtpStep
+                      ? 'Xác nhận & Tạo tài khoản'
+                      : 'Gửi mã xác thực Email'
                     : otpStep
                       ? 'Đặt lại mật khẩu mới'
                       : 'Nhận mã xác thực'}

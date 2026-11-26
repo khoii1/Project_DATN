@@ -17,6 +17,12 @@ export const registerSchema = z.object({
     .regex(/[A-Za-z]/, "Mật khẩu phải có ít nhất một chữ cái")
     .regex(/[0-9]/, "Mật khẩu phải có ít nhất một chữ số"),
   role: z.enum(["FARM_OWNER", "STAFF"], { errorMap: () => ({ message: "Vai trò đăng ký không hợp lệ" }) }).optional().default("FARM_OWNER"),
+  otpCode: z.string({ required_error: "Mã xác thực Email là bắt buộc" }).trim().regex(/^\d{6}$/, "Mã xác thực gồm đúng 6 chữ số"),
+});
+
+export const registerOtpRequestSchema = z.object({
+  email: z.string({ required_error: "Email là bắt buộc" }).trim().email("Email không hợp lệ").transform((value) => value.toLowerCase()),
+  fullName: z.string().trim().max(100, "Họ và tên tối đa 100 ký tự").optional(),
 });
 
 export const updateProfileSchema = z.object({
@@ -52,6 +58,7 @@ export const resetPasswordSchema = z.object({
 
 export type LoginInput = z.infer<typeof loginSchema>;
 export type RegisterInput = z.infer<typeof registerSchema>;
+export type RegisterOtpRequestInput = z.infer<typeof registerOtpRequestSchema>;
 export type UpdateProfileInput = z.infer<typeof updateProfileSchema>;
 export type ChangePasswordInput = z.infer<typeof changePasswordSchema>;
 export type ForgotPasswordInput = z.infer<typeof forgotPasswordSchema>;

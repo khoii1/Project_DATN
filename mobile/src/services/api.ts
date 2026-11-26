@@ -170,6 +170,7 @@ export const smartAgriApi = {
     phone?: string | null;
     password: string;
     role?: string;
+    otpCode?: string;
   }) {
     return apiClient.request<{ user: AuthUser; accessToken: string }>('POST', '/auth/register', {
       body: {
@@ -178,8 +179,16 @@ export const smartAgriApi = {
         phone: input.phone?.trim() || null,
         password: input.password,
         role: input.role || 'FARM_OWNER',
+        otpCode: input.otpCode?.trim(),
       },
     });
+  },
+  requestRegisterOtp(email: string, fullName?: string) {
+    return apiClient.request<{ expiresInSeconds: number; emailSent?: boolean; verificationCode?: string }>(
+      'POST',
+      '/auth/register/request-otp',
+      { body: { email: email.trim(), fullName: fullName?.trim() || undefined } },
+    );
   },
   requestPasswordReset(email: string) {
     return apiClient.request<{ expiresInSeconds: number; emailSent?: boolean; verificationCode?: string }>(

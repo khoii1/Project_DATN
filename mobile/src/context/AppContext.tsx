@@ -26,6 +26,7 @@ interface AppContextValue {
     phone?: string | null;
     password: string;
     role?: string;
+    otpCode?: string;
   }) => Promise<void>;
   logout: () => Promise<void>;
   updateServerUrl: (url: string) => Promise<void>;
@@ -143,6 +144,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       phone?: string | null;
       password: string;
       role?: string;
+      otpCode?: string;
     }) => {
       const res = await smartAgriApi.register(input);
       apiClient.setAccessToken(res.accessToken);

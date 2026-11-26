@@ -6,6 +6,7 @@ interface SendPasswordResetOtpParams {
   fullName: string;
   otpCode: string;
   expiresInMinutes?: number;
+  purpose?: "reset-password" | "register";
 }
 
 function escapeHtml(raw: string): string {
@@ -17,17 +18,27 @@ function escapeHtml(raw: string): string {
     .replace(/'/g, "&#39;");
 }
 
-function buildOtpEmailTemplate({ fullName, otpCode, expiresInMinutes = 5 }: Omit<SendPasswordResetOtpParams, "to">) {
+function buildOtpEmailTemplate({ fullName, otpCode, expiresInMinutes = 5, purpose = "reset-password" }: Omit<SendPasswordResetOtpParams, "to">) {
   const safeName = escapeHtml(fullName);
-  const subject = `[Smart Agriculture] Mã OTP đặt lại mật khẩu: ${otpCode}`;
+  const isRegister = purpose === "register";
+  const subject = isRegister
+    ? `[Smart Agriculture] Mã OTP xác thực đăng ký tài khoản: ${otpCode}`
+    : `[Smart Agriculture] Mã OTP đặt lại mật khẩu: ${otpCode}`;
+  const heading = isRegister ? "Xác thực Email đăng ký tài khoản" : "Mã xác thực đặt lại mật khẩu";
+  const intro = isRegister
+    ? "Cảm ơn bạn đã đăng ký tài khoản trên hệ thống Nông Nghiệp Thông Minh. Vui lòng nhập mã xác thực 6 chữ số dưới đây vào màn hình đăng ký để hoàn tất tạo tài khoản:"
+    : "Hệ thống vừa nhận được yêu cầu khôi phục mật khẩu cho tài khoản của bạn. Vui lòng nhập mã xác thực 6 chữ số dưới đây vào màn hình đặt lại mật khẩu:";
+  const ignoreNote = isRegister
+    ? "Nếu bạn không đăng ký tài khoản, hãy bỏ qua email này — sẽ không có tài khoản nào được tạo."
+    : "Nếu bạn không yêu cầu đặt lại mật khẩu, hãy bỏ qua email này — tài khoản của bạn vẫn an toàn.";
   const textBody = [
     `Xin chào ${fullName},`,
     "",
-    `Bạn vừa yêu cầu đặt lại mật khẩu trên hệ thống Nông Nghiệp Thông Minh (Smart Agriculture IoT).`,
+    intro,
     `Mã xác thực OTP của bạn là: ${otpCode}`,
     "",
     `Mã có hiệu lực trong ${expiresInMinutes} phút. Vui lòng không chia sẻ mã này cho bất kỳ ai.`,
-    "Nếu bạn không thực hiện yêu cầu này, vui lòng bỏ qua email này.",
+    ignoreNote,
   ].join("\n");
 
   const htmlBody = `
@@ -40,12 +51,12 @@ function buildOtpEmailTemplate({ fullName, otpCode, expiresInMinutes = 5 }: Omit
   <div style="max-width:520px;margin:0 auto;background:#ffffff;border-radius:16px;overflow:hidden;border:1px solid #e2e8f0;">
     <div style="background:#103b2d;padding:24px 28px;color:#ffffff;">
       <div style="font-size:12px;letter-spacing:2px;text-transform:uppercase;color:#a7f3d0;font-weight:bold;">Smart Agriculture IoT</div>
-      <h1 style="margin:8px 0 0;font-size:22px;font-weight:bold;">Mã xác thực đặt lại mật khẩu</h1>
+      <h1 style="margin:8px 0 0;font-size:22px;font-weight:bold;">${heading}</h1>
     </div>
     <div style="padding:28px;">
       <p style="margin:0 0 14px;font-size:15px;line-height:1.6;">Xin chào <strong>${safeName}</strong>,</p>
       <p style="margin:0 0 20px;font-size:14px;line-height:1.6;color:#475569;">
-        Hệ thống vừa nhận được yêu cầu khôi phục mật khẩu cho tài khoản của bạn. Vui lòng nhập mã xác thực 6 chữ số dưới đây vào màn hình đặt lại mật khẩu:
+        ${intro}
       </p>
       <div style="margin:24px 0;padding:18px;background:#ecfdf5;border:1px dashed #10b981;border-radius:12px;text-align:center;">
         <div style="font-size:12px;color:#047857;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:6px;font-weight:bold;">Mã xác thực OTP</div>
@@ -55,7 +66,7 @@ function buildOtpEmailTemplate({ fullName, otpCode, expiresInMinutes = 5 }: Omit
         ⏳ Mã xác thực có hiệu lực trong vòng <strong>${expiresInMinutes} phút</strong>. Tuyệt đối không chia sẻ mã này cho người khác.
       </p>
       <p style="margin:0;font-size:13px;line-height:1.6;color:#94a3b8;">
-        Nếu bạn không yêu cầu đặt lại mật khẩu, hãy bỏ qua email này — tài khoản của bạn vẫn an toàn.
+        ${ignoreNote}
       </p>
     </div>
     <div style="padding:14px 28px;background:#f8fafc;border-top:1px solid #e2e8f0;font-size:12px;color:#94a3b8;text-align:center;">

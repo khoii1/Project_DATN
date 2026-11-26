@@ -5,7 +5,7 @@ import { userRepository, type PublicUser } from "../repositories/user.repository
 import { AppError } from "../utils/app-error";
 import { signAccessToken } from "../utils/jwt";
 import { comparePassword, hashPassword } from "../utils/password";
-import type { ChangePasswordInput, ForgotPasswordInput, RegisterInput, ResetPasswordInput, UpdateProfileInput } from "../validators/auth.schema";
+import type { ChangePasswordInput, ForgotPasswordInput, RegisterInput, RegisterOtpRequestInput, ResetPasswordInput, UpdateProfileInput } from "../validators/auth.schema";
 import { recordActivity } from "./activity-log.service";
 import { emailService } from "./email.service";
 
@@ -16,7 +16,24 @@ interface ResetTokenRecord {
 }
 
 const passwordResetStore = new Map<string, ResetTokenRecord>();
+const registerOtpStore = new Map<string, ResetTokenRecord>();
 const RESET_TTL_MS = 5 * 60 * 1000;
+
+function verifyRegisterOtp(email: string, otpCode: string): void {
+  const record = registerOtpStore.get(email);
+  if (!record || Date.now() > record.expiresAt) {
+    registerOtpStore.delete(email);
+    throw new AppError(400, "Mã xác thực Email không tồn tại hoặc đã hết hạn (5 phút). Vui lòng gửi lại mã mới.");
+  }
+  if (record.otpCode !== otpCode.trim()) {
+    record.attempts += 1;
+    if (record.attempts >= 5) {
+      registerOtpStore.delete(email);
+      throw new AppError(429, "Nhập sai mã xác thực quá 5 lần. Vui lòng yêu cầu mã mới.");
+    }
+    throw new AppError(400, "Mã xác thực 6 chữ số không chính xác");
+  }
+}
 
 interface LoginResult {
   user: PublicUser;
@@ -30,12 +47,52 @@ function toPublicUser(user: Awaited<ReturnType<typeof userRepository.findByEmail
 }
 
 export const authService = {
+  async requestRegisterOtp(
+    input: RegisterOtpRequestInput,
+  ): Promise<{ expiresInSeconds: number; emailSent: boolean; verificationCode?: string }> {
+    const normalizedEmail = input.email.trim().toLowerCase();
+    const existing = await userRepository.findByEmail(normalizedEmail);
+    if (existing) {
+      throw new AppError(409, "Email này đã được đăng ký sử dụng");
+    }
+
+    const otpCode = String(randomInt(100000, 1000000));
+    registerOtpStore.set(normalizedEmail, { otpCode, expiresAt: Date.now() + RESET_TTL_MS, attempts: 0 });
+
+    if (emailService.isConfigured()) {
+      try {
+        await emailService.sendPasswordResetOtpEmail({
+          to: normalizedEmail,
+          fullName: input.fullName?.trim() || normalizedEmail,
+          otpCode,
+          expiresInMinutes: 5,
+          purpose: "register",
+        });
+      } catch (error) {
+        registerOtpStore.delete(normalizedEmail);
+        throw error;
+      }
+      console.log(`[Register OTP] Sent real OTP email to ${normalizedEmail} (valid 5m)`);
+      return { expiresInSeconds: 300, emailSent: true };
+    }
+
+    if (env.nodeEnv === "production") {
+      registerOtpStore.delete(normalizedEmail);
+      throw new AppError(503, "Máy chủ chưa cấu hình dịch vụ gửi Email (vui lòng thêm biến EMAIL_WEBHOOK_URL trên Render)");
+    }
+
+    console.log(`[Register OTP - Local Dev] Email=${normalizedEmail} Code=${otpCode} (valid 5m)`);
+    return { expiresInSeconds: 300, emailSent: false, verificationCode: otpCode };
+  },
+
   async register(input: RegisterInput, ipAddress?: string): Promise<LoginResult> {
     const normalizedEmail = input.email.trim().toLowerCase();
     const existing = await userRepository.findByEmail(normalizedEmail);
     if (existing) {
       throw new AppError(409, "Email này đã được đăng ký sử dụng");
     }
+    verifyRegisterOtp(normalizedEmail, input.otpCode);
+    registerOtpStore.delete(normalizedEmail);
 
     const passwordHash = await hashPassword(input.password);
     const chosenRole = input.role === UserRole.STAFF ? UserRole.STAFF : UserRole.FARM_OWNER;

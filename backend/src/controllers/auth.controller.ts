@@ -1,6 +1,22 @@
 import type { NextFunction, Request, Response } from "express";
 import { authService } from "../services/auth.service";
-import type { ChangePasswordInput, ForgotPasswordInput, LoginInput, RegisterInput, ResetPasswordInput, UpdateProfileInput } from "../validators/auth.schema";
+import type { ChangePasswordInput, ForgotPasswordInput, LoginInput, RegisterInput, RegisterOtpRequestInput, ResetPasswordInput, UpdateProfileInput } from "../validators/auth.schema";
+
+export async function requestRegisterOtp(request: Request, response: Response, next: NextFunction): Promise<void> {
+  try {
+    const input = request.body as RegisterOtpRequestInput;
+    const data = await authService.requestRegisterOtp(input);
+    response.status(200).json({
+      success: true,
+      message: data.emailSent
+        ? "Mã xác thực OTP 6 chữ số đã được gửi tới Email đăng ký (hiệu lực 5 phút)"
+        : "Đã tạo mã xác thực đăng ký (hiệu lực 5 phút)",
+      data,
+    });
+  } catch (error) {
+    next(error);
+  }
+}
 
 export async function register(request: Request, response: Response, next: NextFunction): Promise<void> {
   try {

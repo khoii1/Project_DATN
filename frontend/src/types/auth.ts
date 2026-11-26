@@ -24,6 +24,7 @@ export interface RegisterInput {
   phone?: string | null;
   password: string;
   role?: "FARM_OWNER" | "STAFF";
+  otpCode: string;
 }
 
 export interface UpdateProfileInput {

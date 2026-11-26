@@ -1,8 +1,9 @@
-import { Eye, EyeOff, Leaf, Loader2, LockKeyhole, Mail, Phone, Sprout, User } from "lucide-react";
+import { Eye, EyeOff, KeyRound, Leaf, Loader2, LockKeyhole, Mail, Phone, Sprout, User } from "lucide-react";
 import { type FormEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
 import { getApiErrorMessage } from "../../services/api";
+import { authService } from "../../services/auth.service";
 
 interface FormErrors {
   fullName?: string;
@@ -15,6 +16,7 @@ interface FormErrors {
 export function RegisterPage() {
   const navigate = useNavigate();
   const { register } = useAuth();
+  const [step, setStep] = useState<"form" | "verify">("form");
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
@@ -25,10 +27,13 @@ export function RegisterPage() {
   const [errors, setErrors] = useState<FormErrors>({});
   const [serverError, setServerError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [otpCode, setOtpCode] = useState("");
+  const [issuedCode, setIssuedCode] = useState("");
+  const [emailSent, setEmailSent] = useState(false);
+  const [resendNotice, setResendNotice] = useState("");
+  const [isResending, setIsResending] = useState(false);
 
-  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    setServerError("");
+  const validateForm = (): boolean => {
     const nextErrors: FormErrors = {};
     if (fullName.trim().length < 2) nextErrors.fullName = "Họ và tên phải có ít nhất 2 ký tự";
     if (!email.trim()) nextErrors.email = "Email không được để trống";
@@ -39,7 +44,48 @@ export function RegisterPage() {
     }
     if (confirmPassword !== password) nextErrors.confirmPassword = "Mật khẩu xác nhận không khớp";
     setErrors(nextErrors);
-    if (Object.keys(nextErrors).length > 0 || !register) return;
+    return Object.keys(nextErrors).length === 0;
+  };
+
+  const sendOtp = async (isResend = false) => {
+    setServerError("");
+    setResendNotice("");
+    try {
+      if (isResend) setIsResending(true);
+      else setIsSubmitting(true);
+      const res = await authService.requestRegisterOtp(email.trim(), fullName.trim());
+      setEmailSent(Boolean(res.emailSent));
+      if (!res.emailSent && res.verificationCode) {
+        setIssuedCode(res.verificationCode);
+        setOtpCode(res.verificationCode);
+      } else {
+        setIssuedCode("");
+        setOtpCode("");
+      }
+      if (isResend) setResendNotice("Đã gửi lại mã OTP 6 chữ số mới tới hộp thư của bạn!");
+      setStep("verify");
+    } catch (error) {
+      setServerError(getApiErrorMessage(error, "Không thể gửi mã xác thực qua Email, vui lòng thử lại"));
+    } finally {
+      setIsSubmitting(false);
+      setIsResending(false);
+    }
+  };
+
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setServerError("");
+    if (step === "form") {
+      if (!validateForm()) return;
+      await sendOtp(false);
+      return;
+    }
+
+    if (!/^\d{6}$/.test(otpCode.trim())) {
+      setServerError("Mã xác thực gồm đúng 6 chữ số");
+      return;
+    }
+    if (!register) return;
 
     try {
       setIsSubmitting(true);
@@ -49,6 +95,7 @@ export function RegisterPage() {
         phone: phone.trim() || null,
         password,
         role,
+        otpCode: otpCode.trim(),
       });
       navigate("/dashboard", { replace: true });
     } catch (error) {
@@ -95,6 +142,60 @@ export function RegisterPage() {
           <p className="mt-2 text-sm leading-6 text-slate-500">Điền thông tin bên dưới để truy cập hệ thống quản lý nông nghiệp thông minh.</p>
 
           <form onSubmit={handleSubmit} className="mt-6 space-y-4" noValidate>
+            {step === "verify" ? (
+              <>
+                {emailSent ? (
+                  <div className="rounded-xl border border-emerald-200 bg-emerald-50 p-3.5 text-sm leading-6 text-emerald-900">
+                    Mã OTP 6 chữ số đã được gửi tới hộp thư <b>{email.trim()}</b> (hiệu lực 5 phút). Vui lòng kiểm tra Hộp thư đến hoặc mục Thư rác (Spam).
+                  </div>
+                ) : issuedCode ? (
+                  <div className="rounded-xl border border-emerald-200 bg-emerald-50 p-3.5 text-sm text-emerald-900">
+                    Mã xác thực đăng ký (chế độ Local, hiệu lực 5 phút): <b className="tracking-widest">{issuedCode}</b>
+                  </div>
+                ) : null}
+                {resendNotice && (
+                  <div className="rounded-xl border border-sky-200 bg-sky-50 px-3.5 py-2.5 text-xs font-semibold text-sky-800">{resendNotice}</div>
+                )}
+                <div>
+                  <div className="flex items-center justify-between">
+                    <label htmlFor="reg-otp" className="text-sm font-semibold text-slate-700">Mã xác thực Email (6 chữ số)</label>
+                    <button
+                      type="button"
+                      disabled={isResending || isSubmitting}
+                      onClick={() => void sendOtp(true)}
+                      className="text-xs font-bold text-brand-700 hover:underline disabled:opacity-50"
+                    >
+                      {isResending ? "Đang gửi lại..." : "Gửi lại mã OTP"}
+                    </button>
+                  </div>
+                  <div className="relative mt-1.5">
+                    <KeyRound className="absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
+                    <input
+                      id="reg-otp"
+                      type="text"
+                      inputMode="numeric"
+                      maxLength={6}
+                      value={otpCode}
+                      onChange={(e) => setOtpCode(e.target.value.replace(/\D/g, ""))}
+                      placeholder="Nhập mã 6 chữ số từ Email"
+                      className="h-11 w-full rounded-xl border border-slate-200 bg-white pl-10 pr-4 text-sm font-bold tracking-widest text-slate-800 shadow-sm focus:border-brand-500"
+                    />
+                  </div>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setStep("form");
+                    setServerError("");
+                    setResendNotice("");
+                  }}
+                  className="text-xs font-semibold text-slate-500 hover:text-slate-800 hover:underline"
+                >
+                  ← Quay lại sửa thông tin đăng ký
+                </button>
+              </>
+            ) : (
+              <>
             <div>
               <label htmlFor="fullName" className="text-sm font-semibold text-slate-700">Họ và tên</label>
               <div className="relative mt-1.5">
@@ -197,6 +298,8 @@ export function RegisterPage() {
               </div>
               {errors.confirmPassword && <p className="mt-1 text-xs font-medium text-red-600">{errors.confirmPassword}</p>}
             </div>
+              </>
+            )}
 
             {serverError && (
               <div role="alert" className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm font-medium text-red-700">
@@ -210,7 +313,9 @@ export function RegisterPage() {
               className="flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-brand-600 text-sm font-bold text-white shadow-lg shadow-brand-600/15 transition hover:bg-brand-700 disabled:cursor-not-allowed disabled:opacity-70"
             >
               {isSubmitting && <Loader2 className="h-4 w-4 animate-spin" />}
-              {isSubmitting ? "Đang tạo tài khoản..." : "Đăng ký tài khoản"}
+              {isSubmitting
+                ? step === "form" ? "Đang gửi mã OTP..." : "Đang tạo tài khoản..."
+                : step === "form" ? "Gửi mã xác thực Email" : "Xác nhận & Tạo tài khoản"}
             </button>
           </form>
 

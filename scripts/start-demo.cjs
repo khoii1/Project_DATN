@@ -177,7 +177,7 @@ async function main() {
   console.log(`${C.green}${C.bold}   HỆ THỐNG ĐÃ SẴN SÀNG HOẠT ĐỘNG!                       ${C.reset}`);
   console.log(`${C.green}==========================================================${C.reset}`);
   console.log(` - Địa chỉ Website : http://localhost:5173/irrigation`);
-  console.log(` - Tài khoản Admin : admin@smartagri.local`);
+  console.log(` - Tài khoản Admin : admin@gmail.com`);
   console.log(` - Mật khẩu        : Admin123`);
   console.log(`${C.gray} - Để tắt toàn bộ  : Chạy lệnh 'npm run demo:stop' hoặc file stop-demo.bat${C.reset}`);
   console.log(`${C.green}==========================================================${C.reset}\n`);

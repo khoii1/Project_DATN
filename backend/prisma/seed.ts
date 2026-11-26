@@ -5,32 +5,52 @@ import { ActuatorState, ActuatorStatus, ActuatorType, AlertOperator, AlertSeveri
 const prisma = new PrismaClient();
 
 const demoUsers = [
-  { fullName: "Quản trị viên", email: "admin@smartagri.local", password: "Admin123", role: UserRole.ADMIN },
-  { fullName: "Chủ trang trại", email: "owner@smartagri.local", password: "Owner123", role: UserRole.FARM_OWNER },
-  { fullName: "Nhân viên nông trại", email: "staff@smartagri.local", password: "Staff123", role: UserRole.STAFF },
+  { fullName: "Quản trị viên", email: "admin@gmail.com", legacyEmail: "admin@smartagri.local", password: "Admin123", role: UserRole.ADMIN },
+  { fullName: "Chủ trang trại", email: "owner@gmail.com", legacyEmail: "owner@smartagri.local", password: "Admin123", role: UserRole.FARM_OWNER },
+  { fullName: "Nhân viên nông trại", email: "staff@gmail.com", legacyEmail: "staff@smartagri.local", password: "Admin123", role: UserRole.STAFF },
 ] as const;
 
 async function seed(): Promise<void> {
+  const sharedPasswordHash = await bcrypt.hash("Admin123", 12);
   for (const demoUser of demoUsers) {
-    const passwordHash = await bcrypt.hash(demoUser.password, 12);
-    await prisma.user.upsert({
-      where: { email: demoUser.email },
-      update: {
-        fullName: demoUser.fullName,
-        role: demoUser.role,
-        status: UserStatus.ACTIVE,
-      },
-      create: {
-        fullName: demoUser.fullName,
-        email: demoUser.email,
-        passwordHash,
-        role: demoUser.role,
-      },
-    });
+    const existingNew = await prisma.user.findUnique({ where: { email: demoUser.email } });
+    const existingLegacy = await prisma.user.findUnique({ where: { email: demoUser.legacyEmail } });
+
+    if (!existingNew && existingLegacy) {
+      await prisma.user.update({
+        where: { id: existingLegacy.id },
+        data: {
+          email: demoUser.email,
+          fullName: demoUser.fullName,
+          passwordHash: sharedPasswordHash,
+          role: demoUser.role,
+          status: UserStatus.ACTIVE,
+        },
+      });
+    } else {
+      await prisma.user.upsert({
+        where: { email: demoUser.email },
+        update: {
+          fullName: demoUser.fullName,
+          passwordHash: sharedPasswordHash,
+          role: demoUser.role,
+          status: UserStatus.ACTIVE,
+        },
+        create: {
+          fullName: demoUser.fullName,
+          email: demoUser.email,
+          passwordHash: sharedPasswordHash,
+          role: demoUser.role,
+        },
+      });
+      if (existingLegacy) {
+        await prisma.user.deleteMany({ where: { email: demoUser.legacyEmail } }).catch(() => undefined);
+      }
+    }
   }
 
-  const owner = await prisma.user.findUniqueOrThrow({ where: { email: "owner@smartagri.local" } });
-  const staff = await prisma.user.findUniqueOrThrow({ where: { email: "staff@smartagri.local" } });
+  const owner = await prisma.user.findUniqueOrThrow({ where: { email: "owner@gmail.com" } });
+  const staff = await prisma.user.findUniqueOrThrow({ where: { email: "staff@gmail.com" } });
   const farm = await prisma.farm.upsert({
     where: { id: "demo_green_farm" },
     update: { ownerId: owner.id, name: "Green Farm", address: "Đà Lạt, Lâm Đồng", areaHectares: 3.5, status: "ACTIVE" },

@@ -66,6 +66,6 @@
 
 | Vai trò | Email | Mật khẩu |
 |---|---|---|
-| **Quản trị viên (`ADMIN`)** | `admin@smartagri.local` | `Admin123` |
-| **Chủ trang trại (`FARM_OWNER`)** | `owner@smartagri.local` | `Owner123` |
-| **Nhân viên (`STAFF`)** | `staff@smartagri.local` | `Staff123` |
+| **Quản trị viên (`ADMIN`)** | `admin@gmail.com` | `Admin123` |
+| **Chủ trang trại (`FARM_OWNER`)** | `owner@gmail.com` | `Admin123` |
+| **Nhân viên (`STAFF`)** | `staff@gmail.com` | `Admin123` |

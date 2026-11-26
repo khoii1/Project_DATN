@@ -15,15 +15,17 @@ async function bootstrapAndStart() {
 
   const prisma = new PrismaClient();
   try {
-    const adminUser = await prisma.user.findUnique({
-      where: { email: "admin@smartagri.local" },
+    const syncedCount = await prisma.user.count({
+      where: {
+        email: { in: ["admin@gmail.com", "owner@gmail.com", "staff@gmail.com"] },
+      },
     });
-    if (!adminUser) {
-      console.log("[Cloud Boot] Cơ sở dữ liệu mới — đang khởi tạo dữ liệu mẫu ban đầu (seed)...");
+    if (syncedCount < 3) {
+      console.log("[Cloud Boot] Đang đồng bộ 3 tài khoản mặc định (@gmail.com / Admin123) và dữ liệu mẫu...");
       await prisma.$disconnect();
       execSync("npm run prisma:seed", { stdio: "inherit" });
     } else {
-      console.log("[Cloud Boot] Đã có dữ liệu tài khoản trên Supabase, bỏ qua bước seed.");
+      console.log("[Cloud Boot] Đã có đủ 3 tài khoản mặc định (@gmail.com) trên Supabase.");
       await prisma.$disconnect();
     }
   } catch (err) {

@@ -67,9 +67,9 @@ Toàn bộ mã nguồn Backend, Website, Mobile (Expo Go) và Firmware ESP32 đ�
 4. Bấm **Deploy**!
    - Sau 45 giây, bạn nhận ngay tên miền public có HTTPS (ví dụ `https://project-datn.vercel.app`).
    - Đăng nhập ngay bằng tài khoản mặc định:
-     - **Admin:** `admin@smartagri.local` / `Admin123`
-     - **Chủ trang trại:** `owner@smartagri.local` / `Owner123`
-     - **Nhân viên:** `staff@smartagri.local` / `Staff123`
+     - **Admin:** `admin@gmail.com` / `Admin123`
+     - **Chủ trang trại:** `owner@gmail.com` / `Admin123`
+     - **Nhân viên:** `staff@gmail.com` / `Admin123`
 
 ---
 
